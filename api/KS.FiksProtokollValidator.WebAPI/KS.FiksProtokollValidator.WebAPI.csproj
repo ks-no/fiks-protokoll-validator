@@ -39,6 +39,8 @@
     <None Include="FiksIO\fiks-io-config.template.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Include="TestCases\NyJournalpostF1\testInformation.json" />
+    <None Include="TestCases\NyJournalpostN1\testInformation.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,6 +80,10 @@
     <None Update="FiksIO\fiks-io-privkey.pem">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TestCases\**" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

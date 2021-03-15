@@ -9,13 +9,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
     [ApiController]
     public class TestCasePayloadFilesController : ControllerBase
     {
-        private readonly string _testsDirectoryPath = Path.Combine("..", "KS.FiksProtokollValidator.TestCases", "Tests");
+        private const string TestsDirectoryPath = @"TestCases/";
 
         // GET api/<TestsCasePayloadFilesController>/TestCaseName
         [HttpGet("{testCaseName}")]
         public ActionResult GetMessagePayloadFile(string testCaseName)
         {
-            var filePath = Path.Combine(_testsDirectoryPath, testCaseName, "arkivmelding.xml");
+            var filePath = Path.Combine(TestsDirectoryPath, testCaseName, "arkivmelding.xml");
 
             return GetPayload(filePath);
         }
@@ -24,7 +24,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{testCaseName}/{attachmentFileName}")]
         public ActionResult GetAttachmentPayloadFile(string testCaseName, string attachmentFileName)
         {
-            var filePath = Path.Combine(_testsDirectoryPath, testCaseName, "Attachments", attachmentFileName);
+            var filePath = Path.Combine(TestsDirectoryPath, testCaseName, "Attachments", attachmentFileName);
 
             return GetPayload(filePath);
         }

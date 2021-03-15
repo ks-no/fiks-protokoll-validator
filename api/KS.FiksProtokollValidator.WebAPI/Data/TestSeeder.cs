@@ -19,7 +19,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
 
         private void Seed()
         {
-            var tests = new DirectoryInfo(@"../KS.FiksProtokollValidator.TestCases/Tests/");
+            var tests = new DirectoryInfo(@"TestCases/");
 
             foreach (var testDirectory in tests.GetDirectories())
             {

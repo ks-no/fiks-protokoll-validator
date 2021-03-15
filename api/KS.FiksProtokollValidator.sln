@@ -6,8 +6,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KS.FiksProtokollValidator.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KS.FiksProtokollValidator.Tests", "KS.FiksProtokollValidator.Tests\KS.FiksProtokollValidator.Tests.csproj", "{000F7B73-7AF0-4B92-BDBB-8669DEBB5CFA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KS.FiksProtokollValidator.TestCases", "KS.FiksProtokollValidator.TestCases\KS.FiksProtokollValidator.TestCases.csproj", "{97CAC63A-EA58-44E3-8CE0-4F82139A883A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,10 +20,6 @@ Global
 		{000F7B73-7AF0-4B92-BDBB-8669DEBB5CFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{000F7B73-7AF0-4B92-BDBB-8669DEBB5CFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{000F7B73-7AF0-4B92-BDBB-8669DEBB5CFA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97CAC63A-EA58-44E3-8CE0-4F82139A883A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97CAC63A-EA58-44E3-8CE0-4F82139A883A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97CAC63A-EA58-44E3-8CE0-4F82139A883A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97CAC63A-EA58-44E3-8CE0-4F82139A883A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
