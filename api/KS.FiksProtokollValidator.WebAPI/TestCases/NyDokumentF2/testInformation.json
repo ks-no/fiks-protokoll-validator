@@ -1,0 +1,12 @@
+﻿{
+    "testName": "Send Dokument - Feilsituasjon 2",
+    "description":
+        "tilknyttetRegistreringSom.kodeverdi(V), dokumenttype.kodeverdi(FEIL), tittel(Tittel), dokumentstatus.kodeverdi(F), variantformat.kodeverdi(A), format.kodeverdi(PDF/A) og referanseJournalpostSystemID(12345)",
+    "testStep": "Feilsituasjon 2 Ulovlig verdi",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyDokument",
+    "situation": "F2",
+    "expectedResult": "FinderFault med info om at dokumenttype ikke finnes",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

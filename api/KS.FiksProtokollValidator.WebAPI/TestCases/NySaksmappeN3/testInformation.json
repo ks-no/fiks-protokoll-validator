@@ -1,0 +1,11 @@
+﻿{
+    "testName": "Send ny Saksmappe - Normalsituasjon 3",
+    "description": "tittel(Test) og saksdato(i går)",
+    "testStep": "Normalsituasjon 3 Input Saksmappe med retur av Saksmappe",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "N3",
+    "expectedResult": "Saksmappe med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

@@ -1,0 +1,11 @@
+﻿{
+    "testName": "Send ny Saksmappe - Feilsituasjon 12", // Vi forutsetter at integrerende klient har validert byggident
+    "description": "Bygningsid(byggIdent:123/12345) og tittel(Test)",
+    "testStep": "Feilsituasjon 12 Ulovlig verdi",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "F12",
+    "expectedResult": "ValidationFault",
+    "queriesWithExpectedValues": [],
+    "supported": false
+} //Skal ikke denne inneholde kommunenummer? Vil den ikke feile på at den ikke inneholder kommunenummer?

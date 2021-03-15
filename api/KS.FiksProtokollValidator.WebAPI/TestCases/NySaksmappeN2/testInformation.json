@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Saksmappe - Normalsituasjon 2",
+    "description": "tittel(Test skjermet), offentligTittel(Test), skjermetTittel(true) og skjerming",
+    "testStep": "Normalsituasjon 2 Input Saksmappe med retur av Saksmappe",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "N2",
+    "expectedResult": "Saksmappe med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}
