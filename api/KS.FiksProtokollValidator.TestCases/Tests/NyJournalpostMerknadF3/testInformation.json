@@ -1,0 +1,12 @@
+﻿{
+    "testName": "Send Merknad med ",
+    "description":
+        "merknad.merknadstype(MA), merknad.merknadstekst(Merknad) og journalnoekkel.saksaar(1900).sakssekvensnummer(1).journalpostnummer(1)",
+    "testStep": "Feilsituasjon 3 Ulovlig verdi",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyJournalpostMerknad",
+    "situation": "F3",
+    "expectedResult": "FinderFault med info om at saksmappe / journalpost ikke finnes",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

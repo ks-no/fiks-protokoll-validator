@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Saksmappe - Feilsituasjon 14",
+    "description": "tittel(Test) og punkt.koordinatsystem(22).kodeverdi.x(12345678) og .y(123456789). For store tall",
+    "testStep": "Feilsituasjon 14 Ulovlig verdi",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "F14",
+    "expectedResult": "ValidationFault",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

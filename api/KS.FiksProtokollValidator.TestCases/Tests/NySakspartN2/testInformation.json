@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Sakspart - Normalsituasjon 2", //Alle felt i sakspart som person skal fylles inn med verdier.
+    "description": "sakspart.kontakt.navn(ABC) og saksnoekkel.saksaar(2011).sakssekvensnummer(1)",
+    "testStep": "Normalsituasjon 2 Input Sakspart",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySakspart",
+    "situation": "N2",
+    "expectedResult": "Saksmappe oppdatert med ny sakspart",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

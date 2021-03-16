@@ -28,15 +28,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("TestCaseId")
-                        .HasColumnType("int");
+                    b.Property<string>("TestCaseTestName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<Guid?>("TestSessionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("MessageGuid");
 
-                    b.HasIndex("TestCaseId");
+                    b.HasIndex("TestCaseTestName");
 
                     b.HasIndex("TestSessionId");
 
@@ -88,25 +88,23 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TestCaseId")
-                        .HasColumnType("int");
+                    b.Property<string>("TestCaseTestName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ValueType")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TestCaseId");
+                    b.HasIndex("TestCaseTestName");
 
                     b.ToTable("FiksResponseTest");
                 });
 
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.TestCase", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("TestName")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -135,15 +133,14 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TestName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<bool>("Supported")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TestStep")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("TestName");
 
                     b.HasIndex("TestName")
                         .IsUnique();
@@ -172,7 +169,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                 {
                     b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.TestCase", "TestCase")
                         .WithMany()
-                        .HasForeignKey("TestCaseId");
+                        .HasForeignKey("TestCaseTestName");
 
                     b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.TestSession", null)
                         .WithMany("FiksRequests")
@@ -192,7 +189,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                 {
                     b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.TestCase", null)
                         .WithMany("FiksResponseTests")
-                        .HasForeignKey("TestCaseId");
+                        .HasForeignKey("TestCaseTestName");
                 });
 
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksRequest", b =>

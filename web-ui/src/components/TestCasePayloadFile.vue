@@ -42,13 +42,12 @@ export default {
       type: String
     }
   },
-  
+
   methods: {
     getContent: function(isTextContent) {
-      var endPointUrl = this.isAttachment ? 
-      this.operation + "" + this.situation + "/" + this.fileName
-      : this.operation + "" + this.situation;
-        
+      var endPointUrl = this.isAttachment
+        ? this.operation + "" + this.situation + "/" + this.fileName
+        : this.operation + "" + this.situation;
 
       var settings = {
         responseType: isTextContent ? "text" : "blob",

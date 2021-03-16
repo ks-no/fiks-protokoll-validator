@@ -1,0 +1,12 @@
+{
+    "testName": "Send ny Journalpost - Normalsituasjon 9",
+    "description":
+        "tittel(Test), journalposttype.kodeverdi(I), korrespondanseparttype.kodeverdi(Avsender), kontakt.navn(NN) og avskrivningsmaate.kodeverdi(TE)",
+    "testStep": "Normalsituasjon 9 Input Journalpost med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyJournalpost",
+    "situation": "N9",
+    "expectedResult": "Journalpost og avskrivning med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

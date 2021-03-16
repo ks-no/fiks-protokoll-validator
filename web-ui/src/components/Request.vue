@@ -1,7 +1,6 @@
 <template>
   <li class="list-group-item">
     <TestCase
-      :testId="testCase.id"
       :testName="testCase.testName"
       :messageType="testCase.messageType"
       :payloadFileName="testCase.payloadFileName"

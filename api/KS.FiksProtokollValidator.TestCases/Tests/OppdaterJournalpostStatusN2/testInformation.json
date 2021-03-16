@@ -1,0 +1,13 @@
+﻿{
+    "testName":
+        "Send ny OppdaterJournalpostStatus - Normalsituasjon 2", //Forutsetter at det er registrert en status F og at den er lovlig for denne journalposten. Store bokstaver er påkrevd.
+    "description":
+        "journalstatus.kodeverdi(F) og journalnoekkel.saksaar(2011).sakssekvensnummer(1).journalpostnummer(1)",
+    "testStep": "Normalsituasjon 2 Input Journalstatus med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterJournalpostStatus",
+    "situation": "N2",
+    "expectedResult": "Journalpost med oppdatert status",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

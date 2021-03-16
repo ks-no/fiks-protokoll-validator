@@ -19,6 +19,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         public List<FiksRequest> FiksRequests { get; set; }
 
         [NotMapped]
-        public ICollection<int> SelectedTestCaseIds { get; set; }
+        public ICollection<string> SelectedTestCaseIds { get; set; }
     }
 }

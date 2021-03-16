@@ -1,0 +1,12 @@
+{
+    "testName": "Send ny Journalpost - Normalsituasjon 8",
+    "description":
+        "tittel(Test), journalposttype.kodeverdi(U), korrespondanseparttype.kodeverdi(Mottaker), kontakt.navn(NN), avskrivningsmaate.kodeverdi(BU) og referanseAvskriverEksternNoekkel.fagsystem.noekkel(FAGSYS123)",
+    "testStep": "Normalsituasjon 8 Input Journalpost med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyJournalpost",
+    "situation": "N8",
+    "expectedResult": "Journalpost og avskrivning med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

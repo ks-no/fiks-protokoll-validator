@@ -45,10 +45,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         // PUT: api/TestCases/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTestCase(int id, TestCase testCase)
+        [HttpPut("{testName}")]
+        public async Task<IActionResult> PutTestCase(string testName, TestCase testCase)
         {
-            if (id != testCase.Id)
+            if (!testName.Equals(testCase.TestName))
             {
                 return BadRequest();
             }
@@ -61,7 +61,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TestCaseExists(id))
+                if (!TestCaseExists(testName))
                 {
                     return NotFound();
                 }
@@ -83,12 +83,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             _context.TestCases.Add(testCase);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTestCase", new { id = testCase.Id }, testCase);
+            return CreatedAtAction("GetTestCase", new { testName = testCase.TestName }, testCase);
         }
 
-        private bool TestCaseExists(int id)
+        private bool TestCaseExists(string testName)
         {
-            return _context.TestCases.Any(e => e.Id == id);
+            return _context.TestCases.Any(e => e.TestName == testName);
         }
     }
 }

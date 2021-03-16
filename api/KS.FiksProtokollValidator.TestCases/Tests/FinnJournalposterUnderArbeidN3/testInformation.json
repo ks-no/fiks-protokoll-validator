@@ -1,0 +1,11 @@
+﻿{
+    "testName": "Send ny Ansvarlig Normalsituasjon 3",
+    "description": "Inputverdi NULL",
+    "testStep": "Normalsituasjon 3 Input Ansvarlig med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "FinnJournalposterUnderArbeid",
+    "situation": "N3",
+    "expectedResult": "Alle journalposter med status R",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

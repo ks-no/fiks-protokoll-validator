@@ -1,21 +1,11 @@
 {
-    "testName": "Send ny journalpost, motta journalpost - Feilsituason 1",
-    "description": "Min beskrivelse som inneholder informasjon om hva som sendes inn i testen, hva som returneres og hva som testes",
-    "testStep": "Feilsituason 1 - Tittel ikke angitt",
+    "testName": "Send ny Journalpost - Feilsituasjon 1",
+    "description": "tom Journalpost",
+    "testStep": "Feilsituasjon 1 Tittel ikke angitt",
     "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
     "operation": "NyJournalpost",
     "situation": "F1",
     "expectedResult": "ValidationFault med info om at tittel og journalposttype ikke er angitt",
-    "queriesWithExpectedValues": [
-        {
-            "payloadQuery": "/arkivmelding/registrering",
-            "expectedValue": "journalpost",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "/arkivmelding/registrering/journalaar",
-            "expectedValue": "2020",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        }
-    ]
+    "queriesWithExpectedValues": [],
+    "supported": false
 }

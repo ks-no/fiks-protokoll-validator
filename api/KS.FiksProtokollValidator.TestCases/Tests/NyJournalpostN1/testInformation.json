@@ -1,26 +1,11 @@
 {
-    "testName": "Send ny journalpost, motta journalpost - Normalsituason 1",
-    "description": "Min beskrivelse som inneholder informasjon om hva som sendes inn i testen, hva som returneres og hva som testes",
-    "testStep": "Normalsituasjon 1 - Input av journalpost og retur av journalpost",
+    "testName": "Send ny Journalpost med - Normalsituasjon 1",
+    "description": "tittel(Test) og journalposttype.kodeverdi(X)",
+    "testStep": "Normalsituasjon 1 Input Journalpost med retur av Journalpost",
     "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
     "operation": "NyJournalpost",
     "situation": "N1",
-    "expectedResult": "Journalpost returneres med utfylte verdier",
-    "queriesWithExpectedValues": [
-        {
-            "payloadQuery": "/arkivmelding/registrering",
-            "expectedValue": "journalpost",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "/arkivmelding/registrering/journalaar",
-            "expectedValue": "2020",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "/arkivmelding/registrering/systemID",
-            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        }
-    ]
+    "expectedResult": "Journalpost med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false
 }

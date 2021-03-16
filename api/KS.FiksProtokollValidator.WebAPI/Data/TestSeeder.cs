@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using KS.FiksProtokollValidator.WebAPI.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json.Linq;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data
@@ -27,58 +28,59 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                     File.ReadAllText(Path.Combine(testDirectory.FullName, "testInformation.json"));
                 var testInformation = JObject.Parse(testInformationJson);
 
-                var testName = testDirectory.Name;
-
-                if (TestExistInDatabase(testName))
-                    continue;
-
-                var test = new TestCase
+                var updateTest = _context.TestCases.Find((string)testInformation["testName"]);
+                if (updateTest != null)
                 {
-                    TestName = (string)testInformation["testName"],
-                    MessageType = (string) testInformation["messageType"],
-                    PayloadFileName = "arkivmelding.xml",
-                    FiksResponseTests = new List<FiksResponseTest>(),
-                    Description = (string) testInformation["description"],
-                    TestStep = (string) testInformation["testStep"],
-                    Operation = (string) testInformation["operation"],
-                    Situation = (string) testInformation["situation"],
-                    ExpectedResult = (string) testInformation["expectedResult"]
-                };
-
-                var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
-                if (Directory.Exists(attachmentDirectory))
-                {
-                    var payloadAttachmentFileNames = "";
-
-                    foreach (var fileInfo in new DirectoryInfo(attachmentDirectory)
-                        .GetFiles())
-                    {
-                        payloadAttachmentFileNames += fileInfo.Name + ";";
-                    }
-
-                    test.PayloadAttachmentFileNames = payloadAttachmentFileNames.TrimEnd(';');
+                    _context.TestCases.Update(UpdateTest(testDirectory, updateTest, testInformation));
                 }
-
-                foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
+                else
                 {
-                    var fiksResponseTest = new FiksResponseTest
-                    {
-                        PayloadQuery = (string) queryWithExpectedValue["payloadQuery"],
-                        ExpectedValue = (string) queryWithExpectedValue["expectedValue"],
-                        ValueType = (SearchValueType) (int) queryWithExpectedValue["valueType"]
-                    };
-
-                    test.FiksResponseTests.Add(fiksResponseTest);
+                    var newTestEntry = new TestCase();
+                    newTestEntry.TestName = (string) testInformation["testName"];
+                    _context.TestCases.Add(UpdateTest(testDirectory, newTestEntry, testInformation));
                 }
-
-                _context.TestCases.Add(test);
                 _context.SaveChanges();
             }
         }
 
-        private bool TestExistInDatabase(string testName)
+        private TestCase UpdateTest(DirectoryInfo testDirectory, TestCase testCase, JObject testInformation)
         {
-            return _context.TestCases.Any(a => (a.Operation+a.Situation).Equals(testName));
+            testCase.MessageType = (string)testInformation["messageType"];
+            testCase.PayloadFileName = "arkivmelding.xml";
+            testCase.FiksResponseTests = new List<FiksResponseTest>();
+            testCase.Description = (string)testInformation["description"];
+            testCase.TestStep = (string)testInformation["testStep"];
+            testCase.Operation = (string)testInformation["operation"];
+            testCase.Situation = (string)testInformation["situation"];
+            testCase.ExpectedResult = (string)testInformation["expectedResult"];
+            testCase.Supported = (bool)testInformation["supported"];
+
+            var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
+            if (Directory.Exists(attachmentDirectory))
+            {
+                var payloadAttachmentFileNames = "";
+
+                foreach (var fileInfo in new DirectoryInfo(attachmentDirectory)
+                    .GetFiles())
+                {
+                    payloadAttachmentFileNames += fileInfo.Name + ";";
+                }
+
+                testCase.PayloadAttachmentFileNames = payloadAttachmentFileNames.TrimEnd(';');
+            }
+
+            foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
+            {
+                var fiksResponseTest = new FiksResponseTest
+                {
+                    PayloadQuery = (string)queryWithExpectedValue["payloadQuery"],
+                    ExpectedValue = (string)queryWithExpectedValue["expectedValue"],
+                    ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
+                };
+
+                testCase.FiksResponseTests.Add(fiksResponseTest);
+            }
+            return testCase;
         }
     }
 }

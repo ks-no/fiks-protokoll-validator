@@ -1,0 +1,12 @@
+﻿{
+    "testName": "Send ny Journalpost - Normalsituasjon 2",
+    "description":
+        "tittel(Test skjermet), journalposttype.kodeverdi(X), og offentligTittel(Test) skjermetTittel(true), skjerming…",
+    "testStep": "Normalsituasjon 2 Input Journalpost med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyJournalpost",
+    "situation": "N2",
+    "expectedResult": "Journalpost med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

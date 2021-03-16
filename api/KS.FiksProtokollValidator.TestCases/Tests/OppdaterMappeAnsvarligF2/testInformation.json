@@ -1,0 +1,12 @@
+﻿{
+    "testName": "Send ny OppdaterMappeAnsvarlig - Feilsituasjon 2",
+    "description":
+        "nyAdministratiEnhetKode(Nivå1), nySaksbehandlerInit(Sbh) og saksnoekkel(1900).saksaarsaksekvensnummer(1)",
+    "testStep": "Feilsituasjon 2 Finnes ikke",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterMappeAnsvarlig",
+    "situation": "F2",
+    "expectedResult": "FinderFault med info om at saksmappe ikke finnes",
+    "queriesWithExpectedValues": [],
+    "supported": false
+}

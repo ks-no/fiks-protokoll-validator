@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -6,9 +7,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
     public class TestCase
     {
         [Key]
-        public int Id { get; set; }
-
-        [Required]
         public string TestName { get; set; }
 
         [Required]
@@ -31,5 +29,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         public string Situation { get; set; }
         [Required]
         public string ExpectedResult { get; set; }
+        [Required]
+        public bool Supported { get; set; }
     }
 }
