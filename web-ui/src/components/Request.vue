@@ -26,11 +26,15 @@
               <strong class="header">Testspørringer:</strong>
             </b-col>
             <b-col>
-              <a v-for="fiksResponseTest in testCase.fiksResponseTests" :key="fiksResponseTest.id">
+              <a
+                v-for="fiksResponseTest in testCase.fiksResponseTests"
+                :key="fiksResponseTest.id"
+              >
                 {{
-                  fiksResponseTest.payloadQuery + (fiksResponseTest.valueType === 0
-                    ? "/text(" + fiksResponseTest.expectedValue + ")"
-                    : "[@xsi:type='" + fiksResponseTest.expectedValue + "']")
+                  fiksResponseTest.payloadQuery +
+                    (fiksResponseTest.valueType === 0
+                      ? "/text(" + fiksResponseTest.expectedValue + ")"
+                      : "[@xsi:type='" + fiksResponseTest.expectedValue + "']")
                 }}
                 <br />
               </a>
@@ -43,9 +47,12 @@
           <h6>
             <strong>Svarmeldinger</strong>
           </h6>
-           {{validState !== "notValidated" ? "" : "Ingen svarmeldinger funnet.."}}
+          {{
+            validState !== "notValidated" ? "" : "Ingen svarmeldinger funnet.."
+          }}
           <Response
-            v-for="response in responses" :key="response.id"
+            v-for="response in responses"
+            :key="response.id"
             :collapseId="'collapse-' + response.id"
             :receivedAt="response.receivedAt"
             :messageType="response.type"
@@ -57,16 +64,31 @@
       <b-card>
         <h6><strong>Testresultat</strong></h6>
         <div v-if="validState === 'notValidated'" class="flex-result-item">
-          <b-icon-exclamation-circle-fill :class="'validState ' + validState" title="Ikke validert" />
+          <b-icon-exclamation-circle-fill
+            :class="'validState ' + validState"
+            title="Ikke validert"
+          />
           <label> Validering er ikke utført </label>
         </div>
         <div v-else-if="validState === 'valid'">
           <label> Validering utført uten feil! </label>
         </div>
         <div v-else-if="validState === 'invalid'">
-          <label class="flex-result-item" v-for="error in validationErrors" :key="error">
-            <b-icon-exclamation-circle-fill :class="'validState ' + validState" title="Ugyldig" />
-            {{ error.replace("/","&lt;").replace(/\//g, "> &lt;").replace(" i svar", "> i svar") }}
+          <label
+            class="flex-result-item"
+            v-for="error in validationErrors"
+            :key="error"
+          >
+            <b-icon-exclamation-circle-fill
+              :class="'validState ' + validState"
+              title="Ugyldig"
+            />
+            {{
+              error
+                .replace("/", "&lt;")
+                .replace(/\//g, "> &lt;")
+                .replace(" i svar", "> i svar")
+            }}
           </label>
         </div>
       </b-card>
@@ -132,7 +154,11 @@ export default {
     if (!this.isValidated) {
       this.validState = "notValidated";
     } else {
-      this.validState = (typeof this.validationErrors !== "undefined" && this.validationErrors.length > 0) ? "invalid" : "valid";
+      this.validState =
+        typeof this.validationErrors !== "undefined" &&
+        this.validationErrors.length > 0
+          ? "invalid"
+          : "valid";
     }
   }
 };
@@ -152,7 +178,7 @@ svg.validState {
   margin-right: 6px;
 }
 
-svg.notValidated{
+svg.notValidated {
   color: rgb(231, 181, 42);
 }
 

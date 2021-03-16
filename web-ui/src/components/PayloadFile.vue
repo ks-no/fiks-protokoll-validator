@@ -3,10 +3,22 @@
     <button class="btn btn-link" v-on:click="handleButtonOnClick()">
       {{ fileName }}
     </button>
-    <b-modal v-model="modalIsOpen" :title="fileName" size="xl" button-size="sm" ok-only ok-variant="secondary" ok-title="Lukk" v-on:close="onClose()">
+    <b-modal
+      v-model="modalIsOpen"
+      :title="fileName"
+      size="xl"
+      button-size="sm"
+      ok-only
+      ok-variant="secondary"
+      ok-title="Lukk"
+      v-on:close="onClose()"
+    >
       <div v-if="content">
         <div v-if="isTextContent">
-          <ssh-pre :language="fileExtension" :label="fileExtension.toUpperCase()">
+          <ssh-pre
+            :language="fileExtension"
+            :label="fileExtension.toUpperCase()"
+          >
             {{ content }}
           </ssh-pre>
         </div>

@@ -134,9 +134,7 @@ export default {
   methods: {
     getTests: async function() {
       this.loading = true;
-      const response = await axios.get(
-        "/api/TestCases"
-      );
+      const response = await axios.get("/api/TestCases");
       this.testCases = response.data;
       this.loading = false;
       this.hasLoaded = true;
@@ -154,15 +152,12 @@ export default {
         selectedTestCaseIds: this.selectedTests
       };
 
-      const response = await axios.post(
-        "/api/TestSessions",
-        params
-      );
+      const response = await axios.post("/api/TestSessions", params);
 
       this.resultData = response.data;
       this.hasRun = true;
       this.running = false;
-      this.$router.push({path: "/TestSession/" + response.data.id});
+      this.$router.push({ path: "/TestSession/" + response.data.id });
     },
 
     toggleAll(checked) {
@@ -185,8 +180,8 @@ export default {
     }
   },
 
-  created () {
-    this.getTests()
+  created() {
+    this.getTests();
   },
 
   watch: {

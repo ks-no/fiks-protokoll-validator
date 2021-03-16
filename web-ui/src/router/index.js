@@ -1,6 +1,8 @@
-import App from "@/App";
+import StartPage from "@/components/StartPage";
 import TestSession from "@/components/TestSession";
 import NewTestSession from "@/components/NewTestSession";
+Vue.use(require("moment"));
+
 
 import Vue from "vue";
 import Router from "vue-router";
@@ -11,8 +13,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "App",
-      component: App
+      name: "StartePage",
+      component: StartPage
     },
     {
       path: "/TestSession/:testSessionId",
