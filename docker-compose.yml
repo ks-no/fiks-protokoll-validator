@@ -1,0 +1,21 @@
+version: '3'
+services:
+  fiks-protokoll-validator-sqlexpress:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Dev#FiksProtokollValidator1234"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "127.0.0.1:1433:1433"
+      - "127.0.0.1:1434:1434/udp"
+  fiks-protokoll-validator-api:
+    image: fiks-protokoll-validator-api
+    environment:
+      ASPNETCORE_ENVIRONMENT: "LocalDev"
+      ENVIRONMENT: "docker-compose-local-dev"
+      fiks-protokoll-validator_ConnectionStrings__DefaultConnection: "Data Source=fiks-protokoll-validator-sqlexpress;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"
+      #fiks-protokoll-validator_ConnectionStrings__DefaultConnectionUserId: "SA"
+      #fiks-protokoll-validator_ConnectionStrings__DefaultConnectionPassword: "Dev#FiksProtokollValidator1234"
+    ports:
+      - "127.0.0.1:64558:64558"
+      - "127.0.0.1:44303:44303"

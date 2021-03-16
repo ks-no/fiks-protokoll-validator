@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace KS.FiksProtokollValidator.WebAPI
@@ -15,6 +16,9 @@ namespace KS.FiksProtokollValidator.WebAPI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                }).ConfigureAppConfiguration((config) =>
+                {
+                    config.AddEnvironmentVariables("fiks-protokoll-validator_");
                 });
     }
 }
