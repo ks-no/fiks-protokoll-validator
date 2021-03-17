@@ -8,7 +8,7 @@
               v-on:click="isNotCollapsed = !isNotCollapsed"
               v-on:keyup.enter="isNotCollapsed = !isNotCollapsed"
               v-on:keyup.space="isNotCollapsed = !isNotCollapsed"
-              v-b-toggle="'collapse-' + testName"
+              v-b-toggle="'collapse-' + operation+ '' + situation"
             >
               <div>
                 <h5 class="flex-title">
@@ -53,7 +53,7 @@
         <b-collapse
           class="ml-4"
           :visible="!isCollapsed"
-          :id="'collapse-' + testName"
+          :id="'collapse-' + operation+ '' + situation"
           style="width: 90%"
         >
           <b-container fluid class="collapsecolor">

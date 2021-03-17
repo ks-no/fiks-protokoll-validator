@@ -14,7 +14,7 @@
       :validState="validState"
       :isCollapsed="isCollapsed"
     />
-    <b-collapse :visible="!isCollapsed" :id="'collapse-' + testCase.id">
+    <b-collapse :visible="!isCollapsed" :id="'collapse-' + testCase.operation+ '' + testCase.situation">
       <b-container fluid>
         <b-row style="margin-bottom: 25px">
           <b-col cols="2"> <strong class="header">Sendt: </strong> </b-col>
