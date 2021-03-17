@@ -11,6 +11,7 @@ services:
   fiks-protokoll-validator-api:
     image: fiks-protokoll-validator-api
     environment:
+      ASPNETCORE_URLS: "http://*:64558"
       ASPNETCORE_ENVIRONMENT: "LocalDev"
       ENVIRONMENT: "docker-compose-local-dev"
       fiks-protokoll-validator_ConnectionStrings__DefaultConnection: "Data Source=fiks-protokoll-validator-sqlexpress;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"
@@ -19,3 +20,7 @@ services:
     ports:
       - "127.0.0.1:64558:64558"
       - "127.0.0.1:44303:44303"
+  fiks-protokoll-validator-web:
+    image: fiks-protokoll-validator-web
+    ports:
+      - "127.0.0.1:8080:8080"

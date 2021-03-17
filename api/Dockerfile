@@ -13,4 +13,6 @@ ARG build_version_number=undefined
 WORKDIR /app
 COPY --from=core-build-env /build-app/published-app .
 
+EXPOSE 64558/tcp
+
 ENTRYPOINT ["dotnet", "KS.FiksProtokollValidator.WebAPI.dll"]

@@ -64,6 +64,8 @@
 import axios from "axios";
 import TestCase from "./TestCase";
 
+//const apiUrl = process.env.VUE_APP_API_URL;
+
 export default {
   name: "newTestSession",
 
@@ -91,7 +93,7 @@ export default {
     getTests: async function() {
       this.loading = true;
       const response = await axios.get(
-        "/api/TestCases"
+          process.env.VUE_APP_API_URL + "/api/TestCases"
       );
       this.testCases = response.data;
       this.loading = false;
@@ -111,7 +113,7 @@ export default {
       };
 
       const response = await axios.post(
-        "/api/TestSessions",
+          process.env.VUE_APP_API_URL + "/api/TestSessions",
         params
       );
 

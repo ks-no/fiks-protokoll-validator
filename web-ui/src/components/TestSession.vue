@@ -25,6 +25,8 @@
 import axios from "axios";
 import Request from "./Request";
 
+//const apiUrl = process.env.VUE_APP_API_URL;
+
 export default {
   name: "TestSession",
 
@@ -43,7 +45,7 @@ export default {
     getTestSession: async function(testSessionId) {
       this.loading = true;
       const response = await axios.get(
-        "/api/TestSessions/" + testSessionId
+          process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId
       );
       this.testSession = {
         ...response.data,

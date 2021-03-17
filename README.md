@@ -28,6 +28,10 @@ Opprett/oppdater databasen ved å navigere til *fiks-protokoll-validator/api/KS.
 * Hvis ikke du har installert dotnet-ef tool tidligere så kan det installeres slik `dotnet tool install --global dotnet-ef`
 * Kjør oppdatering: `dotnet ef database update --connection "Data Source=localhost,1433;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"`
 
+### Docker
+Gå til web-ui mappen og bygg docker image: `docker build -t fiks-protokoll-validator-web .`
+Gå til api mappen og bygg docker image: `docker build -t fiks-protokoll-validator-api .`
+
 ## Oppsett og kjøring i lokalt utviklingsmiljø med lokal sqlexpress
 
 Følgende må være installert på utviklingsmaskinen:
