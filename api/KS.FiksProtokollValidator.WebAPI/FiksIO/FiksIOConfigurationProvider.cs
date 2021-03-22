@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using KS.Fiks.IO.Client.Configuration;
 using Ks.Fiks.Maskinporten.Client;
 using Newtonsoft.Json.Linq;
+using RabbitMQ.Client;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
@@ -14,6 +16,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         public static FiksIOConfiguration GetFromConfigurationFile()
         {
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            
             var config = JObject(FiksIOConfigFile);
 
             var accountConfiguration = new KontoConfiguration(
@@ -33,7 +37,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 tokenEndpoint: (string) config["MaskinPortenTokenUrl"],
                 issuer: (string) config["MaskinPortenIssuer"],
                 numberOfSecondsLeftBeforeExpire: 10, // The token will be refreshed 10 seconds before it expires
-                certificate: GetCertificate((string) config["MaskinPortenCompanyCertificateThumbprint"]));
+                certificate: GetCertificate((string) config["MaskinPortenCompanyCertificateThumbprint"], (string) config["MaskinPortenCompanyCertificatePath"]));
 
             // Optional: Use custom api host (i.e. for connecting to test api)
             var apiConfiguration = new ApiConfiguration(
@@ -41,10 +45,21 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 host: (string) config["ApiHost"],
                 port: (int) config["ApiPort"]);
 
+
+            var sslOption1 = (!string.IsNullOrEmpty(environment) && environment == "Development")
+                ? new SslOption()
+                {
+                    Enabled = true,
+                    ServerName = (string) config["AmqpHost"],
+                    CertificateValidationCallback =
+                        (RemoteCertificateValidationCallback) ((sender, certificate, chain, errors) => true)
+                }
+                : null;
+            
             // Optional: Use custom amqp host (i.e. for connection to test queue)
-            var amqpConfiguration = new AmqpConfiguration(
+            AmqpConfiguration amqpConfiguration = new AmqpConfiguration(
                 host: (string) config["AmqpHost"],
-                port: (int) config["AmqpPort"]);
+                port: (int) config["AmqpPort"], sslOption1);
 
             // Combine all configurations
             return new FiksIOConfiguration(
@@ -63,8 +78,15 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             return config;
         }
 
-        private static X509Certificate2 GetCertificate(string thumbprint)
+        private static X509Certificate2 GetCertificate(string thumbprint, string path)
         {
+            if (!string.IsNullOrEmpty(path))
+            {
+                //X509Certificate2 cert = new X509Certificate2();
+                //cert.Import(path);
+                return new X509Certificate2(File.ReadAllBytes(path), "KS_PASSWORD");
+            }
+           
             var store = new X509Store(StoreLocation.CurrentUser);
 
             store.Open(OpenFlags.ReadOnly);
