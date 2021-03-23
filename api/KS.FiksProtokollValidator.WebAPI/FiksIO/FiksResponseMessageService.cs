@@ -58,11 +58,11 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                         var reader1 = new StreamReader(entryStream, Encoding.UTF8);
                         var content = await reader1.ReadToEndAsync();
                         payloads.Add(asiceReadEntry.FileName, content);
-                    }
+                    } 
                 }
                 catch (Exception e)
                 {
-                    _logger.Log(LogLevel.Error ,"Klarte ikke hente payload og melding blir dermed ikke parset");
+                    _logger.Log(LogLevel.Error ,"Klarte ikke hente payload og melding blir dermed ikke parset. Error: {Message}", e.Message);
                     fileArgs.SvarSender?.Ack();
                     return;
                 }
@@ -120,57 +120,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     _logger.Log(LogLevel.Error,
                         "Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Svarmelding forkastes.");
                 }
-
-                /*await using (var context = new FiksIOMessageDBContext(new DbContextOptions<FiksIOMessageDBContext>()))
-                {
-                    var testSession = context.TestSessions.Include(t => t.FiksRequests).FirstOrDefaultAsync(t =>
-                        t.FiksRequests.Any(r => r.MessageGuid.Equals(fileArgs.Melding.SvarPaMelding))).Result;
-
-                    var timesTried = 1;
-                    while (testSession == null && timesTried <= 5)
-                    {
-                        Thread.Sleep(1000);
-                        testSession = context.TestSessions.Include(t => t.FiksRequests).FirstOrDefault(t =>
-                            t.FiksRequests.Any(r => r.MessageGuid.Equals(fileArgs.Melding.SvarPaMelding)));
-                        timesTried++;
-                    }
-
-
-                    if (testSession != null)
-                    {
-                        var fiksRequest =
-                            testSession.FiksRequests.Find(r => r.MessageGuid.Equals(fileArgs.Melding.SvarPaMelding));
-
-                        var responseMessage = new FiksResponse
-                        {
-                            ReceivedAt = DateTime.Now,
-                            Type = fileArgs.Melding.MeldingType,
-                            Payload = payloads.Count > 1 ? string.Join(',', payloads.Keys) :
-                                payloads.Count == 1 ? payloads.Keys.ElementAt(0) : null,
-                            PayloadContent = payloads.Count == 1 ? payloads.Values.ElementAt(0) : null,
-                        };
-
-                        if (fiksRequest == null)
-                        {
-                            fileArgs.SvarSender?.Ack();
-                            _logger.Log(LogLevel.Error,
-                                "Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Svarmelding forkastes.");
-                            return;
-                        }
-
-                        fiksRequest.FiksResponses ??= new List<FiksResponse>();
-
-                        fiksRequest.FiksResponses.Add(responseMessage);
-
-                        context.Entry(testSession).State = EntityState.Modified;
-                        await context.SaveChangesAsync();
-                    }
-                    else
-                    {
-                        _logger.Log(LogLevel.Error,
-                            "Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Svarmelding forkastes.");
-                    }
-                }*/
             }
             finally
             {
