@@ -82,8 +82,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         {
             if (!string.IsNullOrEmpty(path))
             {
-                //X509Certificate2 cert = new X509Certificate2();
-                //cert.Import(path);
                 return new X509Certificate2(File.ReadAllBytes(path), "KS_PASSWORD");
             }
            
