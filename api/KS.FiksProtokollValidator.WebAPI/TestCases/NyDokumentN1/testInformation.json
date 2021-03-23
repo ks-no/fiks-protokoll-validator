@@ -9,5 +9,5 @@
     "situation": "N1",
     "expectedResult": "Dokument oppdatert med id-er og standardverdier",
     "queriesWithExpectedValues": [],
-    "supported": true
+    "supported": false
 }
