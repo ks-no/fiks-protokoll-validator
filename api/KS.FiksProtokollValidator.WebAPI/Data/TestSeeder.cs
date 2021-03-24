@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data
@@ -28,7 +29,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                     File.ReadAllText(Path.Combine(testDirectory.FullName, "testInformation.json"));
                 var testInformation = JObject.Parse(testInformationJson);
 
-                var updateTest = _context.TestCases.Find((string)testInformation["testName"]);
+                var updateTest = _context.TestCases.Where(t => t.TestName == (string)testInformation["testName"])
+                    .Include(t => t.ExpectedResponseMessageTypes).Include(t=> t.FiksResponseTests).FirstOrDefault();
                 if (updateTest != null)
                 {
                     _context.TestCases.Update(UpdateTest(testDirectory, updateTest, testInformation));
@@ -79,6 +81,36 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                 };
 
                 testCase.FiksResponseTests.Add(fiksResponseTest);
+            }
+            if (testInformation["expectedResponseMessageTypes"] != null)
+            {
+                if (testCase.ExpectedResponseMessageTypes == null)
+                {
+                    testCase.ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>();
+                    foreach (var messageType in testInformation["expectedResponseMessageTypes"])
+                    {
+                        var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
+                        {
+                            ExpectedResponseMessageType = (string)messageType
+                        };
+                        testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
+                    }
+                }
+                else
+                {
+                    foreach (var messageType in testInformation["expectedResponseMessageTypes"])
+                    {
+                        var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
+                        {
+                            ExpectedResponseMessageType = (string)messageType
+                        };
+                        if (!testCase.ExpectedResponseMessageTypes.Any(r=> r.ExpectedResponseMessageType.Equals(fiksExpectedResponseMessageType.ExpectedResponseMessageType)))
+                        {
+                            testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
+                        }
+                    }
+                }
+                
             }
             return testCase;
         }

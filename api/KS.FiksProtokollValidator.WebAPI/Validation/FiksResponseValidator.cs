@@ -20,10 +20,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                 var expectedResponseMessageTypes =
                     ExpectedResponseMessageTypeProvider.GetExpectedResponseMessageTypes(
-                        fiksRequest.TestCase.MessageType
+                        fiksRequest.TestCase.MessageType, fiksRequest.TestCase.ExpectedResponseMessageTypes
                     );
 
-                fiksRequest.FiksResponseValidationErrors = new List<string>();
+                    fiksRequest.FiksResponseValidationErrors = new List<string>();
 
                 ValidateExistenceOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
 

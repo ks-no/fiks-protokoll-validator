@@ -43,6 +43,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 .ThenInclude(r => r.TestCase)
                 .ThenInclude(a => a.FiksResponseTests)
 
+                .Include(t => t.FiksRequests)
+                .ThenInclude(r => r.TestCase)
+                .ThenInclude(a => a.ExpectedResponseMessageTypes)
+
                 .FirstOrDefaultAsync(i => i.Id == id);
 
             if (testSession == null)

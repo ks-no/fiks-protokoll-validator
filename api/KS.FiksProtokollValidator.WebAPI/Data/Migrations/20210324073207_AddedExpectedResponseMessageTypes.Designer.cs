@@ -4,14 +4,16 @@ using KS.FiksProtokollValidator.WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 {
     [DbContext(typeof(FiksIOMessageDBContext))]
-    partial class FiksIOMessageDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210324073207_AddedExpectedResponseMessageTypes")]
+    partial class AddedExpectedResponseMessageTypes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
