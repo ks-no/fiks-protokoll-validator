@@ -1,0 +1,32 @@
+﻿{
+    "testName": "Send ny Søk - Normalsituasjon 1",
+    "description": "Søker på alle mapper som inneholder 'test' i tittelen",
+    "testStep": "Normalsituasjon 1",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.v1",
+    "operation": "NySøk",
+    "situation": "N1",
+    "expectedResult": "Søkresultat med utfylte standardverdier",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/arkivmelding/mappe",
+            "expectedValue": "saksmappe",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/mappe/saksaar",
+            "expectedValue": "2021",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/mappe/systemID",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/mappe/sakssekvensnummer",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true
+}
