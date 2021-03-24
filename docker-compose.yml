@@ -35,10 +35,6 @@ services:
       - "127.0.0.1:15671:15671"
       - "127.0.0.1:15672:15672"
       - "127.0.0.1:25672:25672"
-    expose:
-      - 5671
-      - 5672
-      - 15672
 
   fiks-io-authorization-service:
     image: rodolpheche/wiremock

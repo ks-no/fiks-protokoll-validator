@@ -11,10 +11,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
     {
         private readonly Guid _senderId;
         private FiksIOClient _client;
+        private AppSettings _appSettings;
 
-        public FiksRequestMessageService()
+        public FiksRequestMessageService(AppSettings appAppSettings)
         {
-            var config = FiksIOConfigurationProvider.GetFromConfigurationFile();
+            _appSettings = appAppSettings;
+            var config = FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings);
 
             _client = new FiksIOClient(config);
 

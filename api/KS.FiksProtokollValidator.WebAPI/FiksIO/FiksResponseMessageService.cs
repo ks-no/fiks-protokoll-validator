@@ -22,13 +22,16 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private IFiksIOClient _client;
         private ILogger<FiksResponseMessageService> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly AppSettings _appSettings;
 
-        public FiksResponseMessageService(ILogger<FiksResponseMessageService> logger, IServiceScopeFactory scopeFactory)
+        public FiksResponseMessageService(ILogger<FiksResponseMessageService> logger, IServiceScopeFactory scopeFactory, AppSettings appSettings)
         {
             _logger = logger;
             _scopeFactory = scopeFactory;
-            _client = new FiksIOClient(FiksIOConfigurationProvider.GetFromConfigurationFile());
+            _appSettings = appSettings;
+            _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
         }
+        
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
