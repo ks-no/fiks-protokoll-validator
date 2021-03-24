@@ -14,3 +14,17 @@ updates:
     time: "03:00"
     timezone: Europe/Oslo
   open-pull-requests-limit: 15
+- package-ecosystem: nuget
+  directory: "/api"
+  schedule:
+    interval: daily
+    time: "03:00"
+    timezone: Europe/Oslo
+  open-pull-requests-limit: 15
+- package-ecosystem: nuget
+  directory: "/web-ui"
+  schedule:
+    interval: daily
+    time: "03:00"
+    timezone: Europe/Oslo
+  open-pull-requests-limit: 15  
