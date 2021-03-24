@@ -22,12 +22,20 @@ namespace KS.FiksProtokollValidator.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // get configuration from appsettings.json - use as singleton
+            services.AddSingleton(CreateAppSettings());
+            
             services.AddControllers();
             services.AddHostedService<FiksResponseMessageService>();
             services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddScoped<IFiksRequestMessageService, FiksRequestMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
+        }
+        
+        public AppSettings CreateAppSettings()
+        {
+            return Configuration.GetSection("AppSettings").Get<AppSettings>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

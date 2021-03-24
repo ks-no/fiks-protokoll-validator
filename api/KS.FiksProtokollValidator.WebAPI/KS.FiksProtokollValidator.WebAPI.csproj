@@ -33,15 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="FiksIO\fiks-io-config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="FiksIO\fiks-io-config.template.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <Compile Update="Resources\RequestMessageTypes.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
