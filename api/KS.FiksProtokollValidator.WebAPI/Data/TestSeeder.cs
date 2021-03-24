@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using KS.FiksProtokollValidator.WebAPI.Models;
@@ -49,7 +49,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         {
             testCase.MessageType = (string)testInformation["messageType"];
             testCase.PayloadFileName = "arkivmelding.xml";
-            testCase.FiksResponseTests = new List<FiksResponseTest>();
             testCase.Description = (string)testInformation["description"];
             testCase.TestStep = (string)testInformation["testStep"];
             testCase.Operation = (string)testInformation["operation"];
@@ -71,17 +70,45 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                 testCase.PayloadAttachmentFileNames = payloadAttachmentFileNames.TrimEnd(';');
             }
 
-            foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
+            if (testInformation["queriesWithExpectedValues"] != null)
             {
-                var fiksResponseTest = new FiksResponseTest
+                if (testCase.FiksResponseTests == null)
                 {
-                    PayloadQuery = (string)queryWithExpectedValue["payloadQuery"],
-                    ExpectedValue = (string)queryWithExpectedValue["expectedValue"],
-                    ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
-                };
+                    testCase.FiksResponseTests = new List<FiksResponseTest>();
+                    foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
+                    {
+                        var fiksResponseTest = new FiksResponseTest
+                        {
+                            PayloadQuery = (string)queryWithExpectedValue["payloadQuery"],
+                            ExpectedValue = (string)queryWithExpectedValue["expectedValue"],
+                            ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
+                        };
 
-                testCase.FiksResponseTests.Add(fiksResponseTest);
+                        testCase.FiksResponseTests.Add(fiksResponseTest);
+                    }
+                }
+                else
+                {
+                    foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
+                    {
+                        var fiksResponseTest = new FiksResponseTest
+                        {
+                            PayloadQuery = (string)queryWithExpectedValue["payloadQuery"],
+                            ExpectedValue = (string)queryWithExpectedValue["expectedValue"],
+                            ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
+                        };
+                        if (!testCase.FiksResponseTests.Any(
+                            r => (r.ExpectedValue.Equals(fiksResponseTest.ExpectedValue) 
+                                  && r.PayloadQuery.Equals(fiksResponseTest.PayloadQuery)
+                                  && r.ValueType.Equals(fiksResponseTest.ValueType))
+                            ))
+                        { 
+                            testCase.FiksResponseTests.Add(fiksResponseTest);
+                        }
+                    }
+                }
             }
+
             if (testInformation["expectedResponseMessageTypes"] != null)
             {
                 if (testCase.ExpectedResponseMessageTypes == null)
