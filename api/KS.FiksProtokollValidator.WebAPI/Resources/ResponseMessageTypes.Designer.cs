@@ -61,6 +61,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.feil.v1.
+        /// </summary>
+        public static string FeilV1 {
+            get {
+                return ResourceManager.GetString("FeilV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.resultat.v1.
         /// </summary>
         public static string InnsynSoekResultatV1 {

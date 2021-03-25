@@ -40,7 +40,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
         public static List<string> GetExpectedResponseMessageTypes(string requestMessageType,
             List<FiksExpectedResponseMessageType> testCaseExpectedResponseMessageTypes)
         {
-            if (testCaseExpectedResponseMessageTypes == null)
+            if (testCaseExpectedResponseMessageTypes.Count == 0)
             {
                 _expectedMessageTypes ??= InitializeExpectedMessageTypes();
 
