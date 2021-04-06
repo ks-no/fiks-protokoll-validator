@@ -64,22 +64,22 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage('API: Push helm chart') {
             steps {
                 println("API: Building helm chart version: ${env.FULL_VERSION}")
                 buildHelm3Chart(API_PROJECT_NAME, env.FULL_VERSION)
             }
         }
-        */
-        /*
+        
+        
         stage('WEB: Push helm chart') {
             steps {
                 println("WEB: Building helm chart version: ${env.FULL_VERSION}")
                 buildHelm3Chart(WEB_PROJECT_NAME, env.FULL_VERSION)
             }
         }
-        */
+        
         /*
         stage('API og WEB - Snapshot: Set version') {
             when {
