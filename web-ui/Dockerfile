@@ -21,7 +21,7 @@ COPY .env.$mode .
 RUN npm run build -- --mode $mode
 
 # production stage
-FROM docker-all.artifactory.fiks.ks.no/fiks-nginx-openshift:latest as production-stage
+FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
