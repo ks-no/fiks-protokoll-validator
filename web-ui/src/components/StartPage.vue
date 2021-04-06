@@ -13,7 +13,7 @@
             <a v-bind:href="lastTestUrl" style="margin-top: 10px;">
               <span>
                 <b-icon-cloud-arrow-down/>
-                 Din testsesjon utført - {{ lastTestDateTime }} ({{lastTestUrl.split("TestSession/")[1]}})
+                 Din testsesjon utført - {{ lastTestDateTime }} ({{ (lastTestUrl || "").split("TestSession/")[1]}})
         </span>
         </a>
           </div>

@@ -1,94 +1,61 @@
 <template>
   <div class="newTestSession">
+
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="basic-addon3">FIKS-konto</span>
       </div>
-      <input
-        id="account-id"
-        v-model="recipientId"
-        type="text"
-        class="form-control"
-        placeholder="UUID"
-        aria-label="UUID"
-        aria-describedby="basic-addon1"
-      />
+      <input id="account-id" v-model="recipientId" type="text" class="form-control" placeholder="UUID" aria-label="UUID" aria-describedby="basic-addon1">
     </div>
+
     <div style="margin: 40px 0">
-      <b-form-group v-if="!hasRun">
-        <span
-          style="width: 100%; display: inline-block; vertical-align: middle;"
-        >
-          <div style="float: left; width: 70%">
-            <h3>
-              Tester
-            </h3>
-            <b-form-checkbox
-              v-show="!hasRun"
-              id="switch_supported"
-              v-model="showNotSupportedTests"
-              size="sm"
-              aria-describedby="testCases"
-              aria-controls="testCases"
-              @change="toggleAllSupportedTests"
-            >
-              {{ "Vis tester som ikke er støttet også" }}
-            </b-form-checkbox>
-          </div>
-          <div class="radioAndButton" style="float: left; width: 30%">
-            <b-button
-              variant="primary"
-              v-on:click="runSelectedTests"
-              v-if="!hasRun || running"
-              :disabled="running"
-              class="runAllButton"
-            >
-              Kjør valgte tester
-            </b-button>
-            <b-form-checkbox
-              v-show="!hasRun"
-              id="switch_selectAllTests"
-              switch
-              v-model="allTestsSelected"
-              size="lg"
-              aria-describedby="testCases"
-              aria-controls="testCases"
-              @change="toggleAll"
-            >
-              {{ allTestsSelected ? "Velg ingen" : "Velg alle" }}
-            </b-form-checkbox>
-          </div>
-        </span>
+    <b-button style="float:right" variant="primary" v-on:click="runSelectedTests" v-if="!hasRun || running" :disabled="running">
+      Kjør valgte tester
+    </b-button>
 
-        <b-spinner label="Loading..." v-if="running || loading"></b-spinner>
-        &nbsp;
-
-        <b-form-checkbox-group
-          switches
-          id="test-list-all"
-          v-model="selectedTests"
-          name="test-list-all"
+    <b-form-group v-if="!hasRun">
+      <span style="width: 100%; display: inline-block; vertical-align: middle;">
+        <h3 style="float: left; width: 50%"> Tester </h3>
+        <b-form-checkbox style="float:left" v-show="!hasRun"
+          id="switch_selectAllTests"
+          switch
+          v-model="allTestsSelected"
           size="lg"
-          stacked
+          aria-describedby="testCases"
+          aria-controls="testCases"
+          @change="toggleAll"
         >
-          <TestCase
-            v-for="testCase in computedTestCases"
-            v-bind:key="testCase.testName"
-            :testName="testCase.testName"
-            :messageType="testCase.messageType"
-            :payloadFileName="testCase.payloadFileName"
-            :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
-            :description="testCase.description"
-            :testStep="testCase.testStep"
-            :operation="testCase.operation"
-            :situation="testCase.situation"
-            :expectedResult="testCase.expectedResult"
-            :supported="testCase.supported"
-            :hasRun="hasRun"
-            :isCollapsed="true"
-          />
-        </b-form-checkbox-group>
-      </b-form-group>
+          {{ allTestsSelected ? "Velg ingen" : "Velg alle" }}
+        </b-form-checkbox>
+      </span>
+
+    <b-spinner label="Loading..." v-if="running || loading"></b-spinner>
+    &nbsp;
+
+      <b-form-checkbox-group
+        switches
+        id="test-list-all"
+        v-model="selectedTests"
+        name="test-list-all"
+        size="lg"
+        stacked
+      >
+        <TestCase v-for="testCase in testCases" :key="testCase.id"
+          :testId="testCase.id"
+          :testName="testCase.testName"
+          :messageType="testCase.messageType"
+          :payloadFileName="testCase.payloadFileName"
+          :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
+          :description="testCase.description"
+          :testStep="testCase.testStep"
+          :operation="testCase.operation"
+          :situation="testCase.situation"
+          :expectedResult="testCase.expectedResult"
+          :hasRun="hasRun"
+          :isCollapsed="true"
+        />
+      </b-form-checkbox-group>
+    </b-form-group>
     </div>
   </div>
 </template>
@@ -96,6 +63,8 @@
 <script>
 import axios from "axios";
 import TestCase from "./TestCase";
+
+require("dotenv").config()
 
 export default {
   name: "newTestSession",
@@ -116,25 +85,16 @@ export default {
       recipientId: null,
       selectedTests: [],
       allTestsSelected: false,
-      showNotSupportedTests: false,
       tmpTests: []
     };
-  },
-
-  computed: {
-    computedTestCases: function() {
-      if (!this.showNotSupportedTests) {
-        return this.testCases.filter(testCase => {
-          return testCase.supported === !this.showNotSupportedTests;
-        });
-      } else return this.testCases;
-    }
   },
 
   methods: {
     getTests: async function() {
       this.loading = true;
-      const response = await axios.get("/api/TestCases");
+      const response = await axios.get(
+          process.env.VUE_APP_API_URL + "/api/TestCases"
+      );
       this.testCases = response.data;
       this.loading = false;
       this.hasLoaded = true;
@@ -152,46 +112,40 @@ export default {
         selectedTestCaseIds: this.selectedTests
       };
 
-      const response = await axios.post("/api/TestSessions", params);
+      const response = await axios.post(
+          process.env.VUE_APP_API_URL + "/api/TestSessions",
+        params
+      );
 
       this.resultData = response.data;
       this.hasRun = true;
       this.running = false;
-      this.$router.push({ path: "/TestSession/" + response.data.id });
+      this.$router.push({path: "/TestSession/" + response.data.id});
     },
 
     toggleAll(checked) {
       if (checked) {
         this.selectedTests = [];
-        const tests = this.testCases.filter(testCase => {
-          return testCase.supported === true;
-        });
-        tests.forEach(test => {
-          this.tmpTests.push(test.testName);
+        this.testCases.forEach(test => {
+          this.tmpTests.push(test.id)
         });
         this.selectedTests = this.tmpTests;
         this.tmpTests = [];
       } else {
         this.selectedTests = [];
       }
-    },
-    toggleAllSupportedTests(checked) {
-      this.showNotSupportedTests = checked;
     }
   },
 
-  created() {
-    this.getTests();
+  created () {
+    this.getTests()
   },
 
   watch: {
     selectedTests(newVal) {
-      const length = this.testCases.filter(testCase => {
-        return testCase.supported === true;
-      }).length;
       if (newVal.length === 0) {
         this.allTestsSelected = false;
-      } else if (newVal.length === length) {
+      } else if (newVal.length === this.testCases.length) {
         this.allTestsSelected = true;
       } else {
         this.allTestsSelected = false;
@@ -205,14 +159,5 @@ export default {
 <style scoped>
 .input-group {
   max-width: 430px;
-}
-.radioAndButton {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-bottom: 8px;
-}
-.runAllButton {
-  margin-bottom: 8px;
 }
 </style>

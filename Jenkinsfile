@@ -55,7 +55,7 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage('WEB: Build and publish docker image') {
             steps {
                 script {
@@ -63,7 +63,7 @@ pipeline {
                     buildAndPushDockerImage(WEB_PROJECT_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'web-ui')
                 }
             }
-        }*/
+        }
         /*
         stage('API: Push helm chart') {
             steps {

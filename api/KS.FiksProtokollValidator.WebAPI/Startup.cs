@@ -1,3 +1,4 @@
+using System;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
 using KS.FiksProtokollValidator.WebAPI.Validation;
@@ -12,6 +13,8 @@ namespace KS.FiksProtokollValidator.WebAPI
 {
     public class Startup
     {
+        private readonly string AllowedOrigins = "_allowedOrigins";
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,6 +25,15 @@ namespace KS.FiksProtokollValidator.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: AllowedOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:8081"); 
+                    });
+            });
+            
             // get configuration from appsettings.json - use as singleton
             services.AddSingleton(CreateAppSettings());
             
@@ -41,8 +53,9 @@ namespace KS.FiksProtokollValidator.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || IsDockerCompose(env))
             {
+                app.UseCors(AllowedOrigins);
                 app.UseDeveloperExceptionPage();
             }
             else
@@ -73,6 +86,16 @@ namespace KS.FiksProtokollValidator.WebAPI
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private static bool IsDockerCompose(IHostEnvironment hostEnvironment)
+        {
+            if (hostEnvironment == null)
+            {
+                throw new ArgumentNullException(nameof(hostEnvironment));
+            }
+
+            return hostEnvironment.IsEnvironment("DockerCompose");
         }
     }
 }
