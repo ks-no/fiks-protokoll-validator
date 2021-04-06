@@ -1,8 +1,8 @@
-FROM node:12
+FROM node:12 AS build-stage
 ARG mode=production
 
 # install simple http server for serving static content
-RUN npm install -g http-server
+#RUN npm install -g http-server
 
 WORKDIR /app 
 
@@ -20,5 +20,11 @@ COPY .env.$mode .
 # build app for production with minification
 RUN npm run build -- --mode $mode
 
+# production stage
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8080
-CMD [ "http-server", "dist" ]
+CMD ["nginx", "-g", "daemon off;"]
+
+#EXPOSE 8080
+#CMD [ "http-server", "dist" ]
