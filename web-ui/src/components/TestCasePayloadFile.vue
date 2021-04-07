@@ -1,26 +1,31 @@
 <template>
   <PayloadFile
-      :fileName="fileName"
-      :content="payloadFileContent"
-      v-on:get-content="isTextContent => getContent(isTextContent)"
+    :fileName="fileName"
+    :content="payloadFileContent"
+    v-on:get-content="isTextContent => getContent(isTextContent)"
   />
 </template>
 
 <script>
 import PayloadFile from "./PayloadFile.vue";
 import axios from "axios";
+
 require("dotenv").config()
+
 export default {
   name: "testCasePayloadFile",
+  
   components: {
     PayloadFile
   },
+  
   data() {
     return {
       payloadFileContent: null,
       fileExtension: null
     };
   },
+  
   props: {
     fileName: {
       required: true,
@@ -39,15 +44,17 @@ export default {
       type: String
     }
   },
+  
   methods: {
     getContent: function(isTextContent) {
       var endPointUrl = this.isAttachment
-          ? this.operation + "" + this.situation + "/" + this.fileName
-          : this.operation + "" + this.situation;
+        ? this.operation + "" + this.situation + "/" + this.fileName
+        : this.operation + "" + this.situation;
       var settings = {
         responseType: isTextContent ? "text" : "blob",
         responseEncoding: isTextContent ? "utf-16" : "base64"
       };
+      
       var apiUrl = process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles";
       var resourceUrl = apiUrl + "/" + endPointUrl;
       axios.get(resourceUrl, settings).then(response => {
