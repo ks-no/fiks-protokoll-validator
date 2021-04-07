@@ -199,7 +199,7 @@ def getTimestamp() {
 
 def buildImageWeb() {
   docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS) {
-    def customImage = docker.build("${WEB_PROJECT_NAME}:${FULL_VERSION}", "-f web-ui/Dockerfile .")
+    def customImage = docker.build("${WEB_PROJECT_NAME}:${FULL_VERSION}", "web-ui")
     return customImage
   }
 }
