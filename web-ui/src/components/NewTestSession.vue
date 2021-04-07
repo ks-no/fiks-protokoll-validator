@@ -32,7 +32,7 @@
               aria-controls="testCases"
               @change="toggleAllSupportedTests"
             >
-              {{ "Vis tester som ikke er støttet også" }}
+              {{ "Vis tester som ikke er implementert" }}
             </b-form-checkbox>
           </div>
           <div class="radioAndButton" style="float: left; width: 30%">

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
 {
@@ -36,11 +37,25 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
             };
         }
 
-        public static List<string> GetExpectedResponseMessageTypes(string requestMessageType)
+        public static List<string> GetExpectedResponseMessageTypes(string requestMessageType,
+            List<FiksExpectedResponseMessageType> testCaseExpectedResponseMessageTypes)
         {
-            _expectedMessageTypes ??= InitializeExpectedMessageTypes();
+            if (testCaseExpectedResponseMessageTypes.Count == 0)
+            {
+                _expectedMessageTypes ??= InitializeExpectedMessageTypes();
 
-            return _expectedMessageTypes[requestMessageType];
+                return _expectedMessageTypes[requestMessageType];
+            }
+            else
+            {
+                var responseMessageTypesList = new List<string>();
+                foreach (var responseMessageType in testCaseExpectedResponseMessageTypes)
+                {
+                    responseMessageTypesList.Add(responseMessageType.ExpectedResponseMessageType);
+                }
+
+                return responseMessageTypesList;
+            }
         }
     }
 }

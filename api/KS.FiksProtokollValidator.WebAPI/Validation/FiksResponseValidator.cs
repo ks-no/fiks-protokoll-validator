@@ -20,10 +20,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                 var expectedResponseMessageTypes =
                     ExpectedResponseMessageTypeProvider.GetExpectedResponseMessageTypes(
-                        fiksRequest.TestCase.MessageType
+                        fiksRequest.TestCase.MessageType, fiksRequest.TestCase.ExpectedResponseMessageTypes
                     );
 
-                fiksRequest.FiksResponseValidationErrors = new List<string>();
+                    fiksRequest.FiksResponseValidationErrors = new List<string>();
 
                 ValidateExistenceOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
 
@@ -90,7 +90,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            if (receivedPayloadFileName != null && !receivedPayloadFileName.EndsWith(".xml"))
+            if (receivedPayloadFileName != null && (!receivedPayloadFileName.EndsWith(".xml") && !receivedPayloadFileName.Equals("feil.txt")))
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.InvalidPayloadFileFormatMessage, receivedPayloadFileName.Split('.').Last()
@@ -98,7 +98,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            ValidateXmlPayloadContent(fiksResponse.PayloadContent, fiksResponseTests, validationErrors);
+            if (!receivedPayloadFileName.Equals("feil.txt"))
+            {
+                ValidateXmlPayloadContent(fiksResponse.PayloadContent, fiksResponseTests, validationErrors);
+            }
         }
 
         private static bool ResponseMessageShouldHavePayload(string responseMessageType)
@@ -113,6 +116,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             {
                 WebAPI.Resources.ResponseMessageTypes.KvitteringV1,
                 WebAPI.Resources.ResponseMessageTypes.InnsynSoekResultatV1,
+                WebAPI.Resources.ResponseMessageTypes.FeilV1,
             };
         }
 
