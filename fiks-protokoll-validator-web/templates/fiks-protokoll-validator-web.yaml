@@ -3,15 +3,14 @@ kind: Deployment
 metadata:
   name: fiks-protokoll-validator-web
   annotations:
-    description: "Et system for registrering av kommunens applikasjoner, datasett og hvordan disse henger sammen. Samt for protokollering av persondatabehandlinger"
-    externalServices: "Bruker SendGrid for utsendelse av SMS"
+    description: "Web applikasjon som tester Fiks-IO protokoll"
   labels:
     app: fiks-protokoll-validator-web
     component: fiks-protokoll-validator-web
     criticality: "KRITISK"
 spec:
   replicas: 1
-  minReadySeconds: 10 # Må kanskje økes enda mer mtp DB migration?
+  minReadySeconds: 10
   revisionHistoryLimit: 1
   strategy:
     type: RollingUpdate
