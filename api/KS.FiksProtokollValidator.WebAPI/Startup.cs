@@ -30,7 +30,9 @@ namespace KS.FiksProtokollValidator.WebAPI
                 options.AddPolicy(name: AllowedOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:8081"); 
+                        builder.WithOrigins("http://localhost:8081")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader(); 
                     });
             });
             
@@ -55,21 +57,19 @@ namespace KS.FiksProtokollValidator.WebAPI
         {
             if (env.IsDevelopment() || IsDockerCompose(env))
             {
-                app.UseCors(AllowedOrigins);
                 app.UseDeveloperExceptionPage();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
                 serviceScope.ServiceProvider.GetService<ITestSeeder>();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
