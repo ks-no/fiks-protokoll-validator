@@ -7,6 +7,12 @@ pipeline {
         API_PROJECT_NAME = "fiks-protokoll-validator-api"
         WEB_PROJECT_NAME = "fiks-protokoll-validator-web"
         DOCKERFILE_TESTS = "Dockerfile-run-tests"
+        // Artifactory credentials is stored under this key
+        ARTIFACTORY_CREDENTIALS = "artifactory-token-based"
+        // URL to artifactory Docker release repo
+        DOCKER_REPO_RELEASE = "https://docker-all.artifactory.fiks.ks.no"
+        // URL to artifactory Docker Snapshot repo
+        DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
@@ -55,31 +61,32 @@ pipeline {
                 }
             }
         }
-        /*
+        
         stage('WEB: Build and publish docker image') {
             steps {
                 script {
                     println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImage(WEB_PROJECT_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'web-ui')
+                    //buildAndPushDockerImage(WEB_PROJECT_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'web-ui')
+                    buildAndPushDockerImageWeb(params.isRelease);
                 }
             }
-        }*/
-        /*
+        }
+        
         stage('API: Push helm chart') {
             steps {
                 println("API: Building helm chart version: ${env.FULL_VERSION}")
                 buildHelm3Chart(API_PROJECT_NAME, env.FULL_VERSION)
             }
         }
-        */
-        /*
+        
+        
         stage('WEB: Push helm chart') {
             steps {
                 println("WEB: Building helm chart version: ${env.FULL_VERSION}")
                 buildHelm3Chart(WEB_PROJECT_NAME, env.FULL_VERSION)
             }
         }
-        */
+        
         /*
         stage('API og WEB - Snapshot: Set version') {
             when {
@@ -188,4 +195,23 @@ def incrementVersion(versionString) {
 
 def getTimestamp() {
     return java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
+}
+
+def buildImageWeb() {
+  docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS) {
+    def customImage = docker.build("${WEB_PROJECT_NAME}:${FULL_VERSION}", "web-ui")
+    return customImage
+  }
+}
+
+def buildAndPushDockerImageWeb(boolean isRelease = false) {
+  def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
+  script {
+    def customImage = buildImageWeb()
+    docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
+      {
+        customImage.push()
+        customImage.push('latest')
+      }
+  }
 }
