@@ -197,7 +197,7 @@ def getTimestamp() {
     return java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
 }
 
-def buildImageWeb(String version) {
+def buildImageWeb() {
   docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS) {
     def customImage = docker.build("${WEB_PROJECT_NAME}:${FULL_VERSION}", ".")
     return customImage
