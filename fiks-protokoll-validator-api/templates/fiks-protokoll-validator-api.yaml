@@ -45,6 +45,8 @@ spec:
                 name: logstash-config    
             - secretRef:
                 name: fiks-protokoll-validator-api-secret
+            - secretRef:
+                name: ks-virksomhetssertifikat                
         - name: fiks-protokoll-validator-api-proxy
           image: "{{ .Values.image.repository }}fiks-nginx-openshift-folkeregister:1.0.0"
           ports:
