@@ -80,14 +80,14 @@ pipeline {
             }
         }
         
-        
+        /*
         stage('WEB: Push helm chart') {
             steps {
                 println("WEB: Building helm chart version: ${env.FULL_VERSION}")
                 buildHelm3Chart(WEB_APP_NAME, env.FULL_VERSION)
             }
         }
-        
+        */
         /*
         stage('API og WEB - Snapshot: Set version') {
             when {
