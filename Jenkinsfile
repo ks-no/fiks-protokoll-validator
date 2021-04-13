@@ -172,7 +172,8 @@ def versionPattern() {
 }
 
 def findVersionSuffix() {
-    def findCommand = $/find -name "api\KS.FiksProtokollValidator.WebAPI\KS.FiksProtokollValidator.WebAPI.csproj" -exec xpath '{}' '/Project/PropertyGroup/VersionPrefix/text()' \;/$
+    println("FindVersionSuffix")
+    def findCommand = $/find api/KS.FiksProtokollValidator.WebAPI -name "KS.FiksProtokollValidator.WebAPI.csproj" -exec xpath '{}' '/Project/PropertyGroup/VersionPrefix/text()' \;/$
 
     def version = sh(script: findCommand, returnStdout: true, label: 'Lookup current version from csproj files').trim().split('\n').find {
         return it.trim().matches(versionPattern())
