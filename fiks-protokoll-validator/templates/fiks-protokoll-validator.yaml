@@ -78,7 +78,7 @@ spec:
             - name: ks-virksomhetssertifikat-store
               readOnly: true
               mountPath: /etc/fiks/ks-certs
-            - name: fiks-protokoll-validering-api-secret-key
+            - name: protokoll-validator-fiks-io-kryptering
               readOnly: true
               mountPath: /etc/fiks/fiks-io
       volumes:
@@ -88,9 +88,9 @@ spec:
         - name: ks-virksomhetssertifikat-store
           secret:
             secretName: ks-virksomhetssertifikat-store
-        - name: fiks-protokoll-validering-api-secret-key
+        - name: protokoll-validator-fiks-io-kryptering
           secret:
-            secretName: fiks-protokoll-validering-api-secret-key
+            secretName: protokoll-validator-fiks-io-kryptering
 ---
 kind: Service
 apiVersion: v1
