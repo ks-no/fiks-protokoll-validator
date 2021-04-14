@@ -43,7 +43,7 @@ namespace KS.FiksProtokollValidator.WebAPI
                     webBuilder.UseStartup<Startup>();
                 }).ConfigureAppConfiguration((config) =>
                 {
-                    config.AddEnvironmentVariables("fiks-protokoll-validator_");
+                    config.AddEnvironmentVariables("fiksProtokollValidator_");
                 });
     }
 }

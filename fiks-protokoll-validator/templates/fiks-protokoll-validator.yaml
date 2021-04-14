@@ -75,10 +75,22 @@ spec:
               readOnly: true
               mountPath: /etc/nginx/templates/nginx.conf.template
               subPath: nginx.conf.template
+            - name: ks-virksomhetssertifikat-store
+              readOnly: true
+              mountPath: /etc/fiks/ks-certs
+            - name: fiks-protokoll-validering-api-secret-key
+              readOnly: true
+              mountPath: /etc/fiks/fiks-io
       volumes:
         - name: nginx-conf-template
           configMap:
             name: nginx-conf-template
+        - name: ks-virksomhetssertifikat-store
+          secret:
+            secretName: ks-virksomhetssertifikat-store
+        - name: fiks-protokoll-validering-api-secret-key
+          secret:
+            secretName: fiks-protokoll-validering-api-secret-key
 ---
 kind: Service
 apiVersion: v1

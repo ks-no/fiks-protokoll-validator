@@ -18,9 +18,9 @@ services:
       ASPNETCORE_ENVIRONMENT: "DockerCompose"
       ENVIRONMENT: "DockerCompose"
       AMQP_IGNORE_SSL_ERROR: "true"
-      fiks-protokoll-validator_ConnectionStrings__DefaultConnection: "Data Source=fiks-protokoll-validator-sqlexpress;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"
-      #fiks-protokoll-validator_ConnectionStrings__DefaultConnectionUserId: "SA"
-      #fiks-protokoll-validator_ConnectionStrings__DefaultConnectionPassword: "Dev#FiksProtokollValidator1234"
+      fiksProtokollValidator_ConnectionStrings__DefaultConnection: "Data Source=fiks-protokoll-validator-sqlexpress;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"
+      #fiksProtokollValidator_ConnectionStrings__DefaultConnectionUserId: "SA"
+      #fiksProtokollValidator_ConnectionStrings__DefaultConnectionPassword: "Dev#FiksProtokollValidator1234"
     ports:
       - "127.0.0.1:64558:64558"
       - "127.0.0.1:44303:44303"
