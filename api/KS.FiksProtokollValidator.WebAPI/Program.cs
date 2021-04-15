@@ -22,7 +22,7 @@ namespace KS.FiksProtokollValidator.WebAPI
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Localization", LogEventLevel.Error)
                 .Enrich.FromLogContext()
-                .Enrich.WithProperty("app", "digiorden")
+                .Enrich.WithProperty("app", "protokoll-validator")
                 .Enrich.WithProperty("env", environment)
                 .Enrich.WithProperty("logsource", hostname)
                 .Enrich.WithProperty("node", kubernetesNode)

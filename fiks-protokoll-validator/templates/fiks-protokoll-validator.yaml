@@ -84,7 +84,7 @@ spec:
       volumes:
         - name: nginx-conf-template
           configMap:
-            name: nginx-conf-template
+            name: fiks-protokoll-validator-api-nginx-conf-template
         - name: ks-virksomhetssertifikat-store
           secret:
             secretName: ks-virksomhetssertifikat-store
@@ -110,7 +110,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-conf-template
+  name: fiks-protokoll-validator-api-nginx-conf-template
 data:
   nginx.conf.template: |-
     worker_processes  1;
@@ -218,7 +218,7 @@ spec:
       volumes:
         - name: nginx-conf-template
           configMap:
-            name: nginx-conf-template
+            name: fiks-protokoll-validator-web-nginx-conf-template
 ---
 kind: Service
 apiVersion: v1
@@ -238,7 +238,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nginx-conf-template
+  name: fiks-protokoll-validator-web-nginx-conf-template
 data:
   nginx.conf.template: |-
     worker_processes  1;
