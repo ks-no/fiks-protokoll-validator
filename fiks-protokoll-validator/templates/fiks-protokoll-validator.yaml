@@ -46,35 +46,8 @@ spec:
             - secretRef:
                 name: fiks-protokoll-validator-api-secret
             - secretRef:
-                name: ks-virksomhetssertifikat                
-        - name: fiks-protokoll-validator-api-proxy
-          image: "{{ .Values.image.repository }}fiks-nginx-openshift-folkeregister:1.0.0"
-          ports:
-            - containerPort: 8080
-          imagePullPolicy: IfNotPresent
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 5
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 1
-          livenessProbe:
-            httpGet:
-              path: /ready
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 5
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 2
+                name: ks-virksomhetssertifikat
           volumeMounts:
-            - name: nginx-conf-template
-              readOnly: true
-              mountPath: /etc/nginx/templates/nginx.conf.template
-              subPath: nginx.conf.template
             - name: ks-virksomhetssertifikat-store
               readOnly: true
               mountPath: /etc/fiks/ks-certs
@@ -82,9 +55,6 @@ spec:
               readOnly: true
               mountPath: /etc/fiks/fiks-io
       volumes:
-        - name: nginx-conf-template
-          configMap:
-            name: fiks-protokoll-validator-api-nginx-conf-template
         - name: ks-virksomhetssertifikat-store
           secret:
             secretName: ks-virksomhetssertifikat-store
@@ -106,45 +76,7 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: fiks-protokoll-validator-api-nginx-conf-template
-data:
-  nginx.conf.template: |-
-    worker_processes  1;
-
-    error_log  /var/log/nginx/error.log warn;
-    pid        /var/run/nginx.pid;
-
-    events {
-        worker_connections  1024;
-    }
-
-    http {
-        include       /etc/nginx/mime.types;
-        default_type  application/octet-stream;
-
-        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                          '$status $body_bytes_sent "$http_referer" '
-                          '"$http_user_agent" "$http_x_forwarded_for"';
-
-        access_log  /var/log/nginx/access.log  main;
-
-        sendfile        on;
-        keepalive_timeout  65;
-
-        server {
-            listen 8080;
-
-            location /ready {
-              access_log off;
-              return 204;
-            }
-        }
-    }
-
+      
 ---
 
 apiVersion: apps/v1
@@ -187,38 +119,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: fiks-protokoll-validator-web-config
-        - name: fiks-protokoll-validator-web-proxy
-          image: "{{ .Values.image.repository }}fiks-nginx-openshift:1.2"
-          ports:
-            - containerPort: 8080
-          imagePullPolicy: IfNotPresent
-          readinessProbe:
-            httpGet:
-              path: /ready
-              port: 8080
-            initialDelaySeconds: 15
-            periodSeconds: 5
-            timeoutSeconds: 1
-            successThreshold: 1
-            failureThreshold: 1
-          livenessProbe:
-            httpGet:
-              path: /ready
-              port: 8080
-            initialDelaySeconds: 60
-            periodSeconds: 5
-            timeoutSeconds: 5
-            successThreshold: 1
-            failureThreshold: 2
-          volumeMounts:
-            - name: nginx-conf-template
-              readOnly: true
-              mountPath: /etc/nginx/templates/nginx.conf.template
-              subPath: nginx.conf.template
-      volumes:
-        - name: nginx-conf-template
-          configMap:
-            name: fiks-protokoll-validator-web-nginx-conf-template
 ---
 kind: Service
 apiVersion: v1
@@ -234,41 +134,3 @@ spec:
       name: web
       port: 8080
       targetPort: 8080
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: fiks-protokoll-validator-web-nginx-conf-template
-data:
-  nginx.conf.template: |-
-    worker_processes  1;
-
-    error_log  /var/log/nginx/error.log warn;
-    pid        /var/run/nginx.pid;
-
-    events {
-        worker_connections  1024;
-    }
-
-    http {
-        include       /etc/nginx/mime.types;
-        default_type  application/octet-stream;
-
-        log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                          '$status $body_bytes_sent "$http_referer" '
-                          '"$http_user_agent" "$http_x_forwarded_for"';
-
-        access_log  /var/log/nginx/access.log  main;
-
-        sendfile        on;
-        keepalive_timeout  65;
-
-        server {
-            listen 8080;
-
-            location /ready {
-              access_log off;
-              return 204;
-            }
-        }
-    }
