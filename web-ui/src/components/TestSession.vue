@@ -72,7 +72,6 @@ export default {
       };
       localStorage.validatorLastTest = this.sessionurl;
       localStorage.createdAt = response.data.createdAt; 
-    
       this.loading = false;
     },
 
