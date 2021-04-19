@@ -190,6 +190,10 @@ export default {
       required: true,
       type: Boolean,
     },
+    protocol:{
+      required:true,
+      type: String,
+    }
   },
 };
 </script>
