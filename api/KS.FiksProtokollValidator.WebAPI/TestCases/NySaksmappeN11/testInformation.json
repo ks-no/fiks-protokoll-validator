@@ -7,5 +7,5 @@
     "situation": "N11",
     "expectedResult": "Saksmalle og byggident med utfylte standardverdier",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

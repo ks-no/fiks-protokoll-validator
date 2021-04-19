@@ -7,5 +7,5 @@
     "situation": "F13",
     "expectedResult": "ValidationFault",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

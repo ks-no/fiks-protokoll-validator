@@ -9,5 +9,5 @@
     "situation": "N1",
     "expectedResult": "Journalpost med oppdatert eksternnøkkel",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

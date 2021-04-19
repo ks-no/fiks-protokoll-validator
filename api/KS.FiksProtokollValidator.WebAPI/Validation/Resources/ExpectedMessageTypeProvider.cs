@@ -34,6 +34,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                         WebAPI.Resources.ResponseMessageTypes.InnsynSoekResultatV1
                     }
                 },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentMoteplanV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultat
+                    }
+                },
             };
         }
 

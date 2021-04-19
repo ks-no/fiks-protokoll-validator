@@ -8,5 +8,5 @@
     "situation": "N10",
     "expectedResult": "Journalpost med utfylte standardverdier knyttet til angitt sak",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

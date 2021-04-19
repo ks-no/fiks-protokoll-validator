@@ -70,6 +70,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1.
+        /// </summary>
+        public static string HentMoteplanV1 {
+            get {
+                return ResourceManager.GetString("HentMoteplanV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.oppdatersaksmappe.v1.
         /// </summary>
         public static string OppdaterSaksmappeV1 {

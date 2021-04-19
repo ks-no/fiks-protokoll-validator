@@ -28,5 +28,5 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

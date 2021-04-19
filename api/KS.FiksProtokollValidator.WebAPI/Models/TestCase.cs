@@ -32,6 +32,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         [Required]
         public bool Supported { get; set; }
         [Required]
+        public string Protocol { get; set; }
+        [Required]
         public List<FiksExpectedResponseMessageType> ExpectedResponseMessageTypes { get; set; }
     }
 }

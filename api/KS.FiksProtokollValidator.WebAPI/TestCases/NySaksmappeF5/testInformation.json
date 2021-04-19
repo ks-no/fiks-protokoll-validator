@@ -7,5 +7,5 @@
     "situation": "F5",
     "expectedResult": "ValidationFault med info om ulovlig verdi i oppbevaresTilDato",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

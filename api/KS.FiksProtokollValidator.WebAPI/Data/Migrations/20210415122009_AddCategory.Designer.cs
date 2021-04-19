@@ -4,14 +4,16 @@ using KS.FiksProtokollValidator.WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 {
     [DbContext(typeof(FiksIOMessageDBContext))]
-    partial class FiksIOMessageDBContextModelSnapshot : ModelSnapshot
+    [Migration("20210415122009_AddCategory")]
+    partial class AddCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -127,6 +129,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                     b.Property<string>("TestName")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -147,10 +153,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PayloadFileName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Protocol")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

@@ -7,5 +7,5 @@
     "situation": "F1",
     "expectedResult": "ValidationFault med info om at tittel og journalposttype ikke er angitt",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

@@ -8,5 +8,5 @@
     "situation": "F1",
     "expectedResult": "ValidationFault med info om ulovlig verdi i merknadsdato",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

@@ -14,6 +14,13 @@
         aria-describedby="basic-addon1"
       />
     </div>
+    <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon3">FIKS-protokoll</span>
+    </div>
+      <b-form-select v-model="selectedProtocol" :options="options" style="width:30%"></b-form-select>
+    </div>
+  
     <div style="margin: 40px 0">
       <b-form-group v-if="!hasRun">
         <span
@@ -84,6 +91,7 @@
             :situation="testCase.situation"
             :expectedResult="testCase.expectedResult"
             :supported="testCase.supported"
+            :protocol="testCase.protocol"
             :hasRun="hasRun"
             :isCollapsed="true"
           />
@@ -117,7 +125,13 @@ export default {
       selectedTests: [],
       allTestsSelected: false,
       showNotSupportedTests: false,
-      tmpTests: []
+      tmpTests: [],
+      selectedProtocol: "ingen",
+        options: [
+          { value: "ingen", text: 'Velg en FIKS-protokoll'},
+          { value: 'no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1', text: 'no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1' },
+          { value: 'no.ks.fiks.politisk.behandling.klient.v1', text: 'no.ks.fiks.politisk.behandling.klient.v1' },
+        ]
     };
   },
 
@@ -125,9 +139,9 @@ export default {
     computedTestCases: function() {
       if (!this.showNotSupportedTests) {
         return this.testCases.filter(testCase => {
-          return testCase.supported === !this.showNotSupportedTests;
+          return testCase.supported === !this.showNotSupportedTests && testCase.protocol === this.selectedProtocol;
         });
-      } else return this.testCases;
+      } else return this.testCases.filter(testCase => testCase.protocol === this.selectedProtocol);
     }
   },
 
@@ -164,7 +178,7 @@ export default {
       if (checked) {
         this.selectedTests = [];
         const tests = this.testCases.filter(testCase => {
-          return testCase.supported === true;
+          return testCase.supported === true && testCase.protocol === this.selectedProtocol;
         });
         tests.forEach(test => {
           this.tmpTests.push(test.testName);
@@ -187,7 +201,7 @@ export default {
   watch: {
     selectedTests(newVal) {
       const length = this.testCases.filter(testCase => {
-        return testCase.supported === true;
+        return testCase.supported === true && testCase.protocol === this.selectedProtocol;
       }).length;
       if (newVal.length === 0) {
         this.allTestsSelected = false;

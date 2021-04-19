@@ -79,6 +79,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tom respons.
+        /// </summary>
+        public static string MissingJsonPayload {
+            get {
+                return ResourceManager.GetString("MissingJsonPayload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fant ingen forekomster av {0} i svarmeldingens innhold.
         /// </summary>
         public static string MissingPayloadElement {
@@ -129,6 +138,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
         public static string UnexpectedResponseMessage {
             get {
                 return ResourceManager.GetString("UnexpectedResponseMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Json key {0} var forventet med verdi {1}, men {2} ble funnet.
+        /// </summary>
+        public static string WrongValueOnJsonPayloadKey {
+            get {
+                return ResourceManager.GetString("WrongValueOnJsonPayloadKey", resourceCulture);
             }
         }
         

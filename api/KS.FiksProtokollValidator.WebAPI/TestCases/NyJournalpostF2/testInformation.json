@@ -7,5 +7,5 @@
     "situation": "F2",
     "expectedResult": "ValidationFault med info om at arkivdel ikke finnes",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

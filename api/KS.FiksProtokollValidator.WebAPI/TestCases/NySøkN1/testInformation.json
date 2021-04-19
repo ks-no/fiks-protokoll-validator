@@ -8,5 +8,6 @@
     "expectedResult": "Søkresultat med utfylte standardverdier",
     "queriesWithExpectedValues": [
     ],
-    "supported": true
+    "supported": true, 
+    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
+using Newtonsoft.Json.Linq;
 using Wmhelp.XPath2;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation
@@ -23,7 +24,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                         fiksRequest.TestCase.MessageType, fiksRequest.TestCase.ExpectedResponseMessageTypes
                     );
 
-                    fiksRequest.FiksResponseValidationErrors = new List<string>();
+                fiksRequest.FiksResponseValidationErrors = new List<string>();
 
                 ValidateExistenceOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
 
@@ -90,7 +91,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            if (receivedPayloadFileName != null && (!receivedPayloadFileName.EndsWith(".xml") && !receivedPayloadFileName.Equals("feil.txt")))
+            if (receivedPayloadFileName != null && (!receivedPayloadFileName.EndsWith(".xml") && !PayloadFileAllowedName(receivedPayloadFileName)))
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.InvalidPayloadFileFormatMessage, receivedPayloadFileName.Split('.').Last()
@@ -98,10 +99,22 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            if (!receivedPayloadFileName.Equals("feil.txt"))
+            if (receivedPayloadFileName.EndsWith(".xml"))
             {
                 ValidateXmlPayloadContent(fiksResponse.PayloadContent, fiksResponseTests, validationErrors);
             }
+            else
+            {
+                if (receivedPayloadFileName.EndsWith(".json"))
+                {
+                    ValidateJsonPayloadContent(fiksResponse.PayloadContent, fiksResponseTests, validationErrors);
+                }
+            }
+        }
+
+        private static bool PayloadFileAllowedName(string receivedPayloadFileName)
+        {
+            return receivedPayloadFileName.Equals("feil.txt") || receivedPayloadFileName.Equals("resultat.json");
         }
 
         private static bool ResponseMessageShouldHavePayload(string responseMessageType)
@@ -117,6 +130,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 WebAPI.Resources.ResponseMessageTypes.KvitteringV1,
                 WebAPI.Resources.ResponseMessageTypes.InnsynSoekResultatV1,
                 WebAPI.Resources.ResponseMessageTypes.FeilV1,
+                WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultat,
             };
         }
 
@@ -163,6 +177,70 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                         ));
                 }
             }
+        }
+        private static void ValidateJsonPayloadContent(string jsonPayloadContent, List<FiksResponseTest> fiksResponseTests,
+            List<string> validationErrors)
+        {
+            var json = JObject.Parse(jsonPayloadContent);
+
+            if (json.Count == 0)
+            {
+                validationErrors.Add(string.Format(
+                    ValidationErrorMessages.MissingJsonPayload
+                ));
+            }
+            else
+            {
+
+                foreach (var fiksResponseTest in fiksResponseTests)
+                {
+                    var expectedElement = fiksResponseTest.PayloadQuery.Split('/').Last();
+                    var expectedValue = fiksResponseTest.ExpectedValue;
+                    var expectedValueType = fiksResponseTest.ValueType;
+
+                    if (expectedValueType == SearchValueType.Attribute)
+                    {
+                        string jsonPath = CreateJsonPath(fiksResponseTest.PayloadQuery, expectedValue);
+                        if (json.SelectToken(jsonPath) == null)
+                            validationErrors.Add(string.Format(
+                                ValidationErrorMessages.MissingPayloadElement, fiksResponseTest.PayloadQuery + expectedValue
+                            ));
+                    }
+                    else if (expectedValueType == SearchValueType.Value)
+                    {
+                        string jsonPath = CreateJsonPath(fiksResponseTest.PayloadQuery, null);
+                        var token = json.SelectToken(jsonPath);
+
+                        if (token == null)
+                            validationErrors.Add(string.Format(
+                                ValidationErrorMessages.MissingPayloadElement, fiksResponseTest.PayloadQuery
+                            ));
+                        else if (expectedValue == "*")
+                            continue;
+                        else if (expectedValue != null && !token.ToString().Equals(expectedValue))
+                            validationErrors.Add(string.Format(
+                                ValidationErrorMessages.WrongValueOnJsonPayloadKey, expectedElement, expectedValue, token.ToString()
+                            ));
+                    }
+                }
+            }
+        }
+
+        private static string CreateJsonPath(string payloadQuery, string expectedValue)
+        {
+            string jsonPath = "$";
+            foreach (string part in payloadQuery.Split("/"))
+            {
+                if (part != "")
+                {
+                    jsonPath += "['" + part + "']";
+                }
+            }
+            if (expectedValue != null)
+            {
+                jsonPath += "['" + expectedValue + "']";
+            }
+            return jsonPath;
         }
     }
 }

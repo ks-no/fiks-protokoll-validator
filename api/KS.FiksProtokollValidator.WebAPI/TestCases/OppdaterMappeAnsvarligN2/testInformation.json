@@ -9,5 +9,5 @@
     "situation": "N2",
     "expectedResult": "Saksmappe med oppdatert enhet og saksbehandler",
     "queriesWithExpectedValues": [],
-    "supported": false
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }

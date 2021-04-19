@@ -48,13 +48,24 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         private TestCase UpdateTest(DirectoryInfo testDirectory, TestCase testCase, JObject testInformation)
         {
             testCase.MessageType = (string)testInformation["messageType"];
-            testCase.PayloadFileName = "arkivmelding.xml";
+
+
+            foreach (var fileInfo in new DirectoryInfo(testDirectory.FullName)
+                    .GetFiles())
+            {
+                if (!fileInfo.Name.Equals("testInformation.json"))
+                {
+                    testCase.PayloadFileName = fileInfo.Name;
+                }
+            }
+
             testCase.Description = (string)testInformation["description"];
             testCase.TestStep = (string)testInformation["testStep"];
             testCase.Operation = (string)testInformation["operation"];
             testCase.Situation = (string)testInformation["situation"];
             testCase.ExpectedResult = (string)testInformation["expectedResult"];
             testCase.Supported = (bool)testInformation["supported"];
+            testCase.Protocol = testInformation["protocol"] == null ? "":(string)testInformation["protocol"];
 
             var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
             if (Directory.Exists(attachmentDirectory))
