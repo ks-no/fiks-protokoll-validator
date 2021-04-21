@@ -110,7 +110,7 @@ spec:
         - name: fiks-protokoll-validator-web
           image: "{{ .Values.image.repository }}fiks-protokoll-validator-web:{{ .Values.image.tag }}"
           ports:
-            - containerPort: 8081
+            - containerPort: 8080
           env:
             - name: KUBERNETES_NODE
               valueFrom:
