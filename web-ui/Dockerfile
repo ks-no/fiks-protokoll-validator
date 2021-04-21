@@ -1,5 +1,8 @@
-FROM node:12 AS build-stage
+FROM node:12
 ARG mode=production
+
+# install simple http server for serving static content
+RUN npm install -g http-server
 
 WORKDIR /app 
 
@@ -17,11 +20,5 @@ COPY .env.$mode .
 # build app for production with minification
 RUN npm run build -- --mode $mode
 
-# production stage
-FROM docker-all.artifactory.fiks.ks.no/fiks-nginx-openshift:latest as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
 EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
-
-#EXPOSE 8080
-#CMD [ "http-server", "dist" ]
+CMD [ "http-server", "dist" ]
