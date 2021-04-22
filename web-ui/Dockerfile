@@ -1,9 +1,6 @@
 FROM node:12 as build-stage
 ARG mode=production
 
-# install simple http server for serving static content
-#RUN npm install -g http-server
-
 WORKDIR /app 
 
 COPY package*.json ./
@@ -23,13 +20,10 @@ RUN npm run build -- --mode $mode
 
 FROM docker-all.artifactory.fiks.ks.no/fiks-nginx-openshift:latest as production-stage
 
-COPY --from=build-stage /app/dist /usr/share/nginx/html/dist
+COPY --from=build-stage /app/dist /usr/share/nginx/html
 
 #RUN rm /etc/nginx/conf.d/default.conf
 COPY  nginx.conf /etc/nginx/conf.d/app.conf
 WORKDIR /etc/nginx
 
 CMD ["nginx", "-g", "daemon off;"]
-
-#EXPOSE 8080
-#CMD [ "http-server", "dist" ]
