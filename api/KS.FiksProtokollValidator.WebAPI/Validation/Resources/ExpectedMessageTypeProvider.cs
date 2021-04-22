@@ -38,9 +38,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     WebAPI.Resources.RequestMessageTypes.HentMoteplanV1,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultat
+                        WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultatV1
                     }
                 },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentUtvalgV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.HentUtvalgResultatV1
+                    }
+                }
             };
         }
 

@@ -126,7 +126,10 @@
   <data name="SoekV1" xml:space="preserve">
     <value>no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.v1</value>
   </data>
-	<data name="HentMoteplanV1" xml:space="preserve">
+  <data name="HentMoteplanV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1</value>
+  </data>
+  <data name="HentUtvalgV1" xml:space="preserve">
+    <value>no.ks.fiks.politisk.behandling.klient.hentutvalg.v1</value>
   </data>
 </root>

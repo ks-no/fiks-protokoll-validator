@@ -72,9 +72,18 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.tjener.resultatmøteplan.v1.
         /// </summary>
-        public static string HentMoteplanResultat {
+        public static string HentMoteplanResultatV1 {
             get {
-                return ResourceManager.GetString("HentMoteplanResultat", resourceCulture);
+                return ResourceManager.GetString("HentMoteplanResultatV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.tjener.resultatutvalg.v1.
+        /// </summary>
+        public static string HentUtvalgResultatV1 {
+            get {
+                return ResourceManager.GetString("HentUtvalgResultatV1", resourceCulture);
             }
         }
         
