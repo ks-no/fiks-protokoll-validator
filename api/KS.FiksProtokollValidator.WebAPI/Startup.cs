@@ -31,10 +31,10 @@ namespace KS.FiksProtokollValidator.WebAPI
                 options.AddPolicy(name: AllowedOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:8081")
-                            .WithOrigins("https://forvaltning.fiks.dev.ks.no")
-                            .WithOrigins("https://forvaltning.fiks.test.ks.no")
-                            .WithOrigins("https://forvaltning.fiks.ks.no")
+                        builder.WithOrigins("http://localhost:8081",
+                            "https://forvaltning.fiks.dev.ks.no",
+                            "https://forvaltning.fiks.test.ks.no",
+                            "https://forvaltning.fiks.ks.no")
                             .AllowAnyMethod()
                             .AllowAnyHeader(); 
                     });
@@ -81,10 +81,7 @@ namespace KS.FiksProtokollValidator.WebAPI
 
             app.UseAuthorization();
 
-            app.UseCors(options => options
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .Build());
+            app.UseCors(AllowedOrigins);
 
             app.UseEndpoints(endpoints =>
             {
