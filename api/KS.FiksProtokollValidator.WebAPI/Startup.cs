@@ -32,6 +32,9 @@ namespace KS.FiksProtokollValidator.WebAPI
                     builder =>
                     {
                         builder.WithOrigins("http://localhost:8081")
+                            .WithOrigins("https://forvaltning.fiks.dev.ks.no")
+                            .WithOrigins("https://forvaltning.fiks.test.ks.no")
+                            .WithOrigins("https://forvaltning.fiks.ks.no")
                             .AllowAnyMethod()
                             .AllowAnyHeader(); 
                     });
