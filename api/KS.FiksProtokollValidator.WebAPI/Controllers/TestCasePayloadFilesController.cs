@@ -12,19 +12,19 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         private const string TestsDirectoryPath = @"TestCases/";
 
         // GET api/<TestsCasePayloadFilesController>/TestCaseName
-        [HttpGet("{testCaseName}/{fileName}")]
-        public ActionResult GetMessagePayloadFile(string testCaseName, string fileName)
+        [HttpGet("{protocol}/{testCaseName}/{fileName}")]
+        public ActionResult GetMessagePayloadFile(string testCaseName, string protocol, string fileName)
         {
-            var filePath = Path.Combine(TestsDirectoryPath, testCaseName, fileName);
+            var filePath = Path.Combine(TestsDirectoryPath, protocol, testCaseName, fileName);
 
             return GetPayload(filePath);
         }
 
         // GET api/<TestsCasePayloadFilesController>/TestCaseName/attachmentFileName
-        [HttpGet("{testCaseName}/Attachement/{attachmentFileName}")]
-        public ActionResult GetAttachmentPayloadFile(string testCaseName, string attachmentFileName)
+        [HttpGet("{protocol}/{testCaseName}/Attachement/{attachmentFileName}")]
+        public ActionResult GetAttachmentPayloadFile(string protocol, string testCaseName, string attachmentFileName)
         {
-            var filePath = Path.Combine(TestsDirectoryPath, testCaseName, "Attachments", attachmentFileName);
+            var filePath = Path.Combine(TestsDirectoryPath, protocol, testCaseName, "Attachments", attachmentFileName);
 
             return GetPayload(filePath);
         }

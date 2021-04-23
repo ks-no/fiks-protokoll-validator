@@ -30,14 +30,18 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             var payloads = new List<IPayload>();
 
             var payLoadFileName = fiksRequest.TestCase.PayloadFileName;
-            var testsDirectory = "TestCases/"; 
-            var testCaseDirectory = Path.Combine(testsDirectory, fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation);
+            var testsDirectory = "TestCases/";
+            var testCaseDirectory = Path.Combine(testsDirectory, fiksRequest.TestCase.Protocol, fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation);
+
+            if (!string.IsNullOrEmpty(payLoadFileName))
+            {
             var payLoadFilePath = Path.Combine(testCaseDirectory, payLoadFileName);
 
             IPayload payload = new StringPayload(File.ReadAllText(payLoadFilePath), payLoadFileName);
 
             payloads.Add(payload);
-            
+            }
+
             var attachmentFileNames = fiksRequest.TestCase.PayloadAttachmentFileNames;
 
             if (!string.IsNullOrEmpty(attachmentFileNames))

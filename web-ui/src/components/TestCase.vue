@@ -89,6 +89,7 @@
                   :fileName="payloadFileName"
                   :operation="operation"
                   :situation="situation"
+                  :protocol="protocol"
                 />
               </b-col>
             </b-row>
@@ -107,6 +108,7 @@
                     <TestCasePayloadFile
                       :operation="operation"
                       :situation="situation"
+                      :protocol="protocol"
                       :fileName="attachmentFileName"
                       :isAttachment="true"
                     />

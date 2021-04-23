@@ -23,25 +23,28 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         {
             var tests = new DirectoryInfo(@"TestCases/");
 
-            foreach (var testDirectory in tests.GetDirectories())
+            foreach (var protocolDirectory in tests.GetDirectories())
             {
-                var testInformationJson =
-                    File.ReadAllText(Path.Combine(testDirectory.FullName, "testInformation.json"));
-                var testInformation = JObject.Parse(testInformationJson);
+                foreach (var testDirectory in protocolDirectory.GetDirectories())
+                {
+                    var testInformationJson =
+                        File.ReadAllText(Path.Combine(testDirectory.FullName, "testInformation.json"));
+                    var testInformation = JObject.Parse(testInformationJson);
 
-                var updateTest = _context.TestCases.Where(t => t.TestName == (string)testInformation["testName"])
-                    .Include(t => t.ExpectedResponseMessageTypes).Include(t=> t.FiksResponseTests).FirstOrDefault();
-                if (updateTest != null)
-                {
-                    _context.TestCases.Update(UpdateTest(testDirectory, updateTest, testInformation));
+                    var updateTest = _context.TestCases.Where(t => t.TestName == (string)testInformation["testName"])
+                        .Include(t => t.ExpectedResponseMessageTypes).Include(t => t.FiksResponseTests).FirstOrDefault();
+                    if (updateTest != null)
+                    {
+                        _context.TestCases.Update(UpdateTest(testDirectory, updateTest, testInformation));
+                    }
+                    else
+                    {
+                        var newTestEntry = new TestCase();
+                        newTestEntry.TestName = (string)testInformation["testName"];
+                        _context.TestCases.Add(UpdateTest(testDirectory, newTestEntry, testInformation));
+                    }
+                    _context.SaveChanges();
                 }
-                else
-                {
-                    var newTestEntry = new TestCase();
-                    newTestEntry.TestName = (string) testInformation["testName"];
-                    _context.TestCases.Add(UpdateTest(testDirectory, newTestEntry, testInformation));
-                }
-                _context.SaveChanges();
             }
         }
 
@@ -65,7 +68,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             testCase.Situation = (string)testInformation["situation"];
             testCase.ExpectedResult = (string)testInformation["expectedResult"];
             testCase.Supported = (bool)testInformation["supported"];
-            testCase.Protocol = testInformation["protocol"] == null ? "":(string)testInformation["protocol"];
+            testCase.Protocol = testInformation["protocol"] == null ? "" : (string)testInformation["protocol"];
 
             var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
             if (Directory.Exists(attachmentDirectory))
@@ -109,11 +112,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                             ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
                         };
                         if (!testCase.FiksResponseTests.Any(
-                            r => (r.ExpectedValue.Equals(fiksResponseTest.ExpectedValue) 
+                            r => (r.ExpectedValue.Equals(fiksResponseTest.ExpectedValue)
                                   && r.PayloadQuery.Equals(fiksResponseTest.PayloadQuery)
                                   && r.ValueType.Equals(fiksResponseTest.ValueType))
                             ))
-                        { 
+                        {
                             testCase.FiksResponseTests.Add(fiksResponseTest);
                         }
                     }
@@ -142,13 +145,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                         {
                             ExpectedResponseMessageType = (string)messageType
                         };
-                        if (!testCase.ExpectedResponseMessageTypes.Any(r=> r.ExpectedResponseMessageType.Equals(fiksExpectedResponseMessageType.ExpectedResponseMessageType)))
+                        if (!testCase.ExpectedResponseMessageTypes.Any(r => r.ExpectedResponseMessageType.Equals(fiksExpectedResponseMessageType.ExpectedResponseMessageType)))
                         {
                             testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
                         }
                     }
                 }
-                
+
             }
             return testCase;
         }

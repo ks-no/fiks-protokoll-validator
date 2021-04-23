@@ -40,6 +40,10 @@ export default {
     situation: {
       required: false,
       type: String
+    },
+    protocol: {
+      required: false,
+      type: String
     }
   },
 
@@ -55,7 +59,7 @@ export default {
       };
 
       var apiUrl = "/api/TestCasePayloadFiles";
-      var resourceUrl = apiUrl + "/" + endPointUrl;
+      var resourceUrl = apiUrl + "/" + this.protocol + "/" + endPointUrl;
       axios.get(resourceUrl, settings).then(response => {
         this.payloadFileContent = response.data;
       });

@@ -1,0 +1,38 @@
+﻿{
+    "testName": "Hent Utvalg",
+    "description": "Hent Utvalg",
+    "testStep": "Normalsituasjon 1 Input Hent Utvalg, retur Utvalg",
+    "messageType": "no.ks.fiks.politisk.behandling.klient.hentutvalg.v1",
+    "operation": "HentUtvalg",
+    "situation": "N1",
+    "expectedResult": "Alle Utvalg",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/",
+            "expectedValue": "utvalg",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/utvalg",
+            "expectedValue": "utvalgId",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/utvalg",
+            "expectedValue": "utvalgNavn",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/utvalg/utvalgId",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/utvalg/utvalgNavn",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.politisk.behandling.klient.v1"
+}
