@@ -12,7 +12,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         [Required]
         public string MessageType { get; set; }
 
-        [Required]
         public string PayloadFileName { get; set; }
 
         public string PayloadAttachmentFileNames { get; set; }
