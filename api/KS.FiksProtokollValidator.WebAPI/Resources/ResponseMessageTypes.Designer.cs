@@ -106,6 +106,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.mottatt.v1.
+        /// </summary>
+        public static string MottattPolitiskBehandlingV1 {
+            get {
+                return ResourceManager.GetString("MottattPolitiskBehandlingV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.mottatt.v1.
         /// </summary>
         public static string MottattV1 {

@@ -132,4 +132,13 @@
   <data name="HentUtvalgV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.klient.hentutvalg.v1</value>
   </data>
+  <data name="SendDelegertVedtakV1" xml:space="preserve">
+    <value>no.ks.fiks.politisk.behandling.klient.senddelegertvedtak.v1</value>
+  </data>
+  <data name="SendOrienteringssakV1" xml:space="preserve">
+    <value>no.ks.fiks.politisk.behandling.klient.sendorienteringssak.v1</value>
+  </data>
+  <data name="SendUtvalgV1" xml:space="preserve">
+    <value>no.ks.fiks.politisk.behandling.klient.sendutvalgssak.v1</value>
+  </data>
 </root>

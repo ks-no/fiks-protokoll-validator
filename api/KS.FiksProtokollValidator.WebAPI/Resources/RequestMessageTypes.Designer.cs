@@ -97,6 +97,33 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.senddelegertvedtak.v1.
+        /// </summary>
+        public static string SendDelegertVedtakV1 {
+            get {
+                return ResourceManager.GetString("SendDelegertVedtakV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.sendorienteringssak.v1.
+        /// </summary>
+        public static string SendOrienteringssakV1 {
+            get {
+                return ResourceManager.GetString("SendOrienteringssakV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.sendutvalgssak.v1.
+        /// </summary>
+        public static string SendUtvalgV1 {
+            get {
+                return ResourceManager.GetString("SendUtvalgV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.v1.
         /// </summary>
         public static string SoekV1 {

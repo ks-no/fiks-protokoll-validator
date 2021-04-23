@@ -138,4 +138,7 @@
   <data name="HentUtvalgResultatV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.tjener.resultatutvalg.v1</value>
   </data>
+  <data name="MottattPolitiskBehandlingV1" xml:space="preserve">
+    <value>no.ks.fiks.politisk.behandling.mottatt.v1</value>
+  </data>
 </root>
