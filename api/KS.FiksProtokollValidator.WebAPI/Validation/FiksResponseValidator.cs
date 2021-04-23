@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using KS.FiksProtokollValidator.WebAPI.Models;
@@ -91,7 +91,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            if (receivedPayloadFileName != null && (!receivedPayloadFileName.EndsWith(".xml") && !PayloadFileAllowedName(receivedPayloadFileName)))
+            if (receivedPayloadFileName != null && !hasAllowedFileFormat(receivedPayloadFileName))
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.InvalidPayloadFileFormatMessage, receivedPayloadFileName.Split('.').Last()
@@ -112,9 +112,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             }
         }
 
-        private static bool PayloadFileAllowedName(string receivedPayloadFileName)
+        private static bool hasAllowedFileFormat(string receivedPayloadFileName)
         {
-            return receivedPayloadFileName.Equals("feil.txt") || receivedPayloadFileName.Equals("resultat.json");
+            return receivedPayloadFileName.EndsWith(".xml") || 
+                receivedPayloadFileName.EndsWith(".json") || 
+                receivedPayloadFileName.EndsWith(".txt");
         }
 
         private static bool ResponseMessageShouldHavePayload(string responseMessageType)
@@ -217,6 +219,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                                 ValidationErrorMessages.MissingPayloadElement, fiksResponseTest.PayloadQuery
                             ));
                         else if (expectedValue == "*")
+                            //TODO: Sjekk at den ikke tom eller whitespace
                             continue;
                         else if (expectedValue != null && !token.ToString().Equals(expectedValue))
                             validationErrors.Add(string.Format(
