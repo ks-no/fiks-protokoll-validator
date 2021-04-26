@@ -1,4 +1,4 @@
-FROM node:12 as build-stage
+FROM node:15 as build-stage
 ARG mode=production
 
 WORKDIR /app 
