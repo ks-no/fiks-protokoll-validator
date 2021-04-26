@@ -88,6 +88,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fant ingen forekomster i svarmeldingens innhold med path {0}.
+        /// </summary>
+        public static string MissingJsonPayloadToken {
+            get {
+                return ResourceManager.GetString("MissingJsonPayloadToken", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fant ingen forekomster av {0} i svarmeldingens innhold.
         /// </summary>
         public static string MissingPayloadElement {
@@ -142,7 +151,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Json key {0} var forventet med verdi {1}, men {2} ble funnet.
+        ///   Looks up a localized string similar to Json key {0} var forventet med verdi {1} ble ikke funnet.
         /// </summary>
         public static string WrongValueOnJsonPayloadKey {
             get {

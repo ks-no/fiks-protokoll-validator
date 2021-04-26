@@ -126,6 +126,9 @@
   <data name="MissingJsonPayload" xml:space="preserve">
     <value>Tom respons</value>
   </data>
+  <data name="MissingJsonPayloadToken" xml:space="preserve">
+    <value>Fant ingen forekomster i svarmeldingens innhold med path {0}</value>
+  </data>
   <data name="MissingPayloadElement" xml:space="preserve">
     <value>Fant ingen forekomster av {0} i svarmeldingens innhold</value>
   </data>
@@ -145,7 +148,7 @@
     <value>Uventet svarmelding: {0}</value>
   </data>
   <data name="WrongValueOnJsonPayloadKey" xml:space="preserve">
-    <value>Json key {0} var forventet med verdi {1}, men {2} ble funnet</value>
+    <value>Json key {0} var forventet med verdi {1} ble ikke funnet</value>
   </data>
   <data name="WrongValueOnPayloadElement" xml:space="preserve">
     <value>Xml-node {0} var forventet med verdi {1}, men {2} ble funnet</value>

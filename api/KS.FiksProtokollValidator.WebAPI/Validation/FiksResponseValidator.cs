@@ -197,54 +197,79 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                 foreach (var fiksResponseTest in fiksResponseTests)
                 {
-                    var expectedElement = fiksResponseTest.PayloadQuery.Split('/').Last();
+                    var path = fiksResponseTest.PayloadQuery;
                     var expectedValue = fiksResponseTest.ExpectedValue;
                     var expectedValueType = fiksResponseTest.ValueType;
 
                     if (expectedValueType == SearchValueType.Attribute)
                     {
-                        string jsonPath = CreateJsonPath(fiksResponseTest.PayloadQuery, expectedValue);
-                        if (json.SelectToken(jsonPath) == null)
+                        var tokens = json.SelectTokens(path);
+                       
+                        if (tokens == null || tokens.Count() == 0)
                             validationErrors.Add(string.Format(
-                                ValidationErrorMessages.MissingPayloadElement, fiksResponseTest.PayloadQuery + expectedValue
+                                ValidationErrorMessages.MissingJsonPayloadToken, path
                             ));
+                        else
+                        {
+                            bool foundExpectedValue = false;
+                            for (int i = 0; i < tokens.Count(); i++)
+                            {
+                                JToken token = tokens.ElementAt(i);
+                                var keyIsPresent = false;
+
+                                if (token.Type == JTokenType.Array)
+                                {
+                                    JToken jTokenFromDirectPath = json.SelectToken(path+"["+i.ToString()+"]."+expectedValue);
+                                    if (jTokenFromDirectPath != null)
+                                    {
+                                        keyIsPresent = true;
+                                    }
+                                }
+                                else if (token.Type == JTokenType.Object)
+                                {
+                                    keyIsPresent = JObject.Parse(token.ToString()).ContainsKey(expectedValue);
+                                }
+
+                                    if (keyIsPresent)
+                                    {
+                                        foundExpectedValue = true;
+                                    }
+                                  
+                            }
+                            if (!foundExpectedValue)
+                            {
+                               validationErrors.Add(string.Format(ValidationErrorMessages.MissingAttributeOnPayloadElement, expectedValue, path));
+                            }
+                        }
                     }
                     else if (expectedValueType == SearchValueType.Value)
                     {
-                        string jsonPath = CreateJsonPath(fiksResponseTest.PayloadQuery, null);
-                        var token = json.SelectToken(jsonPath);
+                        var tokens = json.SelectTokens(path);
 
-                        if (token == null)
+                        if (tokens == null)
                             validationErrors.Add(string.Format(
-                                ValidationErrorMessages.MissingPayloadElement, fiksResponseTest.PayloadQuery
+                                ValidationErrorMessages.MissingJsonPayloadToken, path
                             ));
+
                         else if (expectedValue == "*")
                             //TODO: Sjekk at den ikke tom eller whitespace
                             continue;
-                        else if (expectedValue != null && !token.ToString().Equals(expectedValue))
+                        
+                        bool foundExpectedValue = false;
+                        foreach (JToken token in tokens)
+                        {
+                            if (token.ToString() == expectedValue)
+                            {
+                                foundExpectedValue = true;
+                            }
+                        }
+                        if (expectedValue != null && !foundExpectedValue)
                             validationErrors.Add(string.Format(
-                                ValidationErrorMessages.WrongValueOnJsonPayloadKey, expectedElement, expectedValue, token.ToString()
+                                ValidationErrorMessages.WrongValueOnJsonPayloadKey, path, expectedValue
                             ));
                     }
                 }
             }
-        }
-
-        private static string CreateJsonPath(string payloadQuery, string expectedValue)
-        {
-            string jsonPath = "$";
-            foreach (string part in payloadQuery.Split("/"))
-            {
-                if (part != "")
-                {
-                    jsonPath += "['" + part + "']";
-                }
-            }
-            if (expectedValue != null)
-            {
-                jsonPath += "['" + expectedValue + "']";
-            }
-            return jsonPath;
         }
     }
 }

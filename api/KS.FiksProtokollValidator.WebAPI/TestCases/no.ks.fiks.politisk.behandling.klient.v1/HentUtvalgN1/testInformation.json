@@ -8,27 +8,27 @@
     "expectedResult": "Alle Utvalg",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "/",
+            "payloadQuery": "$",
             "expectedValue": "utvalg",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/utvalg",
+            "payloadQuery": "$.utvalg",
             "expectedValue": "utvalgId",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/utvalg",
+            "payloadQuery": "$.utvalg",
             "expectedValue": "utvalgNavn",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/utvalg/utvalgId",
+            "payloadQuery": "$.utvalg[*].utvalgId",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/utvalg/utvalgNavn",
+            "payloadQuery": "$.utvalg[*].utvalgNavn",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
