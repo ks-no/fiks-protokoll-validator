@@ -1,8 +1,5 @@
-FROM node:12 AS build-stage
+FROM node:12 as build-stage
 ARG mode=production
-
-# install simple http server for serving static content
-#RUN npm install -g http-server
 
 WORKDIR /app 
 
@@ -16,15 +13,16 @@ COPY babel.config.js .
 COPY .eslintrc.js .
 COPY .env .
 COPY .env.$mode .
+COPY vue.production.config.js vue.config.js
 
 # build app for production with minification
 RUN npm run build -- --mode $mode
 
-# production stage
 FROM docker-all.artifactory.fiks.ks.no/fiks-nginx-openshift:latest as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
 
-#EXPOSE 8080
-#CMD [ "http-server", "dist" ]
+COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+COPY  nginx.conf /etc/nginx/conf.d/app.conf
+WORKDIR /etc/nginx
+
+CMD ["nginx", "-g", "daemon off;"]

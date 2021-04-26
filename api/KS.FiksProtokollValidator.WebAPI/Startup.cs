@@ -4,6 +4,7 @@ using KS.FiksProtokollValidator.WebAPI.FiksIO;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,10 @@ namespace KS.FiksProtokollValidator.WebAPI
                 options.AddPolicy(name: AllowedOrigins,
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:8081")
+                        builder.WithOrigins("http://localhost:8081",
+                            "https://forvaltning.fiks.dev.ks.no",
+                            "https://forvaltning.fiks.test.ks.no",
+                            "https://forvaltning.fiks.ks.no")
                             .AllowAnyMethod()
                             .AllowAnyHeader(); 
                     });
@@ -77,10 +81,7 @@ namespace KS.FiksProtokollValidator.WebAPI
 
             app.UseAuthorization();
 
-            app.UseCors(options => options
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .Build());
+            app.UseCors(AllowedOrigins);
 
             app.UseEndpoints(endpoints =>
             {

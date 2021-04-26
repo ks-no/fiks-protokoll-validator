@@ -26,7 +26,10 @@ Sørg for at din config (appsettings.Development.json) peker til riktig database
 **Oppdater databasen:**
 Opprett/oppdater databasen ved å navigere til *fiks-protokoll-validator/api/KS.FiksProtokollValidator.WebAPI/* og kjør `dotnet ef` kommando for å oppdatere db.
 * Hvis ikke du har installert dotnet-ef tool tidligere så kan det installeres slik `dotnet tool install --global dotnet-ef`
-* Kjør oppdatering: `dotnet ef database update --connection "Data Source=localhost,1433;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"`
+* LOKALT: Kjør oppdatering: `dotnet ef database update --connection "Data Source=localhost,1433;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"`
+* DEV og TEST: dotnet ef migrations script -o migration-<dagens_dato_her>.sql
+
+
 
 ### Docker
 Gå til web-ui mappen og bygg docker image: `docker build -t fiks-protokoll-validator-web .`
