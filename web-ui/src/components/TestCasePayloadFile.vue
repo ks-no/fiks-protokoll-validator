@@ -10,20 +10,22 @@
 import PayloadFile from "./PayloadFile.vue";
 import axios from "axios";
 
+require("dotenv").config()
+
 export default {
   name: "testCasePayloadFile",
-
+  
   components: {
     PayloadFile
   },
-
+  
   data() {
     return {
       payloadFileContent: null,
       fileExtension: null
     };
   },
-
+  
   props: {
     fileName: {
       required: true,
@@ -46,7 +48,7 @@ export default {
       type: String
     }
   },
-
+  
   methods: {
     getContent: function(isTextContent) {
       var endPointUrl = this.isAttachment
@@ -58,8 +60,9 @@ export default {
         responseEncoding: isTextContent ? "utf-16" : "base64"
       };
 
-      var apiUrl = "/api/TestCasePayloadFiles";
+      var apiUrl = process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles";
       var resourceUrl = apiUrl + "/" + this.protocol + "/" + endPointUrl;
+
       axios.get(resourceUrl, settings).then(response => {
         this.payloadFileContent = response.data;
       });

@@ -1,12 +1,19 @@
 pipeline {
     agent any
     environment {
-        PROJECT_WEB = "web-ui"
-        PROJECT_API = "api"
+        PROJECT_WEB_FOLDER = "web-ui"
+        PROJECT_API_FOLDER = "api"
         PROJECT_TEST = "KS.FiksProtokollValidator.Tests/KS.FiksProtokollValidator.Tests.csproj"
-        API_PROJECT_NAME = "fiks-protokoll-validator-api"
-        WEB_PROJECT_NAME = "fiks-protokoll-validator-web"
+        PROJECT_CHARTNAME = "fiks-protokoll-validator"
+        API_APP_NAME = "fiks-protokoll-validator-api"
+        WEB_APP_NAME = "fiks-protokoll-validator-web"
         DOCKERFILE_TESTS = "Dockerfile-run-tests"
+        // Artifactory credentials is stored under this key
+        ARTIFACTORY_CREDENTIALS = "artifactory-token-based"
+        // URL to artifactory Docker release repo
+        DOCKER_REPO_RELEASE = "https://docker-all.artifactory.fiks.ks.no"
+        // URL to artifactory Docker Snapshot repo
+        DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
@@ -51,32 +58,33 @@ pipeline {
             steps {
                 script {
                     println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImage(API_PROJECT_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'api')
+                    buildAndPushDockerImage(API_APP_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'api')
                 }
             }
         }
-        /*
+        
         stage('WEB: Build and publish docker image') {
             steps {
                 script {
                     println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImage(WEB_PROJECT_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'web-ui')
+                    //buildAndPushDockerImage(WEB_APP_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'web-ui')
+                    buildAndPushDockerImageWeb(params.isRelease);
                 }
             }
-        }*/
-        /*
-        stage('API: Push helm chart') {
+        }
+        
+        stage('API and WEB: Push helm chart') {
             steps {
-                println("API: Building helm chart version: ${env.FULL_VERSION}")
-                buildHelm3Chart(API_PROJECT_NAME, env.FULL_VERSION)
+                println("API and WEB: Building helm chart version: ${env.FULL_VERSION}")
+                buildHelm3Chart(PROJECT_CHARTNAME, env.FULL_VERSION)
             }
         }
-        */
+        
         /*
         stage('WEB: Push helm chart') {
             steps {
                 println("WEB: Building helm chart version: ${env.FULL_VERSION}")
-                buildHelm3Chart(WEB_PROJECT_NAME, env.FULL_VERSION)
+                buildHelm3Chart(WEB_APP_NAME, env.FULL_VERSION)
             }
         }
         */
@@ -102,7 +110,7 @@ pipeline {
                 expression { !params.isRelease }
             }
             steps {
-                build job: 'deployToDev', parameters: [string(name: 'chartName', value: API_PROJECT_NAME), string(name: 'version', value: env.FULL_VERSION)], wait: false, propagate: false
+                build job: 'deployToDev', parameters: [string(name: 'chartName', value: API_APP_NAME), string(name: 'version', value: env.FULL_VERSION)], wait: false, propagate: false
             }
         }
         */
@@ -116,7 +124,7 @@ pipeline {
                 expression { !params.isRelease }
             }
             steps {
-                build job: 'deployToDev', parameters: [string(name: 'chartName', value: WEB_PROJECT_NAME), string(name: 'version', value: env.FULL_VERSION)], wait: false, propagate: false
+                build job: 'deployToDev', parameters: [string(name: 'chartName', value: WEB_APP_NAME), string(name: 'version', value: env.FULL_VERSION)], wait: false, propagate: false
             }
         }
         */
@@ -146,10 +154,10 @@ pipeline {
     
     post {
         always {
-            dir("${PROJECT_API}\\bin") {
+            dir("${PROJECT_API_FOLDER}\\bin") {
                 deleteDir()
             }
-            dir("${PROJECT_WEB}\\bin") {
+            dir("${PROJECT_WEB_FOLDER}\\bin") {
                 deleteDir()
             }
             dir("${PROJECT_TEST}\\bin") {
@@ -164,7 +172,8 @@ def versionPattern() {
 }
 
 def findVersionSuffix() {
-    def findCommand = $/find -name "*.csproj" -exec xpath '{}' '/Project/PropertyGroup/VersionPrefix/text()' \;/$
+    println("FindVersionSuffix")
+    def findCommand = $/find api/KS.FiksProtokollValidator.WebAPI -name "KS.FiksProtokollValidator.WebAPI.csproj" -exec xpath '{}' '/Project/PropertyGroup/VersionPrefix/text()' \;/$
 
     def version = sh(script: findCommand, returnStdout: true, label: 'Lookup current version from csproj files').trim().split('\n').find {
         return it.trim().matches(versionPattern())
@@ -188,4 +197,23 @@ def incrementVersion(versionString) {
 
 def getTimestamp() {
     return java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
+}
+
+def buildImageWeb() {
+  docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS) {
+    def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", "web-ui")
+    return customImage
+  }
+}
+
+def buildAndPushDockerImageWeb(boolean isRelease = false) {
+  def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
+  script {
+    def customImage = buildImageWeb()
+    docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
+      {
+        customImage.push()
+        customImage.push('latest')
+      }
+  }
 }

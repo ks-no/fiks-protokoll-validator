@@ -4,11 +4,260 @@
     <TargetFramework>net5.0</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <StartupObject>KS.FiksProtokollValidator.WebAPI.Program</StartupObject>
+    <VersionPrefix>1.0.0</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Remove="FiksIO\fiks-io-config.json" />
     <Content Remove="FiksIO\fiks-io-config.template.json" />
+    <Content Include="TestCases\NyJournalpostN1\arkivmelding.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestCases\NyJournalpostN1\Attatchment\rekvisisjon.pdf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="TestCases\FinnJournalposterUnderArbeidN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\FinnJournalposterUnderArbeidN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\FinnJournalposterUnderArbeidN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\FinnJournalposterUnderArbeidN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\FinnJournalposterUnderArbeidN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\FinnJournalposterUnderArbeidN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyAvskrivningF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyAvskrivningF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyAvskrivningF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyAvskrivningF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyAvskrivningF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyAvskrivningF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyAvskrivningN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyAvskrivningN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyAvskrivningN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyAvskrivningN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF3\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF3\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF4\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF4\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF5\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF5\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF6\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF6\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentN1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentN1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyDokumentN2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyDokumentN2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyJournalpostF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyJournalpostF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyJournalpostF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyJournalpostF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyJournalpostF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\NyJournalpostF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <None Remove="TestCases\NyJournalpostF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostF7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostF7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostMerknadF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostMerknadF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostMerknadF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostMerknadF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostMerknadF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostMerknadF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostMerknadN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostMerknadN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN10\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN10\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN6\Attatchment\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN6\Attatchment\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN6\Attatchment\vedlegg.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN6\Attatchment\vedlegg.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN8\Attatchment\vedlegg1.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN8\Attatchment\vedlegg1.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN8\Attatchment\vedtak.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN8\Attatchment\vedtak.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN8\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN8\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostN9\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostN9\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF10\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF10\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF11\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF11\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF12\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF12\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF13\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF13\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF14\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF14\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF15\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF15\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF8\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF8\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeF9\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeF9\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeFX\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeFX\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeMerknadF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeMerknadF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeMerknadF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeMerknadF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeMerknadF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeMerknadF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeMerknadN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeMerknadN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN10\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN10\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN11\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN11\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN12\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN12\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN13\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN13\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN7\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN8\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN8\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeN9\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeN9\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeTilleggsinformasjonF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeTilleggsinformasjonF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeTilleggsinformasjonF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeTilleggsinformasjonF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeTilleggsinformasjonF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeTilleggsinformasjonF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySaksmappeTilleggsinformasjonN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySaksmappeTilleggsinformasjonN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySakspartF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySakspartF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySakspartF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySakspartF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySakspartN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySakspartN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySakspartN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySakspartN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySakspartN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySakspartN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NySøkN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NySøkN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostAnsvarligN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostAnsvarligN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostEksternNøkkelF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostEksternNøkkelF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostEksternNøkkelF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostEksternNøkkelF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostEksternNøkkelN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostEksternNøkkelN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostEksternNøkkelN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostEksternNøkkelN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostStatusF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostStatusF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostStatusF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostStatusF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostStatusN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostStatusN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterJournalpostStatusN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterJournalpostStatusN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligN4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeAnsvarligN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeAnsvarligN5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeStatusF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeStatusF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeStatusF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeStatusF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeStatusN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeStatusN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\OppdaterMappeStatusN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\OppdaterMappeStatusN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +278,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="Serilog.Sinks.Network" Version="2.0.2.68" />
     <PackageReference Include="XPath2" Version="1.1.0" />
   </ItemGroup>
 

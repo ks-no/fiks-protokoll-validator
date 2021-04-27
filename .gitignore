@@ -382,5 +382,6 @@ MigrationBackup/
 
 # App specific files
 *.pem
+*.cer
 fiks-io-config.json
 appsettings.development.json

@@ -16,9 +16,9 @@
         readonly="true"
         ref="sessionUrlCopy"
       />
-      <b-button 
-      variant="primary"
-      v-on:click="copyURL()"
+      <b-button
+          variant="primary"
+          v-on:click="copyURL()"
       >
         Kopier til utklippstavlen
       </b-button>
@@ -47,13 +47,15 @@
 import axios from "axios";
 import Request from "./Request";
 
+require("dotenv").config()
+
 export default {
   name: "TestSession",
-
+  
   components: {
     Request
   },
-
+  
   data() {
     return {
       testSession: null,
@@ -61,26 +63,27 @@ export default {
       sessionurl: window.location.href
     };
   },
-
+  
   methods: {
     getTestSession: async function(testSessionId) {
       this.loading = true;
-      const response = await axios.get("/api/TestSessions/" + testSessionId);
+      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId);
       this.testSession = {
         ...response.data,
         fiksRequests: this.sortRequests(response.data.fiksRequests)
       };
       localStorage.validatorLastTest = this.sessionurl;
       localStorage.createdAt = response.data.createdAt; 
+
       this.loading = false;
     },
-
+    
     sortRequests: requests => {
       return requests
-        ? requests.sort((a, b) => new Date(a.sentAt) - new Date(b.sentAt))
-        : null;
+          ? requests.sort((a, b) => new Date(a.sentAt) - new Date(b.sentAt))
+          : null;
     },
-
+    
     copyURL() {
       const copyText = this.$refs.sessionUrlCopy;
       copyText.select();
@@ -88,10 +91,10 @@ export default {
       alert("Adressen er kopiert");
     }
   },
-
+  
   created() {
     if (this.$route.params.testSessionId) {
-      this.getTestSession(this.$route.params.testSessionId); 
+      this.getTestSession(this.$route.params.testSessionId);
     }
   }
 };

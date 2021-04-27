@@ -105,13 +105,15 @@
 import axios from "axios";
 import TestCase from "./TestCase";
 
+require("dotenv").config()
+
 export default {
   name: "newTestSession",
-
+  
   components: {
     TestCase
   },
-
+  
   data() {
     return {
       title: "Ny Testsesjon",
@@ -134,7 +136,7 @@ export default {
         ]
     };
   },
-
+  
   computed: {
     computedTestCases: function() {
       if (!this.showNotSupportedTests) {
@@ -144,19 +146,19 @@ export default {
       } else return this.testCases.filter(testCase => testCase.protocol === this.selectedProtocol);
     }
   },
-
+  
   methods: {
     getTests: async function() {
       this.loading = true;
-      const response = await axios.get("/api/TestCases");
+      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases");
       this.testCases = response.data;
       this.loading = false;
       this.hasLoaded = true;
     },
-
+    
     runSelectedTests: async function() {
       this.running = true;
-
+      
       if (this.selectedTests.length === 0) {
         this.running = false;
         return;
@@ -165,15 +167,14 @@ export default {
         recipientId: this.recipientId,
         selectedTestCaseIds: this.selectedTests
       };
-
-      const response = await axios.post("/api/TestSessions", params);
-
+      
+      const response = await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params);
       this.resultData = response.data;
       this.hasRun = true;
       this.running = false;
-      this.$router.push({ path: "/TestSession/" + response.data.id });
+      this.$router.push({ path: process.env.VUE_APP_API_URL + "/TestSession/" + response.data.id });
     },
-
+    
     toggleAll(checked) {
       if (checked) {
         this.selectedTests = [];
@@ -189,15 +190,14 @@ export default {
         this.selectedTests = [];
       }
     },
+    
     toggleAllSupportedTests(checked) {
       this.showNotSupportedTests = checked;
     }
   },
-
   created() {
     this.getTests();
   },
-
   watch: {
     selectedTests(newVal) {
       const length = this.testCases.filter(testCase => {
