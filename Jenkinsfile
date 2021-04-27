@@ -45,15 +45,7 @@ pipeline {
                 }
             }
         }
-        /* stage('Build and test') {
-            steps {
-                script {
-                    println("Building and testing in docker with dockerfile ${env.DOCKERFILE_TESTS}")
-                    docker.build("digiorden-test-image", "-f ./${env.DOCKERFILE_TESTS} .")
-                }
-            }
-        }*/
-        
+              
         stage('API: Build and publish docker image') {
             steps {
                 script {
@@ -67,7 +59,6 @@ pipeline {
             steps {
                 script {
                     println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    //buildAndPushDockerImage(WEB_APP_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'web-ui')
                     buildAndPushDockerImageWeb(params.isRelease);
                 }
             }
@@ -80,15 +71,6 @@ pipeline {
             }
         }
         
-        /*
-        stage('WEB: Push helm chart') {
-            steps {
-                println("WEB: Building helm chart version: ${env.FULL_VERSION}")
-                buildHelm3Chart(WEB_APP_NAME, env.FULL_VERSION)
-            }
-        }
-        */
-        /*
         stage('API og WEB - Snapshot: Set version') {
             when {
                 expression { !params.isRelease }
@@ -99,9 +81,8 @@ pipeline {
                }
            }
         }
-        */
-        /*
-        stage('API: Deploy to dev') {
+        
+        stage('API og WEB: Deploy to dev') {
             when {
                 anyOf {
                     branch 'master'
@@ -110,26 +91,11 @@ pipeline {
                 expression { !params.isRelease }
             }
             steps {
-                build job: 'deployToDev', parameters: [string(name: 'chartName', value: API_APP_NAME), string(name: 'version', value: env.FULL_VERSION)], wait: false, propagate: false
+                build job: 'deployToDev', parameters: [string(name: 'chartName', value: PROJECT_CHARTNAME), string(name: 'version', value: env.FULL_VERSION)], wait: false, propagate: false
             }
         }
-        */
-        /*
-        stage('WEB: Deploy to dev') {
-            when {
-                anyOf {
-                    branch 'master'
-                    branch 'main'
-                }
-                expression { !params.isRelease }
-            }
-            steps {
-                build job: 'deployToDev', parameters: [string(name: 'chartName', value: WEB_APP_NAME), string(name: 'version', value: env.FULL_VERSION)], wait: false, propagate: false
-            }
-        }
-        */
-        /*
-        stage('API og WEB: Set next version and push to git') {
+        
+        stage('API og WEB: Release. Set next version and push to git') {
             when {
                 allOf {
                   expression { params.isRelease }
@@ -149,7 +115,7 @@ pipeline {
                     sh "~/.local/bin/http --ignore-stdin -a ${USERNAME}:${GITHUB_KEY} POST https://api.github.com/repos/ks-no/${env.REPO_NAME}/releases tag_name=\"${env.FULL_VERSION}\" body=\"Release utført av ${env.user}\n\n## Endringer:\n${params.releaseNotes}\n\n ## Sikkerhetsvurdering: \n${params.securityReview} \n\n ## Review: \n${params.reviewer == 'Endringene krever ikke review' ? params.reviewer : "Review gjort av ${params.reviewer}"}\""
                 }
             }
-        }*/
+        }
     }
     
     post {
