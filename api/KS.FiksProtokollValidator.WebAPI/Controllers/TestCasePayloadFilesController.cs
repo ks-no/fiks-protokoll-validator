@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 using static System.IO.File;
 
 namespace KS.FiksProtokollValidator.WebAPI.Controllers
@@ -10,6 +12,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
     public class TestCasePayloadFilesController : ControllerBase
     {
         private const string TestsDirectoryPath = @"TestCases/";
+        
+        private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET api/<TestsCasePayloadFilesController>/TestCaseName
         [HttpGet("{testCaseName}")]
@@ -17,6 +21,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         {
             var filePath = Path.Combine(TestsDirectoryPath, testCaseName, "arkivmelding.xml");
 
+            Log.Debug("GetMessagePayloadFile get file for testCaseName {TestCaseName} with filePath {FilePath}",testCaseName, filePath);
+            
             return GetPayload(filePath);
         }
 
@@ -25,6 +31,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         public ActionResult GetAttachmentPayloadFile(string testCaseName, string attachmentFileName)
         {
             var filePath = Path.Combine(TestsDirectoryPath, testCaseName, "Attachments", attachmentFileName);
+            
+            Log.Debug("GetAttachmentPayloadFile get attachment for testCaseName {TestCaseName}, attachmentFileName {AttachmentFileName} with filePath {FilePath}",testCaseName, filePath, attachmentFileName);
 
             return GetPayload(filePath);
         }
@@ -37,6 +45,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             }
             catch (Exception exception)
             {
+                Log.Error("GetPayload could not find file with filepath {FilePath}", filePath);
                 return NotFound(exception.Message);
             }
         }
