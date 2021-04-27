@@ -158,7 +158,7 @@ export default {
       this.resultData = response.data;
       this.hasRun = true;
       this.running = false;
-      this.$router.push({ path: process.env.VUE_APP_API_URL + "/TestSession/" + response.data.id });
+      this.$router.push({ path: "/TestSession/" + response.data.id });
     },
     
     toggleAll(checked) {
