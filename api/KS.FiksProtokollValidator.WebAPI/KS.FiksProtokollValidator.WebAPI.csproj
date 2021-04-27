@@ -261,6 +261,36 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendDelegertVedtakN1\Attachments\vedtak.docx" />
+    <None Remove="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendOrienteringssakN1\Attachments\orientering.docx" />
+    <None Remove="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\analyse.pdf" />
+    <None Remove="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\planbestemmelser.pdf" />
+    <None Remove="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\plankart.pdf" />
+    <None Remove="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\saksframlegg.docx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendDelegertVedtakN1\Attachments\vedtak.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendOrienteringssakN1\Attachments\orientering.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\analyse.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\planbestemmelser.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\plankart.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestCases\no.ks.fiks.politisk.behandling.klient.v1\SendUtvalgsakN1\Attachments\saksframlegg.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="KS.Fiks.ASiC-E" Version="1.0.2" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="1.1.13" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.3" />
