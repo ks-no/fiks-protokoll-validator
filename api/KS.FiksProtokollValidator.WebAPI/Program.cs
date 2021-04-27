@@ -2,6 +2,7 @@ using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.Network;
@@ -18,7 +19,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
             
             var loggerConfiguration = new LoggerConfiguration()
-                .MinimumLevel.Information()
+                .MinimumLevel.Debug()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Localization", LogEventLevel.Error)
                 .Enrich.FromLogContext()
@@ -44,6 +45,7 @@ namespace KS.FiksProtokollValidator.WebAPI
                 }).ConfigureAppConfiguration((config) =>
                 {
                     config.AddEnvironmentVariables("fiksProtokollValidator_");
-                });
+                })
+                .UseSerilog();
     }
 }

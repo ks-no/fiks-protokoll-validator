@@ -19,57 +19,57 @@
     <None Remove="TestCases\FinnJournalposterUnderArbeidN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="TestCases\FinnJournalposterUnderArbeidN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
     <None Remove="TestCases\FinnJournalposterUnderArbeidN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="TestCases\FinnJournalposterUnderArbeidN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\FinnJournalposterUnderArbeidN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\FinnJournalposterUnderArbeidN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyAvskrivningF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyAvskrivningF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyAvskrivningF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyAvskrivningF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyAvskrivningF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyAvskrivningF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyAvskrivningN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyAvskrivningN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyAvskrivningN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyAvskrivningN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF3\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF3\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF4\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF4\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF5\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF5\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF6\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF6\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentN1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentN1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyDokumentN2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyDokumentN2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyJournalpostF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyJournalpostF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyJournalpostF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyJournalpostF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <None Remove="TestCases\NyJournalpostF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
-    <Content Include="TestCases\NyJournalpostF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest"/>
+    <Content Include="TestCases\FinnJournalposterUnderArbeidN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\FinnJournalposterUnderArbeidN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\FinnJournalposterUnderArbeidN3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyAvskrivningF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyAvskrivningF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyAvskrivningF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyAvskrivningF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyAvskrivningF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyAvskrivningF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyAvskrivningN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyAvskrivningN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyAvskrivningN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyAvskrivningN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF3\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF3\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF4\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF4\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF5\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF5\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF6\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF6\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentF6\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentN1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentN1\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentN1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentN2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyDokumentN2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyDokumentN2\Attachments\rekvisisjon.pdf" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostF1\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostF2\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="TestCases\NyJournalpostF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="TestCases\NyJournalpostF3\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
     <None Remove="TestCases\NyJournalpostF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="TestCases\NyJournalpostF4\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
     <None Remove="TestCases\NyJournalpostF5\arkivmelding.xml" CopyToOutputDirectory="PreserveNewest" />
@@ -279,6 +279,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Serilog" Version="2.10.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.Network" Version="2.0.2.68" />
     <PackageReference Include="XPath2" Version="1.1.0" />
