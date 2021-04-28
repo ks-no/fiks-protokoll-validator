@@ -1,0 +1,13 @@
+﻿{
+    "testName":
+        "Send ny Journalpost - Normalsituasjon 7", //Informasjonstyp en forutsettes registrert i arkivet. informasjonstyp e.kodeverdi må inneholde GroupIdentifier/f ieldIdentifier Gjelder for alle viksomhets spesifikke metadata felter.
+    "description":
+        "med tittel(Test), journalposttype.kodeverdi(X), informasjonstype.kodeverdi(INFO) og informasjon(Tillegg)",
+    "testStep": "Normalsituasjon 7 Input Journalpost med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyJournalpost",
+    "situation": "N7",
+    "expectedResult": "Journalpost og tilleggsinformasjon med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

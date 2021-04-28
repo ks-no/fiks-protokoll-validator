@@ -1,0 +1,13 @@
+﻿{
+    "testName":
+        "Send ny SaksmappeTilleggsinformasjon - Feilsituasjon 1", //Det bør ikke være lov å registrere informasjon som skal kastes før den er registrert
+    "description":
+        "informasjonstype.kodeverdiinformasjon(TILLEGG), informasjon(Tillegg), oppbevaresTilDato(i går) og saksnoekkel.saksaar(2011).sakssekvensnummer(1)",
+    "testStep": "Feilsituasjon 1 Ulovlig verdi",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappeTilleggsinformasjon",
+    "situation": "F1",
+    "expectedResult": "ValidationFault med info om ulovlig verdi i oppbevaresTilDato",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

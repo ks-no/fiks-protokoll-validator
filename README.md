@@ -27,7 +27,9 @@ Sørg for at din config (appsettings.Development.json) peker til riktig database
 Opprett/oppdater databasen ved å navigere til *fiks-protokoll-validator/api/KS.FiksProtokollValidator.WebAPI/* og kjør `dotnet ef` kommando for å oppdatere db.
 * Hvis ikke du har installert dotnet-ef tool tidligere så kan det installeres slik `dotnet tool install --global dotnet-ef`
 * LOKALT: Kjør oppdatering: `dotnet ef database update --connection "Data Source=localhost,1433;Initial Catalog=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"`
-* DEV og TEST: dotnet ef migrations script -o migration-<dagens_dato_her>.sql
+* DEV og TEST: dotnet ef migrations script <evt. from-migration> -o migration-<dagens_dato_her>.sql 
+  
+**Ved generering av migration script er <from-migration> da siste eksisterende, allerede kjørt, migration** 
 
 
 

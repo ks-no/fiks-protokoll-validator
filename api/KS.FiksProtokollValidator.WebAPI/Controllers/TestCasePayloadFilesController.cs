@@ -16,23 +16,23 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
 
         // GET api/<TestsCasePayloadFilesController>/TestCaseName
-        [HttpGet("{testCaseName}")]
-        public ActionResult GetMessagePayloadFile(string testCaseName)
+        [HttpGet("{protocol}/{testCaseName}/{fileName}")]
+        public ActionResult GetMessagePayloadFile(string testCaseName, string protocol, string fileName)
         {
-            var filePath = Path.Combine(TestsDirectoryPath, testCaseName, "arkivmelding.xml");
+            var filePath = Path.Combine(TestsDirectoryPath, protocol, testCaseName, fileName);
 
-            Log.Debug("GetMessagePayloadFile get file for testCaseName {TestCaseName} with filePath {FilePath}",testCaseName, filePath);
+            Log.Debug("GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName} with filePath {FilePath}", protocol, testCaseName, filePath);
             
             return GetPayload(filePath);
         }
 
         // GET api/<TestsCasePayloadFilesController>/TestCaseName/attachmentFileName
-        [HttpGet("{testCaseName}/{attachmentFileName}")]
-        public ActionResult GetAttachmentPayloadFile(string testCaseName, string attachmentFileName)
+        [HttpGet("{protocol}/{testCaseName}/Attachement/{attachmentFileName}")]
+        public ActionResult GetAttachmentPayloadFile(string protocol, string testCaseName, string attachmentFileName)
         {
-            var filePath = Path.Combine(TestsDirectoryPath, testCaseName, "Attachments", attachmentFileName);
+            var filePath = Path.Combine(TestsDirectoryPath, protocol, testCaseName, "Attachments", attachmentFileName);
             
-            Log.Debug("GetAttachmentPayloadFile get attachment for testCaseName {TestCaseName}, attachmentFileName {AttachmentFileName} with filePath {FilePath}",testCaseName, filePath, attachmentFileName);
+            Log.Debug("GetAttachmentPayloadFile get attachment for protocol {Protocol} testCaseName {TestCaseName}, attachmentFileName {AttachmentFileName} with filePath {FilePath}", protocol, testCaseName, filePath, attachmentFileName);
 
             return GetPayload(filePath);
         }

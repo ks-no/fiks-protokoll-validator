@@ -73,7 +73,7 @@ export default {
         fiksRequests: this.sortRequests(response.data.fiksRequests)
       };
       localStorage.validatorLastTest = this.sessionurl;
-      localStorage.createdAt = response.data.createdAt;
+      localStorage.createdAt = response.data.createdAt; 
 
       this.loading = false;
     },

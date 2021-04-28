@@ -1,0 +1,13 @@
+﻿{
+    "testName":
+        "Send OppdaterJournalpostAnsvarlig - Normalsituasjon 2", //Forutsetter at det er registrert en enhet med kode Nivå1.Nivå2 og en saksbehandler med initialer Sbh. Små / store bokstaver er ikke signifikante.
+    "description":
+        "nyAdministrativEnhetKode(Nivå1), nySaksbehandlerInit(Sbh) og journalnoekkel.saksaar(2011).sakssekvensnummer(1).journalpostnummer(1)",
+    "testStep": "Normalsituasjon 2 Input Ansvarlig med enhet med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterJournalpostAnsvarlig",
+    "situation": "N2",
+    "expectedResult": "Journalpost med oppdatert enhet og saksbehandler",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

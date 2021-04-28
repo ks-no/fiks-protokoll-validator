@@ -10,6 +10,7 @@
       :situation="testCase.situation"
       :operation="testCase.operation"
       :testStep="testCase.testStep"
+      :protocol="testCase.protocol"
       :hasRun="hasRun"
       :validState="validState"
       :isCollapsed="isCollapsed"
@@ -31,10 +32,16 @@
                 :key="fiksResponseTest.id"
               >
                 {{
-                  fiksResponseTest.payloadQuery +
+                  testCase.protocol != "no.ks.fiks.politisk.behandling.klient.v1" ? 
+                   fiksResponseTest.payloadQuery +
                     (fiksResponseTest.valueType === 0
                       ? "/text(" + fiksResponseTest.expectedValue + ")"
                       : "[@xsi:type='" + fiksResponseTest.expectedValue + "']")
+                  :
+                  fiksResponseTest.payloadQuery +
+                    (fiksResponseTest.valueType === 0
+                      ? "/forventet verdi(" + fiksResponseTest.expectedValue + ")"
+                      : "[key='" + fiksResponseTest.expectedValue + "']")
                 }}
                 <br />
               </a>

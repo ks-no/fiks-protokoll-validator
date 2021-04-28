@@ -89,6 +89,7 @@
                   :fileName="payloadFileName"
                   :operation="operation"
                   :situation="situation"
+                  :protocol="protocol"
                 />
               </b-col>
             </b-row>
@@ -107,6 +108,7 @@
                     <TestCasePayloadFile
                       :operation="operation"
                       :situation="situation"
+                      :protocol="protocol"
                       :fileName="attachmentFileName"
                       :isAttachment="true"
                     />
@@ -190,6 +192,10 @@ export default {
       required: true,
       type: Boolean,
     },
+    protocol:{
+      required:true,
+      type: String,
+    }
   },
 };
 </script>
