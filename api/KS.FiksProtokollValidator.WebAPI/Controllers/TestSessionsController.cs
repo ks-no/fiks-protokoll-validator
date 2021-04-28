@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
@@ -9,6 +10,7 @@ using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.Controllers
 {
@@ -20,6 +22,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         private readonly FiksIOMessageDBContext _context;
         private readonly IFiksRequestMessageService _fiksRequestMessageService;
         private readonly IFiksResponseValidator _fiksResponseValidator;
+        
+        private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
 
         public TestSessionsController(FiksIOMessageDBContext context, IFiksRequestMessageService fiksRequestMessageService, IFiksResponseValidator fiksResponseValidator)
         {
@@ -51,11 +55,14 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             if (testSession == null)
             {
+                Log.Error("Session with id {Id} not found", id);
                 return NotFound();
             }
 
             _fiksResponseValidator.Validate(testSession);
 
+            Log.Debug("TestSession with id {Id} found", id);
+            
             return testSession;
         }
 
@@ -88,6 +95,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             _context.TestSessions.Add(testSession);
 
             await _context.SaveChangesAsync();
+            
+            Log.Debug("Session successfully created with id {Id} and recipientId {RecipientId}", testSession.Id, testSession.RecipientId);
 
             return CreatedAtAction("GetTestSession", new {id = testSession.Id}, testSession);
         }
