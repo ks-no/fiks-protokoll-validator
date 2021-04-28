@@ -13,13 +13,14 @@ namespace KS.FiksProtokollValidator.WebAPI
     {
         public static void Main(string[] args)
         {
+            var aspnetcoreEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var logstashDestination = Environment.GetEnvironmentVariable("LOGSTASH_DESTINATION");
             var hostname = Environment.GetEnvironmentVariable("HOSTNAME");
             var kubernetesNode = Environment.GetEnvironmentVariable("KUBERNETES_NODE");
             var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
             
             var loggerConfiguration = new LoggerConfiguration()
-                .MinimumLevel.Debug()
+                .MinimumLevel.Information()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
                 .MinimumLevel.Override("Microsoft.AspNetCore.Localization", LogEventLevel.Error)
                 .Enrich.FromLogContext()
@@ -33,6 +34,15 @@ namespace KS.FiksProtokollValidator.WebAPI
             {
                 loggerConfiguration.WriteTo.TCPSink($"tcp://{logstashDestination}"); 
             }
+            
+            Log.Logger = loggerConfiguration.CreateLogger();
+            
+            Log.Information("Starting host with env variables:");
+            Log.Information("ASPNETCORE_ENVIRONMENT: {AspnetcoreEnvironment}", aspnetcoreEnvironment);
+            Log.Information("HOSTNAME: {Hostname}", hostname);
+            Log.Information("KUBERNETES_NODE: {KubernetesNode}", kubernetesNode);
+            Log.Information("ENVIRONMENT: {Environment}",environment);
+            Log.Information("LOGSTASH_DESTINATION: {LogstashDestination}", logstashDestination);
             
             CreateHostBuilder(args).Build().Run();
         }
