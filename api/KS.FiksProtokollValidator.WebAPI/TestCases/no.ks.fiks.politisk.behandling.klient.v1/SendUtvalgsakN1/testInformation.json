@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Send Utvalgsak",
+    "description": "Send Utvalgsak",
+    "testStep": "Normalsituasjon 1 Input Send Utvalgsak, retur kvittering på mottak",
+    "messageType": "no.ks.fiks.politisk.behandling.klient.sendutvalgssak.v1",
+    "operation": "SendUtvalgsak",
+    "situation": "N1",
+    "expectedResult": "En kvittering på mottak",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.politisk.behandling.klient.v1"
+}

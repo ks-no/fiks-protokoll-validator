@@ -70,11 +70,56 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1.
+        /// </summary>
+        public static string HentMoteplanV1 {
+            get {
+                return ResourceManager.GetString("HentMoteplanV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.hentutvalg.v1.
+        /// </summary>
+        public static string HentUtvalgV1 {
+            get {
+                return ResourceManager.GetString("HentUtvalgV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.oppdatersaksmappe.v1.
         /// </summary>
         public static string OppdaterSaksmappeV1 {
             get {
                 return ResourceManager.GetString("OppdaterSaksmappeV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.senddelegertvedtak.v1.
+        /// </summary>
+        public static string SendDelegertVedtakV1 {
+            get {
+                return ResourceManager.GetString("SendDelegertVedtakV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.sendorienteringssak.v1.
+        /// </summary>
+        public static string SendOrienteringssakV1 {
+            get {
+                return ResourceManager.GetString("SendOrienteringssakV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.sendutvalgssak.v1.
+        /// </summary>
+        public static string SendUtvalgV1 {
+            get {
+                return ResourceManager.GetString("SendUtvalgV1", resourceCulture);
             }
         }
         

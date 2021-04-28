@@ -70,6 +70,24 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.tjener.resultatmøteplan.v1.
+        /// </summary>
+        public static string HentMoteplanResultatV1 {
+            get {
+                return ResourceManager.GetString("HentMoteplanResultatV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.tjener.resultatutvalg.v1.
+        /// </summary>
+        public static string HentUtvalgResultatV1 {
+            get {
+                return ResourceManager.GetString("HentUtvalgResultatV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.resultat.v1.
         /// </summary>
         public static string InnsynSoekResultatV1 {
@@ -84,6 +102,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         public static string KvitteringV1 {
             get {
                 return ResourceManager.GetString("KvitteringV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.mottatt.v1.
+        /// </summary>
+        public static string MottattPolitiskBehandlingV1 {
+            get {
+                return ResourceManager.GetString("MottattPolitiskBehandlingV1", resourceCulture);
             }
         }
         

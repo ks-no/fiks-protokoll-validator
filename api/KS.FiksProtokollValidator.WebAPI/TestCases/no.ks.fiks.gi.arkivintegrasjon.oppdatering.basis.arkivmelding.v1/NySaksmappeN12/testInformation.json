@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Saksmappe - Normalsituasjon 12",
+    "description": "tittel(Test), punkt.koordinatsystem(22).kodeverdi.x(123456) og .y(1234567)",
+    "testStep": "Normalsituasjon 12 Input Saksmappe og Punkt med retur Saksmappe",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "N12",
+    "expectedResult": "Ikke støttet enda",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

@@ -147,6 +147,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PayloadFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Protocol")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

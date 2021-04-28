@@ -1,0 +1,38 @@
+{
+    "testName": "Send ny Journalpost - Normalsituasjon 6 - Innkommende journalpost",
+    "description": "tittel(Bestilling av oppmålingsforretning ...), journalposttype(I)", //TODO Hva skaljournalstatus ha for verdi? 
+    "testStep": "Normalsituasjon 6 Input Journalpost med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyJournalpost",
+    "situation": "N6",
+    "expectedResult": "Journalpost og avsender/mottak er med utfylte standardverdier",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/arkivmelding/registrering",
+            "expectedValue": "journalpost",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/registrering/systemID",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/registrering/journalaar",
+            "expectedValue": "2021",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/registrering/journalsekvensnummer",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/registrering/journalpostnummer",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}
