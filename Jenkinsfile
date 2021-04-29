@@ -104,7 +104,7 @@ pipeline {
                 }
             }
             steps {
-                gitCheckout()
+                gitCheckout("main")
                 gitTag(isRelease, env.FULL_VERSION)
                 prepareDotNetNoBuild(env.NEXT_VERSION)
                 gitPush()
