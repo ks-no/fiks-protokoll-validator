@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -43,6 +44,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             Log.Information("KUBERNETES_NODE: {KubernetesNode}", kubernetesNode);
             Log.Information("ENVIRONMENT: {Environment}",environment);
             Log.Information("LOGSTASH_DESTINATION: {LogstashDestination}", logstashDestination);
+            Log.Information("Path.PathSeparator: {PathSeparator}", Path.PathSeparator);
             
             CreateHostBuilder(args).Build().Run();
         }

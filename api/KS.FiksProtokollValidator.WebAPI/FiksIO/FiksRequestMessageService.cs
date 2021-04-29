@@ -35,18 +35,18 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
             if (!string.IsNullOrEmpty(payLoadFileName))
             {
-            var payLoadFilePath = Path.Combine(testCaseDirectory, payLoadFileName);
+                var payLoadFilePath = Path.Combine(testCaseDirectory, payLoadFileName);
 
-            IPayload payload = new StringPayload(File.ReadAllText(payLoadFilePath), payLoadFileName);
+                IPayload payload = new StringPayload(File.ReadAllText(payLoadFilePath), payLoadFileName);
 
-            payloads.Add(payload);
+                payloads.Add(payload);
             }
 
             var attachmentFileNames = fiksRequest.TestCase.PayloadAttachmentFileNames;
 
             if (!string.IsNullOrEmpty(attachmentFileNames))
             {
-                foreach (var payloadFileName in attachmentFileNames.Split(Path.PathSeparator))
+                foreach (var payloadFileName in attachmentFileNames.Split(";"))
                 {
                     var fileStream = File.OpenRead(Path.Combine(testCaseDirectory, "Attachments", payloadFileName));
                     payloads.Add(new StreamPayload(fileStream, payloadFileName));
