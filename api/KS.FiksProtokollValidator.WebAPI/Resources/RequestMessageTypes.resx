@@ -141,4 +141,7 @@
   <data name="SendUtvalgV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.klient.sendutvalgssak.v1</value>
   </data>
+  <data name="SendVedtakFraUtvalgV1" xml:space="preserve">
+    <value>no.ks.fiks.politisk.behandling.tjener.sendvedtakfrautvalg.v1</value>
+  </data>
 </root>

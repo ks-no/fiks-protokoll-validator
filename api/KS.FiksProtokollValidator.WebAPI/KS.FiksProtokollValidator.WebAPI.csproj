@@ -21,6 +21,13 @@
     </Content>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
+	  <Content Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
+	  <EmbeddedResource Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
+	  <None Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
+	</ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="KS.Fiks.ASiC-E" Version="1.0.2" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="1.1.13" />

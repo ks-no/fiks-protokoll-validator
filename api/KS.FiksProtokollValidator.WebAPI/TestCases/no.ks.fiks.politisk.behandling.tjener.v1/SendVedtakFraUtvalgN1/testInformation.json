@@ -3,7 +3,7 @@
     "description": "Send Vedtak fra Utvalg",
     "testStep": "Normalsituasjon 1 Input Vedtak fra Utvalg, retur kvittering på mottak",
     "messageType": "no.ks.fiks.politisk.behandling.tjener.sendvedtakfrautvalg.v1",
-    "operation": "SendDelegertVedtak",
+    "operation": "SendVedtakFraUtvalg",
     "situation": "N1",
     "expectedResult": "En kvittering på mottak",
     "queriesWithExpectedValues": [
