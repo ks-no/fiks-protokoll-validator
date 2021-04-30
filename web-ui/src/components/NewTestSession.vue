@@ -47,7 +47,7 @@
               variant="primary"
               v-on:click="runSelectedTests"
               v-if="!hasRun || running"
-              :disabled="running"
+              :disabled="running || !fiksAccountPresent || selectedTests.length==0"
               class="runAllButton"
             >
               Kjør valgte tester
@@ -125,6 +125,7 @@ export default {
       hasLoaded: false,
       recipientId: null,
       selectedTests: [],
+      fiksAccountPresent: false,
       allTestsSelected: false,
       showNotSupportedTests: false,
       tmpTests: [],
@@ -210,6 +211,12 @@ export default {
       } else {
         this.allTestsSelected = false;
       }
+    },
+    recipientId(newVal){
+        this.fiksAccountPresent = newVal.length > 0;
+    },
+    selectedProtocol(){
+      this.selectedTests = [];
     }
   }
 };
