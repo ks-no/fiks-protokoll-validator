@@ -86,6 +86,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     message = e.InnerException.Message;
                 }
                 
+                Log.Error("Error with deserializing the test request: {}", JsonSerializer.Serialize(testRequest));
                 return BadRequest(message);
             }
             testSession.Id = Guid.NewGuid();
@@ -109,8 +110,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 {
                     if (e.InnerException.Message.Contains("Ingen konto med id"))
                     {
+                        Log.Error("TestSession FIKS-account {0} is illeagal", testSession.RecipientId);
                         return BadRequest("Ugyldig konto: " + testSession.RecipientId);
                     }
+                    Log.Error("An Error occured when sending FIKS request with recipient ID {0}", testSession.RecipientId);
                     return StatusCode(500, e);
                 }
                 testSession.FiksRequests.Add(fiksRequest);
