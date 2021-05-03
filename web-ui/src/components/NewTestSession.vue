@@ -66,7 +66,9 @@
             </b-form-checkbox>
           </div>
         </span>
-
+        <b-alert v-model="showRequestError" variant="danger" dismissible>
+          <p>Testing feilet med statuskode {{requestErrorStatusCode}}. Melding: {{requestErrorMessage}}</p>
+        </b-alert>
         <b-spinner label="Loading..." v-if="running || loading"></b-spinner>
         &nbsp;
 
@@ -128,6 +130,9 @@ export default {
       fiksAccountPresent: false,
       allTestsSelected: false,
       showNotSupportedTests: false,
+      showRequestError: false,
+      requestErrorStatusCode: 0,
+      requestErrorMessage: "",
       tmpTests: [],
       selectedProtocol: "ingen",
         options: [
@@ -169,11 +174,21 @@ export default {
         selectedTestCaseIds: this.selectedTests
       };
       
-      const response = await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params);
-      this.resultData = response.data;
-      this.hasRun = true;
-      this.running = false;
-      this.$router.push({ path: "/TestSession/" + response.data.id });
+      await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params)
+      .then(response => {
+         if (response.status == 201) {
+                this.resultData = response.data;
+                this.hasRun = true;
+                this.running = false;
+            this.$router.push({ path: "/TestSession/" + response.data.id });        
+        }
+      })
+      .catch(error => {
+        this.running = false;
+        this.requestErrorStatusCode = error.response.status;
+        this.requestErrorMessage = error.response.data;
+        this.showRequestError = true;
+      })
     },
     
     toggleAll(checked) {
