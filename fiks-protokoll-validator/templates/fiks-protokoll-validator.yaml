@@ -47,6 +47,8 @@ spec:
                 name: fiks-protokoll-validator-api-secret
             - secretRef:
                 name: ks-virksomhetssertifikat
+            - secretRef:
+                name: maskinporten-config
           volumeMounts:
             - name: ks-virksomhetssertifikat-store
               readOnly: true
