@@ -111,7 +111,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     {
                         return BadRequest("Ugyldig konto: " + testSession.RecipientId);
                     }
-                    return BadRequest(e);
+                    return StatusCode(500, e);
                 }
                 testSession.FiksRequests.Add(fiksRequest);
             }
