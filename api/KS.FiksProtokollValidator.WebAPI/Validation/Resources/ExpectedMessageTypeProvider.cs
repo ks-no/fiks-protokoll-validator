@@ -68,6 +68,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
                     }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.SendVedtakFraUtvalgV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                    }
                 }
             };
         }

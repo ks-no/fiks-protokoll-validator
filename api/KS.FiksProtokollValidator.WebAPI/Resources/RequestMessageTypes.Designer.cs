@@ -124,6 +124,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.tjener.sendvedtakfrautvalg.v1.
+        /// </summary>
+        public static string SendVedtakFraUtvalgV1 {
+            get {
+                return ResourceManager.GetString("SendVedtakFraUtvalgV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.v1.
         /// </summary>
         public static string SoekV1 {
