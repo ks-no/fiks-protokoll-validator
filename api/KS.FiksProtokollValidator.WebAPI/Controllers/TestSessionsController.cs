@@ -101,8 +101,18 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     TestCase = _context.TestCases.Find(testId)
                 };
 
-                fiksRequest.MessageGuid = _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId);
-
+                try
+                {
+                    fiksRequest.MessageGuid = _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId);
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException.Message.Contains("Ingen konto med id"))
+                    {
+                        return BadRequest("Ugyldig konto: " + testSession.RecipientId);
+                    }
+                    return BadRequest(e);
+                }
                 testSession.FiksRequests.Add(fiksRequest);
             }
 
