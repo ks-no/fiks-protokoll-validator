@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
@@ -10,6 +10,7 @@ using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.Controllers
@@ -70,8 +71,24 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<TestSession>> PostTestSession([FromBody] TestSession testSession)
+        public async Task<ActionResult<TestSession>> PostTestSession([FromBody] TestRequest testRequest)
         {
+            TestSession testSession = new TestSession();
+            try
+            {
+                testSession = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
+            }
+            catch (Exception e)
+            {
+                var message = e.Message;
+                if (e.InnerException != null)
+                {
+                    message = e.InnerException.Message;
+                }
+                
+                Log.Error("Error with deserializing the test request: {}", JsonSerializer.Serialize(testRequest));
+                return BadRequest(message);
+            }
             testSession.Id = Guid.NewGuid();
 
             testSession.CreatedAt = DateTime.Now;
@@ -85,8 +102,20 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     TestCase = _context.TestCases.Find(testId)
                 };
 
-                fiksRequest.MessageGuid = _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId);
-
+                try
+                {
+                    fiksRequest.MessageGuid = _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId);
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException.Message.Contains("Ingen konto med id"))
+                    {
+                        Log.Error("TestSession FIKS-account {0} is illeagal", testSession.RecipientId);
+                        return BadRequest("Ugyldig konto: " + testSession.RecipientId);
+                    }
+                    Log.Error("An Error occured when sending FIKS request with recipient ID {0}", testSession.RecipientId);
+                    return StatusCode(500, e);
+                }
                 testSession.FiksRequests.Add(fiksRequest);
             }
 
