@@ -5,7 +5,6 @@
       <b-navbar-brand style="padding:10px 25px 10px 4px" to="/">
         Fiks-protokollvalidator
       </b-navbar-brand>
-      <b-navbar-toggle target="nav-collapse" />
       <b-navbar-nav>
         <b-nav-item to="/NewTestSession">Ny testsesjon</b-nav-item>
       </b-navbar-nav>

@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Saksmappe - Feilsituasjon 1",
+    "description": "Uten tittel",
+    "testStep": "Feilsituasjon 1 Finnes ikke",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "F1",
+    "expectedResult": "ValidationFault med info om manglende tittel",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

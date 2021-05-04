@@ -19,6 +19,27 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksExpectedResponseMessageType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ExpectedResponseMessageType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TestCaseTestName")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestCaseTestName");
+
+                    b.ToTable("FiksExpectedResponseMessageType");
+                });
+
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksRequest", b =>
                 {
                     b.Property<Guid>("MessageGuid")
@@ -126,6 +147,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PayloadFileName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Protocol")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -165,6 +189,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                     b.ToTable("TestSessions");
                 });
 
+            modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksExpectedResponseMessageType", b =>
+                {
+                    b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.TestCase", null)
+                        .WithMany("ExpectedResponseMessageTypes")
+                        .HasForeignKey("TestCaseTestName");
+                });
+
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksRequest", b =>
                 {
                     b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.TestCase", "TestCase")
@@ -199,6 +230,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.TestCase", b =>
                 {
+                    b.Navigation("ExpectedResponseMessageTypes");
+
                     b.Navigation("FiksResponseTests");
                 });
 

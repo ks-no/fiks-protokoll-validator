@@ -1,0 +1,14 @@
+{
+    "testName": "Send ny Saksmappe - Feilsituasjon X - Feil i arkivmelding.xml",
+    "description": "Arkivmeldingen inneholder feil(tittel mangler) som ikke valideres",
+    "testStep": "Feilsituasjon X Input Saksmappe med retur av feil",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "FX",
+    "expectedResult": "Melding med messagetype no.ks.fiks.gi.arkivintegrasjon.feil.v1",
+    "queriesWithExpectedValues": [
+    ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.gi.arkivintegrasjon.feil.v1" ],
+    "supported": true, 
+    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

@@ -1,0 +1,12 @@
+﻿{
+    "testName": "Send Dokument - Feilsituasjon 1",
+    "description":
+        "tilknyttetRegistreringSom.kodeverdi(X), dokumenttype.kodeverdi(TEGNING), tittel(Tittel), dokumentstatus.kodeverdi(F), variantformat.kodeverdi(A), format.kodeverdi(PDF/A) og referanseJournalpostSystemID(12345)",
+    "testStep": "Feilsituasjon 1 Ulovlig verdi",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyDokument",
+    "situation": "F1",
+    "expectedResult": "FinderFault med info om at tilknytningskode ikke finnes",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

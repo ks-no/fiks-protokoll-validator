@@ -12,7 +12,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         [Required]
         public string MessageType { get; set; }
 
-        [Required]
         public string PayloadFileName { get; set; }
 
         public string PayloadAttachmentFileNames { get; set; }
@@ -31,5 +30,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         public string ExpectedResult { get; set; }
         [Required]
         public bool Supported { get; set; }
+        [Required]
+        public string Protocol { get; set; }
+        [Required]
+        public List<FiksExpectedResponseMessageType> ExpectedResponseMessageTypes { get; set; }
     }
 }

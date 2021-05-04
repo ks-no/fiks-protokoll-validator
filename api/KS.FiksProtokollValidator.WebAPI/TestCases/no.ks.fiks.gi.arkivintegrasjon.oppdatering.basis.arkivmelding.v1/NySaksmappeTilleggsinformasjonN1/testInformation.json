@@ -1,0 +1,13 @@
+﻿{
+    "testName":
+        "Send ny SaksmappeTilleggsinformasjon - Normalsituasjon 1", //Evt. eksisterende beholdes. Informasjonstypen skal være registrert på forhånd i VSM
+    "description":
+        "informasjonstype.kodeverdi(TILLEGG), informasjon(Tillegg) og saksnoekkel.saksaar(2011).sakssekvensnummer(1)",
+    "testStep": "Normalsituasjon 1 Input Tilleggsinformasjon",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappeTilleggsinformasjon",
+    "situation": "N1",
+    "expectedResult": "Saksmappe oppdatert med ny tilleggsinformasjon",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

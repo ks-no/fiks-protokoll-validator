@@ -1,0 +1,13 @@
+﻿{
+    "testName":
+        "Send OppdaterJournalpostAnsvarlig - Normalsituasjon 5", //Enhet settes til saksbehandlers enhet gitt av dennes standardrolle.
+    "description":
+        "nyAdministrativEnhetKode, nySaksbehandlerInit(Sbh) og journalnoekkel.saksaar(2011).sakssekvensnummer(1).journalpostnummer(1)",
+    "testStep": "Normalsituasjon 5 Input Ansvarlig uten enhet med retur av Journalpost",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterJournalpostAnsvarlig",
+    "situation": "N5",
+    "expectedResult": "Journalpost med oppdatert enhet og saksbehandler",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}
