@@ -1,0 +1,12 @@
+{
+    "testName": "Send ny Sakspart - Feilsituasjon 1", //SakspartRolle som ikke finnes
+    "description":
+        "sakspart.kontakt.navn(NN).sakspartRolle.kodeverdi(Feil) og saksnoekkel.saksaar(2011).sakssekvensnummer(1)",
+    "testStep": "Feilsituasjon 1 Finnes ikke",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySakspart",
+    "situation": "F1",
+    "expectedResult": "FinderFault med info om at sakspartrolle ikke finnes",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

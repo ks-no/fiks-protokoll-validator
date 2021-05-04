@@ -55,7 +55,6 @@ export default {
 
   props: {
     fileName: {
-      required: true,
       type: String
     },
     content: {
@@ -84,8 +83,10 @@ export default {
       return temporaryUrl;
     },
     getFileExtension(fileName) {
-      var arr = fileName.split(".");
-      return arr[arr.length - 1];
+      if (fileName) {
+        var arr = fileName.split(".");
+        return arr[arr.length - 1];
+      }
     },
     isTextFileExtension(type) {
       return ["xml", "txt", "json", "html", "csv", "md"].indexOf(type) != -1;

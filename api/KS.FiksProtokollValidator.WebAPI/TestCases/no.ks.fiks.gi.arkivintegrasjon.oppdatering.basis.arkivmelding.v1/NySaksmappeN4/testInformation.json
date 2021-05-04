@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Saksmappe - Normalsituasjon 4",
+    "description": "tittel(Test123) og referanseEksternnokkel.fagsystem.noekkel(FAGSYS123)",
+    "testStep": "Normalsituasjon 4 Input Saksmappe med retur av Saksmappe",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "N4",
+    "expectedResult": "Saksmappe med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

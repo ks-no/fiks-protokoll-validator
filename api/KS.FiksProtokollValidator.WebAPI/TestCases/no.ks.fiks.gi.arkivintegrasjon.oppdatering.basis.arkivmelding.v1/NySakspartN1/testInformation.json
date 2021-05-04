@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Sakspart - Normalsituasjon 1", //Evt. eksisterende beholdes
+    "description": "sakspart.kontakt.navn(NN) og saksnoekkel.saksaar(2011).sakssekvensnummer(1)",
+    "testStep": "Normalsituasjon 1 Input Sakspart",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySakspart",
+    "situation": "N1",
+    "expectedResult": "Saksmappe oppdatert med ny sakspart",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

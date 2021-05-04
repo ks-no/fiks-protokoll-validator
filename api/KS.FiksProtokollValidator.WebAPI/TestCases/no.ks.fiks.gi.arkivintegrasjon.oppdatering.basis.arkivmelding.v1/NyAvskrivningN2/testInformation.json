@@ -1,0 +1,13 @@
+﻿{
+    "testName":
+        "Send Avskrivning - Normalsituasjon 2", //Det må velges en journalpost som kan avskrives (en man er mottager av) Hvis journalposten allerede er avskrevet, endres avskrivningen
+    "description":
+        "avskrivningsmaate.kodeverdi(TE) og journalnoekkel.saksaar(2011).sakssekvensnummer(1).journalpostnummer(1)",
+    "testStep": "Normalsituasjon 2 Input Avskrivning",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NyAvskrivning",
+    "situation": "N2",
+    "expectedResult": "Journalpost oppdatert med ny avskrivning",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

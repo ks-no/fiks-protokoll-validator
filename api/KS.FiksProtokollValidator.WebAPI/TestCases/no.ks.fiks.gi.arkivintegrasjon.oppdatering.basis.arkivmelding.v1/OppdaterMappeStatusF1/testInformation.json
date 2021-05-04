@@ -1,0 +1,11 @@
+{
+    "testName": "Send OppdaterMappeStatus - Feilsituasjon 1",
+    "description": "sakstatus.kodeverdi(Y) og saksnoekkel.saksaar(2011).sakssekvensnummer(Y)",
+    "testStep": "Feilsituasjon 1 Finnes ikke",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterMappeStatus",
+    "situation": "F1",
+    "expectedResult": "FinderFault med info om at saksstatus ikke finnes",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

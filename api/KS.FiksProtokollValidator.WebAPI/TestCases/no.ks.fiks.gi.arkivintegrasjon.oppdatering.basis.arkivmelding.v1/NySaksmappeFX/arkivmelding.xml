@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/arkivmelding">
+	<system>Fagsystem X</system>
+	<meldingId>e4712424-883c-4068-9cb7-97ac679d7232</meldingId>
+	<tidspunkt>2021-03-18T10:07:14.6543806+01:00</tidspunkt>
+	<antallFiler>0</antallFiler>
+	<mappe xsi:type="saksmappe">
+		<klassifikasjon>
+			<klassifikasjonssystem>Personnummer</klassifikasjonssystem>
+			<klasseID>19085830948</klasseID>
+		</klassifikasjon>
+		<referanseEksternNoekkel>
+			<fagsystem>Fagsystem X</fagsystem>
+			<noekkel>1234</noekkel>
+		</referanseEksternNoekkel>
+	</mappe>
+</arkivmelding>

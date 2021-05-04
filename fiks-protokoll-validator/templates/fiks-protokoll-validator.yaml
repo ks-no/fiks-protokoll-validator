@@ -1,0 +1,136 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fiks-protokoll-validator-api
+  annotations:
+    description: "API for denne applikasjonen som tester Fiks-IO protokoll"
+    externalServices: "Fiks-io, eksterne arkiv-systemer"
+  labels:
+    app: fiks-protokoll-validator-api
+    component: fiks-protokoll-validator-api
+    criticality: "KRITISK"
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      component: fiks-protokoll-validator-api
+  template:
+    metadata:
+      labels:
+        component: fiks-protokoll-validator-api
+    spec:
+      containers:
+        - name: fiks-protokoll-validator-api
+          image: "{{ .Values.image.repository }}fiks-protokoll-validator-api:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KUBERNETES_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          envFrom:
+            - configMapRef:
+                name: fiks-protokoll-validator-api-config
+            - configMapRef:
+                name: fiks-hosts-config
+            - configMapRef:
+                name: logstash-config    
+            - secretRef:
+                name: fiks-protokoll-validator-api-secret
+            - secretRef:
+                name: ks-virksomhetssertifikat
+          volumeMounts:
+            - name: ks-virksomhetssertifikat-store
+              readOnly: true
+              mountPath: /etc/fiks/ks-certs
+            - name: protokoll-validator-fiks-io-kryptering
+              readOnly: true
+              mountPath: /etc/fiks/fiks-io
+      volumes:
+        - name: ks-virksomhetssertifikat-store
+          secret:
+            secretName: ks-virksomhetssertifikat-store
+        - name: protokoll-validator-fiks-io-kryptering
+          secret:
+            secretName: protokoll-validator-fiks-io-kryptering
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fiks-protokoll-validator-api-service
+  labels:
+    app: fiks-protokoll-validator-api
+    tier: dotnet
+spec:
+  selector:
+    component: fiks-protokoll-validator-api
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fiks-protokoll-validator-web
+  annotations:
+    description: "Web applikasjon som tester Fiks-IO protokoll"
+  labels:
+    app: fiks-protokoll-validator-web
+    component: fiks-protokoll-validator-web
+    criticality: "KRITISK"
+spec:
+  replicas: 1
+  minReadySeconds: 10
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      component: fiks-protokoll-validator-web
+  template:
+    metadata:
+      labels:
+        component: fiks-protokoll-validator-web
+    spec:
+      containers:
+        - name: fiks-protokoll-validator-web
+          image: "{{ .Values.image.repository }}fiks-protokoll-validator-web:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: KUBERNETES_NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+          envFrom:
+            - configMapRef:
+                name: fiks-protokoll-validator-web-config
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: fiks-protokoll-validator-web-service
+  labels:
+    app: fiks-protokoll-validator-web
+spec:
+  selector:
+    component: fiks-protokoll-validator-web
+  ports:
+    - protocol: TCP
+      name: web
+      port: 8080
+      targetPort: 8080

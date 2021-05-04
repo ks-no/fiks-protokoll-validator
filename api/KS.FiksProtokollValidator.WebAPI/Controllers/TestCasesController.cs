@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
+using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.Controllers
 {
@@ -15,6 +17,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
     public class TestCasesController : ControllerBase
     {
         private readonly FiksIOMessageDBContext _context;
+        
+        private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
 
         public TestCasesController(FiksIOMessageDBContext context)
         {
@@ -25,6 +29,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TestCase>>> GetTestCases()
         {
+            Log.Debug("Finding all TestCases");
             return await _context.TestCases.ToListAsync();
         }
 
@@ -36,8 +41,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             if (testCase == null)
             {
-                return NotFound();
+                Log.Error("Could not find TestCase with id {Id}", id);
+                return NotFound($"Could not find TestCase with id {id}");
             }
+            
+            Log.Debug("GetTestCase found TestCase with id {Id}", id);
 
             return testCase;
         }
@@ -50,6 +58,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         {
             if (!testName.Equals(testCase.TestName))
             {
+                Log.Error("BadRequest for testName {TestName} and testCase.TestName {TestCaseTestName}", testName, testCase.TestName );
                 return BadRequest();
             }
 
@@ -63,13 +72,17 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             {
                 if (!TestCaseExists(testName))
                 {
+                    Log.Error("DbUpdateConcurrencyException occured. TestCase with testName {TestName} doesn't exist", testName);
                     return NotFound();
                 }
                 else
                 {
+                    Log.Error("DbUpdateConcurrencyException occured for request on testName {TestName}", testName);
                     throw;
                 }
             }
+            
+            Log.Debug("PutTestCase saved successfully to DB");
 
             return NoContent();
         }
@@ -83,6 +96,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             _context.TestCases.Add(testCase);
             await _context.SaveChangesAsync();
 
+            Log.Debug("PostTestCase saved successfully to DB");
+            
             return CreatedAtAction("GetTestCase", new { testName = testCase.TestName }, testCase);
         }
 

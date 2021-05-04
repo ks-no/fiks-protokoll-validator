@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Saksmappe - Normalsituasjon 11",
+    "description": "tittel(Test) og Bygningsid(byggIdent:123/1)",
+    "testStep": "Normalsituasjon 11 Input Saksmappe og Bygningsid med retur Saksmappe",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "N11",
+    "expectedResult": "Saksmalle og byggident med utfylte standardverdier",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

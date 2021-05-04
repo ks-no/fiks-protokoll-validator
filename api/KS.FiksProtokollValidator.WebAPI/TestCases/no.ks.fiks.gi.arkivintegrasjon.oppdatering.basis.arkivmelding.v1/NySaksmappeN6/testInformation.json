@@ -1,0 +1,32 @@
+{
+    "testName": "Send ny Saksmappe - Normalsituasjon 6",
+    "description": "tittel(Test) og klassifikasjonssystem.kodeverdi(FE) og klasseID(123)",
+    "testStep": "Normalsituasjon 6 Input Saksmappe med retur av Saksmappe",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "N6",
+    "expectedResult": "Saksmappe og klasse med utfylte standardverdier",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/arkivmelding/mappe",
+            "expectedValue": "saksmappe",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/mappe/saksaar",
+            "expectedValue": "2021",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/mappe/systemID",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmelding/mappe/sakssekvensnummer",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}

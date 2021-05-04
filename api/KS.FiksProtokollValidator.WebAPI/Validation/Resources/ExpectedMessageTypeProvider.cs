@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
 {
@@ -33,14 +34,70 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                         WebAPI.Resources.ResponseMessageTypes.InnsynSoekResultatV1
                     }
                 },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentMoteplanV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultatV1
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentUtvalgV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.HentUtvalgResultatV1
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.SendUtvalgV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.SendOrienteringssakV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.SendDelegertVedtakV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.SendVedtakFraUtvalgV1,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                    }
+                }
             };
         }
 
-        public static List<string> GetExpectedResponseMessageTypes(string requestMessageType)
+        public static List<string> GetExpectedResponseMessageTypes(string requestMessageType,
+            List<FiksExpectedResponseMessageType> testCaseExpectedResponseMessageTypes)
         {
-            _expectedMessageTypes ??= InitializeExpectedMessageTypes();
+            if (testCaseExpectedResponseMessageTypes.Count == 0)
+            {
+                _expectedMessageTypes ??= InitializeExpectedMessageTypes();
 
-            return _expectedMessageTypes[requestMessageType];
+                return _expectedMessageTypes[requestMessageType];
+            }
+            else
+            {
+                var responseMessageTypesList = new List<string>();
+                foreach (var responseMessageType in testCaseExpectedResponseMessageTypes)
+                {
+                    responseMessageTypesList.Add(responseMessageType.ExpectedResponseMessageType);
+                }
+
+                return responseMessageTypesList;
+            }
         }
     }
 }

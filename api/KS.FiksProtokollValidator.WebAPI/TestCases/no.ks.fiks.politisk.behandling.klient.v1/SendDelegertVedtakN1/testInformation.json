@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Send Delegert Vedtak",
+    "description": "Send Delegert Vedtak",
+    "testStep": "Normalsituasjon 1 Input Send Delegert Vedtak, retur kvittering på mottak",
+    "messageType": "no.ks.fiks.politisk.behandling.klient.senddelegertvedtak.v1",
+    "operation": "SendDelegertVedtak",
+    "situation": "N1",
+    "expectedResult": "En kvittering på mottak",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.politisk.behandling.klient.v1"
+}

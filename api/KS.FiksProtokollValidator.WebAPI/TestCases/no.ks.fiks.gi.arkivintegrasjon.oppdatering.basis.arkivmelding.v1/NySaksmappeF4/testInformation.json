@@ -1,0 +1,11 @@
+{
+    "testName": "Send ny Saksmappe - Feilsituasjon 4", // SakspartRolle som ikke finnes
+    "description": "tittel(Test), kontakt.navn(NN) og sakspartRolle.kodeverdi(XXX)",
+    "testStep": "Feilsituasjon 4 Finnes ikke",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "NySaksmappe",
+    "situation": "F4",
+    "expectedResult": "FinderFault med info om at sakspartRolle ikke finnes",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}
