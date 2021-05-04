@@ -28,7 +28,6 @@ export default {
   
   props: {
     fileName: {
-      required: true,
       type: String
     },
     isAttachment: {

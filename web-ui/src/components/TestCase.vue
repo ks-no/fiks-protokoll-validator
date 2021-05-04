@@ -173,7 +173,6 @@ export default {
       type: String,
     },
     payloadFileName: {
-      required: true,
       type: String,
     },
     payloadAttachmentFileNames: {
