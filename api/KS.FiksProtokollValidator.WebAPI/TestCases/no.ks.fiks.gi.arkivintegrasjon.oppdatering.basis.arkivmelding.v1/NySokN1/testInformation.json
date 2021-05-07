@@ -3,7 +3,7 @@
     "description": "Søker på alle mapper som inneholder 'test' i tittelen",
     "testStep": "Normalsituasjon 1",
     "messageType": "no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.v1",
-    "operation": "NySøk",
+    "operation": "NySok",
     "situation": "N1",
     "expectedResult": "Søkresultat med utfylte standardverdier",
     "queriesWithExpectedValues": [
