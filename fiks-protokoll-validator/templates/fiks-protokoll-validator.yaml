@@ -43,12 +43,12 @@ spec:
                 name: fiks-hosts-config
             - configMapRef:
                 name: logstash-config    
+            - configMapRef:
+                name: maskinporten-config
             - secretRef:
                 name: fiks-protokoll-validator-api-secret
             - secretRef:
                 name: ks-virksomhetssertifikat
-            - secretRef:
-                name: maskinporten-config
           volumeMounts:
             - name: ks-virksomhetssertifikat-store
               readOnly: true
