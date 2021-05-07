@@ -2,7 +2,7 @@
     "utvalgId": "345345345345",
     "utvalgNavn": "Kommunestyre",
     "møteId": "3",
-    "møtedato": "2021-05-20",
+    "møtedato": "2021-05-20T00:00:00+00:00",
     "erEndeligVedtak": true,
     "sak": {
         "referanseEksternNøkkel": {
