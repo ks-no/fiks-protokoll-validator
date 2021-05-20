@@ -8,6 +8,14 @@ Man kan kjøre det på flere måter:
 * Sqlexpress på din egen maskin samt front-end og back-end lokalt. 
 * Bytte ut sqlexpress med en annen sql server 
 
+## Testing i Development miljø
+[Fiks-Protokollvalidator i development er her](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/) 
+
+Konto id man kan benytte:
+- Arkivsystem: 760fd7d6-435f-4c1b-97d5-92fbe2f603b0
+- Fagsystem arkiv: 4a416cde-2aca-4eef-bec4-efddcee0fcea
+- Politisk behandling: 
+
 ## Oppsett og kjøring lokalt vha docker-compose
 
 Krever at man har installert følgende:
