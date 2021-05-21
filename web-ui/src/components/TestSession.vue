@@ -2,7 +2,7 @@
   <div>
     <h2>Resultater</h2>
 
-    <div class="input-group mb-3">
+    <div class="input-group mb-3" v-if="!this.fetchError">
       <div class="input-group-prepend">
         <span class="input-group-text" style="align-self: baseline" id="basic-addon3">Adresse til denne testen:</span>
       </div>
@@ -24,6 +24,13 @@
       </b-button>
     </div>
 
+    <div v-if="this.fetchError">
+      <b-alert v-model="fetchError" variant="danger" dismissible>
+          <p>Vi kunne ikke finne din test med SessionID:  {{this.$route.params.testSessionId}}.</p>
+          <p>Statuskode: {{requestErrorStatusCode}}</p>
+          <p>{{requestErrorMessage.title}}</p>
+        </b-alert>
+    </div>
     <b-spinner label="Loading..." v-if="loading"></b-spinner>
     &nbsp;
 
@@ -60,22 +67,34 @@ export default {
     return {
       testSession: null,
       loading: false,
-      sessionurl: window.location.href
+      fetchError: false,
+      sessionurl: window.location.href,
+      requestErrorStatusCode: null,
     };
   },
   
   methods: {
     getTestSession: async function(testSessionId) {
       this.loading = true;
-      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId);
-      this.testSession = {
+      await axios.get(process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId)
+      .then(response => {
+        if (response.status == 200) {
+          this.testSession = {
         ...response.data,
         fiksRequests: this.sortRequests(response.data.fiksRequests)
       };
-      localStorage.validatorLastTest = this.sessionurl;
-      localStorage.createdAt = response.data.createdAt; 
-
-      this.loading = false;
+        localStorage.validatorLastTest = this.sessionurl;
+        localStorage.createdAt = response.data.createdAt; 
+        this.loading = false;
+        }
+      }).catch(error => {
+          console.log("error: ", error);
+          this.loading = false;
+          this.requestErrorStatusCode = error.response.status;
+          this.requestErrorMessage = error.response.data;
+          this.fetchError = true;
+      });
+      
     },
     
     sortRequests: requests => {
