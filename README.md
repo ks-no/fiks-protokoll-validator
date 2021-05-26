@@ -16,6 +16,14 @@ Konto id man kan benytte:
 - Fagsystem arkiv: 4a416cde-2aca-4eef-bec4-efddcee0fcea
 - Politisk behandling: 
 
+## Testing i Test miljø
+[Fiks-Protokollvalidator i test er her](https://forvaltning.fiks.test.ks.no/fiks-validator/#/)
+
+Konto id man kan benytte:
+- Arkivsystem: 8752e128-0e2b-494c-8fab-8e3577aca13d
+- Fagsystem arkiv: 91307c59-0ddb-4212-bede-59f98e0edf77
+- Politisk behandling:
+
 ## Oppsett og kjøring lokalt vha docker-compose
 
 Krever at man har installert følgende:
