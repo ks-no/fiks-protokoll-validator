@@ -15,7 +15,7 @@
     "nginx": "1.0.3",
     "nginx-conf": "^2.0.0",
     "simple-syntax-highlighter": "^1.4.6",
-    "vue": "^2.6.12",
+    "vue": "^2.6.13",
     "vue-axios": "^3.2.4",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.5.1"
@@ -32,6 +32,6 @@
     "eslint-plugin-prettier": "^3.4.0",
     "eslint-plugin-vue": "^7.9.0",
     "prettier": "^2.3.0",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.13"
   }
 }
