@@ -14,7 +14,7 @@
     "core-js": "^3.13.0",
     "nginx": "1.0.3",
     "nginx-conf": "^2.0.0",
-    "simple-syntax-highlighter": "^1.4.6",
+    "simple-syntax-highlighter": "^1.4.7",
     "vue": "^2.6.12",
     "vue-axios": "^3.2.4",
     "vue-moment": "^4.1.0",
