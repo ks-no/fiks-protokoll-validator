@@ -37,6 +37,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TestSession>> GetTestSession(Guid id)
         {
+            Log.Information("GetTestSession with id: {Id}", id);
             var testSession = await _context.TestSessions
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.FiksResponses)
@@ -62,7 +63,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             _fiksResponseValidator.Validate(testSession);
 
-            Log.Debug("TestSession with id {Id} found", id);
+            Log.Information("TestSession with id {Id} found", id);
             
             return testSession;
         }
@@ -73,6 +74,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<TestSession>> PostTestSession([FromBody] TestRequest testRequest)
         {
+            Log.Information("PostTestSession start");
             TestSession testSession = new TestSession();
             try
             {

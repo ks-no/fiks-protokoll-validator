@@ -21,7 +21,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         {
             var filePath = Path.Combine(TestsDirectoryPath, protocol, testCaseName, fileName);
 
-            Log.Debug("GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName} with filePath {FilePath}", protocol, testCaseName, filePath);
+            Log.Information("GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName} with filePath {FilePath}", protocol, testCaseName, filePath);
             
             return GetPayload(filePath);
         }
@@ -32,7 +32,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         {
             var filePath = Path.Combine(TestsDirectoryPath, protocol, testCaseName, "Attachments", attachmentFileName);
             
-            Log.Debug("GetAttachmentPayloadFile get attachment for protocol {Protocol} testCaseName {TestCaseName}, attachmentFileName {AttachmentFileName} with filePath {FilePath}", protocol, testCaseName, filePath, attachmentFileName);
+            Log.Information("GetAttachmentPayloadFile get attachment for protocol {Protocol} testCaseName {TestCaseName}, attachmentFileName {AttachmentFileName} with filePath {FilePath}", protocol, testCaseName, filePath, attachmentFileName);
 
             return GetPayload(filePath);
         }

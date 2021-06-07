@@ -29,7 +29,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TestCase>>> GetTestCases()
         {
-            Log.Debug("Finding all TestCases");
+            Log.Information("Finding all TestCases");
             return await _context.TestCases.ToListAsync();
         }
 
@@ -37,6 +37,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TestCase>> GetTestCase(int id)
         {
+            Log.Information("Finding testcase with id: {Id}", id);
             var testCase = await _context.TestCases.FindAsync(id);
 
             if (testCase == null)
@@ -56,6 +57,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpPut("{testName}")]
         public async Task<IActionResult> PutTestCase(string testName, TestCase testCase)
         {
+            Log.Information("PutTestCase with {TestName} and {TestCaseName}", testName, testCase.TestName);
             if (!testName.Equals(testCase.TestName))
             {
                 Log.Error("BadRequest for testName {TestName} and testCase.TestName {TestCaseTestName}", testName, testCase.TestName );
@@ -93,6 +95,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<TestCase>> PostTestCase([FromBody] TestCase testCase)
         {
+            Log.Information("Posting testcases");
             _context.TestCases.Add(testCase);
             await _context.SaveChangesAsync();
 
