@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,20 +14,19 @@ using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     public class FiksResponseMessageService : IHostedService
     {
         private IFiksIOClient _client;
-        private ILogger<FiksResponseMessageService> _logger;
+        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly AppSettings _appSettings;
 
-        public FiksResponseMessageService(ILogger<FiksResponseMessageService> logger, IServiceScopeFactory scopeFactory, AppSettings appSettings)
+        public FiksResponseMessageService(IServiceScopeFactory scopeFactory, AppSettings appSettings)
         {
-            _logger = logger;
             _scopeFactory = scopeFactory;
             _appSettings = appSettings;
             _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
@@ -43,17 +43,18 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             return Task.CompletedTask;
         }
 
-        private async void OnMottattMelding(object sender, MottattMeldingArgs fileArgs)
+        private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
         {
+            Logger.Information("Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new Dictionary<string, string>();
 
-            if (fileArgs.Melding.HasPayload)
+            if (mottattMeldingArgs.Melding.HasPayload)
             {
                 try
                 {
                     // Verify that message has payload
                     IAsicReader reader = new AsiceReader();
-                    await using var inputStream = fileArgs.Melding.DecryptedStream.Result;
+                    await using var inputStream = mottattMeldingArgs.Melding.DecryptedStream.Result;
                     using var asice = reader.Read(inputStream);
                     foreach (var asiceReadEntry in asice.Entries)
                     {
@@ -65,8 +66,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 catch (Exception e)
                 {
-                    _logger.Log(LogLevel.Error ,"Klarte ikke hente payload og melding blir dermed ikke parset. Error: {Message}", e.Message);
-                    fileArgs.SvarSender?.Ack();
+                    Logger.Error("Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                    mottattMeldingArgs.SvarSender?.Ack();
                     return;
                 }
             }
@@ -76,15 +77,15 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 using var scope = _scopeFactory.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<FiksIOMessageDBContext>();
                 var testSession = context.TestSessions.Include(t => t.FiksRequests).FirstOrDefaultAsync(t =>
-                    t.FiksRequests.Any(r => r.MessageGuid.Equals(fileArgs.Melding.SvarPaMelding))).Result;
+                    t.FiksRequests.Any(r => r.MessageGuid.Equals(mottattMeldingArgs.Melding.SvarPaMelding))).Result;
 
-                // Er dette optimalt? Er det gjort slik fordi man ikke vet om databasen har rukket å skrive før man får svar?
+                // Ikke optimalt? Det er gjort slik fordi man ikke vet om databasen har rukket å skrive før man får svar.
                 var timesTried = 1; 
                 while (testSession == null && timesTried <= 5)
                 {
                     Thread.Sleep(1000);
                     testSession = context.TestSessions.Include(t => t.FiksRequests).FirstOrDefault(t =>
-                        t.FiksRequests.Any(r => r.MessageGuid.Equals(fileArgs.Melding.SvarPaMelding))); //Hvorfor er det ikke .Result her?
+                        t.FiksRequests.Any(r => r.MessageGuid.Equals(mottattMeldingArgs.Melding.SvarPaMelding))); 
                     timesTried++;
                 }
 
@@ -92,12 +93,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 if (testSession != null)
                 {
                     var fiksRequest =
-                        testSession.FiksRequests.Find(r => r.MessageGuid.Equals(fileArgs.Melding.SvarPaMelding));
+                        testSession.FiksRequests.Find(r => r.MessageGuid.Equals(mottattMeldingArgs.Melding.SvarPaMelding));
 
                     var responseMessage = new FiksResponse
                     {
                         ReceivedAt = DateTime.Now,
-                        Type = fileArgs.Melding.MeldingType,
+                        Type = mottattMeldingArgs.Melding.MeldingType,
                         Payload = payloads.Count > 1 ? string.Join(',', payloads.Keys) :
                             payloads.Count == 1 ? payloads.Keys.ElementAt(0) : null,
                         PayloadContent = payloads.Count == 1 ? payloads.Values.ElementAt(0) : null,
@@ -105,9 +106,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
                     if (fiksRequest == null)
                     {
-                        fileArgs.SvarSender?.Ack();
-                        _logger.Log(LogLevel.Error,
-                            "Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Svarmelding forkastes.");
+                        mottattMeldingArgs.SvarSender?.Ack();
+                        Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
                         return;
                     }
 
@@ -120,13 +120,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 else
                 {
-                    _logger.Log(LogLevel.Error,
-                        "Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Svarmelding forkastes.");
+                    Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
                 }
             }
             finally
             {
-                fileArgs.SvarSender?.Ack();
+                mottattMeldingArgs.SvarSender?.Ack();
             }
         }
     }
