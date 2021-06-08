@@ -21,14 +21,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
     public class FiksResponseMessageService : IHostedService
     {
         private IFiksIOClient _client;
-        //private ILogger _logger;
-        private readonly ILogger Logger; //Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly AppSettings _appSettings;
 
-        public FiksResponseMessageService(ILogger logger, IServiceScopeFactory scopeFactory, AppSettings appSettings)
+        public FiksResponseMessageService(IServiceScopeFactory scopeFactory, AppSettings appSettings)
         {
-            Logger = logger;
             _scopeFactory = scopeFactory;
             _appSettings = appSettings;
             _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
@@ -47,6 +45,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
         {
+            Logger.Information("Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new Dictionary<string, string>();
 
             if (mottattMeldingArgs.Melding.HasPayload)
