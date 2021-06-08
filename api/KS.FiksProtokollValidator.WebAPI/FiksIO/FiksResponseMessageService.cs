@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,20 +14,20 @@ using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     public class FiksResponseMessageService : IHostedService
     {
         private IFiksIOClient _client;
-        private ILogger<FiksResponseMessageService> _logger;
+        //private ILogger<FiksResponseMessageService> _logger;
+        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly AppSettings _appSettings;
 
-        public FiksResponseMessageService(ILogger<FiksResponseMessageService> logger, IServiceScopeFactory scopeFactory, AppSettings appSettings)
+        public FiksResponseMessageService(IServiceScopeFactory scopeFactory, AppSettings appSettings)
         {
-            _logger = logger;
             _scopeFactory = scopeFactory;
             _appSettings = appSettings;
             _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
@@ -65,7 +66,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 catch (Exception e)
                 {
-                    _logger.Log(LogLevel.Error ,"Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                    Logger.Error("Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                     mottattMeldingArgs.SvarSender?.Ack();
                     return;
                 }
@@ -106,8 +107,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     if (fiksRequest == null)
                     {
                         mottattMeldingArgs.SvarSender?.Ack();
-                        _logger.Log(LogLevel.Error,
-                            "Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
+                        Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
                         return;
                     }
 
@@ -120,8 +120,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 else
                 {
-                    _logger.Log(LogLevel.Error,
-                        "Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
+                    Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
                 }
             }
             finally
