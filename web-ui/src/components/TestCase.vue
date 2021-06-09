@@ -21,21 +21,31 @@
                     class="expand-icon"
                   />
                   <span> {{ testName }}</span>
-                  <b-icon-exclamation-circle-fill
+                  <div
                     v-if="validState === 'invalid'"
-                    :class="'validState ' + validState"
-                    title="Ugyldig"
-                  />
-                  <b-icon-check-circle-fill
+                    class="text-center">
+                    <b-icon-exclamation-circle-fill
+                      :class="'validState ' + validState"
+                      title="Ugyldig"
+                    />
+                  </div>
+                  <div
                     v-else-if="validState === 'valid'"
+                    class="text-center">
+                  <b-icon-check-circle-fill
                     :class="'validState ' + validState"
                     title="Gyldig"
                   />
-                  <b-icon-exclamation-circle-fill
+                  </div>
+                  <div
                     v-else-if="validState === 'notValidated'"
-                    :class="'validState ' + validState"
-                    title="Ikke validert"
-                  />
+                    class="text-center"
+                    >
+                    <b-icon-exclamation-circle-fill
+                     :class="'validState ' + validState"
+                     title="Ikke validert"
+                    />
+                  </div>
                 </h5>
               </div>
             </span>

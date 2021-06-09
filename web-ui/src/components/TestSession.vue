@@ -33,7 +33,22 @@
     </div>
     <b-spinner label="Loading..." v-if="loading"></b-spinner>
     &nbsp;
+    <div
+      v-if="showUpdateButton()"
+    >
+    <div class="text-right">
+      <p>Gul status indikerer at testen ikke har mottatt svar</p>      
+      <p>Rød status indikerer feil eller mangler i svaret</p>
+      <p>Oppdater testene for å validere på nytt ved rød eller gul status</p>
 
+      <b-button 
+      variant="primary"
+      v-on:click="getTestSession($route.params.testSessionId)"
+      >
+      Oppdater tester
+      </b-button>
+      </div>
+  </div>
     <div v-if="testSession && testSession.fiksRequests">
       <Request
         v-for="request in testSession.fiksRequests"
@@ -75,6 +90,7 @@ export default {
   
   methods: {
     getTestSession: async function(testSessionId) {
+      this.testSession = null;
       this.loading = true;
       await axios.get(process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId)
       .then(response => {
@@ -96,7 +112,26 @@ export default {
       });
       
     },
-    
+    showUpdateButton() {
+      let result = false;
+      if (this.testSession && this.testSession.fiksRequests != null) {
+        this.testSession.fiksRequests.forEach(request => {
+            console.log(request.isFiksResponseValidated);
+          if (!request.isFiksResponseValidated) {
+            console.log("I should show a update button");
+            result = true;
+          }
+          else{
+            if (request.fiksResponseValidationErrors != null && request.fiksResponseValidationErrors.lenght >0) {
+              console.log("I should show a update button");
+              result = true;
+            }
+          }
+        });
+      }
+      return result;
+    },
+
     sortRequests: requests => {
       return requests
           ? requests.sort((a, b) => new Date(a.sentAt) - new Date(b.sentAt))
