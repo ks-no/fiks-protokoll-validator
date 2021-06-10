@@ -37,9 +37,19 @@
       v-if="showUpdateButton()"
     >
     <div class="text-right">
-      <p>Gul status indikerer at testen ikke har mottatt svar</p>      
-      <p>Rød status indikerer feil eller mangler i svaret</p>
-      <p>Oppdater testene for å validere på nytt ved rød eller gul status</p>
+        <p>
+            <b-icon-exclamation-circle-fill
+              :class="'validState invalid'"
+              title="Ugyldig"
+            /> 
+            og 
+        <b-icon-exclamation-circle-fill
+          :class="'validState notValidated'"
+           title="Ikke validert"
+        />
+         status indikerer at testen har feil, mangler eller ikke har mottatt svar
+    </p>      
+    <p>Oppdater testene for å validere på nytt ved rød eller gul status</p>
 
       <b-button 
       variant="primary"
@@ -116,14 +126,11 @@ export default {
       let result = false;
       if (this.testSession && this.testSession.fiksRequests != null) {
         this.testSession.fiksRequests.forEach(request => {
-            console.log(request.isFiksResponseValidated);
           if (!request.isFiksResponseValidated) {
-            console.log("I should show a update button");
             result = true;
           }
           else{
             if (request.fiksResponseValidationErrors != null && request.fiksResponseValidationErrors.lenght >0) {
-              console.log("I should show a update button");
               result = true;
             }
           }
@@ -158,5 +165,17 @@ export default {
 <style scoped>
 img {
   margin-top: 50px;
+}
+svg.validState {
+  font-size: 24px;
+  margin-right: 6px;
+}
+
+svg.notValidated {
+  color: rgb(231, 181, 42);
+}
+
+svg.invalid {
+  color: #cc3333;
 }
 </style>
