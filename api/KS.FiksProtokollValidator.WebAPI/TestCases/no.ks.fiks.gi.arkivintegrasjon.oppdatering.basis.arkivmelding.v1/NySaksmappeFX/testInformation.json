@@ -8,7 +8,7 @@
     "expectedResult": "Melding med messagetype no.ks.fiks.gi.arkivintegrasjon.feil.v1",
     "queriesWithExpectedValues": [
     ],
-    "expectedResponseMessageTypes": [ "no.ks.fiks.gi.arkivintegrasjon.feil.v1" ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.kvittering.ugyldigforespørsel.v1" ],
     "supported": true, 
     "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
 }
