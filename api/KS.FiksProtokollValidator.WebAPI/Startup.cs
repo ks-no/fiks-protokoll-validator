@@ -1,5 +1,6 @@
 using System;
 using KS.FiksProtokollValidator.WebAPI.Data;
+using KS.FiksProtokollValidator.WebAPI.Data.SessionCleanUp;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Builder;
@@ -49,8 +50,11 @@ namespace KS.FiksProtokollValidator.WebAPI
             services.AddScoped<IFiksRequestMessageService, FiksRequestMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
+            services.AddScoped<ICleanUpWorker, CleanUpWorker>();
+            services.AddHostedService<TestSessionCleanUp>();
+            services.AddScoped<IUnitOfWorkManager, UnitOfWorkManager>();
         }
-        
+
         public AppSettings CreateAppSettings()
         {
             var appSettings = Configuration.GetSection("AppSettings").Get<AppSettings>();
