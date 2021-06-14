@@ -4,6 +4,7 @@ using System.Linq;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Newtonsoft.Json.Linq;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data
@@ -52,7 +53,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         {
             testCase.MessageType = (string)testInformation["messageType"];
 
-
             foreach (var fileInfo in new DirectoryInfo(testDirectory.FullName)
                     .GetFiles())
             {
@@ -84,76 +84,125 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                 testCase.PayloadAttachmentFileNames = payloadAttachmentFileNames.TrimEnd(';');
             }
 
-            if (testInformation["queriesWithExpectedValues"] != null)
-            {
-                if (testCase.FiksResponseTests == null)
-                {
-                    testCase.FiksResponseTests = new List<FiksResponseTest>();
-                    foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
-                    {
-                        var fiksResponseTest = new FiksResponseTest
-                        {
-                            PayloadQuery = (string)queryWithExpectedValue["payloadQuery"],
-                            ExpectedValue = (string)queryWithExpectedValue["expectedValue"],
-                            ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
-                        };
+            // Legg til QueriesWithExpectedValues
+            //TODO lag en DeleteQueriesWithExpectedValues
+            AddQueriesWithExpectedValues(testCase, testInformation);
 
+            // Slett og legg til expectedResponseMessageTypes
+            DeleteFiksExpectedResponseMessageTypes(testCase, testInformation);
+            AddFiksExpectedResponseMessageTypes(testCase, testInformation);
+
+            return testCase;
+        }
+
+        private void AddQueriesWithExpectedValues(TestCase testCase, JObject testInformation)
+        {
+            if (testInformation["queriesWithExpectedValues"] == null)
+            {
+                return;
+            }
+            
+            if (testCase.FiksResponseTests == null)
+            {
+                testCase.FiksResponseTests = new List<FiksResponseTest>();
+                foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
+                {
+                    var fiksResponseTest = new FiksResponseTest
+                    {
+                        PayloadQuery = (string) queryWithExpectedValue["payloadQuery"],
+                        ExpectedValue = (string) queryWithExpectedValue["expectedValue"],
+                        ValueType = (SearchValueType) (int) queryWithExpectedValue["valueType"]
+                    };
+
+                    testCase.FiksResponseTests.Add(fiksResponseTest);
+                }
+            }
+            else
+            {
+                foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
+                {
+                    var fiksResponseTest = new FiksResponseTest
+                    {
+                        PayloadQuery = (string) queryWithExpectedValue["payloadQuery"],
+                        ExpectedValue = (string) queryWithExpectedValue["expectedValue"],
+                        ValueType = (SearchValueType) (int) queryWithExpectedValue["valueType"]
+                    };
+                    if (!testCase.FiksResponseTests.Any(
+                        r => (r.ExpectedValue.Equals(fiksResponseTest.ExpectedValue)
+                              && r.PayloadQuery.Equals(fiksResponseTest.PayloadQuery)
+                              && r.ValueType.Equals(fiksResponseTest.ValueType))
+                    ))
+                    {
                         testCase.FiksResponseTests.Add(fiksResponseTest);
                     }
                 }
-                else
+            }
+        }
+
+        private void DeleteFiksExpectedResponseMessageTypes(TestCase testCase, JObject testInformation)
+        {
+            // Delete all?
+            if ((testInformation["expectedResponseMessageTypes"] == null || !testInformation["expectedResponseMessageTypes"].HasValues) && testCase.ExpectedResponseMessageTypes.Count > 0)
+            {
+                foreach (var dbExpMsgRspType in testCase.ExpectedResponseMessageTypes)
                 {
-                    foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
-                    {
-                        var fiksResponseTest = new FiksResponseTest
-                        {
-                            PayloadQuery = (string)queryWithExpectedValue["payloadQuery"],
-                            ExpectedValue = (string)queryWithExpectedValue["expectedValue"],
-                            ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
-                        };
-                        if (!testCase.FiksResponseTests.Any(
-                            r => (r.ExpectedValue.Equals(fiksResponseTest.ExpectedValue)
-                                  && r.PayloadQuery.Equals(fiksResponseTest.PayloadQuery)
-                                  && r.ValueType.Equals(fiksResponseTest.ValueType))
-                            ))
-                        {
-                            testCase.FiksResponseTests.Add(fiksResponseTest);
-                        }
-                    }
+                    _context.Entry(dbExpMsgRspType).State = EntityState.Deleted;
                 }
+                testCase.ExpectedResponseMessageTypes = null;
+                return;
+            }
+            
+            // Find what to delete
+            var i = 0;
+            var deleteIndexes = new List<int>(); 
+            
+            foreach (var dbTestCase in testCase.ExpectedResponseMessageTypes)
+            {
+                var found = testInformation["expectedResponseMessageTypes"].Any(fileTestCase => fileTestCase.ToString() == dbTestCase.ExpectedResponseMessageType);
+                if (!found)
+                {
+                    deleteIndexes.Add(i);
+                }
+                i++;
             }
 
-            if (testInformation["expectedResponseMessageTypes"] != null)
+            foreach (var deleteIndex in deleteIndexes)
             {
-                if (testCase.ExpectedResponseMessageTypes == null)
+                var dbExpMsgRspType = testCase.ExpectedResponseMessageTypes[deleteIndex];
+                _context.Entry(dbExpMsgRspType).State = EntityState.Deleted;
+                testCase.ExpectedResponseMessageTypes.RemoveAt(deleteIndex);
+            }
+        }
+
+        private void AddFiksExpectedResponseMessageTypes(TestCase testCase, JObject testInformation)
+        {
+            if (testCase.ExpectedResponseMessageTypes == null)
+            {
+                testCase.ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>();
+                foreach (var messageType in testInformation["expectedResponseMessageTypes"])
                 {
-                    testCase.ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>();
-                    foreach (var messageType in testInformation["expectedResponseMessageTypes"])
+                    var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
                     {
-                        var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
-                        {
-                            ExpectedResponseMessageType = (string)messageType
-                        };
+                        ExpectedResponseMessageType = (string) messageType
+                    };
+                    testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
+                }
+            }
+            else if(testInformation["expectedResponseMessageTypes"] != null && testInformation["expectedResponseMessageTypes"].HasValues)
+            {
+                foreach (var messageType in testInformation["expectedResponseMessageTypes"])
+                {
+                    var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
+                    {
+                        ExpectedResponseMessageType = (string) messageType
+                    };
+                    if (!testCase.ExpectedResponseMessageTypes.Any(r =>
+                        r.ExpectedResponseMessageType.Equals(fiksExpectedResponseMessageType.ExpectedResponseMessageType)))
+                    {
                         testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
                     }
                 }
-                else
-                {
-                    foreach (var messageType in testInformation["expectedResponseMessageTypes"])
-                    {
-                        var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
-                        {
-                            ExpectedResponseMessageType = (string)messageType
-                        };
-                        if (!testCase.ExpectedResponseMessageTypes.Any(r => r.ExpectedResponseMessageType.Equals(fiksExpectedResponseMessageType.ExpectedResponseMessageType)))
-                        {
-                            testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
-                        }
-                    }
-                }
-
             }
-            return testCase;
         }
     }
 }

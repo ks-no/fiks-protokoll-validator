@@ -20,7 +20,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                     continue;
 
                 var expectedResponseMessageTypes =
-                    ExpectedResponseMessageTypeProvider.GetExpectedResponseMessageTypes(
+                    ExpectedResponseMessageTypeProvider.GetExpectedResponseMessageTypesAsStrings(
                         fiksRequest.TestCase.MessageType, fiksRequest.TestCase.ExpectedResponseMessageTypes
                     );
 
@@ -126,14 +126,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         }
 
         private static HashSet<string> GetMessageTypesWithPayload()
-        { //Todo: Må fylle på i denne listen med de meldingstyper som har resultat.
-            return new HashSet<string>
+        { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
+            return new()
             {
                 WebAPI.Resources.ResponseMessageTypes.KvitteringV1,
                 WebAPI.Resources.ResponseMessageTypes.InnsynSoekResultatV1,
                 WebAPI.Resources.ResponseMessageTypes.FeilV1,
                 WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultatV1,
-                WebAPI.Resources.ResponseMessageTypes.HentUtvalgResultatV1
+                WebAPI.Resources.ResponseMessageTypes.HentUtvalgResultatV1,
+                WebAPI.Resources.ResponseMessageTypes.UgyldigforespørselV1,
             };
         }
 

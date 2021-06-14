@@ -136,7 +136,7 @@
     <value>Mangler innhold i svarmelding: {0}</value>
   </data>
   <data name="MissingResponseMessage" xml:space="preserve">
-    <value>Manglende svarmelding: {0}</value>
+    <value>Manglende forventet svarmelding: {0}</value>
   </data>
   <data name="MissingValueOnPayloadElement" xml:space="preserve">
     <value>Xml-node {0} har ingen verdi</value>
