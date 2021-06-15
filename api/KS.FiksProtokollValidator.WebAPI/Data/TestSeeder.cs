@@ -151,6 +151,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                 testCase.ExpectedResponseMessageTypes = null;
                 return;
             }
+
+            if (testCase.ExpectedResponseMessageTypes == null)
+            {
+                return;
+            }
             
             // Find what to delete
             var i = 0;
