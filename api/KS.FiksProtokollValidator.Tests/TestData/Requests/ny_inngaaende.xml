@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/arkivmelding">
+<arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/arkivmelding/v2">
   <system>Fagsystem X</system>
   <meldingId>e4712424-883c-4068-9cb7-97ac679d7232</meldingId>
   <tidspunkt>2020-09-22T11:11:45.0552598+02:00</tidspunkt>
