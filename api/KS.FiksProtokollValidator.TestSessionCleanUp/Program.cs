@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Events;
+using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.TestSessionCleanUp
 {
@@ -14,8 +15,7 @@ namespace KS.FiksProtokollValidator.TestSessionCleanUp
     {
         static async Task Main(string[] args)
         {
-            using IHost host = CreateHostBuilder(args).Build();
-
+            int NumberOfDays = -30;
 
             var loggerConfiguration = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -25,24 +25,42 @@ namespace KS.FiksProtokollValidator.TestSessionCleanUp
                 .Enrich.WithProperty("app", "protokoll-validator")
                 .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level}] [{RequestId}] [{requestid}] - {Message} {NewLine} {Exception}");
 
-
             Log.Logger = loggerConfiguration.CreateLogger();
 
-            await host.RunAsync();
-        }
-
-        static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-            .ConfigureServices((hostContext, services) =>
-            {
-                IConfiguration Configuration = new ConfigurationBuilder()
+            IConfiguration Configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 .AddCommandLine(args)
                 .Build();
 
-                services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-                services.AddHostedService<CleanUp>();
-            }).UseSerilog();
+            var options = new DbContextOptionsBuilder<FiksIOMessageDBContext>()
+                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                .Options;
+            FiksIOMessageDBContext _context = new FiksIOMessageDBContext(options);
+
+            Log.Information($"Starting to delete records older than {NumberOfDays * -1} days in database.");
+            var testSessions = _context.TestSessions.Include(e => e.FiksRequests).ThenInclude(e => e.FiksResponses);
+
+            foreach (TestSession testSession in testSessions)
+            {
+
+                if (testSession.CreatedAt < DateTime.Now.AddDays(NumberOfDays))
+                {
+                    foreach (FiksRequest fiksRequest in testSession.FiksRequests)
+                    {
+                        foreach (FiksResponse fiksResponse in fiksRequest.FiksResponses)
+                        {
+                            Log.Information($"Deleting FiksResponse: {fiksResponse.Id}");
+                            _context.FiksResponse.Remove(fiksResponse);
+                        }
+                        Log.Information($"Deleting FiksRequest: {fiksRequest.MessageGuid}");
+                        _context.FiksRequest.Remove(fiksRequest);
+                    }
+                    Log.Information($"Deleting TestSession: {testSession.Id}");
+                    _context.TestSessions.Remove(testSession);
+                }
+            }
+            _context.SaveChanges();
+        }
     }
 }
