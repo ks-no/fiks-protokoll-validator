@@ -26,7 +26,6 @@ namespace KS.FiksProtokollValidator.TestSessionCleanUp
 
         public bool DoWork()
         {
-            Console.WriteLine("TEST TEST");
             Log.Information($"Starting to delete records older than {NumberOfDays * -1} days in database.");
             var testSessions = _context.TestSessions.Include(e => e.FiksRequests).ThenInclude(e => e.FiksResponses);
 
