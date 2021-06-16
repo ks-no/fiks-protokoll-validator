@@ -50,7 +50,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }
-        
+
         public AppSettings CreateAppSettings()
         {
             var appSettings = Configuration.GetSection("AppSettings").Get<AppSettings>();
