@@ -19,7 +19,7 @@
         },
         {
             "payloadQuery": "$",
-            "expectedValue": "referanseMeldingId",
+            "expectedValue": "correlationId",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
@@ -28,7 +28,7 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.referanseMeldingId",
+            "payloadQuery": "$.correlationId",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
