@@ -79,7 +79,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
             };
         }
 
-        public static List<string> GetExpectedResponseMessageTypes(string requestMessageType,
+        public static List<string> GetExpectedResponseMessageTypesAsStrings(string requestMessageType,
             List<FiksExpectedResponseMessageType> testCaseExpectedResponseMessageTypes)
         {
             if (testCaseExpectedResponseMessageTypes.Count == 0)
@@ -88,16 +88,14 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
 
                 return _expectedMessageTypes[requestMessageType];
             }
-            else
-            {
-                var responseMessageTypesList = new List<string>();
-                foreach (var responseMessageType in testCaseExpectedResponseMessageTypes)
-                {
-                    responseMessageTypesList.Add(responseMessageType.ExpectedResponseMessageType);
-                }
 
-                return responseMessageTypesList;
+            var responseMessageTypesList = new List<string>();
+            foreach (var responseMessageType in testCaseExpectedResponseMessageTypes)
+            {
+                responseMessageTypesList.Add(responseMessageType.ExpectedResponseMessageType);
             }
+
+            return responseMessageTypesList;
         }
     }
 }

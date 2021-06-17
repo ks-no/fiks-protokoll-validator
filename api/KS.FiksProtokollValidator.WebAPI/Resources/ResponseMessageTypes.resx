@@ -132,6 +132,9 @@
   <data name="Timeout" xml:space="preserve">
     <value>no.ks.fiks.kvittering.tidsavbrudd</value>
   </data>
+  <data name="UgyldigforespørselV1" xml:space="preserve">
+    <value>no.ks.fiks.kvittering.ugyldigforespørsel.v1</value>
+  </data>
   <data name="HentMoteplanResultatV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.tjener.resultatmøteplan.v1</value>
   </data>
