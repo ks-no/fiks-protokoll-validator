@@ -34,6 +34,33 @@
     <b-spinner label="Loading..." v-if="loading"></b-spinner>
     &nbsp;
 
+    <div
+      v-if="showUpdateButton()"
+    >
+    <div class="text-right">
+       <p>
+            <b-icon-exclamation-circle-fill
+              :class="'validState invalid'"
+              title="Ugyldig"
+            /> 
+            og 
+        <b-icon-exclamation-circle-fill
+          :class="'validState notValidated'"
+           title="Ikke validert"
+        />
+         status indikerer at testen har feil, mangler eller ikke har mottatt svar
+    </p>  
+      <p>Oppdater testene for å validere på nytt ved rød eller gul status</p>
+
+      <b-button 
+      variant="primary"
+      v-on:click="getTestSession($route.params.testSessionId)"
+      >
+      Oppdater tester
+      </b-button>
+      </div>
+  </div>
+
     <div v-if="testSession && testSession.fiksRequests">
       <Request
         v-for="request in testSession.fiksRequests"
@@ -75,6 +102,7 @@ export default {
   
   methods: {
     getTestSession: async function(testSessionId) {
+      this.testSession = null;
       this.loading = true;
       await axios.get(process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId)
       .then(response => {
@@ -94,7 +122,22 @@ export default {
           this.requestErrorMessage = error.response.data;
           this.fetchError = true;
       });
-      
+    },
+    showUpdateButton() {
+      let result = false;
+      if (this.testSession && this.testSession.fiksRequests != null) {
+        this.testSession.fiksRequests.forEach(request => {
+          if (!request.isFiksResponseValidated) {
+            result = true;
+          }
+          else{
+            if (request.fiksResponseValidationErrors != null && request.fiksResponseValidationErrors.lenght >0) {
+              result = true;
+            }
+          }
+        });
+      }
+      return result;
     },
     
     sortRequests: requests => {
@@ -123,5 +166,17 @@ export default {
 <style scoped>
 img {
   margin-top: 50px;
+}
+svg.validState {
+  font-size: 24px;
+  margin-right: 6px;
+}
+
+svg.notValidated {
+  color: rgb(231, 181, 42);
+}
+
+svg.invalid {
+  color: #cc3333;
 }
 </style>
