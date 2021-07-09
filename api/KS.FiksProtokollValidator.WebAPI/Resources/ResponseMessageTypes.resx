@@ -144,4 +144,10 @@
   <data name="MottattPolitiskBehandlingV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.mottatt.v1</value>
   </data>
+  <data name="FinnPlanerForMatrikkelenhetV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.planerformatrikkelenhet.v2</value>
+  </data>
+  <data name="MottattGiPlanV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.mottatt.v2</value>
+  </data>
 </root>

@@ -70,6 +70,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.finnplanerformatrikkelenhet.v2.
+        /// </summary>
+        public static string FinnPlanerForMatrikkelEnhetV2 {
+            get {
+                return ResourceManager.GetString("FinnPlanerForMatrikkelEnhetV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1.
         /// </summary>
         public static string HentMoteplanV1 {
@@ -93,6 +102,24 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         public static string OppdaterSaksmappeV1 {
             get {
                 return ResourceManager.GetString("OppdaterSaksmappeV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.registrerdispensasjonplan.v2.
+        /// </summary>
+        public static string RegistrerDispensasjonForPlanV2 {
+            get {
+                return ResourceManager.GetString("RegistrerDispensasjonForPlanV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.registrerplanavgrensning.v2.
+        /// </summary>
+        public static string RegistrerPlanavgrensingV2 {
+            get {
+                return ResourceManager.GetString("RegistrerPlanavgrensingV2", resourceCulture);
             }
         }
         

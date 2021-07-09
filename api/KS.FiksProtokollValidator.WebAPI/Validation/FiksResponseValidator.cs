@@ -135,6 +135,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultatV1,
                 WebAPI.Resources.ResponseMessageTypes.HentUtvalgResultatV1,
                 WebAPI.Resources.ResponseMessageTypes.UgyldigforespørselV1,
+                WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2
             };
         }
 

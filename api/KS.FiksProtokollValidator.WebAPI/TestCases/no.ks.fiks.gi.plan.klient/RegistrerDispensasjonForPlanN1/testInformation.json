@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Registrer dispensasjon for plan",
+    "description": "",
+    "testStep": "Normalsituasjon 1 Input, retur bekreftelse på mottak",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerdispensasjonplan.v2",
+    "operation": "RegistrerDispensasjonForPlan",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat registrering",
+    "queriesWithExpectedValues": [
+       
+    ],
+    "supported": false,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

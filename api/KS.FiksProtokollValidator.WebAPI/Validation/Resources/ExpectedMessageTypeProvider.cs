@@ -75,6 +75,27 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
                     }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.FinnPlanerForMatrikkelEnhetV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.RegistrerDispensasjonForPlanV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.RegistrerPlanavgrensingV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                    }
                 }
             };
         }
