@@ -31,7 +31,7 @@
   <ItemGroup>
     <PackageReference Include="KS.Fiks.ASiC-E" Version="1.0.3" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="1.2.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
