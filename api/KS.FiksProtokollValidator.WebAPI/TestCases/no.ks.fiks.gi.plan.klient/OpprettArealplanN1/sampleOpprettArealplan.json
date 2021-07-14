@@ -1,0 +1,22 @@
+﻿{
+    "plannavn": "Breisås Syd",
+    "plantype": {
+        "kodeverdi": "35",
+        "kodebeskrivelse": "Detaljregulering"
+    },
+    "planstatus": {
+        "kodeverdi": "0",
+        "kodebeskrivelse": "Opprettet plan"
+    },
+    "lovreferanse": {
+        "kodeverdi": "6",
+        "kodebeskrivelse": "PBL 2008"
+    },
+    "saksnummer": {
+        "saksår": 2019,
+        "sakssekvensnummer": 1234465
+    }
+}
+
+
+

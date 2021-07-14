@@ -1,0 +1,48 @@
+﻿{
+    "testName": "Finn dispensasjoner",
+    "description": "Finn dispensasjoner med søkekriterie",
+    "testStep": "Normalsituasjon 1 Input FinnDispensasjon, retur dispensasjon(er)",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.finndispensasjoner.v2",
+    "operation": "FinnDispensasjoner",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat søk, og dispensasjon(er)",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "$",
+            "expectedValue": "dispensasjon",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$",
+            "expectedValue": "nasjonalArealplanID",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$",
+            "expectedValue": "vedtaksdato",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.dispensasjon.kodeverdi",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.vedtaksdato",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.nasjonalArealplanID.plannavn",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.nasjonalArealplanID.planstatus",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

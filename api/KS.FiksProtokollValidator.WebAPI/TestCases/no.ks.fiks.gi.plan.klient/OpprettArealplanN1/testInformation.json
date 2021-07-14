@@ -1,0 +1,43 @@
+﻿{
+    "testName": "Opprett arealplan",
+    "description": "Opprett arealplan",
+    "testStep": "Normalsituasjon 1 Input OpprettArealplan, retur MeldingOmPlanident",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2",
+    "operation": "OpprettArealplan",
+    "situation": "N1",
+    "expectedResult": "MeldingOmPlanident i retur",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "$",
+            "expectedValue": "nasjonalArealplanId",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$",
+            "expectedValue": "saksnummer",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.nasjonalArealplanId.administrativEnhet",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.nasjonalArealplanId.planidentifikasjon",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.saksnummer.saksaar",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.saksnummer.sakssekvensnummer",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

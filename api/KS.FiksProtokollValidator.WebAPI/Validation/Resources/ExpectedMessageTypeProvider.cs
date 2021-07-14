@@ -96,6 +96,27 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
                     }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.FinnPlanerV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.FinnPlanerV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.FinnDispensasjonerV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.FinnDispensasjonerForSøkV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.OpprettArealplanV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2
+                    }
                 }
             };
         }

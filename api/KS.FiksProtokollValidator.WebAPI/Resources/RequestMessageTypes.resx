@@ -153,4 +153,13 @@
   <data name="RegistrerPlanavgrensingV2" xml:space="preserve">
     <value>no.ks.fiks.gi.plan.oppdatering.registrerplanavgrensning.v2</value>
   </data>
+  <data name="FinnPlanerV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.finnplaner.v2</value>
+  </data>
+  <data name="FinnDispensasjonerV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.finndispensasjoner.v2</value>
+  </data>
+  <data name="OpprettArealplanV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2</value>
+  </data>
 </root>

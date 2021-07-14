@@ -70,11 +70,29 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.dispensasjonerforsøk.v2.
+        /// </summary>
+        public static string FinnDispensasjonerForSøkV2 {
+            get {
+                return ResourceManager.GetString("FinnDispensasjonerForSøkV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planerformatrikkelenhet.v2.
         /// </summary>
         public static string FinnPlanerForMatrikkelenhetV2 {
             get {
                 return ResourceManager.GetString("FinnPlanerForMatrikkelenhetV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planerforsøk.v2.
+        /// </summary>
+        public static string FinnPlanerV2 {
+            get {
+                return ResourceManager.GetString("FinnPlanerV2", resourceCulture);
             }
         }
         
@@ -111,6 +129,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         public static string KvitteringV1 {
             get {
                 return ResourceManager.GetString("KvitteringV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.meldingomplanident.v2.
+        /// </summary>
+        public static string MeldingOmPlanidentV2 {
+            get {
+                return ResourceManager.GetString("MeldingOmPlanidentV2", resourceCulture);
             }
         }
         
