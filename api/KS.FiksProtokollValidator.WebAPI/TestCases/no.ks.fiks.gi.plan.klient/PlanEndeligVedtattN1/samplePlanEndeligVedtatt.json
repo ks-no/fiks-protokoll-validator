@@ -14,8 +14,8 @@
             "sakssekvensnummer": 12345
         },
         "planbehandlingtype": {
-            "kodeverdi": "13",
-            "kodebeskrivelse": "Plan vedtatt med innsigelse"
+            "kodeverdi": "14",
+            "kodebeskrivelse": "Plan endelig vedtatt"
         },
         "navn": "navn på registrering"
     }

@@ -120,6 +120,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 else
                 {
+                    
                     Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
                 }
             }
