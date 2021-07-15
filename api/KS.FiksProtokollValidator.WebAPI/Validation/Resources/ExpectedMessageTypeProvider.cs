@@ -117,6 +117,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2
                     }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.RegistrerPlanbehandlingV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                    }
                 }
             };
         }

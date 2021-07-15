@@ -151,6 +151,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2.
+        /// </summary>
+        public static string RegistrerPlanbehandlingV2 {
+            get {
+                return ResourceManager.GetString("RegistrerPlanbehandlingV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.senddelegertvedtak.v1.
         /// </summary>
         public static string SendDelegertVedtakV1 {
