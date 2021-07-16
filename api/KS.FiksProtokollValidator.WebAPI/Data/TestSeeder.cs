@@ -184,6 +184,18 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             if (testCase.ExpectedResponseMessageTypes == null)
             {
                 testCase.ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>();
+                if (testInformation.ContainsKey("expectedResponseMessageTypes"))
+                {
+                    foreach (var messageType in testInformation["expectedResponseMessageTypes"])
+                    {
+                        var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
+                        {
+                            ExpectedResponseMessageType = (string)messageType
+                        };
+                        testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
+                    }
+                }
+                
             }
             else if(testInformation["expectedResponseMessageTypes"] != null && testInformation["expectedResponseMessageTypes"].HasValues)
             {
