@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Hent arealplan",
+    "description": "Hent arealplan",
+    "testStep": "Normalsituasjon 1 Input HentArealplan, retur arealplan(er)",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.hentarealplan.v2",
+    "operation": "HentArealplan",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat søk, og arealplan(er)",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": false,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

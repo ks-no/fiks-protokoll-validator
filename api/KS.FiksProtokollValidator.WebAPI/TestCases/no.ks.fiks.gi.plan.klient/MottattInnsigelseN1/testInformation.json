@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Mottatt innsigelse",
+    "description": "Mottatt innsigelse",
+    "testStep": "Normalsituasjon 1 Input MottattInnsigelse, retur bekreftelse på mottak",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2",
+    "operation": "MottattInnsigelse",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

@@ -93,7 +93,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="TestCases\no.ks.fiks.gi.plan.tjener\" />
+    <Folder Include="TestCases\no.ks.fiks.gi.plan.klient - Copy\" />
+    <Folder Include="TestCases\no.ks.fiks.gi.plan.klient\" />
   </ItemGroup>
 
 </Project>

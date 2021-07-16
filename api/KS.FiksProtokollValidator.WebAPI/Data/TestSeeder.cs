@@ -142,7 +142,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         private void DeleteFiksExpectedResponseMessageTypes(TestCase testCase, JObject testInformation)
         {
             // Delete all?
-            if ((testInformation["expectedResponseMessageTypes"] == null || !testInformation["expectedResponseMessageTypes"].HasValues) && testCase.ExpectedResponseMessageTypes.Count > 0)
+            if ((testInformation["expectedResponseMessageTypes"] == null || !testInformation["expectedResponseMessageTypes"].HasValues) && testCase.ExpectedResponseMessageTypes?.Count > 0)
             {
                 foreach (var dbExpMsgRspType in testCase.ExpectedResponseMessageTypes)
                 {
@@ -184,14 +184,18 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             if (testCase.ExpectedResponseMessageTypes == null)
             {
                 testCase.ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>();
-                foreach (var messageType in testInformation["expectedResponseMessageTypes"])
+                if (testInformation.ContainsKey("expectedResponseMessageTypes"))
                 {
-                    var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
+                    foreach (var messageType in testInformation["expectedResponseMessageTypes"])
                     {
-                        ExpectedResponseMessageType = (string) messageType
-                    };
-                    testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
+                        var fiksExpectedResponseMessageType = new FiksExpectedResponseMessageType
+                        {
+                            ExpectedResponseMessageType = (string)messageType
+                        };
+                        testCase.ExpectedResponseMessageTypes.Add(fiksExpectedResponseMessageType);
+                    }
                 }
+                
             }
             else if(testInformation["expectedResponseMessageTypes"] != null && testInformation["expectedResponseMessageTypes"].HasValues)
             {

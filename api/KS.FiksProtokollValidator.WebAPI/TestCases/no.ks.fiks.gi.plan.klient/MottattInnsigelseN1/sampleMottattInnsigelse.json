@@ -1,0 +1,22 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "0821",
+            "fylkesnummer": "",
+            "landskode": ""
+        },
+        "planidentifikasjon": "01_27_1988"
+    },
+    "planbehandling": {
+        "dato": "2020-01-01",
+        "saksnummer": {
+            "saksår": 2020,
+            "sakssekvensnummer": 12345
+        },
+        "planbehandlingtype": {
+            "kodeverdi": "12",
+            "kodebeskrivelse": "Mottatt innsigelse"
+        },
+        "navn": "navn på registrering"
+    }
+}

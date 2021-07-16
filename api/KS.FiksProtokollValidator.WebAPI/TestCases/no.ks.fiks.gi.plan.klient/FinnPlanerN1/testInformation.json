@@ -1,0 +1,38 @@
+﻿{
+    "testName": "Finn planer",
+    "description": "Finn planer",
+    "testStep": "Normalsituasjon 1 Input FinnPlan, retur plan",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.finnplaner.v2",
+    "operation": "FinnPlaner",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat registrering, og planer",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "$",
+            "expectedValue": "matrikkelnummer",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$",
+            "expectedValue": "arealplanId",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.matrikkelnummer.kommunenummer",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.matrikkelnummer.gårdsnummer",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.matrikkelnummer.bruksnummer",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

@@ -127,13 +127,12 @@ export default {
       let result = false;
       if (this.testSession && this.testSession.fiksRequests != null) {
         this.testSession.fiksRequests.forEach(request => {
-          if (!request.isFiksResponseValidated) {
-            result = true;
-          }
-          else{
-            if (request.fiksResponseValidationErrors != null && request.fiksResponseValidationErrors.lenght >0) {
+          if (request.isFiksResponseValidated) {
+            if (request.fiksResponseValidationErrors.length >0) {
               result = true;
             }
+          }else {
+            result = true;
           }
         });
       }
