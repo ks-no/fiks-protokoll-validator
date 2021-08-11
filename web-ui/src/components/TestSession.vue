@@ -131,7 +131,8 @@ export default {
             if (request.fiksResponseValidationErrors.length >0) {
               result = true;
             }
-          }else {
+          }
+          else {
             result = true;
           }
         });
