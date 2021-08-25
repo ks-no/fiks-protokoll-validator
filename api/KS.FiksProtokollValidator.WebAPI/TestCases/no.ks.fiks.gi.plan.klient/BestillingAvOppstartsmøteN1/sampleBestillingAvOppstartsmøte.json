@@ -7,6 +7,10 @@
         },
         "planidentifikasjon": "01_27_1988"
     },
+    "planstatus": {
+        "kodeverdi": "0",
+        "kodebeskrivelse": "Planide"
+    },
     "planbehandling": {
         "dato": "2020-01-01",
         "saksnummer": {

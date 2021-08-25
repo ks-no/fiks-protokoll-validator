@@ -18,5 +18,12 @@
             "kodebeskrivelse": "Kunngjøring av offentlig ettersyn"
         },
         "navn": "navn på registrering"
-    }
+    },
+    "plandokument": [
+        {
+            "tittel": "Vedtak",
+            "dokumenttype": "docx",
+            "referanseDokumentfil": "reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc"
+        }
+    ]
 }

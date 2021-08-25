@@ -28,6 +28,16 @@
 	  <None Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvOffentligEttersynN1\reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Content Include="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvOffentligEttersynN1\reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="KS.Fiks.ASiC-E" Version="1.0.3" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="1.2.1" />
