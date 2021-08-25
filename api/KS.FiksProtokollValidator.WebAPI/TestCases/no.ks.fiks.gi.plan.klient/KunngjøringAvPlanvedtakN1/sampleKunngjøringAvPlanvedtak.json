@@ -18,5 +18,12 @@
             "kodebeskrivelse": "Kunngjøring endelig vedtatt plan"
         },
         "navn": "navn på registrering"
-    }
+    },
+    "plandokument": [
+        {
+            "tittel": "Kunngjøring",
+            "dokumenttype": "docx",
+            "referanseDokumentfil": "reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc"
+        }
+    ]
 }

@@ -30,10 +30,14 @@
 
 	<ItemGroup>
 	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvOffentligEttersynN1\reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc" />
+	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvPlanvedtakN1\reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Content Include="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvOffentligEttersynN1\reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	  <Content Include="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvPlanvedtakN1\reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </Content>
 	</ItemGroup>
