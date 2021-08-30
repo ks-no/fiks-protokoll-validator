@@ -1,11 +1,15 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821",
-            "fylkesnummer": "",
-            "landskode": ""
+            "kommunenummer": "4203",
+            "fylkesnummer": "38",
+            "landskode": "NO"
         },
-        "planidentifikasjon": "01_27_1988"
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "9",
+        "kodebeskrivelse": "Avvist"
     },
     "planbehandling": {
         "dato": "2020-01-01",

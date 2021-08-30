@@ -1,11 +1,15 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821",
-            "fylkesnummer": "",
-            "landskode": ""
+            "kommunenummer": "4203",
+            "fylkesnummer": "38",
+            "landskode": "NO"
         },
-        "planidentifikasjon": "01_27_1988"
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "3",
+        "kodebeskrivelse": "Endelig vedtatt arealplan"
     },
     "planbehandling": {
         "dato": "2020-01-01",
@@ -18,5 +22,12 @@
             "kodebeskrivelse": "Plan endelig vedtatt"
         },
         "navn": "navn på registrering"
-    }
+    },
+    "plandokument": [
+        {
+            "tittel": "planbestemmelser",
+            "dokumenttype": "docx",
+            "referanseDokumentfil": "nasjonal_mal_reguleringsplanbestemmelserbokmaal.docx"
+        }
+    ]
 }
