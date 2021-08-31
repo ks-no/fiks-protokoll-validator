@@ -11,12 +11,10 @@
     "lovreferanse": {
         "kodeverdi": "6",
         "kodebeskrivelse": "PBL 2008"
-    }
+    },
     "saksnummer": {
-        "saksår": "2010",
+        "saksår": 2010,
         "sakssekvensnummer": 1
     },
-    "forslagstillerType": {
-        
-    }
+    "forslagsstillerType": "offentlig"
 }

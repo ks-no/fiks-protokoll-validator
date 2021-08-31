@@ -124,6 +124,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
                     }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.OppdaterArealplanV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                    }
                 }
             };
         }

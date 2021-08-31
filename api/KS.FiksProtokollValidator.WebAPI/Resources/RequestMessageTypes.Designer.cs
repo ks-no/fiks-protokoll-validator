@@ -115,6 +115,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.oppdaterarealplan.v2.
+        /// </summary>
+        public static string OppdaterArealplanV2 {
+            get {
+                return ResourceManager.GetString("OppdaterArealplanV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.oppdatersaksmappe.v1.
         /// </summary>
         public static string OppdaterSaksmappeV1 {

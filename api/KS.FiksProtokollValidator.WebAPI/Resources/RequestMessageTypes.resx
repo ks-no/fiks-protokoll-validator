@@ -165,4 +165,7 @@
   <data name="RegistrerPlanbehandlingV2" xml:space="preserve">
     <value>no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2</value>
   </data>
+  <data name="OppdaterArealplanV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.oppdaterarealplan.v2</value>
+  </data>
 </root>

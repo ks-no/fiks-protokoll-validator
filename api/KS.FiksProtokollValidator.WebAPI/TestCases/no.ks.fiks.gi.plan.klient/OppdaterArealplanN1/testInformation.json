@@ -1,42 +1,12 @@
 ﻿{
-    "testName": "Opprett arealplan",
-    "description": "Opprett arealplan",
-    "testStep": "Normalsituasjon 1 Input OpprettArealplan, retur MeldingOmPlanident",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2",
-    "operation": "OpprettArealplan",
+    "testName": "Oppdater arealplan",
+    "description": "Oppdater arealplan",
+    "testStep": "Normalsituasjon 1 Input OppdaterArealplan, retur melding om mottak",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.oppdaterarealplan.v2",
+    "operation": "OppdaterArealplan",
     "situation": "N1",
-    "expectedResult": "MeldingOmPlanident i retur",
+    "expectedResult": "Bekreftet mottak",
     "queriesWithExpectedValues": [
-        {
-            "payloadQuery": "$",
-            "expectedValue": "nasjonalArealplanId",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$",
-            "expectedValue": "saksnummer",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.nasjonalArealplanId.administrativEnhet",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.nasjonalArealplanId.planidentifikasjon",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.saksnummer.saksaar",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.saksnummer.sakssekvensnummer",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        }
     ],
     "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"

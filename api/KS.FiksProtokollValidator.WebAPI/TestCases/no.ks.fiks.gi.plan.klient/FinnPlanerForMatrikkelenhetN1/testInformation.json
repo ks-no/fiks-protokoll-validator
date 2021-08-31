@@ -14,12 +14,12 @@
         },
         {
             "payloadQuery": "$",
-            "expectedValue": "arealplanId",
+            "expectedValue": "plan",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
             "payloadQuery": "$.matrikkelnummer.kommunenummer",
-            "expectedValue": "0821",
+            "expectedValue": "4203",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
@@ -33,7 +33,7 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplanId[*]",
+            "payloadQuery": "$.plan[*]",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }

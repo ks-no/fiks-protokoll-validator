@@ -10,5 +10,9 @@
     "planstatus": {
         "kodeverdi": "8",
         "kodebeskrivelse": "Opphevet"
+    },
+    "lovreferanse": {
+        "kodeverdi": "6",
+        "kodebeskrivelse": "PBL 2008"
     }
 }

@@ -9,26 +9,41 @@
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",
-            "expectedValue": "matrikkelnummer",
+            "expectedValue": "arealplaner",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$",
-            "expectedValue": "arealplanId",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.matrikkelnummer.kommunenummer",
+            "payloadQuery": "$.arealplaner.[0].arealplanId",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.matrikkelnummer.gårdsnummer",
+            "payloadQuery": "$.arealplaner.[0].plannavn",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.matrikkelnummer.bruksnummer",
+            "payloadQuery": "$.arealplaner.[0].plantype",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].planstatus",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].plandokumentasjonOppdatert",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].ubehandletKlage",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].ubehandletInnsigelse",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
