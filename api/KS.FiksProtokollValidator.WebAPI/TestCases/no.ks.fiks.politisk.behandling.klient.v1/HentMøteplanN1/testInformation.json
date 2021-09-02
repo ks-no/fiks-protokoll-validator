@@ -1,6 +1,6 @@
 ﻿{
     "testName": "Hent Møteplan, inkluder møter",
-    "description": "Send hent møteplan med inkluderMøter true",
+    "description": "Send hent møteplan",
     "testStep": "Normalsituasjon 1 Input Hent Møteplan, retur Møteplan",
     "messageType": "no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1",
     "operation": "HentMøteplan",
