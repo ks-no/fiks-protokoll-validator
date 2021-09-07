@@ -1,0 +1,53 @@
+﻿{
+    "testName": "Finn planer",
+    "description": "Finn planer",
+    "testStep": "Normalsituasjon 1 Input FinnPlan, retur plan",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.finnplaner.v2",
+    "operation": "FinnPlaner",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat registrering, og planer",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "$",
+            "expectedValue": "arealplaner",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].arealplanId",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].plannavn",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].plantype",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].planstatus",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].plandokumentasjonOppdatert",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].ubehandletKlage",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.arealplaner.[0].ubehandletInnsigelse",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

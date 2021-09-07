@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Finn planbehandlinger",
+    "description": "Finn planbehandlinger",
+    "testStep": "Normalsituasjon 1 Input FinnPlanbehandlinger, retur planbehandling(er)",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.finnplanbehandlinger.v2",
+    "operation": "FinnPlanbehandlinger",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat søk, og planbehandling(er)",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": false,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

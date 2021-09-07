@@ -1,0 +1,9 @@
+﻿{
+    "søkskriterie": [
+        {
+            "felt": "nasjonalArealplanId.planidentifikasjon",
+            "operator": "equal",
+            "parameterverdier": "09062018-2"
+        }
+    ]
+}

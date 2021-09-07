@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Tildele Planident",
+    "description": "Tildele Planident",
+    "testStep": "Normalsituasjon 1 Input OpprettArealplan, retur planident",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2",
+    "operation": "TildelePlanident",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat Opprettelse av arealplan, reur ny planident",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

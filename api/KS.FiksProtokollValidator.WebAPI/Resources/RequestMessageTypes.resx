@@ -144,4 +144,28 @@
   <data name="SendVedtakFraUtvalgV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.tjener.sendvedtakfrautvalg.v1</value>
   </data>
+  <data name="FinnPlanerForMatrikkelEnhetV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.finnplanerformatrikkelenhet.v2</value>
+  </data>
+  <data name="RegistrerDispensasjonForPlanV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.registrerdispensasjonplan.v2</value>
+  </data>
+  <data name="RegistrerPlanavgrensingV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.registrerplanavgrensning.v2</value>
+  </data>
+  <data name="FinnPlanerV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.finnplaner.v2</value>
+  </data>
+  <data name="FinnDispensasjonerV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.finndispensasjoner.v2</value>
+  </data>
+  <data name="OpprettArealplanV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2</value>
+  </data>
+  <data name="RegistrerPlanbehandlingV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2</value>
+  </data>
+  <data name="OppdaterArealplanV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.oppdatering.oppdaterarealplan.v2</value>
+  </data>
 </root>

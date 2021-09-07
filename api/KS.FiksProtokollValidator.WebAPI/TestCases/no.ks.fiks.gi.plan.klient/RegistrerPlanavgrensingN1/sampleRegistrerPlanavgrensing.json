@@ -1,0 +1,17 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "0821",
+            "fylkesnummer": "1",
+            "landskode": "NO"
+        },
+        "planidentifikasjon": "01_27_1988"
+    },
+    "vedlegg": [
+        {
+            "tittel": "Planavgrensning",
+            "dokumenttype": "KART",
+            "referanseDokumentfil": "omrissOppdatert.gml"
+        }
+    ]
+}

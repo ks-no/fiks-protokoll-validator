@@ -70,6 +70,33 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.finndispensasjoner.v2.
+        /// </summary>
+        public static string FinnDispensasjonerV2 {
+            get {
+                return ResourceManager.GetString("FinnDispensasjonerV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.finnplanerformatrikkelenhet.v2.
+        /// </summary>
+        public static string FinnPlanerForMatrikkelEnhetV2 {
+            get {
+                return ResourceManager.GetString("FinnPlanerForMatrikkelEnhetV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.finnplaner.v2.
+        /// </summary>
+        public static string FinnPlanerV2 {
+            get {
+                return ResourceManager.GetString("FinnPlanerV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1.
         /// </summary>
         public static string HentMoteplanV1 {
@@ -88,11 +115,56 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.oppdaterarealplan.v2.
+        /// </summary>
+        public static string OppdaterArealplanV2 {
+            get {
+                return ResourceManager.GetString("OppdaterArealplanV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.oppdatersaksmappe.v1.
         /// </summary>
         public static string OppdaterSaksmappeV1 {
             get {
                 return ResourceManager.GetString("OppdaterSaksmappeV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2.
+        /// </summary>
+        public static string OpprettArealplanV2 {
+            get {
+                return ResourceManager.GetString("OpprettArealplanV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.registrerdispensasjonplan.v2.
+        /// </summary>
+        public static string RegistrerDispensasjonForPlanV2 {
+            get {
+                return ResourceManager.GetString("RegistrerDispensasjonForPlanV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.registrerplanavgrensning.v2.
+        /// </summary>
+        public static string RegistrerPlanavgrensingV2 {
+            get {
+                return ResourceManager.GetString("RegistrerPlanavgrensingV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2.
+        /// </summary>
+        public static string RegistrerPlanbehandlingV2 {
+            get {
+                return ResourceManager.GetString("RegistrerPlanbehandlingV2", resourceCulture);
             }
         }
         

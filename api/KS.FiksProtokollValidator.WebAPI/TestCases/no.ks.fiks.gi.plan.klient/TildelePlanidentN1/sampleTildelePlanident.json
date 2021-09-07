@@ -1,0 +1,20 @@
+﻿{
+    "plannavn": "plannavn",
+    "plantype": {
+        "kodeverdi": "verdi",
+        "kodebeskrivelse": "beskrivelse"
+    },
+    "planstatus": {
+        "kodeverdi": "0",
+        "kodebeskrivelse": "Planide"
+    },
+    "lovreferanse": {
+        "kodeverdi": "6",
+        "kodebeskrivelse": "PBL 2008"
+    },
+    "saksnummer": {
+        "saksår": 2010,
+        "sakssekvensnummer": 1
+    },
+    "forslagsstillerType": "offentlig"
+}

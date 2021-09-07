@@ -1,0 +1,26 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "4203",
+            "fylkesnummer": "38",
+            "landskode": "NO"
+        },
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "2",
+        "kodebeskrivelse": "Planforslag"
+    },
+    "planbehandling": {
+        "dato": "2020-01-01",
+        "saksnummer": {
+            "saksår": 2020,
+            "sakssekvensnummer": 12345
+        },
+        "planbehandlingtype": {
+            "kodeverdi": "10",
+            "kodebeskrivelse": "Planforslag tatt til behandling"
+        },
+        "navn": "navn på registrering"
+    }
+}

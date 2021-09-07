@@ -1,0 +1,43 @@
+﻿{
+    "testName": "Finn planer for matrikkelenhet",
+    "description": "Send finn plan for matrikkelenhet, motta plan for matrikkelenhet",
+    "testStep": "Normalsituasjon 1 Input Finn plan for matrikkelenhet, retur plan for matrikkelenhet",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.finnplanerformatrikkelenhet.v2",
+    "operation": "FinnPlanerForMatrikkelenhet",
+    "situation": "N1",
+    "expectedResult": "Planer for matrikkelenhet",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "$",
+            "expectedValue": "matrikkelnummer",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$",
+            "expectedValue": "plan",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.matrikkelnummer.kommunenummer",
+            "expectedValue": "4203",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.matrikkelnummer.gårdsnummer",
+            "expectedValue": 1,
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.matrikkelnummer.bruksnummer",
+            "expectedValue": 2,
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.plan[*]",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}
