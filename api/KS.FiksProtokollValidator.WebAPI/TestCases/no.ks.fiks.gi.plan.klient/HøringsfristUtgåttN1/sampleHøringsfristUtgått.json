@@ -2,8 +2,8 @@
     "nasjonalArealplanId": {
         "administrativEnhet": {
             "kommunenummer": "0821",
-            "fylkesnummer": "",
-            "landskode": ""
+            "fylkesnummer": "38",
+            "landskode": "NO"
         },
         "planidentifikasjon": "01_27_1988"
     },
