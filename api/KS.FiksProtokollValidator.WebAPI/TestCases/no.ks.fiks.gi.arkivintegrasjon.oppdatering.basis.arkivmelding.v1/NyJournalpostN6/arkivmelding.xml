@@ -18,7 +18,6 @@
 				<format>PDF</format>
 				<filnavn>rekvisisjon.pdf</filnavn>
 				<referanseDokumentfil>rekvisisjon.pdf</referanseDokumentfil>
-				<filnavn>rekvisisjon.pdf</filnavn>
 			</dokumentobjekt>
 		</dokumentbeskrivelse>
 		<dokumentbeskrivelse>
@@ -30,6 +29,7 @@
 				<versjonsnummer>1</versjonsnummer>
 				<variantformat>P</variantformat>
 				<format>PDF</format>
+				<filnavn>vedlegg.pdf</filnavn>
 				<referanseDokumentfil>vedlegg.pdf</referanseDokumentfil>
 			</dokumentobjekt>
 		</dokumentbeskrivelse>
