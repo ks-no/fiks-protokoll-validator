@@ -17,14 +17,8 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
         [SetUp]
         public void Setup()
         {
-            _xmlReaderSettings = new XmlReaderSettings();
             baseFilePath = "./TestCases/no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1/NyJournalpostN1";
-        }
-
-
-        [Test]
-        public void ValidateXmlWithXsdFromFiksIO()
-        {
+            _xmlReaderSettings = new XmlReaderSettings();
             try
             {
                 _xmlReaderSettings.Schemas.Add("http://www.arkivverket.no/standarder/noark5/arkivmelding/v2",
@@ -32,14 +26,33 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 _xmlReaderSettings.Schemas.Add("http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2",
                     "./Schema/metadatakatalog.xsd");
                 _xmlReaderSettings.ValidationType = ValidationType.Schema;
+                _xmlReaderSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessInlineSchema;
+                _xmlReaderSettings.ValidationFlags |= XmlSchemaValidationFlags.ProcessSchemaLocation;
+                _xmlReaderSettings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
                 _xmlReaderSettings.ValidationEventHandler += new ValidationEventHandler(xmlReaderSettingsValidationEventHandler);
-                _xmlReader = XmlReader.Create(baseFilePath+"/arkivmelding.xml", _xmlReaderSettings);
-                while (_xmlReader.Read()) { }
-                Assert.Pass();
             }
             catch (Exception e)
             {
                 Assert.Fail(e.Message);
+            }
+        }
+
+
+        [Test]
+        public void ValidateXmlWithXsdFromFiksIO()
+        {
+            var line = String.Empty;
+            try
+            {
+                _xmlReader = XmlReader.Create(baseFilePath+"/arkivmelding.xml", _xmlReaderSettings);
+                while (_xmlReader.Read()) { }
+                Assert.Pass();
+                _xmlReader.Close();
+            }
+            catch (Exception e)
+            {
+                _xmlReader.Close();
+                //Assert.Fail(e.Message);
             }
             
         }
