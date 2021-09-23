@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Xml;
+using System.Xml.Schema;
+using FluentAssertions;
+using Xunit;
+
+namespace KS.FiksProtokollValidator.Tests.UnitTest
+{
+    public class ArkivMeldingUnitTest
+    {
+        private List<string> _xmlValidationMessages;
+        private readonly XmlReaderSettings _xmlReaderSettings;
+        private readonly string _baseFilePath;
+
+        public ArkivMeldingUnitTest()
+        {
+            _baseFilePath = "./TestCases/no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1/";
+            // Process the message
+            var arkivmeldingXmlSchemaSet = new XmlSchemaSet();
+            arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/arkivmelding/v2", "./Schema/arkivmelding.xsd");
+            arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2", "./Schema/metadatakatalog.xsd");
+            arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/sok", "./Schema/sok.xsd");
+            _xmlReaderSettings = new XmlReaderSettings
+            {
+                ValidationType = ValidationType.Schema
+            };
+            _xmlReaderSettings.Schemas.Add(arkivmeldingXmlSchemaSet);
+            _xmlReaderSettings.ValidationFlags |= XmlSchemaValidationFlags.ReportValidationWarnings;
+            _xmlReaderSettings.ValidationEventHandler += XmlReaderSettingsValidationEventHandler;
+        }
+        
+        [Theory(DisplayName = "Arkivmelding validering")]
+        [InlineData("NyJournalpostN1")]
+        [InlineData("NyJournalpostN6")]
+        [InlineData("NyJournalpostN8")]
+        [InlineData("NySaksmappeN1")]
+        [InlineData("NySokN1")]
+        public void ValidateArkivMelding(string caseFolder)
+        {
+            _xmlValidationMessages = new List<string>();
+            try
+            {
+                using (XmlReader validationReader = XmlReader.Create($"{_baseFilePath}{caseFolder}/arkivmelding.xml", _xmlReaderSettings))
+                {
+                    try
+                    {
+                        while (validationReader.Read())
+                        { }
+                    }
+                    catch (XmlException ex)
+                    {
+                        _xmlValidationMessages.Add(ex.Message + " XSD validering");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                _xmlValidationMessages.Add(e.Message + " XSD validering");
+            }
+            _xmlValidationMessages.Should().BeEmpty();
+        }
+        
+        
+        
+        private void XmlReaderSettingsValidationEventHandler(object? sender, ValidationEventArgs e)
+        {
+            switch (e.Severity)
+            {
+                case XmlSeverityType.Warning:
+                    _xmlValidationMessages.Add("linje " + e.Exception.LineNumber + ", posisjon " + e.Exception.LinePosition + " " + e.Message);
+                    break;
+                case XmlSeverityType.Error:
+                    _xmlValidationMessages.Add("linje " + e.Exception.LineNumber + ", posisjon " + e.Exception.LinePosition + " " + e.Message);
+                    break;
+            }
+        }
+
+    }
+}
