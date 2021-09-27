@@ -22,8 +22,12 @@
     "plandokument": [
         {
             "tittel": "Vedtak",
-            "dokumenttype": "docx",
-            "referanseDokumentfil": "reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc"
+            "dokumenttype": {
+                "kodeverdi": "VEDTAK",
+                "kodebeskrivelse": "Vedtak"
+            },
+            "referanseDokumentfil": "reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc",
+            "arkivnavn": "vedtak reguleringsplan"
         }
     ]
 }

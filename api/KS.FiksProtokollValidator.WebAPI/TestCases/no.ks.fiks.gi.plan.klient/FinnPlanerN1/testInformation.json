@@ -9,41 +9,41 @@
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",
-            "expectedValue": "arealplaner",
+            "expectedValue": "plan",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplaner.[0].arealplanId",
+            "payloadQuery": "$.plan.[0].arealplanId",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplaner.[0].plannavn",
+            "payloadQuery": "$.plan.[0].plannavn",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplaner.[0].plantype",
+            "payloadQuery": "$.plan.[0].plantype",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplaner.[0].planstatus",
+            "payloadQuery": "$.plan.[0].planstatus",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplaner.[0].plandokumentasjonOppdatert",
+            "payloadQuery": "$.plan.[0].plandokumentasjonOppdatert",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplaner.[0].ubehandletKlage",
+            "payloadQuery": "$.plan.[0].ubehandletKlage",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.arealplaner.[0].ubehandletInnsigelse",
+            "payloadQuery": "$.plan.[0].ubehandletInnsigelse",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
