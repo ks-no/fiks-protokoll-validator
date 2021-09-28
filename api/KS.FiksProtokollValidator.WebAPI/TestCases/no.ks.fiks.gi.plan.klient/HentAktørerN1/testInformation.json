@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Hent aktører",
+    "description": "Hent aktører",
+    "testStep": "Normalsituasjon 1 Input HentAktører, retur aktører",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.hentaktører.v2",
+    "operation": "HentAktører",
+    "situation": "N1",
+    "expectedResult": "Retur av aktører",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

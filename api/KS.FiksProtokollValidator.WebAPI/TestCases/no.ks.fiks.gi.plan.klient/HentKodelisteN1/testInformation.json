@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Hent kodeliste",
+    "description": "HentKodeliste",
+    "testStep": "Normalsituasjon 1 Input HentKodeliste, retur kodeliste",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.hentkodeliste.v2",
+    "operation": "HentKodeliste",
+    "situation": "N1",
+    "expectedResult": "Retur av kodeliste",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

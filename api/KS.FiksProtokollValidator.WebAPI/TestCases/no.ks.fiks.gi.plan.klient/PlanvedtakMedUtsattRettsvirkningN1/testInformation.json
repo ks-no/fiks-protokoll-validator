@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Planvedtak med utsatt rettsvirkning",
+    "description": "Planvedtak med utsatt rettsvirkning",
+    "testStep": "Normalsituasjon 1 Input PlanvedtakMedUtsattRettsvirkning, retur bekreftelse på mottak",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2",
+    "operation": "PlanvedtakMedUtsattRettsvirkning",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat Planvedtak med utsatt rettsvirkning",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}
