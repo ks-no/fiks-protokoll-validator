@@ -138,7 +138,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnDispensasjonerForSøkV2,
-                WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2
+                WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2,
+                WebAPI.Resources.ResponseMessageTypes.AktørerV2,
+                WebAPI.Resources.ResponseMessageTypes.BboxV2,
+                WebAPI.Resources.ResponseMessageTypes.RelatertePlanerV2,
+                WebAPI.Resources.ResponseMessageTypes.GjeldendePlanbestemmelserV2,
+                WebAPI.Resources.ResponseMessageTypes.KodelisteV2
             };
         }
 

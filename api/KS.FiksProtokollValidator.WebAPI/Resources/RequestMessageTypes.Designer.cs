@@ -79,11 +79,29 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.finnplandokumenter.v2.
+        /// </summary>
+        public static string FinnPlandokumenterV2 {
+            get {
+                return ResourceManager.GetString("FinnPlandokumenterV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.finnplanerformatrikkelenhet.v2.
         /// </summary>
         public static string FinnPlanerForMatrikkelEnhetV2 {
             get {
                 return ResourceManager.GetString("FinnPlanerForMatrikkelEnhetV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.finnplanerforområde.v2.
+        /// </summary>
+        public static string FinnPlanerForOmrådeV2 {
+            get {
+                return ResourceManager.GetString("FinnPlanerForOmrådeV2", resourceCulture);
             }
         }
         
@@ -97,11 +115,74 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.hentaktører.v2.
+        /// </summary>
+        public static string HentAktørerV2 {
+            get {
+                return ResourceManager.GetString("HentAktørerV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.hentbboxforplan.v2.
+        /// </summary>
+        public static string HentBboxV2 {
+            get {
+                return ResourceManager.GetString("HentBboxV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.hentgjeldendeplanbestemmelser.v2.
+        /// </summary>
+        public static string HentGjeldendePlanbestemmelserV2 {
+            get {
+                return ResourceManager.GetString("HentGjeldendePlanbestemmelserV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.hentkodeliste.v2.
+        /// </summary>
+        public static string HentKodelisteV2 {
+            get {
+                return ResourceManager.GetString("HentKodelisteV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1.
         /// </summary>
         public static string HentMoteplanV1 {
             get {
                 return ResourceManager.GetString("HentMoteplanV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.hentplanfil.v2.
+        /// </summary>
+        public static string HentPlanfilV2 {
+            get {
+                return ResourceManager.GetString("HentPlanfilV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.hentplanområder.v2.
+        /// </summary>
+        public static string HentPlanområderV2 {
+            get {
+                return ResourceManager.GetString("HentPlanområderV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.hentrelaterteplaner.v2.
+        /// </summary>
+        public static string HentRelatertePlanerV2 {
+            get {
+                return ResourceManager.GetString("HentRelatertePlanerV2", resourceCulture);
             }
         }
         
@@ -120,6 +201,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         public static string OppdaterArealplanV2 {
             get {
                 return ResourceManager.GetString("OppdaterArealplanV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.oppdaterdispensasjon.v2.
+        /// </summary>
+        public static string OppdaterDispensasjonV2 {
+            get {
+                return ResourceManager.GetString("OppdaterDispensasjonV2", resourceCulture);
             }
         }
         
@@ -147,6 +237,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         public static string RegistrerDispensasjonForPlanV2 {
             get {
                 return ResourceManager.GetString("RegistrerDispensasjonForPlanV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.oppdatering.registrermidlertidigforbudmottiltak.v2.
+        /// </summary>
+        public static string RegistrerMidlertidigForbudMotTiltakV2 {
+            get {
+                return ResourceManager.GetString("RegistrerMidlertidigForbudMotTiltakV2", resourceCulture);
             }
         }
         

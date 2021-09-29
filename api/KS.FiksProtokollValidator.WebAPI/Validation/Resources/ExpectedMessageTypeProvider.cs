@@ -131,6 +131,69 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
                     }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentAktørerV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.AktørerV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentBboxV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.BboxV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentKodelisteV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.KodelisteV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentPlanfilV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.PlanfilV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentPlanområderV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.PlanområderV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentRelatertePlanerV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.RelatertePlanerV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.HentGjeldendePlanbestemmelserV2,
+                    new List<string>
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.GjeldendePlanbestemmelserV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.OppdaterDispensasjonV2,
+                    new List<string>()
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                    }
+                },
+                {
+                    WebAPI.Resources.RequestMessageTypes.RegistrerMidlertidigForbudMotTiltakV2,
+                    new List<string>()
+                    {
+                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                    }
                 }
             };
         }

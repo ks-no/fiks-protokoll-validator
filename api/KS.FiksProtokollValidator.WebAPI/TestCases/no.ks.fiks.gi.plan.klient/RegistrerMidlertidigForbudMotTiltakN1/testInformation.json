@@ -2,7 +2,7 @@
     "testName": "Registrer midlertidig forbud mot tiltak",
     "description": "Registrer midlertidig forbud mot tiltak",
     "testStep": "Normalsituasjon 1 Input RegistrerMidlertidigForbudMotTiltak, retur bekreftelse på mottak",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerdispensasjonplan.v2",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrermidlertidigforbudmottiltak.v2",
     "operation": "RegistrerMidlertidigForbudMotTiltak",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering",

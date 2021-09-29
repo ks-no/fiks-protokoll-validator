@@ -61,6 +61,24 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.aktører.v2.
+        /// </summary>
+        public static string AktørerV2 {
+            get {
+                return ResourceManager.GetString("AktørerV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.bbox.v2.
+        /// </summary>
+        public static string BboxV2 {
+            get {
+                return ResourceManager.GetString("BboxV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.arkivintegrasjon.feil.v1.
         /// </summary>
         public static string FeilV1 {
@@ -79,6 +97,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.plandokumenter.v2.
+        /// </summary>
+        public static string FinnPlandokumenterV2 {
+            get {
+                return ResourceManager.GetString("FinnPlandokumenterV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planerformatrikkelenhet.v2.
         /// </summary>
         public static string FinnPlanerForMatrikkelenhetV2 {
@@ -88,11 +115,29 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planerforområde.v2.
+        /// </summary>
+        public static string FinnPlanerForOmrådeV2 {
+            get {
+                return ResourceManager.GetString("FinnPlanerForOmrådeV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planerforsøk.v2.
         /// </summary>
         public static string FinnPlanerV2 {
             get {
                 return ResourceManager.GetString("FinnPlanerV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.gjeldendeplanbestemmelser.v2.
+        /// </summary>
+        public static string GjeldendePlanbestemmelserV2 {
+            get {
+                return ResourceManager.GetString("GjeldendePlanbestemmelserV2", resourceCulture);
             }
         }
         
@@ -120,6 +165,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         public static string InnsynSoekResultatV1 {
             get {
                 return ResourceManager.GetString("InnsynSoekResultatV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.kodeliste.v2.
+        /// </summary>
+        public static string KodelisteV2 {
+            get {
+                return ResourceManager.GetString("KodelisteV2", resourceCulture);
             }
         }
         
@@ -165,6 +219,33 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         public static string MottattV1 {
             get {
                 return ResourceManager.GetString("MottattV1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planfil.v2.
+        /// </summary>
+        public static string PlanfilV2 {
+            get {
+                return ResourceManager.GetString("PlanfilV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planområder.v2.
+        /// </summary>
+        public static string PlanområderV2 {
+            get {
+                return ResourceManager.GetString("PlanområderV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.relaterteplaner.v2.
+        /// </summary>
+        public static string RelatertePlanerV2 {
+            get {
+                return ResourceManager.GetString("RelatertePlanerV2", resourceCulture);
             }
         }
         
