@@ -12,6 +12,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private readonly Guid _senderId;
         private FiksIOClient _client;
         private AppSettings _appSettings;
+        private const int TtlMinutes = 5; 
 
         public FiksRequestMessageService(AppSettings appAppSettings)
         {
@@ -25,7 +26,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         public Guid Send(FiksRequest fiksRequest, Guid receiverId)
         {
-            var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType);
+            var ttl = new TimeSpan(0, TtlMinutes, 0); 
+            var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType, ttl);
 
             var payloads = new List<IPayload>();
 
