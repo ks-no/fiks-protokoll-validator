@@ -186,4 +186,7 @@
   <data name="RelatertePlanerV2" xml:space="preserve">
     <value>no.ks.fiks.gi.plan.innsyn.relaterteplaner.v2</value>
   </data>
+  <data name="PlandokumenterV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.plandokumenter.v2</value>
+  </data>
 </root>

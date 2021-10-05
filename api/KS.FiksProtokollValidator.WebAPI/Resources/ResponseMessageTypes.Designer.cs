@@ -223,6 +223,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.plandokumenter.v2.
+        /// </summary>
+        public static string PlandokumenterV2 {
+            get {
+                return ResourceManager.GetString("PlandokumenterV2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to no.ks.fiks.gi.plan.innsyn.planfil.v2.
         /// </summary>
         public static string PlanfilV2 {
