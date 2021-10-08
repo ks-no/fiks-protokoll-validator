@@ -7,7 +7,7 @@
     },
     "planstatus": {
         "kodeverdi": "0",
-        "kodebeskrivelse": "Planide"
+        "kodebeskrivelse": "Planinitiativ/Grunnlag for oppstart"
     },
     "planbehandling": {
         "dato": "2020-01-01",
@@ -19,6 +19,35 @@
             "kodeverdi": "1",
             "kodebeskrivelse": "Mottatt planinitiativ/Bestilling av oppstartsmøte"
         },
-        "navn": "navn på registrering"
-    }
+        "navn": "Planinitiativ for detaljregulering av planveien 5"
+    },
+    "plandokument": [
+        {
+            "tittel": "Planinitiativ for detaljregulering av planveien 5",
+            "dokumenttype": {
+                "kodeverdi": "KORR",
+                "kodebeskrivelse": "Korrespondanse"
+            },
+            "referanseDokumentfil": "planinitiativ.doc",
+            "arkivnavn": "planarkiv"
+        },
+        {
+            "tittel": "Plangrense for detaljregulering av planveien 5",
+            "dokumenttype": {
+                "kodeverdi": "KART",
+                "kodebeskrivelse": "Kart"
+            },
+            "referanseDokumentfil": "plangrense.gml",
+            "arkivnavn": "planarkiv"
+        },
+        {
+            "tittel": "Plangrense for detaljregulering av planveien 5",
+            "dokumenttype": {
+                "kodeverdi": "KART",
+                "kodebeskrivelse": "Kart"
+            },
+            "referanseDokumentfil": "plangrense.pdf",
+            "arkivnavn": "planarkiv"
+        }
+     ]
 }
