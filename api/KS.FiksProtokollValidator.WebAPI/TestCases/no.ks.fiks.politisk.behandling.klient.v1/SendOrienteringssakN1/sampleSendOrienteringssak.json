@@ -6,12 +6,12 @@
         }
     ],
     "sak": {
-        "referanseEksternNøkkel": {
+        "referanseEksternNoekkel": {
             "fagsystem": "ePlansak",
-            "nøkkel": "AB123456789"
+            "noekkel": "AB123456789"
         },
         "fagsystemetsSaksnummer": {
-            "saksår": 2021,
+            "saksaar": 2021,
             "sakssekvensnummer": 11
         },
         "tittel": "Orientering om ny forskrift ....",
