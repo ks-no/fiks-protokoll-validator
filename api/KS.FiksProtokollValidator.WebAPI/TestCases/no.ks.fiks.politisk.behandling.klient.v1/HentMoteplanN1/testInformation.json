@@ -1,0 +1,43 @@
+{
+    "testName": "Hent Møteplan, inkluder møter",
+    "description": "Send hent møteplan med inkluderMøter true",
+    "testStep": "Normalsituasjon 1 Input Hent Møteplan, retur Møteplan",
+    "messageType": "no.ks.fiks.politisk.behandling.klient.hentmoteplan.v1",
+    "operation": "HentMoteplan",
+    "situation": "N1",
+    "expectedResult": "Møteplan med utfylte standardverdier",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "$",
+            "expectedValue": "utvalgId",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$",
+            "expectedValue": "utvalgNavn",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$",
+            "expectedValue": "møte",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.utvalgId",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.utvalgNavn",
+            "expectedValue": "Plan og byggesak",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "$.møte[*]",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.politisk.behandling.klient.v1"
+}
