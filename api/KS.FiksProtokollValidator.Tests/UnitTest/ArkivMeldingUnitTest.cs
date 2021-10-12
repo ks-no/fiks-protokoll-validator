@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 using FluentAssertions;
-using Xunit;
+using NUnit.Framework;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {
@@ -13,6 +13,16 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
         private List<string> _xmlValidationMessages;
         private readonly XmlReaderSettings _xmlReaderSettings;
         private readonly string _baseFilePath;
+        
+        [DatapointSource]
+        public string[] TestCasesValues = 
+        {
+            "NyJournalpostN1",
+            "NyJournalpostN6",
+            "NyJournalpostN8",
+            "NySaksmappeN1",
+            "NySokN1"
+        };
 
         public ArkivMeldingUnitTest()
         {
@@ -31,12 +41,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             _xmlReaderSettings.ValidationEventHandler += XmlReaderSettingsValidationEventHandler;
         }
         
-        [Theory(DisplayName = "Arkivmelding validering")]
-        [InlineData("NyJournalpostN1")]
-        [InlineData("NyJournalpostN6")]
-        [InlineData("NyJournalpostN8")]
-        [InlineData("NySaksmappeN1")]
-        [InlineData("NySokN1")]
+        [Theory]
         public void ValidateArkivMelding(string caseFolder)
         {
             _xmlValidationMessages = new List<string>();

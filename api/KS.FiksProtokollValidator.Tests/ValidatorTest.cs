@@ -30,7 +30,7 @@ namespace KS.FiksProtokollValidator.Tests
                 ValueType = SearchValueType.Attribute,
             };
 
-            var requestPayloadFilePath = @"TestData\Requests\ny_inngaaende.xml";
+            var requestPayloadFilePath = "./TestData/Requests/ny_inngaaende.xml";
 
             _testCase = new TestCase
             {
@@ -38,6 +38,7 @@ namespace KS.FiksProtokollValidator.Tests
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
+                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>()
             };
 
             _testCase.FiksResponseTests.Add(_fiksResponseTest);
@@ -47,7 +48,7 @@ namespace KS.FiksProtokollValidator.Tests
                 Type = WebAPI.Resources.ResponseMessageTypes.MottattV1,
             };
 
-            var responsePayloadFilePath = @"TestData\Responses\svar_paa_ny_inngaaende.xml";
+            var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
 
             _fiksResponseKvittering = new FiksResponse
             {
@@ -64,7 +65,7 @@ namespace KS.FiksProtokollValidator.Tests
                 SentAt = DateTime.Now,
                 IsFiksResponseValidated = false,
                 FiksResponseValidationErrors = new List<string>(),
-                TestCase = _testCase
+                TestCase = _testCase,
             };
 
             _fiksRequest.FiksResponses.Add(_fiksResponseMottatt);
