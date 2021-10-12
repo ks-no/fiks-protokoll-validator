@@ -1,5 +1,5 @@
 {
-    "testName": "Hent Møteplan",
+    "testName": "Hent Møteplan, inkluder møter",
     "description": "Send hent møteplan",
     "testStep": "Normalsituasjon 1 Input Hent Møteplan, retur Møteplan",
     "messageType": "no.ks.fiks.politisk.behandling.klient.hentmoeteplan.v1",
