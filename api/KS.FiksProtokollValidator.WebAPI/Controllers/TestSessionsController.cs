@@ -110,9 +110,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 }
                 catch (Exception e)
                 {
+                    Log.Error(e, "Noe gikk galt ved sending av request til {FiksKonto}", testSession.RecipientId);
                     if (e.InnerException.Message.Contains("Ingen konto med id"))
                     {
-                        Log.Error("TestSession FIKS-account {0} is illegal", testSession.RecipientId);
+                        Log.Error("TestSession FIKS-account {FiksKonto} is illegal", testSession.RecipientId);
                         return BadRequest("Ugyldig konto: " + testSession.RecipientId);
                     }
                     Log.Error("An Error occured when sending FIKS request with recipient ID {0}", testSession.RecipientId);
