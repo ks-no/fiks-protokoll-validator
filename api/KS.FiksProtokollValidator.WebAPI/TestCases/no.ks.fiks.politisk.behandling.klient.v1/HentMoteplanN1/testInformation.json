@@ -3,7 +3,7 @@
     "description": "Send hent møteplan",
     "testStep": "Normalsituasjon 1 Input Hent Møteplan, retur Møteplan",
     "messageType": "no.ks.fiks.politisk.behandling.klient.hentmoeteplan.v1",
-    "operation": "HentMoeteplan",
+    "operation": "HentMoteplan",
     "situation": "N1",
     "expectedResult": "Møteplan med utfylte standardverdier",
     "queriesWithExpectedValues": [
