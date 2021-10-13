@@ -136,7 +136,7 @@
     <value>no.ks.fiks.kvittering.ugyldigforespørsel.v1</value>
   </data>
   <data name="HentMoteplanResultatV1" xml:space="preserve">
-    <value>no.ks.fiks.politisk.behandling.tjener.resultatmoteplan.v1</value>
+    <value>no.ks.fiks.politisk.behandling.tjener.resultatmoeteplan.v1</value>
   </data>
   <data name="HentUtvalgResultatV1" xml:space="preserve">
     <value>no.ks.fiks.politisk.behandling.tjener.resultatutvalg.v1</value>
