@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
@@ -35,38 +36,38 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentMoteplanV1,
+                    PolitiskBehandlingMeldingTypeV1.HentMoeteplan,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultatV1
+                        PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentUtvalgV1,
+                    PolitiskBehandlingMeldingTypeV1.HentUtvalg,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.HentUtvalgResultatV1
+                        PolitiskBehandlingMeldingTypeV1.ResultatUtvalg
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.SendUtvalgV1,
+                    PolitiskBehandlingMeldingTypeV1.SendUtvalgssak,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                        PolitiskBehandlingMeldingTypeV1.Mottatt
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.SendOrienteringssakV1,
+                    PolitiskBehandlingMeldingTypeV1.SendOrienteringssak,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                        PolitiskBehandlingMeldingTypeV1.Mottatt
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.SendDelegertVedtakV1,
+                    PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                        PolitiskBehandlingMeldingTypeV1.Mottatt
                     }
                 },
                 {
