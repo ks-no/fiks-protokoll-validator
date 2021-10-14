@@ -45,30 +45,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources {
             }
         }
         
-        public static string ArkivmeldingV1 {
-            get {
-                return ResourceManager.GetString("ArkivmeldingV1", resourceCulture);
-            }
-        }
-        
-        public static string OppdaterSaksmappeV1 {
-            get {
-                return ResourceManager.GetString("OppdaterSaksmappeV1", resourceCulture);
-            }
-        }
-        
-        public static string SoekV1 {
-            get {
-                return ResourceManager.GetString("SoekV1", resourceCulture);
-            }
-        }
-        
-        public static string SendVedtakFraUtvalgV1 {
-            get {
-                return ResourceManager.GetString("SendVedtakFraUtvalgV1", resourceCulture);
-            }
-        }
-        
         public static string FinnPlanerForMatrikkelEnhetV2 {
             get {
                 return ResourceManager.GetString("FinnPlanerForMatrikkelEnhetV2", resourceCulture);

@@ -120,29 +120,8 @@
   <data name="FeilV1" xml:space="preserve">
     <value>no.ks.fiks.gi.arkivintegrasjon.feil.v1</value>
   </data>
-  <data name="InnsynSoekResultatV1" xml:space="preserve">
-    <value>no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.resultat.v1</value>
-  </data>
-  <data name="KvitteringV1" xml:space="preserve">
-    <value>no.ks.fiks.gi.arkivintegrasjon.kvittering.v1</value>
-  </data>
-  <data name="MottattV1" xml:space="preserve">
-    <value>no.ks.fiks.gi.arkivintegrasjon.mottatt.v1</value>
-  </data>
   <data name="Timeout" xml:space="preserve">
     <value>no.ks.fiks.kvittering.tidsavbrudd</value>
-  </data>
-  <data name="UgyldigforespørselV1" xml:space="preserve">
-    <value>no.ks.fiks.kvittering.ugyldigforespørsel.v1</value>
-  </data>
-  <data name="HentMoteplanResultatV1" xml:space="preserve">
-    <value>no.ks.fiks.politisk.behandling.tjener.resultatmoeteplan.v1</value>
-  </data>
-  <data name="HentUtvalgResultatV1" xml:space="preserve">
-    <value>no.ks.fiks.politisk.behandling.tjener.resultatutvalg.v1</value>
-  </data>
-  <data name="MottattPolitiskBehandlingV1" xml:space="preserve">
-    <value>no.ks.fiks.politisk.behandling.mottatt.v1</value>
   </data>
   <data name="FinnPlanerForMatrikkelenhetV2" xml:space="preserve">
     <value>no.ks.fiks.gi.plan.innsyn.planerformatrikkelenhet.v2</value>
