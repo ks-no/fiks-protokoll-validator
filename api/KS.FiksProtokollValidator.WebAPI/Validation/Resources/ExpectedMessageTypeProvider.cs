@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
+using KS.Fiks.IO.Arkiv.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
@@ -13,26 +14,26 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
             return new Dictionary<string, List<string>>
             {
                 {
-                    WebAPI.Resources.RequestMessageTypes.ArkivmeldingV1,
+                    ArkivintegrasjonMeldingTypeV1.BasisArkivmelding,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattV1,
-                        WebAPI.Resources.ResponseMessageTypes.KvitteringV1
+                        ArkivintegrasjonMeldingTypeV1.Mottatt,
+                        ArkivintegrasjonMeldingTypeV1.Kvittering
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.OppdaterSaksmappeV1,
+                    ArkivintegrasjonMeldingTypeV1.BasisOppdaterSaksmappe,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattV1,
-                        WebAPI.Resources.ResponseMessageTypes.KvitteringV1
+                        ArkivintegrasjonMeldingTypeV1.Mottatt,
+                        ArkivintegrasjonMeldingTypeV1.Kvittering
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.SoekV1,
+                    ArkivintegrasjonMeldingTypeV1.InnsynSok,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.InnsynSoekResultatV1
+                        ArkivintegrasjonMeldingTypeV1.InnsynSokResultat
                     }
                 },
                 {
@@ -71,10 +72,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.SendVedtakFraUtvalgV1,
+                    PolitiskBehandlingMeldingTypeV1.ResultatSendVedtakFraUtvalg,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattPolitiskBehandlingV1
+                        PolitiskBehandlingMeldingTypeV1.Mottatt
                     }
                 },
                 {
