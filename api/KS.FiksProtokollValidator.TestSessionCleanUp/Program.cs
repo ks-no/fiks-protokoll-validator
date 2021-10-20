@@ -11,11 +11,11 @@ using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.TestSessionCleanUp
 {
-    class Program
+    internal static class Program
     {
         static async Task Main(string[] args)
         {
-            int NumberOfDays = -30;
+            const int numberOfDays = -30;
 
             var loggerConfiguration = new LoggerConfiguration()
                 .MinimumLevel.Information()
@@ -27,40 +27,40 @@ namespace KS.FiksProtokollValidator.TestSessionCleanUp
 
             Log.Logger = loggerConfiguration.CreateLogger();
 
-            IConfiguration Configuration = new ConfigurationBuilder()
+            IConfiguration configuration = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 .AddCommandLine(args)
                 .Build();
 
             var options = new DbContextOptionsBuilder<FiksIOMessageDBContext>()
-                .UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection"))
                 .Options;
-            FiksIOMessageDBContext _context = new FiksIOMessageDBContext(options);
+            var context = new FiksIOMessageDBContext(options);
 
-            Log.Information($"Starting to delete records older than {NumberOfDays * -1} days in database.");
-            var testSessions = _context.TestSessions.Include(e => e.FiksRequests).ThenInclude(e => e.FiksResponses);
+            Log.Information($"Starting to delete records older than {numberOfDays * -1} days in database.");
+            var testSessions = context.TestSessions.Include(e => e.FiksRequests).ThenInclude(e => e.FiksResponses);
 
-            foreach (TestSession testSession in testSessions)
+            foreach (var testSession in testSessions)
             {
 
-                if (testSession.CreatedAt < DateTime.Now.AddDays(NumberOfDays))
+                if (testSession.CreatedAt < DateTime.Now.AddDays(numberOfDays))
                 {
-                    foreach (FiksRequest fiksRequest in testSession.FiksRequests)
+                    foreach (var fiksRequest in testSession.FiksRequests)
                     {
-                        foreach (FiksResponse fiksResponse in fiksRequest.FiksResponses)
+                        foreach (var fiksResponse in fiksRequest.FiksResponses)
                         {
                             Log.Information($"Deleting FiksResponse: {fiksResponse.Id}");
-                            _context.FiksResponse.Remove(fiksResponse);
+                            context.FiksResponse.Remove(fiksResponse);
                         }
                         Log.Information($"Deleting FiksRequest: {fiksRequest.MessageGuid}");
-                        _context.FiksRequest.Remove(fiksRequest);
+                        context.FiksRequest.Remove(fiksRequest);
                     }
                     Log.Information($"Deleting TestSession: {testSession.Id}");
-                    _context.TestSessions.Remove(testSession);
+                    context.TestSessions.Remove(testSession);
                 }
             }
-            _context.SaveChanges();
+            await context.SaveChangesAsync();
         }
     }
 }
