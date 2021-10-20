@@ -29,12 +29,13 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         {
             _scopeFactory = scopeFactory;
             _appSettings = appSettings;
+            _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            Logger.Information("Starter subscription - ExectueAsync");
             stoppingToken.ThrowIfCancellationRequested();
-            _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
             var onReceived = new EventHandler<MottattMeldingArgs>(OnMottattMelding);
             _client.NewSubscription(onReceived);   
             
