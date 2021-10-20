@@ -18,10 +18,10 @@ using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
-    public class FiksResponseMessageService : IHostedService
+    public class FiksResponseMessageService : BackgroundService
     {
         private IFiksIOClient _client;
-        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly AppSettings _appSettings;
 
@@ -29,18 +29,16 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         {
             _scopeFactory = scopeFactory;
             _appSettings = appSettings;
+        }
+
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            stoppingToken.ThrowIfCancellationRequested();
             _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
-        }
-        
-
-        public async Task StartAsync(CancellationToken cancellationToken)
-        {
-            _client.NewSubscription(OnMottattMelding);
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            var onReceived = new EventHandler<MottattMeldingArgs>(OnMottattMelding);
+            _client.NewSubscription(onReceived);   
+            
+            await Task.CompletedTask;
         }
 
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
