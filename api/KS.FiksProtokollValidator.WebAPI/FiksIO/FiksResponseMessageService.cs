@@ -20,8 +20,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     public class FiksResponseMessageService : IHostedService
     {
-        private IFiksIOClient _client;
-        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly IFiksIOClient _client;
+        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly AppSettings _appSettings;
 
@@ -33,7 +33,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         }
         
 
-        public async Task StartAsync(CancellationToken cancellationToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
             _client.NewSubscription(OnMottattMelding);
         }
