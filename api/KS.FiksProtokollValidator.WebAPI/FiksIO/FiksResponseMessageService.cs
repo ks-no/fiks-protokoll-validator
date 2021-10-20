@@ -33,7 +33,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         }
         
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public async Task StartAsync(CancellationToken cancellationToken)
         {
             _client.NewSubscription(OnMottattMelding);
         }
