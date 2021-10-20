@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using KS.Fiks.IO.Arkiv.Client.Models;
+using KS.Fiks.IO.Client.Models.Feilmelding;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
@@ -34,7 +36,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _testCase = new TestCase
             {
-                MessageType = WebAPI.Resources.RequestMessageTypes.ArkivmeldingV1,
+                MessageType = ArkivintegrasjonMeldingTypeV1.BasisArkivmelding,
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
@@ -45,14 +47,14 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseMottatt = new FiksResponse
             {
-                Type = WebAPI.Resources.ResponseMessageTypes.MottattV1,
+                Type = ArkivintegrasjonMeldingTypeV1.Mottatt,
             };
 
             var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
 
             _fiksResponseKvittering = new FiksResponse
             {
-                Type = WebAPI.Resources.ResponseMessageTypes.KvitteringV1,
+                Type = FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
                 ReceivedAt = DateTime.Now,
                 Payload = responsePayloadFilePath,
                 PayloadContent = File.ReadAllText(responsePayloadFilePath),

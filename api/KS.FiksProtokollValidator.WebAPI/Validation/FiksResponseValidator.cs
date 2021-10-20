@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using KS.Fiks.IO.Arkiv.Client.Models;
+using KS.Fiks.IO.Client.Models.Feilmelding;
+using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using Newtonsoft.Json.Linq;
@@ -129,12 +132,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
             return new()
             {
-                WebAPI.Resources.ResponseMessageTypes.KvitteringV1,
-                WebAPI.Resources.ResponseMessageTypes.InnsynSoekResultatV1,
-                WebAPI.Resources.ResponseMessageTypes.FeilV1,
-                WebAPI.Resources.ResponseMessageTypes.HentMoteplanResultatV1,
-                WebAPI.Resources.ResponseMessageTypes.HentUtvalgResultatV1,
-                WebAPI.Resources.ResponseMessageTypes.UgyldigforespørselV1,
+                ArkivintegrasjonMeldingTypeV1.Kvittering,
+                ArkivintegrasjonMeldingTypeV1.InnsynSokResultat,
+                WebAPI.Resources.ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
+                PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
+                PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
+                FeilmeldingMeldingTypeV1.Ugyldigforespørsel
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnDispensasjonerForSøkV2,
