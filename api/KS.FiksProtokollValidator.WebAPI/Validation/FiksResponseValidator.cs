@@ -137,7 +137,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 WebAPI.Resources.ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FeilmeldingMeldingTypeV1.Ugyldigforespørsel
+                FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnDispensasjonerForSøkV2,
