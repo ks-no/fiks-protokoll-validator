@@ -20,7 +20,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     public class FiksResponseMessageService : BackgroundService
     {
-        private IFiksIOClient _client;
+        private readonly IFiksIOClient _client;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private readonly AppSettings _appSettings;
@@ -36,9 +36,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         {
             Logger.Information("Starter subscription - ExectueAsync");
             stoppingToken.ThrowIfCancellationRequested();
-            var onReceived = new EventHandler<MottattMeldingArgs>(OnMottattMelding);
-            _client.NewSubscription(onReceived);   
-            
+            _client.NewSubscription(OnMottattMelding);   
             await Task.CompletedTask;
         }
 

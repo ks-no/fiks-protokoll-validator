@@ -385,3 +385,4 @@ MigrationBackup/
 *.cer
 fiks-io-config.json
 appsettings.development.json
+appsettings.Test.json
