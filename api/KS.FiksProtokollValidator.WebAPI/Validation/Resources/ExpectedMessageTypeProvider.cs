@@ -54,28 +54,28 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     PolitiskBehandlingMeldingTypeV1.SendUtvalgssak,
                     new List<string>
                     {
-                        PolitiskBehandlingMeldingTypeV1.Mottatt
+                        PolitiskBehandlingMeldingTypeV1.SendUtvalgssakKvittering
                     }
                 },
                 {
                     PolitiskBehandlingMeldingTypeV1.SendOrienteringssak,
                     new List<string>
                     {
-                        PolitiskBehandlingMeldingTypeV1.Mottatt
+                        PolitiskBehandlingMeldingTypeV1.SendOrienteringssakKvittering
                     }
                 },
                 {
                     PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak,
                     new List<string>
                     {
-                        PolitiskBehandlingMeldingTypeV1.Mottatt
+                        PolitiskBehandlingMeldingTypeV1.SendDelegertVedtakKvittering
                     }
                 },
                 {
-                    PolitiskBehandlingMeldingTypeV1.ResultatSendVedtakFraUtvalg,
+                    PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg,
                     new List<string>
                     {
-                        PolitiskBehandlingMeldingTypeV1.Mottatt
+                        PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalgKvittering
                     }
                 },
                 {
