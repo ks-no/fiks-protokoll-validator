@@ -61,7 +61,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 return NotFound();
             }
 
-            _fiksResponseValidator.Validate(testSession);
+            try
+            {
+                _fiksResponseValidator.Validate(testSession);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Validering av melding feilet");
+                return BadRequest($"Validering av melding feilet: {e.Message}");
+            }
 
             Log.Information("TestSession with id {Id} found", id);
             
