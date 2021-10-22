@@ -37,7 +37,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TestSession>> GetTestSession(Guid id)
         {
-            Log.Information("GetTestSession with id: {Id}", id);
+            Log.Information("GetTestSession with id: {SessionID}", id);
             var testSession = await _context.TestSessions
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.FiksResponses)
@@ -57,11 +57,19 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             if (testSession == null)
             {
-                Log.Error("Session with id {Id} not found", id);
+                Log.Error("Session with id {SessionID} not found", id);
                 return NotFound();
             }
 
-            _fiksResponseValidator.Validate(testSession);
+            try
+            {
+                _fiksResponseValidator.Validate(testSession);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Validering av en eller flere meldinger feilet for session med id {SessionID}", id);
+                return StatusCode(500, $"Validering av en eller flere meldinger feilet: {e.Message}");
+            }
 
             Log.Information("TestSession with id {Id} found", id);
             
