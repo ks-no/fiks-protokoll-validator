@@ -99,36 +99,6 @@
                         }
                     }
                 },
-                "hoveddokument": {
-                    "type": "object",
-                    "properties": {
-                        "tittel": {
-                            "type": "string"
-                        },
-                        "skjermetDokument": {
-                            "type": "boolean"
-                        },
-                        "dokumenttype": {
-                            "type": "object",
-                            "properties": {
-                                "kodeverdi": {
-                                    "type": "string"
-                                },
-                                "kodebeskrivelse": {
-                                    "type": "string"
-                                }
-                            }
-                        },
-                        "referanseDokumentfil": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "tittel",
-                        "skjermetDokument",
-                        "referanseDokumentfil"
-                    ]
-                },
                 "vedtak": {
                     "type": "object",
                     "properties": {
@@ -172,12 +142,6 @@
                 "posisjon": {
                     "description": "Punkt",
                     "type": "object"
-                },
-                "vedlegg": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/Vedlegg"
-                    }
                 }
             },
             "required": [
