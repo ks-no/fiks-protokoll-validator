@@ -15,14 +15,6 @@
             "sakssekvensnummer": 11
         },
         "tittel": "Orientering om ny forskrift ....",
-        "hoveddokument": {
-            "tittel": "Orientering om ny forskrift ....",
-            "skjermetDokument": false,
-            "dokumenttype": {
-                "kodeverdi": "BREV"
-            },
-            "referanseDokumentfil": "orientering.docx"
-        },
         "saksbeskrivelse": {
             "tekstInnhold": "beskrivelse av saken",
             "tekstFormat": {

@@ -15,15 +15,6 @@
             "sakssekvensnummer": 2
         },
         "tittel": "OMRÅDEREGULERING FOR HIS Allè - BEHANDLING FØR HØRING OG UTLEGGING TIL OFFENTLIG ETTERSYN",
-        "hoveddokument": {
-            "tittel": "OMRÅDEREGULERING FOR HIS Allè - BEHANDLING FØR HØRING OG UTLEGGING TIL OFFENTLIG ETTERSYN",
-            "skjermetDokument": false,
-            "dokumenttype": {
-                "kodeverdi": "SAKSFRAMLEGG"
-            },
-            "referanseDokumentfil": "saksframlegg.docx",
-            "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-        },
         "saksbeskrivelse": {
             "tekstInnhold": "beskrivelse av saken",
             "tekstFormat": {
@@ -36,32 +27,6 @@
                 "kodeverdi": "markup"
             }
         },
-        "saksansvarlig": "saksb",
-        "vedlegg": [
-            {
-                "tittel": "191216 Planbestemmelser for Nepåkeren",
-                "skjermetDokument": false,
-                "dokumenttype": {
-                    "kodeverdi": "PLANBEST"
-                },
-                "referanseDokumentfil": "planbestemmelser.pdf"
-            },
-            {
-                "tittel": "20191213 Plankart Nepåkeren A1",
-                "skjermetDokument": false,
-                "dokumenttype": {
-                    "kodeverdi": "PLANKART"
-                },
-                "referanseDokumentfil": "plankart.pdf"
-            },
-            {
-                "tittel": "Vedlegg 5 ROS-analyse",
-                "skjermetDokument": false,
-                "dokumenttype": {
-                    "kodeverdi": "ROS-ANALYSE"
-                },
-                "referanseDokumentfil": "analyse.pdf"
-            }
-        ]
+        "saksansvarlig": "saksb"
     }
 }
