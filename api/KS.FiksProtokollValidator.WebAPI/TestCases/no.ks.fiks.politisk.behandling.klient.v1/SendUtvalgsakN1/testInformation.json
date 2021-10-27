@@ -6,6 +6,7 @@
     "operation": "SendUtvalgsak",
     "situation": "N1",
     "expectedResult": "En kvittering på mottak",
+    "sampleFile": "Samples/utvalgssak/sampleSendUtvalgssak.json",
     "queriesWithExpectedValues": [
     ],
     "supported": true,
