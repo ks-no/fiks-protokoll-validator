@@ -6,6 +6,7 @@
     "operation": "SendDelegertVedtak",
     "situation": "N1",
     "expectedResult": "En kvittering på mottak",
+    "sampleFile": "Samples/delegertvedtak/sampleSendDelegertVedtak.json",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

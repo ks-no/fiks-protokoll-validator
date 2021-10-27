@@ -12,6 +12,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
     public class TestSeeder : ITestSeeder
     {
         private readonly FiksIOMessageDBContext _context;
+        public const string TestsDirectory = "TestCases/";
 
         public TestSeeder(FiksIOMessageDBContext context)
         {
@@ -52,16 +53,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         private TestCase UpdateTest(DirectoryInfo testDirectory, TestCase testCase, JObject testInformation)
         {
             testCase.MessageType = (string)testInformation["messageType"];
-
-            foreach (var fileInfo in new DirectoryInfo(testDirectory.FullName)
-                    .GetFiles())
-            {
-                if (!fileInfo.Name.Equals("testInformation.json"))
-                {
-                    testCase.PayloadFileName = fileInfo.Name;
-                }
-            }
-
             testCase.Description = (string)testInformation["description"];
             testCase.TestStep = (string)testInformation["testStep"];
             testCase.Operation = (string)testInformation["operation"];
@@ -70,7 +61,31 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             testCase.Supported = (bool)testInformation["supported"];
             testCase.Protocol = testInformation["protocol"] == null ? "" : (string)testInformation["protocol"];
 
+            if (!string.IsNullOrEmpty((string) testInformation["sampleFile"]))
+            {
+                var sampleFile = (string) testInformation["sampleFile"];
+                var fileName = sampleFile.Split('/').Last();
+                testCase.PayloadFileName = fileName;
+                testCase.PayloadFilePath = sampleFile;
+            }
+            else
+            {
+                foreach (var fileInfo in new DirectoryInfo(testDirectory.FullName)
+                    .GetFiles())
+                {
+                    if (fileInfo.Name.Equals("testInformation.json"))
+                    {
+                        continue;
+                    }
+                    
+                    testCase.PayloadFileName = fileInfo.Name;
+                    var testCaseDirectory = Path.Combine(TestsDirectory, testCase.Protocol, testCase.Operation + testCase.Situation);
+                    testCase.PayloadFilePath = testCaseDirectory + "/" + fileInfo.Name;
+                }
+            }
+
             var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
+            
             if (Directory.Exists(attachmentDirectory))
             {
                 var payloadAttachmentFileNames = "";
@@ -95,7 +110,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             return testCase;
         }
 
-        private void AddQueriesWithExpectedValues(TestCase testCase, JObject testInformation)
+        private static void AddQueriesWithExpectedValues(TestCase testCase, JObject testInformation)
         {
             if (testInformation["queriesWithExpectedValues"] == null)
             {
