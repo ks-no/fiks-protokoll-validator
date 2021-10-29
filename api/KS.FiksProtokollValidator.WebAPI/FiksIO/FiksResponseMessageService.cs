@@ -46,7 +46,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
         {
             Logger.Information("Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
-            var payloads = new Dictionary<string, string>();
+            var payloads = new List<FiksPayload>();
 
             if (mottattMeldingArgs.Melding.HasPayload)
             {
@@ -59,9 +59,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     foreach (var asiceReadEntry in asice.Entries)
                     {
                         await using var entryStream = asiceReadEntry.OpenStream();
-                        var reader1 = new StreamReader(entryStream, Encoding.UTF8);
+
+                        StreamReader reader1 = new StreamReader(entryStream, Encoding.UTF8);
                         var content = await reader1.ReadToEndAsync();
-                        payloads.Add(asiceReadEntry.FileName, content);
+                        var bytes = Encoding.UTF8.GetBytes(content);
+
+                        payloads.Add(new FiksPayload() {Filename = asiceReadEntry.FileName, Payload = bytes });
                     } 
                 }
                 catch (Exception e)
@@ -98,10 +101,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     var responseMessage = new FiksResponse
                     {
                         ReceivedAt = DateTime.Now,
-                        Type = mottattMeldingArgs.Melding.MeldingType,
-                        Payload = payloads.Count > 1 ? string.Join(',', payloads.Keys) :
-                            payloads.Count == 1 ? payloads.Keys.ElementAt(0) : null,
-                        PayloadContent = payloads.Count == 1 ? payloads.Values.ElementAt(0) : null,
+                        Type = mottattMeldingArgs.Melding.MeldingType ,
+                        FiksPayloads = payloads
                     };
 
                     if (fiksRequest == null)

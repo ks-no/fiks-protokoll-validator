@@ -19,7 +19,7 @@
             :language="fileExtension"
             :label="fileExtension.toUpperCase()"
           >
-            {{ content }}
+            {{attemptDecodeBase64(content)}}
           </ssh-pre>
         </div>
         <div v-else>
@@ -52,7 +52,6 @@ export default {
       temporaryUrl: null
     };
   },
-
   props: {
     fileName: {
       type: String
@@ -75,12 +74,33 @@ export default {
       }
     },
     getTemporaryUrl(content) {
-      const contentType =
-        this.fileExtension === "pdf" ? { type: "application/pdf" } : null;
-      const blob = new Blob([content], contentType);
-      const temporaryUrl = URL.createObjectURL(blob);
-      this.temporaryUrl = temporaryUrl; // Used to revoke URL
-      return temporaryUrl;
+      console.log("content type: ", content.type);
+
+      if (content.type == "application/octet-stream") {
+        const contentType = this.fileExtension === "pdf" ? { type: "application/pdf" } : null;
+        const blob = new Blob([content], contentType);
+        const temporaryUrl = URL.createObjectURL(blob);
+        this.temporaryUrl = temporaryUrl; // Used to revoke URL
+        return temporaryUrl;
+      }else{
+        const decodedContent = atob(content);
+        const decodedContent2 = atob(decodedContent);
+        let binaryLen = decodedContent2.length;
+
+        let bytes = new Uint8Array(binaryLen);
+
+        for (let i = 0; i < binaryLen; i++) {
+            let ascii = decodedContent2.charCodeAt(i);
+            bytes[i] = ascii;
+        }
+
+        const contentType = this.fileExtension === "pdf" ? { type: "application/pdf" } : null;
+
+        const blob = new Blob([bytes], contentType);
+        const temporaryUrl = URL.createObjectURL(blob);
+        this.temporaryUrl = temporaryUrl; // Used to revoke URL
+        return temporaryUrl;
+      }
     },
     getFileExtension(fileName) {
       if (fileName) {
@@ -91,9 +111,20 @@ export default {
     isTextFileExtension(type) {
       return ["xml", "txt", "json", "html", "csv", "md"].indexOf(type) != -1;
     },
+
     onClose() {
       URL.revokeObjectURL(this.temporaryUrl);
       this.temporaryUrl = null;
+    },
+    attemptDecodeBase64(content){
+      try {
+        var decodedContent = atob(content);
+        return decodedContent;
+      } catch (error) {
+        if (error.code === 5) {
+          return content;
+        }
+      }
     }
   }
 };

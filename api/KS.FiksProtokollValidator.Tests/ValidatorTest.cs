@@ -52,9 +52,9 @@ namespace KS.FiksProtokollValidator.Tests
             _fiksResponseKvittering = new FiksResponse
             {
                 Type = WebAPI.Resources.ResponseMessageTypes.KvitteringV1,
-                ReceivedAt = DateTime.Now,
+                ReceivedAt = DateTime.Now/*,
                 Payload = responsePayloadFilePath,
-                PayloadContent = File.ReadAllText(responsePayloadFilePath),
+                PayloadContent = File.ReadAllText(responsePayloadFilePath),*/
             };
 
             _fiksRequest = new FiksRequest

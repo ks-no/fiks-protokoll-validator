@@ -16,10 +16,15 @@
     <b-collapse :id="'collapse-' + collapseId" class="mt-2">
       <b-card>
         <p><strong>Mottatt: </strong>{{ formatDate(receivedAt) }}</p>
+         <div
+           v-for="payload in payloads"
+           :key="payload.fileName"
+          >
         <p v-if="payload">
           <strong>Innhold: </strong>
-          <PayloadFile :fileName="payload" :content="payloadContent" />
+          <PayloadFile :fileName="payload.filename" :content="payload.payload" />
         </p>
+        </div>
       </b-card>
     </b-collapse>
   </li>
@@ -53,8 +58,8 @@ export default {
     messageType: {
       type: String
     },
-    payload: {
-      type: String
+    payloads: {
+      type: Array
     },
     payloadContent: {
       type: String
