@@ -120,6 +120,7 @@
                       :situation="situation"
                       :protocol="protocol"
                       :fileName="attachmentFileName"
+                      :testName="testName"
                       :isAttachment="true"
                     />
                   </div>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using KS.Fiks.IO.Client;
 using KS.Fiks.IO.Client.Models;
+using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
@@ -32,15 +33,11 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             var payloads = new List<IPayload>();
 
             var payLoadFileName = fiksRequest.TestCase.PayloadFileName;
-            var testsDirectory = "TestCases/";
-            var testCaseDirectory = Path.Combine(testsDirectory, fiksRequest.TestCase.Protocol, fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation);
-
+           
             if (!string.IsNullOrEmpty(payLoadFileName))
             {
-                var payLoadFilePath = Path.Combine(testCaseDirectory, payLoadFileName);
-
+                var payLoadFilePath = fiksRequest.TestCase.PayloadFilePath;
                 IPayload payload = new StringPayload(File.ReadAllText(payLoadFilePath), payLoadFileName);
-
                 payloads.Add(payload);
             }
 
@@ -50,6 +47,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             {
                 foreach (var payloadFileName in attachmentFileNames.Split(";"))
                 {
+                    var testCaseDirectory = Path.Combine(TestSeeder.TestsDirectory, fiksRequest.TestCase.Protocol, fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation);
                     var fileStream = File.OpenRead(Path.Combine(testCaseDirectory, "Attachments", payloadFileName));
                     payloads.Add(new StreamPayload(fileStream, payloadFileName));
                 }

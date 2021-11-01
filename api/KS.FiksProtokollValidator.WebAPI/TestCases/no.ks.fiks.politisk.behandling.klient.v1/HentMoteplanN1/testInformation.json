@@ -6,6 +6,7 @@
     "operation": "HentMoteplan",
     "situation": "N1",
     "expectedResult": "Møteplan med utfylte standardverdier",
+    "sampleFile": "Samples/moeteplan/sampleHentMoeteplan.json",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",
