@@ -36,7 +36,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         }
         
         // GET api/<TestsCasePayloadFilesController>/TestCaseName
-        [HttpGet("{protocol}/{id}")]
+        [HttpGet("{protocol}/{testCaseName}/payload")]
         public ActionResult GetMessagePayloadFile(string testCaseName)
         {
             var decodedId = HttpUtility.UrlDecode(testCaseName);
@@ -60,7 +60,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
        
 
-        // GET api/<TestsCasePayloadFilesController>/TestCaseName/attachmentFileName
+        // GET api/<TestsCasePayloadFilesController>/TestCaseName/Attachement/attachmentFileName
         [HttpGet("{protocol}/{testCaseName}/Attachement/{attachmentFileName}")]
         public ActionResult GetAttachmentPayloadFile(string protocol, string testCaseName, string attachmentFileName)
         {

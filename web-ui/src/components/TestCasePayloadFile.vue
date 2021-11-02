@@ -56,7 +56,7 @@ export default {
     getContent: function(isTextContent) {
       let endPointUrl = this.isAttachment
           ? this.operation + "" + this.situation + "/" + "Attachement/" + this.fileName
-          : this.testName;
+          : this.testName + "/payload";
 
       let settings = {
         responseType: isTextContent ? "text" : "blob",
