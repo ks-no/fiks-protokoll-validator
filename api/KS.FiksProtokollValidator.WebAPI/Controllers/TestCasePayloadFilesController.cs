@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Web;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -36,14 +37,25 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         
         // GET api/<TestsCasePayloadFilesController>/TestCaseName
         [HttpGet("{protocol}/{id}")]
-        public ActionResult GetMessagePayloadFile(string id)
+        public ActionResult GetMessagePayloadFile(string testCaseName)
         {
-            var testCase  = _context.TestCases.FindAsync(id).Result;
-            var filePath = testCase.PayloadFilePath;
+            var decodedId = HttpUtility.UrlDecode(testCaseName);
+            try
+            {
+                var testCase = _context.TestCases.FindAsync(decodedId).Result;
+                var filePath = testCase.PayloadFilePath;
 
-            Log.Information("GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName} with filePath {FilePath}", testCase.Protocol, testCase.TestName, filePath);
-            
-            return GetPayload(filePath);
+                Log.Information(
+                    "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName} with filePath {FilePath}",
+                    testCase.Protocol, testCase.TestName, filePath);
+
+                return GetPayload(filePath);
+            }
+            catch(Exception e)
+            {
+                Log.Error(e,"GetMessagePayloadFile for protocol testCaseName {TestCaseName} failed", testCaseName);
+                return new NotFoundResult();
+            }
         }
 
        
