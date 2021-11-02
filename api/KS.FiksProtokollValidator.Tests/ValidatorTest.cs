@@ -54,7 +54,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseKvittering = new FiksResponse
             {
-                Type = FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
+                Type = ArkivintegrasjonMeldingTypeV1.Kvittering,
                 ReceivedAt = DateTime.Now,
                 Payload = responsePayloadFilePath,
                 PayloadContent = File.ReadAllText(responsePayloadFilePath),
