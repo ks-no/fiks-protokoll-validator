@@ -264,7 +264,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                     {
                         var tokens = json.SelectTokens(path);
 
-                        if (tokens == null)
+                        if (!tokens.Any())
                             validationErrors.Add(string.Format(
                                 ValidationErrorMessages.MissingJsonPayloadToken, path
                             ));
