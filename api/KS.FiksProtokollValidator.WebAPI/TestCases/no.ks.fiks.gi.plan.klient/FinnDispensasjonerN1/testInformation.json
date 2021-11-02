@@ -24,11 +24,6 @@
         },
         {
             "payloadQuery": "$.dispensasjon.[0]",
-            "expectedValue": "vedtaksdato",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.dispensasjon.[0]",
             "expectedValue": "innvilgetDispensasjon",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },

@@ -31,7 +31,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             _appSettings = appSettings;
             _client = new FiksIOClient(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
         }
-        
+
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
@@ -60,12 +60,15 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     {
                         await using var entryStream = asiceReadEntry.OpenStream();
 
-                        StreamReader reader1 = new StreamReader(entryStream, Encoding.UTF8);
-                        var content = await reader1.ReadToEndAsync();
-                        var bytes = Encoding.UTF8.GetBytes(content);
+                        byte[] fileAsBytes; 
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            entryStream.CopyTo(ms);
+                            fileAsBytes = ms.ToArray();
+                        }
 
-                        payloads.Add(new FiksPayload() {Filename = asiceReadEntry.FileName, Payload = bytes });
-                    } 
+                        payloads.Add(new FiksPayload() { Filename = asiceReadEntry.FileName, Payload = fileAsBytes });
+                    }
                 }
                 catch (Exception e)
                 {
@@ -83,12 +86,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     t.FiksRequests.Any(r => r.MessageGuid.Equals(mottattMeldingArgs.Melding.SvarPaMelding))).Result;
 
                 // Ikke optimalt? Det er gjort slik fordi man ikke vet om databasen har rukket å skrive før man får svar.
-                var timesTried = 1; 
+                var timesTried = 1;
                 while (testSession == null && timesTried <= 5)
                 {
                     Thread.Sleep(1000);
                     testSession = context.TestSessions.Include(t => t.FiksRequests).FirstOrDefault(t =>
-                        t.FiksRequests.Any(r => r.MessageGuid.Equals(mottattMeldingArgs.Melding.SvarPaMelding))); 
+                        t.FiksRequests.Any(r => r.MessageGuid.Equals(mottattMeldingArgs.Melding.SvarPaMelding)));
                     timesTried++;
                 }
 
@@ -101,7 +104,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     var responseMessage = new FiksResponse
                     {
                         ReceivedAt = DateTime.Now,
-                        Type = mottattMeldingArgs.Melding.MeldingType ,
+                        Type = mottattMeldingArgs.Melding.MeldingType,
                         FiksPayloads = payloads
                     };
 

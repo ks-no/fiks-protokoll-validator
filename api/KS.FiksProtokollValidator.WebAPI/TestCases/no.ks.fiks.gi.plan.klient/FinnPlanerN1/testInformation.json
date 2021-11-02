@@ -13,7 +13,7 @@
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.plan.[0].arealplanId",
+            "payloadQuery": "$.plan.[0].nasjonalArealplanId",
             "expectedValue": "*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },

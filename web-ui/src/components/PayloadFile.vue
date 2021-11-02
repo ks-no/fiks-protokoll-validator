@@ -36,6 +36,7 @@
 <script>
 import SshPre from "simple-syntax-highlighter";
 import "simple-syntax-highlighter/dist/sshpre.css";
+const MimeTypes = require('mime-types')
 
 export default {
   name: "PayloadFile",
@@ -74,8 +75,6 @@ export default {
       }
     },
     getTemporaryUrl(content) {
-      console.log("content type: ", content.type);
-
       if (content.type == "application/octet-stream") {
         const contentType = this.fileExtension === "pdf" ? { type: "application/pdf" } : null;
         const blob = new Blob([content], contentType);
@@ -84,18 +83,17 @@ export default {
         return temporaryUrl;
       }else{
         const decodedContent = atob(content);
-        const decodedContent2 = atob(decodedContent);
-        let binaryLen = decodedContent2.length;
+        let binaryLen = decodedContent.length;
 
         let bytes = new Uint8Array(binaryLen);
 
         for (let i = 0; i < binaryLen; i++) {
-            let ascii = decodedContent2.charCodeAt(i);
+            let ascii = decodedContent.charCodeAt(i);
             bytes[i] = ascii;
         }
-
-        const contentType = this.fileExtension === "pdf" ? { type: "application/pdf" } : null;
-
+        
+        const mimeType = MimeTypes.lookup(this.fileExtension);
+        const contentType =  { type: mimeType };
         const blob = new Blob([bytes], contentType);
         const temporaryUrl = URL.createObjectURL(blob);
         this.temporaryUrl = temporaryUrl; // Used to revoke URL
