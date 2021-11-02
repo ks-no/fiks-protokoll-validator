@@ -140,8 +140,6 @@ export default {
           { value: 'no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1', text: 'no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.v1' },
           { value: 'no.ks.fiks.politisk.behandling.klient.v1', text: 'no.ks.fiks.politisk.behandling.klient.v1' },
           { value: 'no.ks.fiks.politisk.behandling.tjener.v1', text: 'no.ks.fiks.politisk.behandling.tjener.v1'},
-          { value: 'no.ks.fiks.gi.plan.klient', text: 'no.ks.fiks.gi.plan.klient'}
-
         ]
     };
   },
