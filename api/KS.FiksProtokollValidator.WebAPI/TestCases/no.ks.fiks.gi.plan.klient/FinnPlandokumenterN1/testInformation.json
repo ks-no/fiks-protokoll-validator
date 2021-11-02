@@ -8,6 +8,6 @@
     "expectedResult": "Bekreftelse på mottat søk, og retur av plandokument(er)",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

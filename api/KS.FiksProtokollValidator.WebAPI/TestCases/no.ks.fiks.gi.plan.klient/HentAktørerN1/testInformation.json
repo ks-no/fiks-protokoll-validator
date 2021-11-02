@@ -8,6 +8,6 @@
     "expectedResult": "Retur av aktører",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

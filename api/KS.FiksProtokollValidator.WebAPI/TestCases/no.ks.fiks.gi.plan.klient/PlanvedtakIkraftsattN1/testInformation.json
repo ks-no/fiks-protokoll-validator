@@ -8,6 +8,6 @@
     "expectedResult": "Bekreftelse på mottat Planvedtak ikraftsatt",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

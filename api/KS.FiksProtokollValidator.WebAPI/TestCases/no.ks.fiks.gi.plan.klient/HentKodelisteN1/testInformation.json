@@ -8,6 +8,6 @@
     "expectedResult": "Retur av kodeliste",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

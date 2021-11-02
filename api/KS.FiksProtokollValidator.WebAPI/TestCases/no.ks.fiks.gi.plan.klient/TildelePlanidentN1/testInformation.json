@@ -8,6 +8,6 @@
     "expectedResult": "Bekreftelse på mottat Opprettelse av arealplan, reur ny planident",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }
