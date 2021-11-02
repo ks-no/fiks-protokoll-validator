@@ -98,6 +98,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
 
                 testCase.PayloadAttachmentFileNames = payloadAttachmentFileNames.TrimEnd(';');
             }
+            else if(!string.IsNullOrEmpty(testCase.PayloadAttachmentFileNames))
+            {
+                testCase.PayloadAttachmentFileNames = null;
+            } 
 
             // Legg til QueriesWithExpectedValues
             //TODO lag en DeleteQueriesWithExpectedValues
