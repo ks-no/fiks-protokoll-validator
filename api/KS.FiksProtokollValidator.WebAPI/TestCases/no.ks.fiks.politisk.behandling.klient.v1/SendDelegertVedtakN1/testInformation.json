@@ -2,7 +2,7 @@
     "testName": "Send Delegert Vedtak",
     "description": "Send Delegert Vedtak",
     "testStep": "Normalsituasjon 1 Input Send Delegert Vedtak, retur kvittering på mottak",
-    "messageType": "no.ks.fiks.politisk.behandling.senddelegertvedtak.v1",
+    "messageType": "no.ks.fiks.politisk.behandling.v1.delegertvedtak.send",
     "operation": "SendDelegertVedtak",
     "situation": "N1",
     "expectedResult": "En kvittering på mottak",

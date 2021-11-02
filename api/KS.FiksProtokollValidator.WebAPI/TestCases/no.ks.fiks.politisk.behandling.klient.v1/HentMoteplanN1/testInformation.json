@@ -2,7 +2,7 @@
     "testName": "Hent Møteplan, inkluder møter",
     "description": "Send hent møteplan",
     "testStep": "Normalsituasjon 1 Input Hent Møteplan, retur Møteplan",
-    "messageType": "no.ks.fiks.politisk.behandling.hentmoeteplan.v1",
+    "messageType": "no.ks.fiks.politisk.behandling.v1.moeteplan.hent",
     "operation": "HentMoteplan",
     "situation": "N1",
     "expectedResult": "Møteplan med utfylte standardverdier",

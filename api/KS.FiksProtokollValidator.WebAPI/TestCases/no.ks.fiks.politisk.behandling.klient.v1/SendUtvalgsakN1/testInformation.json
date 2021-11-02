@@ -2,7 +2,7 @@
     "testName": "Send Utvalgsak",
     "description": "Send Utvalgsak",
     "testStep": "Normalsituasjon 1 Input Send Utvalgsak, retur kvittering på mottak",
-    "messageType": "no.ks.fiks.politisk.behandling.sendutvalgssak.v1",
+    "messageType": "no.ks.fiks.politisk.behandling.v1.utvalgssak.send",
     "operation": "SendUtvalgsak",
     "situation": "N1",
     "expectedResult": "En kvittering på mottak",
