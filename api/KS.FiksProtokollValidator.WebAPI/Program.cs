@@ -1,7 +1,11 @@
 using System;
 using System.IO;
+using KS.FiksProtokollValidator.WebAPI.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -45,8 +49,31 @@ namespace KS.FiksProtokollValidator.WebAPI
             Log.Information("ENVIRONMENT: {Environment}",environment);
             Log.Information("LOGSTASH_DESTINATION: {LogstashDestination}", logstashDestination);
             Log.Information("Path.PathSeparator: {PathSeparator}", Path.PathSeparator);
+
+            var host = CreateHostBuilder(args).Build();
             
-            CreateHostBuilder(args).Build().Run();
+            MigrateAndSeedDatabase(host);
+            
+            host.Run();
+        }
+        
+        private static void MigrateAndSeedDatabase(IHost host)
+        {
+            Log.Information("Running migrations and seeding data");
+            using (var scope = host.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<FiksIOMessageDBContext>();
+                    context.Database.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while seeding the database.");
+                }
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
