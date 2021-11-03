@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using KS.Fiks.IO.Client;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
@@ -36,8 +38,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
            
             if (!string.IsNullOrEmpty(payLoadFileName))
             {
+                var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 var payLoadFilePath = fiksRequest.TestCase.PayloadFilePath;
-                IPayload payload = new StringPayload(File.ReadAllText(payLoadFilePath), payLoadFileName);
+                IPayload payload = new StringPayload(File.ReadAllText(basepath + "/" + payLoadFilePath), payLoadFileName);
                 payloads.Add(payload);
             }
 
