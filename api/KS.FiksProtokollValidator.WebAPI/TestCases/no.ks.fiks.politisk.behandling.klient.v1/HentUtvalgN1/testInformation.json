@@ -2,7 +2,7 @@
     "testName": "Hent Utvalg",
     "description": "Hent Utvalg",
     "testStep": "Normalsituasjon 1 Input Hent Utvalg, retur Utvalg",
-    "messageType": "no.ks.fiks.politisk.behandling.klient.hentutvalg.v1",
+    "messageType": "no.ks.fiks.politisk.behandling.v1.utvalg.hent",
     "operation": "HentUtvalg",
     "situation": "N1",
     "expectedResult": "Alle Utvalg",

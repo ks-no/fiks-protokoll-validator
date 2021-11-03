@@ -37,7 +37,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TestSession>> GetTestSession(Guid id)
         {
-            Log.Information("GetTestSession with id: {Id}", id);
+            Log.Information("GetTestSession with id: {SessionID}", id);
             var testSession = await _context.TestSessions
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.FiksResponses).ThenInclude(a => a.FiksPayloads)
@@ -57,11 +57,19 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             if (testSession == null)
             {
-                Log.Error("Session with id {Id} not found", id);
+                Log.Error("Session with id {SessionID} not found", id);
                 return NotFound();
             }
 
-            _fiksResponseValidator.Validate(testSession);
+            try
+            {
+                _fiksResponseValidator.Validate(testSession);
+            }
+            catch (Exception e)
+            {
+                Log.Error(e, "Validering av en eller flere meldinger feilet for session med id {SessionID}", id);
+                return StatusCode(500, $"Validering av en eller flere meldinger feilet: {e.Message}");
+            }
 
             Log.Information("TestSession with id {Id} found", id);
             
@@ -110,9 +118,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 }
                 catch (Exception e)
                 {
+                    Log.Error(e, "Noe gikk galt ved sending av request til {FiksKonto}", testSession.RecipientId);
                     if (e.InnerException.Message.Contains("Ingen konto med id"))
                     {
-                        Log.Error("TestSession FIKS-account {0} is illeagal", testSession.RecipientId);
+                        Log.Error("TestSession FIKS-account {FiksKonto} is illegal", testSession.RecipientId);
                         return BadRequest("Ugyldig konto: " + testSession.RecipientId);
                     }
                     Log.Error("An Error occured when sending FIKS request with recipient ID {0}", testSession.RecipientId);

@@ -26,9 +26,11 @@
 
     <div v-if="this.fetchError">
       <b-alert v-model="fetchError" variant="danger" dismissible>
-          <p>Vi kunne ikke finne din test med SessionID:  {{this.$route.params.testSessionId}}.</p>
+          <p v-if="requestErrorStatusCode === 404">Vi kunne ikke finne din test med SessionID:  {{this.$route.params.testSessionId}}.</p>
+          <p v-else>Noe gikk galt med SessionID:  {{this.$route.params.testSessionId}}.</p>
           <p>Statuskode: {{requestErrorStatusCode}}</p>
-          <p>{{requestErrorMessage.title}}</p>
+          <p v-if="requestErrorStatusCode === 500">{{requestErrorMessage}}</p>
+          <p v-else>{{requestErrorMessage.title}}</p>
         </b-alert>
     </div>
     <b-spinner label="Loading..." v-if="loading"></b-spinner>

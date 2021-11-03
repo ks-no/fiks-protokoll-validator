@@ -1,11 +1,12 @@
-﻿{
+{
     "testName": "Hent Møteplan, inkluder møter",
-    "description": "Send hent møteplan med inkluderMøter true",
+    "description": "Send hent møteplan",
     "testStep": "Normalsituasjon 1 Input Hent Møteplan, retur Møteplan",
-    "messageType": "no.ks.fiks.politisk.behandling.klient.hentmøteplan.v1",
-    "operation": "HentMøteplan",
+    "messageType": "no.ks.fiks.politisk.behandling.v1.moeteplan.hent",
+    "operation": "HentMoteplan",
     "situation": "N1",
     "expectedResult": "Møteplan med utfylte standardverdier",
+    "sampleFile": "Samples/moeteplan/sampleHentMoeteplan.json",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",
@@ -19,7 +20,7 @@
         },
         {
             "payloadQuery": "$",
-            "expectedValue": "møte",
+            "expectedValue": "moete",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
@@ -33,7 +34,7 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.møte[*]",
+            "payloadQuery": "$.moete[*]",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }

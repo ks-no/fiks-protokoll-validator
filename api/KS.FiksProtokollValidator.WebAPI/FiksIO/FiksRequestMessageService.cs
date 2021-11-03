@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using KS.Fiks.IO.Client;
 using KS.Fiks.IO.Client.Models;
+using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
@@ -12,6 +13,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private readonly Guid _senderId;
         private FiksIOClient _client;
         private AppSettings _appSettings;
+        private const int TTLMinutes = 5; 
 
         public FiksRequestMessageService(AppSettings appAppSettings)
         {
@@ -25,20 +27,17 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         public Guid Send(FiksRequest fiksRequest, Guid receiverId)
         {
-            var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType);
+            var ttl = new TimeSpan(0, TTLMinutes, 0); 
+            var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType, ttl);
 
             var payloads = new List<IPayload>();
 
             var payLoadFileName = fiksRequest.TestCase.PayloadFileName;
-            var testsDirectory = "TestCases/";
-            var testCaseDirectory = Path.Combine(testsDirectory, fiksRequest.TestCase.Protocol, fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation);
-
+           
             if (!string.IsNullOrEmpty(payLoadFileName))
             {
-                var payLoadFilePath = Path.Combine(testCaseDirectory, payLoadFileName);
-
+                var payLoadFilePath = fiksRequest.TestCase.PayloadFilePath;
                 IPayload payload = new StringPayload(File.ReadAllText(payLoadFilePath), payLoadFileName);
-
                 payloads.Add(payload);
             }
 
@@ -48,6 +47,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             {
                 foreach (var payloadFileName in attachmentFileNames.Split(";"))
                 {
+                    var testCaseDirectory = Path.Combine(TestSeeder.TestsDirectory, fiksRequest.TestCase.Protocol, fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation);
                     var fileStream = File.OpenRead(Path.Combine(testCaseDirectory, "Attachments", payloadFileName));
                     payloads.Add(new StreamPayload(fileStream, payloadFileName));
                 }

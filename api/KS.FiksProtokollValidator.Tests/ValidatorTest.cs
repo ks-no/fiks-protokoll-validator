@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using KS.Fiks.IO.Arkiv.Client.Models;
+using KS.Fiks.IO.Client.Models.Feilmelding;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
@@ -30,11 +32,11 @@ namespace KS.FiksProtokollValidator.Tests
                 ValueType = SearchValueType.Attribute,
             };
 
-            var requestPayloadFilePath = @"TestData\Requests\ny_inngaaende.xml";
+            var requestPayloadFilePath = "./TestData/Requests/ny_inngaaende.xml";
 
             _testCase = new TestCase
             {
-                MessageType = WebAPI.Resources.RequestMessageTypes.ArkivmeldingV1,
+                MessageType = ArkivintegrasjonMeldingTypeV1.BasisArkivmelding,
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
@@ -45,10 +47,10 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseMottatt = new FiksResponse
             {
-                Type = WebAPI.Resources.ResponseMessageTypes.MottattV1,
+                Type = ArkivintegrasjonMeldingTypeV1.Mottatt,
             };
 
-            var responsePayloadFilePath = @"TestData\Responses\svar_paa_ny_inngaaende.xml";
+            var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
 
             byte[] fileAsBytes;
             using (MemoryStream ms = new MemoryStream())
@@ -60,7 +62,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseKvittering = new FiksResponse
             {
-                Type = WebAPI.Resources.ResponseMessageTypes.KvitteringV1,
+                Type = ArkivintegrasjonMeldingTypeV1.Kvittering,
                 ReceivedAt = DateTime.Now,
                 FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "svar_paa_ny_inngaaende.xml", Payload = fileAsBytes } },
             };
@@ -72,7 +74,7 @@ namespace KS.FiksProtokollValidator.Tests
                 SentAt = DateTime.Now,
                 IsFiksResponseValidated = false,
                 FiksResponseValidationErrors = new List<string>(),
-                TestCase = _testCase
+                TestCase = _testCase,
             };
 
             _fiksRequest.FiksResponses.Add(_fiksResponseMottatt);

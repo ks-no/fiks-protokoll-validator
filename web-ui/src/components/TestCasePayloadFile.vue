@@ -45,22 +45,26 @@ export default {
     protocol: {
       required: false,
       type: String
+    },
+    testName: {
+      required: true,
+      type: String
     }
   },
   
   methods: {
     getContent: function(isTextContent) {
-      var endPointUrl = this.isAttachment
-        ? this.operation + "" + this.situation + "/" + "Attachement/" + this.fileName
-        : this.operation + "" + this.situation + "/" + this.fileName;
+      let endPointUrl = this.isAttachment
+          ? this.operation + "" + this.situation + "/" + "Attachement/" + this.fileName
+          : this.operation + "" + this.situation + "/payload";
 
-      var settings = {
+      let settings = {
         responseType: isTextContent ? "text" : "blob",
         responseEncoding: isTextContent ? "utf-16" : "base64"
       };
 
-      var apiUrl = process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles";
-      var resourceUrl = apiUrl + "/" + this.protocol + "/" + endPointUrl;
+      let apiUrl = process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles";
+      let resourceUrl = apiUrl + "/" + this.protocol + "/" + endPointUrl;
 
       axios.get(resourceUrl, settings).then(response => {
         this.payloadFileContent = response.data;

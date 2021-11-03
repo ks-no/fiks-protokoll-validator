@@ -2,10 +2,11 @@
     "testName": "Send Orienteringssak",
     "description": "Send Orienteringssak",
     "testStep": "Normalsituasjon 1 Input Send Utvalg, retur kvittering på mottak",
-    "messageType": "no.ks.fiks.politisk.behandling.klient.sendorienteringssak.v1",
+    "messageType": "no.ks.fiks.politisk.behandling.v1.orienteringssak.send",
     "operation": "SendOrienteringssak",
     "situation": "N1",
     "expectedResult": "En kvittering på mottak",
+    "sampleFile": "Samples/orienteringssak/sampleSendOrienteringssak.json",
     "queriesWithExpectedValues": [
     ],
     "supported": true,
