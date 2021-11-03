@@ -81,7 +81,7 @@ export default {
         const temporaryUrl = URL.createObjectURL(blob);
         this.temporaryUrl = temporaryUrl; // Used to revoke URL
         return temporaryUrl;
-      }else{
+      } else {
         const decodedContent = atob(content);
         let binaryLen = decodedContent.length;
 
