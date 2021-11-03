@@ -63,7 +63,7 @@
             :collapseId="'collapse-' + response.id"
             :receivedAt="response.receivedAt"
             :messageType="response.type"
-            :payload="response.payload"
+            :payloads="response.fiksPayloads"
             :payloadContent="response.payloadContent"
           />
         </ul>

@@ -40,7 +40,7 @@ namespace KS.FiksProtokollValidator.Tests
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
-                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>()
+                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>() { new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = "no.ks.fiks.gi.arkivintegrasjon.mottatt.v1" }, new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = "no.ks.fiks.gi.arkivintegrasjon.kvittering.v1" } }
             };
 
             _testCase.FiksResponseTests.Add(_fiksResponseTest);
@@ -52,12 +52,19 @@ namespace KS.FiksProtokollValidator.Tests
 
             var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
 
+            byte[] fileAsBytes;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                Stream s = File.OpenRead(responsePayloadFilePath);
+                s.CopyTo(ms);
+                fileAsBytes = ms.ToArray();
+            }
+
             _fiksResponseKvittering = new FiksResponse
             {
                 Type = ArkivintegrasjonMeldingTypeV1.Kvittering,
                 ReceivedAt = DateTime.Now,
-                Payload = responsePayloadFilePath,
-                PayloadContent = File.ReadAllText(responsePayloadFilePath),
+                FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "svar_paa_ny_inngaaende.xml", Payload = fileAsBytes } },
             };
 
             _fiksRequest = new FiksRequest

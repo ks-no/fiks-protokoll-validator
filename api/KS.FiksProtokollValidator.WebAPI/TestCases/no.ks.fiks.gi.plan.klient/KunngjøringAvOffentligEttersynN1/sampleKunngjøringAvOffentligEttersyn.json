@@ -1,9 +1,7 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821",
-            "fylkesnummer": "38",
-            "landskode": "NO"
+            "kommunenummer": "0821"
         },
         "planidentifikasjon": "01_27_1988"
     },
@@ -22,8 +20,12 @@
     "plandokument": [
         {
             "tittel": "Vedtak",
-            "dokumenttype": "docx",
-            "referanseDokumentfil": "reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc"
+            "dokumenttype": {
+                "kodeverdi": "VEDTAK",
+                "kodebeskrivelse": "Vedtak"
+            },
+            "referanseDokumentfil": "reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc",
+            "arkivnavn": "vedtak reguleringsplan"
         }
     ]
 }

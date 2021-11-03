@@ -1,0 +1,18 @@
+﻿{
+    "forbudOmråde": {
+        "område": [
+            [ 0, 0 ],
+            [ 3, 6 ],
+            [ 6, 1 ],
+            [ 0, 0 ]
+        ],
+        "saksnummer": {
+            "saksår": 2020,
+            "sakssekvensnummer": 12345
+        },
+        "avgjørelsesdato": "2020-01-01",
+        "pblTiltakForbudType": "midlertidigForbudMotTiltak",
+        "gyldigTilDato": "2020-02-01",
+        "områdenavn": "områdenavn"
+    }
+}

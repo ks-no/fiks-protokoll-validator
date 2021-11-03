@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Oppdater dispensasjon",
+    "description": "Oppdater dispensasjon",
+    "testStep": "Normalsituasjon 1 Input OppdaterDispensasjon, retur bekreftelse på mottak",
+    "messageType": "no.ks.fiks.gi.plan.oppdatering.oppdaterdispensasjon.v2",
+    "operation": "OppdaterDispensasjon",
+    "situation": "N1",
+    "expectedResult": "Bekreftet mottak",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": false,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}

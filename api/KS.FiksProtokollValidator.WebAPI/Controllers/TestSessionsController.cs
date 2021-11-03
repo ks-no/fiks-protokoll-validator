@@ -40,7 +40,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             Log.Information("GetTestSession with id: {SessionID}", id);
             var testSession = await _context.TestSessions
                 .Include(t => t.FiksRequests)
-                .ThenInclude(r => r.FiksResponses)
+                .ThenInclude(r => r.FiksResponses).ThenInclude(a => a.FiksPayloads)
                 
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.TestCase)

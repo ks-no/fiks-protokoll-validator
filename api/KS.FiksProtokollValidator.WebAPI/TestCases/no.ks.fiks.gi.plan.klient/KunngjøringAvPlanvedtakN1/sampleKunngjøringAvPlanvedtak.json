@@ -1,9 +1,7 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821",
-            "fylkesnummer": "38",
-            "landskode": "NO"
+            "kommunenummer": "0821"
         },
         "planidentifikasjon": "01_27_1988"
     },
@@ -22,8 +20,12 @@
     "plandokument": [
         {
             "tittel": "Kunngjøring",
-            "dokumenttype": "docx",
-            "referanseDokumentfil": "reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc"
+            "dokumenttype": {
+                "kodeverdi": "KUNNGJ",
+                "kodebeskrivelse": "Kunnkjøring"
+            },
+            "referanseDokumentfil": "reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc",
+            "arkivnavn": "kunngjøring av reguleringsplan"
         }
     ]
 }

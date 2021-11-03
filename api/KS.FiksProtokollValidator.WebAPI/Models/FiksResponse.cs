@@ -1,4 +1,6 @@
-﻿using System;
+﻿using KS.Fiks.IO.Client.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace KS.FiksProtokollValidator.WebAPI.Models
@@ -14,8 +16,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         [Required]
         public string Type { get; set; }
 
-        public string Payload { get; set; }
-
-        public string PayloadContent { get; set; }
+        public List<FiksPayload> FiksPayloads { get; set; }
     }
 }

@@ -138,4 +138,34 @@
   <data name="MeldingOmPlanidentV2" xml:space="preserve">
     <value>no.ks.fiks.gi.plan.oppdatering.meldingomplanident.v2</value>
   </data>
+  <data name="AktørerV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.aktører.v2</value>
+  </data>
+  <data name="BboxV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.bbox.v2</value>
+  </data>
+  <data name="FinnPlandokumenterV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.plandokumenter.v2</value>
+  </data>
+  <data name="FinnPlanerForOmrådeV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.planerforområde.v2</value>
+  </data>
+  <data name="GjeldendePlanbestemmelserV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.gjeldendeplanbestemmelser.v2</value>
+  </data>
+  <data name="KodelisteV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.kodeliste.v2</value>
+  </data>
+  <data name="PlanfilV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.planfil.v2</value>
+  </data>
+  <data name="PlanområderV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.planområder.v2</value>
+  </data>
+  <data name="RelatertePlanerV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.relaterteplaner.v2</value>
+  </data>
+  <data name="PlandokumenterV2" xml:space="preserve">
+    <value>no.ks.fiks.gi.plan.innsyn.plandokumenter.v2</value>
+  </data>
 </root>

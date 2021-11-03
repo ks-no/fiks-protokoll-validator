@@ -1,0 +1,12 @@
+﻿{
+    "saksnummer": {
+        "saksår": 2020,
+        "sakssekvensnummer": 12345
+    },
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "0821"
+        },
+        "planidentifikasjon": "01_27_1988"
+    }
+}

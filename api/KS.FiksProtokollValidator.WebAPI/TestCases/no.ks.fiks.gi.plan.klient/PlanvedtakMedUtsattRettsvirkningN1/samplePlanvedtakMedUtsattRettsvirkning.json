@@ -1,0 +1,24 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "4203"
+        },
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "6",
+        "kodebeskrivelse": "Vedtatt plan med utsatt rettsvirkning"
+    },
+    "planbehandling": {
+        "dato": "2020-01-01",
+        "saksnummer": {
+            "saksår": 2020,
+            "sakssekvensnummer": 12345
+        },
+        "planbehandlingtype": {
+            "kodeverdi": "13",
+            "kodebeskrivelse": "Plan vedtatt med innsigelse"
+        },
+        "navn": "navn på registrering"
+    }
+}
