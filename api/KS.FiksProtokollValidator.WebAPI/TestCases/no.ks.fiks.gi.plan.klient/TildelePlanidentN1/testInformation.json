@@ -5,7 +5,7 @@
     "messageType": "no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2",
     "operation": "TildelePlanident",
     "situation": "N1",
-    "expectedResult": "Bekreftelse på mottat Opprettelse av arealplan, reur ny planident",
+    "expectedResult": "Bekreftelse på mottat Opprettelse av arealplan, retur ny planident",
     "queriesWithExpectedValues": [
     ],
     "supported": false,
