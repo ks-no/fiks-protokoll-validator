@@ -93,7 +93,7 @@ export default {
         }
         
         const mimeType = MimeTypes.lookup(this.fileExtension);
-        const contentType =  { type: mimeType };
+        const contentType = { type: mimeType };
         const blob = new Blob([bytes], contentType);
         const temporaryUrl = URL.createObjectURL(blob);
         this.temporaryUrl = temporaryUrl; // Used to revoke URL
