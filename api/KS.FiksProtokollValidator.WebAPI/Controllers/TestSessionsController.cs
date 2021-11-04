@@ -83,7 +83,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         public async Task<ActionResult<TestSession>> PostTestSession([FromBody] TestRequest testRequest)
         {
             Log.Information("PostTestSession start");
-            TestSession testSession = new TestSession();
+            TestSession testSession;
             try
             {
                 testSession = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
@@ -99,8 +99,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 Log.Error("Error with deserializing the test request: {}", JsonSerializer.Serialize(testRequest));
                 return BadRequest(message);
             }
-            testSession.Id = Guid.NewGuid();
 
+            if (string.IsNullOrEmpty(testRequest.SessionId))
+            {
+                testSession.Id = Guid.NewGuid();
+            }
+            else
+            {
+                testSession.Id = Guid.Parse(testRequest.SessionId);
+            }
+            
             testSession.CreatedAt = DateTime.Now;
             
             testSession.FiksRequests = new List<FiksRequest>();

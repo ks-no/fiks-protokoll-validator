@@ -178,7 +178,7 @@ export default {
       
       await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params)
       .then(response => {
-         if (response.status == 201) {
+         if (response.status === 201) {
                 this.resultData = response.data;
                 this.hasRun = true;
                 this.running = false;

@@ -36,6 +36,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
            
             if (!string.IsNullOrEmpty(payLoadFileName))
             {
+                
                 var payLoadFilePath = fiksRequest.TestCase.PayloadFilePath;
                 IPayload payload = new StringPayload(File.ReadAllText(payLoadFilePath), payLoadFileName);
                 payloads.Add(payload);
