@@ -13,36 +13,26 @@
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$",
+            "payloadQuery": "$.dispensasjon.[0]",
             "expectedValue": "nasjonalArealplanID",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$",
+            "payloadQuery": "$.dispensasjon.[0]",
             "expectedValue": "vedtaksdato",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.dispensasjon.kodeverdi",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
+            "payloadQuery": "$.dispensasjon.[0]",
+            "expectedValue": "innvilgetDispensasjon",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.vedtaksdato",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.nasjonalArealplanID.plannavn",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.nasjonalArealplanID.planstatus",
-            "expectedValue": "*",
-            "valueType": 0 // 0 = Verdi, 1 = Attributt
+            "payloadQuery": "$.dispensasjon.[0]",
+            "expectedValue": "varigDispensasjon",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

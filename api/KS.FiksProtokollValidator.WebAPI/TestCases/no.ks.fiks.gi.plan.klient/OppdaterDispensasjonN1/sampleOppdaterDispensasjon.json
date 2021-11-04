@@ -1,0 +1,18 @@
+﻿{
+    "oppdater": {
+        "identifikasjon": "identifikasjon",
+        "dispensasjon": {
+            "kodeverdi": "PLAN",
+            "kodebeskrivelse": "Arealplaner"
+        },
+        "nasjonalArealplanId": {
+            "administrativEnhet": {
+                "kommunenummer": "0821"
+            },
+            "planidentifikasjon": "01_27_1988"
+        },
+        "vedtaksdato": "2020-01-01",
+        "innvilgetDispensasjon": true,
+        "varigDispensasjon": true
+    }
+}

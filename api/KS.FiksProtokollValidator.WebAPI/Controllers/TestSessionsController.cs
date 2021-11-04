@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -40,7 +42,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             Log.Information("GetTestSession with id: {SessionID}", id);
             var testSession = await _context.TestSessions
                 .Include(t => t.FiksRequests)
-                .ThenInclude(r => r.FiksResponses)
+                .ThenInclude(r => r.FiksResponses).ThenInclude(a => a.FiksPayloads)
                 
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.TestCase)
@@ -75,6 +77,46 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             
             return testSession;
         }
+        
+        // POST: api/TestSessions/{sessionId}/testcases/{testcaseId}/payload
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost("{sessionId}/testcases/{testcaseId}/payload")]
+        public async Task<ActionResult> UploadCustomPayload(string sessionId, string testcaseId)
+        {
+           
+            var testSession = _context.TestSessions.FirstAsync(s => s.Id == Guid.Parse(sessionId)).Result ?? new TestSession()
+            {
+                Id = new Guid(),
+            };
+
+            var file = Request.Form.Files[0];
+                
+            if(file.Length <= 0)
+            {
+                Log.Error("File size is zero");
+                return BadRequest();
+            }
+
+            var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+            
+            var fiksRequest = new FiksRequest
+            {
+                TestCase = await _context.TestCases.FindAsync(testcaseId),
+                CustomPayloadFile = new FiksPayload()
+                {
+                    Filename = file.Name,
+                    Payload = stream.ToArray()
+                }
+            };
+            
+            testSession.FiksRequests.Add(fiksRequest);
+            
+            await _context.TestSessions.AddAsync(testSession);
+            
+            return new OkResult();
+        }
 
         // POST: api/TestSessions
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
@@ -84,40 +126,44 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         {
             Log.Information("PostTestSession start");
             TestSession testSession;
-            try
+            var newTestSession = false;
+            if(!string.IsNullOrEmpty(testRequest.SessionId))
             {
-                testSession = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
-            }
-            catch (Exception e)
-            {
-                var message = e.Message;
-                if (e.InnerException != null)
-                {
-                    message = e.InnerException.Message;
-                }
-                
-                Log.Error("Error with deserializing the test request: {}", JsonSerializer.Serialize(testRequest));
-                return BadRequest(message);
-            }
-
-            if (string.IsNullOrEmpty(testRequest.SessionId))
-            {
-                testSession.Id = Guid.NewGuid();
+                Log.Debug("Finding session with sessionId {SessionId}", testRequest.SessionId);
+                testSession = _context.TestSessions.FindAsync(testRequest.SessionId).Result;
             }
             else
             {
-                testSession.Id = Guid.Parse(testRequest.SessionId);
+                Log.Debug("Create new TestSession from incoming request");
+                try
+                {
+                    testSession = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
+                }
+                catch (Exception e)
+                {
+                    var message = e.Message;
+                    if (e.InnerException != null)
+                    {
+                        message = e.InnerException.Message;
+                    }
+
+                    Log.Error("Error with deserializing the test request: {}", JsonSerializer.Serialize(testRequest));
+                    return BadRequest(message);
+                }
+                testSession.Id = Guid.NewGuid();
+                newTestSession = true;
             }
-            
+           
             testSession.CreatedAt = DateTime.Now;
             
             testSession.FiksRequests = new List<FiksRequest>();
 
             foreach (var testId in testSession.SelectedTestCaseIds)
             {
-                var fiksRequest = new FiksRequest
+                var testCase = await _context.TestCases.FindAsync(testId);
+                var fiksRequest = testSession.FiksRequests.Find(fr => fr.TestCase == testCase) ?? new FiksRequest
                 {
-                    TestCase = _context.TestCases.Find(testId)
+                    TestCase = testCase
                 };
 
                 try
@@ -127,12 +173,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 catch (Exception e)
                 {
                     Log.Error(e, "Noe gikk galt ved sending av request til {FiksKonto}", testSession.RecipientId);
-                    if (e.InnerException.Message.Contains("Ingen konto med id"))
+                    if (e.InnerException != null && e.InnerException.Message.Contains("Ingen konto med id"))
                     {
                         Log.Error("TestSession FIKS-account {FiksKonto} is illegal", testSession.RecipientId);
                         return BadRequest("Ugyldig konto: " + testSession.RecipientId);
                     }
-                    Log.Error("An Error occured when sending FIKS request with recipient ID {0}", testSession.RecipientId);
+                    Log.Error("An Error occured when sending FIKS request with recipient ID {RecipientId}", testSession.RecipientId);
                     return StatusCode(500, e);
                 }
                 testSession.FiksRequests.Add(fiksRequest);
@@ -140,7 +186,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             testSession.SelectedTestCaseIds.Clear();
 
-            _context.TestSessions.Add(testSession);
+            if (newTestSession)
+            {
+                _context.TestSessions.Add(testSession);
+            }
 
             await _context.SaveChangesAsync();
             

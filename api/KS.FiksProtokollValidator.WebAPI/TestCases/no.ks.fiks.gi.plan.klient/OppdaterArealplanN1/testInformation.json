@@ -8,6 +8,6 @@
     "expectedResult": "Bekreftet mottak",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

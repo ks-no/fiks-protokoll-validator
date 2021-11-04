@@ -88,7 +88,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             return NoContent();
         }
-
+                
         // POST: api/TestCases
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -96,7 +96,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         public async Task<ActionResult<TestCase>> PostTestCase([FromBody] TestCase testCase)
         {
             Log.Information("Posting testcases");
-            _context.TestCases.Add(testCase);
+            await _context.TestCases.AddAsync(testCase);
             await _context.SaveChangesAsync();
 
             Log.Debug("PostTestCase saved successfully to DB");

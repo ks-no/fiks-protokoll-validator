@@ -4,14 +4,11 @@
             "kodeverdi": "Hensynssone",
             "kodebeskrivelse": "170"
         },
-        "nasjonalArealplanID": {
+        "nasjonalArealplanId": {
             "administrativEnhet": {
-                "kommunenummer": "0821",
-                "fylkesnummer": "1",
-                "landskode": "NO"
+                "kommunenummer": "0821"
             },
-            "planidentifikasjon": "planidentifikasjon",
-            "vedtaksdato": "2020-06-13"
+            "planidentifikasjon": "planidentifikasjon"
         },
         "vedtaksdato": "2020-01-01",
         "innvilgetDispensasjon": true,

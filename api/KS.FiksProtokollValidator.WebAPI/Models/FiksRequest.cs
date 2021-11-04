@@ -15,6 +15,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         public DateTime SentAt { get; set; }
 
         public TestCase TestCase { get; set; }
+        
+        public FiksPayload CustomPayloadFile { get; set; }
 
         public List<FiksResponse> FiksResponses { get; set; }
 

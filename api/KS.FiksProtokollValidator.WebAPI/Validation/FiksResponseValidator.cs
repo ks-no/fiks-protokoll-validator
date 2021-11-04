@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using KS.Fiks.IO.Arkiv.Client.Models;
@@ -72,7 +73,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         private static void ValidatePayload(FiksResponse fiksResponse, List<FiksResponseTest> fiksResponseTests,
             List<string> validationErrors)
         {
-            var receivedPayloadFileName = fiksResponse.Payload;
+            FiksPayload fiksPayload = GetFiksPayload(fiksResponse.FiksPayloads);
+            var receivedPayloadFileName = fiksPayload != null ? fiksPayload.Filename : null;
             var messageType = fiksResponse.Type;
 
             if (!ResponseMessageShouldHavePayload(messageType) && receivedPayloadFileName == null)
@@ -104,15 +106,20 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
             if (receivedPayloadFileName.EndsWith(".xml"))
             {
-                ValidateXmlPayloadContent(fiksResponse.PayloadContent, fiksResponseTests, validationErrors);
+                ValidateXmlPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksResponseTests, validationErrors);
             }
             else
             {
                 if (receivedPayloadFileName.EndsWith(".json"))
                 {
-                    ValidateJsonPayloadContent(fiksResponse.PayloadContent, fiksResponseTests, validationErrors);
+                    ValidateJsonPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksResponseTests, validationErrors);
                 }
             }
+        }
+
+        private static FiksPayload GetFiksPayload(List<FiksPayload> fiksPayloads)
+        {
+            return fiksPayloads != null && fiksPayloads.Count > 0 ? fiksPayloads[0] : null;
         }
 
         private static bool hasAllowedFileFormat(string receivedPayloadFileName)
@@ -141,7 +148,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnPlanerV2,
                 WebAPI.Resources.ResponseMessageTypes.FinnDispensasjonerForSøkV2,
-                WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2
+                WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2,
+                WebAPI.Resources.ResponseMessageTypes.AktørerV2,
+                WebAPI.Resources.ResponseMessageTypes.BboxV2,
+                WebAPI.Resources.ResponseMessageTypes.RelatertePlanerV2,
+                WebAPI.Resources.ResponseMessageTypes.GjeldendePlanbestemmelserV2,
+                WebAPI.Resources.ResponseMessageTypes.KodelisteV2,
+                WebAPI.Resources.ResponseMessageTypes.PlandokumenterV2
             };
         }
 
@@ -254,7 +267,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                     {
                         var tokens = json.SelectTokens(path);
 
-                        if (tokens == null)
+                        if (!tokens.Any())
                             validationErrors.Add(string.Format(
                                 ValidationErrorMessages.MissingJsonPayloadToken, path
                             ));

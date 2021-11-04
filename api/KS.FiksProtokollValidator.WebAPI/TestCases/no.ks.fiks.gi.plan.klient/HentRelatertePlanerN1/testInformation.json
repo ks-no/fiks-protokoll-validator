@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Hent relaterte planer",
+    "description": "Hent relaterte planer",
+    "testStep": "Normalsituasjon 1 Input HentRelatertePlaner, retur relaterte planer",
+    "messageType": "no.ks.fiks.gi.plan.innsyn.hentrelaterteplaner.v2",
+    "operation": "HentRelatertePlaner",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat søk, og retur relaterte planer",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": false,
+    "protocol": "no.ks.fiks.gi.plan.klient"
+}
