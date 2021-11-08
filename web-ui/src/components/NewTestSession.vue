@@ -83,7 +83,7 @@
           <TestCase
             v-for="testCase in computedTestCases"
             v-bind:key="testCase.testName"
-            :test-id="testCase.testId"
+            :testId="testCase.testId"
             :testName="testCase.testName"
             :messageType="testCase.messageType"
             :payloadFileName="testCase.payloadFileName"

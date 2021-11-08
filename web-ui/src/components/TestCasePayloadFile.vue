@@ -4,11 +4,16 @@
     :content="payloadFileContent"
     v-on:get-content="isTextContent => getContent(isTextContent)"
   />
+  <PayloadFileUpload 
+    :session-id="sessionId"
+    :test-case-id="testId"
+  />
 </template>
 
 <script>
 import PayloadFile from "./PayloadFile.vue";
 import axios from "axios";
+import PayloadFileUpload from "@/components/PayloadFileUpload";
 
 require("dotenv").config()
 
@@ -16,6 +21,7 @@ export default {
   name: "testCasePayloadFile",
   
   components: {
+    PayloadFileUpload,
     PayloadFile
   },
   
@@ -47,6 +53,10 @@ export default {
       type: String
     },
     testName: {
+      required: true,
+      type: String
+    },
+    testId: {
       required: true,
       type: String
     }

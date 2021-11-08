@@ -19,7 +19,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TestCase>().HasIndex(t => t.TestName).IsUnique();
+            modelBuilder.Entity<TestCase>().HasIndex(t => t.TestId).IsUnique();
         }
     }
 }

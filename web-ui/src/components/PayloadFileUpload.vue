@@ -8,12 +8,6 @@
       <div class="input-group-append">
         <button :disabled="file === ''" v-on:click="submitFile()" class="btn btn-outline-primary action-td" title="Last opp egen melding"><span class="fas fa-upload fa-lg"></span><span>Last opp</span></button>
       </div>
-      <div class="input-group-append">
-        <button v-if="isCustom" v-on:click="deletePrivacyStatement()" class="btn btn-outline-danger action-td" title="Slett egendefinert">
-          <span class="fas fa-times fa-lg"></span>
-          <span>Slett egendefinert</span>
-        </button>
-      </div>
     </div>
   </form>
 </template>
@@ -26,13 +20,14 @@ export default {
   name: 'PayloadFileUpload',
   props: {
     sessionId: String,
+    testId: String,
     apiUrl: String,
     isCustom: false
   },
   data() {
     return {
       file: '',
-      fileUploadText: 'Velg egendefinert fil (pdf)'
+      fileUploadText: 'Velg egendefinert melding'
     };
   },
   methods: {
@@ -44,7 +39,7 @@ export default {
       let formData = new FormData();
       formData.append('file', this.file);
 
-      axios.post(`${this.apiUrl}/details/${this.sessionId}/`,
+      axios.post(`${this.apiUrl}/TestSessions/${this.sessionId}/testcases/${this.testId}/payload`,
           formData,
           {
             headers: {
@@ -57,13 +52,6 @@ export default {
         console.log("Uploading file failed!")
       })
     },
-    deletePrivacyStatement() {
-      axios.delete(`${this.apiUrl}/details/${this.organizationId}/privacystatement/file`)
-          .then(response => {
-            this.getPrivacyStatement();
-            console.log("Deleted custom file");
-          })
-    }
   }
 };
 </script>

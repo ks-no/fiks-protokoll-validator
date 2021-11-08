@@ -96,6 +96,7 @@
               <b-col>
                 <TestCasePayloadFile
                   :testName="testName"
+                  :test-case-id="testId"
                   :fileName="payloadFileName"
                   :operation="operation"
                   :situation="situation"
@@ -121,6 +122,7 @@
                       :protocol="protocol"
                       :fileName="attachmentFileName"
                       :testName="testName"
+                      :test-case-id="testId"
                       :isAttachment="true"
                     />
                   </div>
@@ -156,6 +158,10 @@ export default {
 
   props: {
     testName: {
+      required: true,
+      type: String,
+    },
+    testId: {
       required: true,
       type: String,
     },

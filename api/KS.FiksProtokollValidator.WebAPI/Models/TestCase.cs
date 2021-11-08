@@ -7,6 +7,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
     public class TestCase
     {
         [Key]
+        public string TestId { get; set; }
+        
         public string TestName { get; set; }
 
         [Required]
