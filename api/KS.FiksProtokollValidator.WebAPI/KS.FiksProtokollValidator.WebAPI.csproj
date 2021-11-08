@@ -49,7 +49,7 @@
     <PackageReference Include="KS.Fiks.IO.Arkiv.Client" Version="2.0.2" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="1.2.3" />
     <PackageReference Include="KS.Fiks.IO.Politisk.Behandling.Client" Version="0.0.14" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.7">
