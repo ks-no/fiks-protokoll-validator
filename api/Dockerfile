@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS core-build-env
+FROM mcr.microsoft.com/dotnet/sdk:6.0-alpine AS core-build-env
 WORKDIR /build-app
 
 # Copy csproj and build + publish code
