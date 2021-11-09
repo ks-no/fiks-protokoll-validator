@@ -8,7 +8,7 @@ RUN dotnet build --configuration Release KS.FiksProtokollValidator.WebAPI/KS.Fik
 RUN dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --no-build --output published-app
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:5.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0.0
 ARG build_version_number=undefined
 WORKDIR /app
 COPY --from=core-build-env /build-app/published-app .
