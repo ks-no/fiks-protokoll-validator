@@ -1,8 +1,10 @@
 <template>
   <div>
-    <button class="btn btn-link" v-on:click="handleButtonOnClick()">
-      {{ fileName }}
-    </button>
+    <span><a href="" v-on:click.prevent.capture="openWindow(fileUrl)">{{ fileName }}</a>
+      <button v-if="fileName !== null" class="btn btn-primary" style="margin-left: 10px;padding:1px;" v-on:click="handleButtonOnClick()">
+      Se innhold
+      </button>
+    </span> <br/>
     <b-modal
       v-model="modalIsOpen"
       :title="fileName"
@@ -50,7 +52,8 @@ export default {
       modalIsOpen: false,
       fileExtension: null,
       isTextContent: false,
-      temporaryUrl: null
+      temporaryUrl: null,
+      fileUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.protocol + "/" + this.testId + "/payload",
     };
   },
   props: {
@@ -59,6 +62,12 @@ export default {
     },
     content: {
       required: true
+    },
+    protocol: {
+      type: String
+    },
+    testId: {
+      type: String
     }
   },
 
@@ -123,6 +132,9 @@ export default {
           return content;
         }
       }
+    },
+    openWindow: function (link) {
+      window.open(link, '_blank');
     }
   }
 };

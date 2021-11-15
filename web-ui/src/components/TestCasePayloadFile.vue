@@ -1,13 +1,22 @@
 <template>
-  <PayloadFile
-    :fileName="fileName"
-    :content="payloadFileContent"
-    v-on:get-content="isTextContent => getContent(isTextContent)"
-  />
-  <PayloadFileUpload 
-    :session-id="sessionId"
-    :test-case-id="testId"
-  />
+  <div>
+    <span>
+    <PayloadFile
+      :fileName="fileName"
+      :testId="testId"
+      :protocol="protocol"
+      :content="payloadFileContent"
+      v-on:get-content="isTextContent => getContent(isTextContent)"
+    />
+    </span>
+    <span>
+    <PayloadFileUpload 
+      :fileName="fileName"
+      :testId="testId"
+      :protocol="protocol"
+    />
+      </span>
+  </div>
 </template>
 
 <script>
@@ -28,7 +37,8 @@ export default {
   data() {
     return {
       payloadFileContent: null,
-      fileExtension: null
+      fileExtension: null,
+      apiBaseUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles",
     };
   },
   
@@ -59,6 +69,9 @@ export default {
     testId: {
       required: true,
       type: String
+    },
+    fileUrl: {
+      type: String
     }
   },
   
@@ -66,15 +79,14 @@ export default {
     getContent: function(isTextContent) {
       let endPointUrl = this.isAttachment
           ? this.operation + "" + this.situation + "/" + "Attachement/" + this.fileName
-          : this.operation + "" + this.situation + "/payload";
+          : this.testId + "/payload";
 
       let settings = {
         responseType: isTextContent ? "text" : "blob",
         responseEncoding: isTextContent ? "utf-16" : "base64"
       };
 
-      let apiUrl = process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles";
-      let resourceUrl = apiUrl + "/" + this.protocol + "/" + endPointUrl;
+      let resourceUrl = this.apiBaseUrl + "/" + this.protocol + "/" + endPointUrl;
 
       axios.get(resourceUrl, settings).then(response => {
         this.payloadFileContent = response.data;

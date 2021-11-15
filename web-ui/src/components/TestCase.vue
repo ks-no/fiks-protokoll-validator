@@ -95,8 +95,8 @@
               </b-col>
               <b-col>
                 <TestCasePayloadFile
+                  :testId="testId"
                   :testName="testName"
-                  :test-case-id="testId"
                   :fileName="payloadFileName"
                   :operation="operation"
                   :situation="situation"
@@ -117,12 +117,12 @@
                     :key="attachmentFileName"
                   >
                     <TestCasePayloadFile
+                      :testId="testId"
+                      :testName="testName"
                       :operation="operation"
                       :situation="situation"
                       :protocol="protocol"
                       :fileName="attachmentFileName"
-                      :testName="testName"
-                      :test-case-id="testId"
                       :isAttachment="true"
                     />
                   </div>

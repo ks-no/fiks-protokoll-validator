@@ -81,11 +81,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         // POST: api/TestSessions/{sessionId}/testcases/{testcaseId}/payload
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost("{sessionId}/testcases/{testcaseId}/payload")]
-        public async Task<ActionResult> UploadCustomPayload(string sessionId, string testcaseId)
+        [HttpPost("{testSessionId}/testcases/{testcaseId}/payload")]
+        public async Task<ActionResult> UploadCustomPayload(string testSessionId, string testcaseId)
         {
-           
-            var testSession = _context.TestSessions.FirstAsync(s => s.Id == Guid.Parse(sessionId)).Result ?? new TestSession()
+            // Get testSessionId from cookie
+            testSessionId =  Request.Cookies["testSessionId"];
+            var testSession = _context.TestSessions.FirstAsync(s => s.Id == Guid.Parse(testSessionId)).Result ?? new TestSession()
             {
                 Id = new Guid(),
             };
@@ -104,7 +105,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             var fiksRequest = new FiksRequest
             {
                 TestCase = await _context.TestCases.FindAsync(testcaseId),
-                CustomPayloadFile = new FiksPayload()
+                CustomPayloadFile = new FiksRequestPayload()
                 {
                     Filename = file.Name,
                     Payload = stream.ToArray()
@@ -114,6 +115,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             testSession.FiksRequests.Add(fiksRequest);
             
             await _context.TestSessions.AddAsync(testSession);
+            await _context.SaveChangesAsync();
             
             return new OkResult();
         }
@@ -127,7 +129,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             Log.Information("PostTestSession start");
             TestSession testSession;
             var newTestSession = false;
-            if(!string.IsNullOrEmpty(testRequest.SessionId))
+            var testSessionId = Request.Cookies["testSessionId"];
+            if(!string.IsNullOrEmpty(testSessionId))
             {
                 Log.Debug("Finding session with sessionId {SessionId}", testRequest.SessionId);
                 testSession = _context.TestSessions.FindAsync(testRequest.SessionId).Result;

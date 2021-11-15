@@ -4,6 +4,7 @@ using KS.FiksProtokollValidator.WebAPI.FiksIO;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,12 +33,21 @@ namespace KS.FiksProtokollValidator.WebAPI
                     {
                         builder.WithOrigins("http://localhost:8081",
                             "http://localhost:8080",
+                            "http://localhost:64558",
                             "https://forvaltning.fiks.dev.ks.no",
                             "https://forvaltning.fiks.test.ks.no",
                             "https://forvaltning.fiks.ks.no")
                             .AllowAnyMethod()
-                            .AllowAnyHeader(); 
+                            .AllowAnyHeader()
+                            .AllowCredentials(); 
                     });
+            });
+            
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => false;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+                options.Secure = CookieSecurePolicy.None;
             });
             
             // get configuration from appsettings.json - use as singleton
@@ -88,9 +98,9 @@ namespace KS.FiksProtokollValidator.WebAPI
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
             app.UseCors(AllowedOrigins);
+            
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

@@ -158,12 +158,15 @@ export default {
   methods: {
     getTests: async function() {
       this.loading = true;
-      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases");
+      this.deleteCookie('_testSessionId');
+      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases", {withCredentials: true});
       this.testCases = response.data;
       this.loading = false;
       this.hasLoaded = true;
     },
-    
+    deleteCookie(name) {
+      document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    },
     runSelectedTests: async function() {
       this.running = true;
       
