@@ -46,6 +46,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.TestCase)
+                
+                .Include(t => t.FiksRequests)
+                .ThenInclude(r => r.CustomPayloadFile)
 
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.TestCase)
@@ -78,48 +81,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             return testSession;
         }
         
-        // POST: api/TestSessions/{sessionId}/testcases/{testcaseId}/payload
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost("{testSessionId}/testcases/{testcaseId}/payload")]
-        public async Task<ActionResult> UploadCustomPayload(string testSessionId, string testcaseId)
-        {
-            // Get testSessionId from cookie
-            testSessionId =  Request.Cookies["testSessionId"];
-            var testSession = _context.TestSessions.FirstAsync(s => s.Id == Guid.Parse(testSessionId)).Result ?? new TestSession()
-            {
-                Id = new Guid(),
-            };
-
-            var file = Request.Form.Files[0];
-                
-            if(file.Length <= 0)
-            {
-                Log.Error("File size is zero");
-                return BadRequest();
-            }
-
-            var stream = new MemoryStream();
-            await file.CopyToAsync(stream);
-            
-            var fiksRequest = new FiksRequest
-            {
-                TestCase = await _context.TestCases.FindAsync(testcaseId),
-                CustomPayloadFile = new FiksRequestPayload()
-                {
-                    Filename = file.Name,
-                    Payload = stream.ToArray()
-                }
-            };
-            
-            testSession.FiksRequests.Add(fiksRequest);
-            
-            await _context.TestSessions.AddAsync(testSession);
-            await _context.SaveChangesAsync();
-            
-            return new OkResult();
-        }
-
         // POST: api/TestSessions
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -129,11 +90,18 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             Log.Information("PostTestSession start");
             TestSession testSession;
             var newTestSession = false;
-            var testSessionId = Request.Cookies["testSessionId"];
+            var testSessionId = Request.Cookies["_testSessionId"];
             if(!string.IsNullOrEmpty(testSessionId))
             {
                 Log.Debug("Finding session with sessionId {SessionId}", testRequest.SessionId);
-                testSession = _context.TestSessions.FindAsync(testRequest.SessionId).Result;
+                testSession = _context.TestSessions
+                    .Include(t => t.FiksRequests)
+                    .ThenInclude(f => f.CustomPayloadFile)
+                    .FirstOrDefaultAsync(s => s.Id.Equals(Guid.Parse(testSessionId))).Result;
+                
+                var testSessionFromRequest = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
+                testSession.RecipientId = testSessionFromRequest.RecipientId;
+                testSession.SelectedTestCaseIds = testSessionFromRequest.SelectedTestCaseIds;
             }
             else
             {
@@ -154,18 +122,18 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     return BadRequest(message);
                 }
                 testSession.Id = Guid.NewGuid();
+                testSession.FiksRequests = new List<FiksRequest>();
                 newTestSession = true;
             }
            
             testSession.CreatedAt = DateTime.Now;
             
-            testSession.FiksRequests = new List<FiksRequest>();
-
             foreach (var testId in testSession.SelectedTestCaseIds)
             {
                 var testCase = await _context.TestCases.FindAsync(testId);
                 var fiksRequest = testSession.FiksRequests.Find(fr => fr.TestCase == testCase) ?? new FiksRequest
                 {
+                    Id = Guid.NewGuid(),
                     TestCase = testCase
                 };
 

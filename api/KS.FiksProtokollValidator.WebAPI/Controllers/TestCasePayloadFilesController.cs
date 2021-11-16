@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -60,14 +61,31 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost("{protocol}/{testcaseId}/payload")]
-        public async Task<ActionResult> UploadCustomPayload(string testSessionId, string testcaseId)
+        public async Task<ActionResult> UploadCustomPayload(string testcaseId)
         {
+            Log.Information("UploadCustomPayload start");
             // Get testSessionId from cookie
-            testSessionId =  Request.Cookies["testSessionId"];
-            var testSession = _context.TestSessions.FirstAsync(s => s.Id == Guid.Parse(testSessionId)).Result ?? new TestSession()
+            var testSessionId = Request.Cookies["_testSessionId"];
+            var newTestSession = false;
+            var testSession = new TestSession();
+            if (string.IsNullOrEmpty(testSessionId))
             {
-                Id = new Guid(),
-            };
+                Log.Information("UploadCustomPayload could not find a testSessionId from cookie. Creating a new TestSession");
+                testSession = new TestSession()
+                {
+                    Id = Guid.NewGuid(),
+                    CreatedAt = DateTime.Now
+                };
+                newTestSession = true;
+            }
+            else
+            {
+                testSession = _context.TestSessions.FirstAsync(s => s.Id == Guid.Parse(testSessionId)).Result ??
+                    new TestSession()
+                    {
+                        Id = Guid.NewGuid(),
+                    };
+            }
 
             var file = Request.Form.Files[0];
                 
@@ -82,18 +100,26 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             
             var fiksRequest = new FiksRequest
             {
+                Id = Guid.NewGuid(),
                 TestCase = await _context.TestCases.FindAsync(testcaseId),
-                CustomPayloadFile = new FiksRequestPayload()
+                CustomPayloadFile = new FiksRequestPayload
                 {
-                    Filename = file.Name,
+                    Filename = file.FileName,
                     Payload = stream.ToArray()
                 }
             };
+            testSession.FiksRequests = new List<FiksRequest> {fiksRequest};
+
+            if (newTestSession)
+            {
+                await _context.TestSessions.AddAsync(testSession);    
+            }
+
+            await _context.FiksRequest.AddAsync(fiksRequest);
             
-            testSession.FiksRequests.Add(fiksRequest);
-            
-            await _context.TestSessions.AddAsync(testSession);
             await _context.SaveChangesAsync();
+            
+            Log.Information("UploadCustomPayload finished");
             
             return new OkResult();
         }

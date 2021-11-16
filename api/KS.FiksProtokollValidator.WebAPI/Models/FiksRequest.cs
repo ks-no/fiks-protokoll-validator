@@ -9,6 +9,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
     public class FiksRequest
     {
         [Key]
+        public Guid Id { get; set; }
+        
         public Guid MessageGuid { get; set; }
 
         [Required, DataType(DataType.DateTime)]

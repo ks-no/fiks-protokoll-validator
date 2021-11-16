@@ -58,7 +58,43 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             
             await _context.TestSessions.AddAsync(testSession);
             await _context.SaveChangesAsync();
+         
             return await _context.TestCases.ToListAsync();
+        }
+        
+        // GET: api/TestCases/Protocol
+        [HttpGet("Protocol/{protocol}")]
+        public async Task<ActionResult<IEnumerable<TestCase>>> GetTestCases(string protocol)
+        {
+            Log.Information("Finding all TestCase for protocol {Protocol}", protocol);
+            
+            //Invalidate old cookie
+            Response.Cookies.Delete("_testSessionId", new CookieOptions()
+            {
+                Secure = false,
+            });
+            
+            var testSession = new TestSession()
+            {
+                Id = Guid.NewGuid(),
+                CreatedAt = DateTime.Now
+            };
+            
+            // Set testSessionId as a cookie
+            var option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMinutes(30),
+                Path = "/",
+                HttpOnly = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            };
+            
+            Response.Cookies.Append("_testSessionId", testSession.Id.ToString(), option);  
+            
+            await _context.TestSessions.AddAsync(testSession);
+            await _context.SaveChangesAsync();
+            return await _context.TestCases.Where(t => t.Protocol == protocol).ToListAsync();
         }
 
         // GET: api/TestCases/5

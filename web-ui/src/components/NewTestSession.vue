@@ -18,7 +18,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="basic-addon3">FIKS-protokoll</span>
     </div>
-      <b-form-select v-model="selectedProtocol" :options="options" style="width:30%"></b-form-select>
+      <b-form-select v-model="selectedProtocol" v-on:change="getTestsByProtocol" :options="options" style="width:30%"></b-form-select>
     </div>
   
     <div style="margin: 40px 0">
@@ -82,7 +82,7 @@
         >
           <TestCase
             v-for="testCase in computedTestCases"
-            v-bind:key="testCase.testName"
+            v-bind:key="testCase.testId"
             :testId="testCase.testId"
             :testName="testCase.testName"
             :messageType="testCase.messageType"
@@ -147,25 +147,31 @@ export default {
   
   computed: {
     computedTestCases: function() {
+      if(this.selectedProtocol === 'ingen') return;
       if (!this.showNotSupportedTests) {
         return this.testCases.filter(testCase => {
-          return testCase.supported === !this.showNotSupportedTests && testCase.protocol === this.selectedProtocol;
+          return testCase.supported === !this.showNotSupportedTests;
         });
-      } else return this.testCases.filter(testCase => testCase.protocol === this.selectedProtocol);
+      } else {
+        return this.testCases;
+      }
     }
   },
   
   methods: {
     getTests: async function() {
       this.loading = true;
-      this.deleteCookie('_testSessionId');
       const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases", {withCredentials: true});
       this.testCases = response.data;
       this.loading = false;
       this.hasLoaded = true;
     },
-    deleteCookie(name) {
-      document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    getTestsByProtocol: async function() {
+      this.loading = true;
+      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases/Protocol/" + this.selectedProtocol, {withCredentials: true});
+      this.testCases = response.data;
+      this.loading = false;
+      this.hasLoaded = true;
     },
     runSelectedTests: async function() {
       this.running = true;
@@ -179,7 +185,7 @@ export default {
         selectedTestCaseIds: this.selectedTests
       };
       
-      await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params)
+      await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params, {withCredentials: true})
       .then(response => {
          if (response.status === 201) {
                 this.resultData = response.data;
@@ -203,7 +209,7 @@ export default {
           return testCase.supported === true && testCase.protocol === this.selectedProtocol;
         });
         tests.forEach(test => {
-          this.tmpTests.push(test.testName);
+          this.tmpTests.push(test.testId);
         });
         this.selectedTests = this.tmpTests;
         this.tmpTests = [];
@@ -217,7 +223,7 @@ export default {
     }
   },
   created() {
-    this.getTests();
+    //this.getTests();
   },
   watch: {
     selectedTests(newVal) {

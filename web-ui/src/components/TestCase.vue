@@ -56,7 +56,7 @@
               class="ext-left"
               switch
               size="lg"
-              :value="testName"
+              :value="testId"
             />
           </b-col>
         </span>
