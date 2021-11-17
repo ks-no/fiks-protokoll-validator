@@ -88,9 +88,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         public async Task<ActionResult<TestSession>> PostTestSession([FromBody] TestRequest testRequest)
         {
             Log.Information("PostTestSession start");
+            
             TestSession testSession;
             var newTestSession = false;
             var testSessionId = Request.Cookies["_testSessionId"];
+            
+            //Trim recipient for leading and trailing white-spaces
+            testRequest.RecipientId = testRequest.RecipientId.Trim();
+            
+            
             if(!string.IsNullOrEmpty(testSessionId))
             {
                 Log.Debug("Finding session with sessionId {SessionId}", testRequest.SessionId);

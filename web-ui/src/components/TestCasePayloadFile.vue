@@ -6,16 +6,17 @@
       :testId="testId"
       :protocol="protocol"
       :content="payloadFileContent"
+      :fileUrl="payloadUrl"
       v-on:get-content="isTextContent => getContent(isTextContent)"
     />
     </span>
-    <span>
-    <PayloadFileUpload 
-      :fileName="fileName"
-      :testId="testId"
-      :protocol="protocol"
-    />
-      </span>
+    <span v-if="!hasRun">
+      <PayloadFileUpload 
+        :fileName="fileName"
+        :testId="testId"
+        :protocol="protocol"
+      />
+    </span>
   </div>
 </template>
 
@@ -38,7 +39,8 @@ export default {
     return {
       payloadFileContent: null,
       fileExtension: null,
-      apiBaseUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles",
+      payloadUrl: this.hasRun ? process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
+      attachmentUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.operation + "/" + this.situation + "/" + "Attachement/" + this.fileName
     };
   },
   
@@ -70,23 +72,24 @@ export default {
       required: true,
       type: String
     },
-    fileUrl: {
-      type: String
+    hasRun: {
+      type: Boolean
+    },
+    testSessionId: {
+      type: String,
     }
   },
   
   methods: {
     getContent: function(isTextContent) {
-      let endPointUrl = this.isAttachment
-          ? this.operation + "" + this.situation + "/" + "Attachement/" + this.fileName
-          : this.testId + "/payload";
+      let resourceUrl = this.isAttachment
+          ? this.attachmentUrl
+          : this.payloadUrl;
 
       let settings = {
         responseType: isTextContent ? "text" : "blob",
         responseEncoding: isTextContent ? "utf-16" : "base64"
       };
-
-      let resourceUrl = this.apiBaseUrl + "/" + this.protocol + "/" + endPointUrl;
 
       axios.get(resourceUrl, settings).then(response => {
         this.payloadFileContent = response.data;

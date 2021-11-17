@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
@@ -27,13 +28,14 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             _context = context;
         }
 
-        // GET api/<TestsCasePayloadFilesController>/TestCaseId/payload
-        [HttpGet("{protocol}/{testCaseId}/payload")]
+        // GET api/<TestsCasePayloadFilesController>/Protocol/TestCaseId/payload
+        [HttpGet("{testCaseId}/payload")]
         public ActionResult GetMessagePayloadFile(string testCaseId)
         {
             try
             {
                 var testCase = _context.TestCases.FindAsync(testCaseId).Result;
+                
                 var filePath = testCase.PayloadFilePath;
 
                 Log.Information(
@@ -57,10 +59,59 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             }
         }
         
+        // GET api/<TestsCasePayloadFilesController>/TestCaseId/payload
+        [HttpGet("{testSessionId}/{testCaseId}/payload")]
+        public ActionResult GetUsedMessagePayloadFile(string testSessionId, string testCaseId)
+        {
+            try
+            {
+                var testCase = _context.TestCases.FindAsync(testCaseId).Result;
+                var testSession = _context.TestSessions
+                    .Include(ts => ts.FiksRequests)
+                    .ThenInclude(fr => fr.TestCase)
+                    .Include(ts => ts.FiksRequests)
+                    .ThenInclude(fr => fr.CustomPayloadFile).FirstOrDefaultAsync(ts => ts.Id == Guid.Parse(testSessionId)).Result;
+
+                var fiksRequest = testSession.FiksRequests.FirstOrDefault(request => request.TestCase == testCase);
+
+                if (fiksRequest == null)
+                {
+                    Log.Error("Fant ikke testcase med id {TestCaseId} for testsession med id {TestSessionId}", testCaseId, testSessionId);
+                    return BadRequest($"Fant ikke testcase med id {testCaseId} for testsession med id {testSessionId}");
+                }
+                
+                var contentDispositionHeader = new System.Net.Mime.ContentDisposition()
+                {
+                    FileName = fiksRequest.CustomPayloadFile != null ? fiksRequest.CustomPayloadFile.Filename : testCase.PayloadFileName,
+                    DispositionType = "attachment"
+                };
+                
+                Response.Headers.Add("Content-Disposition", contentDispositionHeader.ToString());
+
+                if (fiksRequest.CustomPayloadFile != null)
+                {
+                    return new FileContentResult(fiksRequest.CustomPayloadFile.Payload, "application/octet-stream");
+                }
+                
+                var filePath = testCase.PayloadFilePath;
+
+                Log.Information(
+                    "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName}, {TestCaseId} with filePath {FilePath}",
+                    testCase.Protocol, testCase.TestName, testCaseId, filePath);
+
+                return GetPayload(filePath);
+            }
+            catch(Exception e)
+            {
+                Log.Error(e,"GetMessagePayloadFile for protocol testCaseName {TestCaseName} failed", testCaseId);
+                return new NotFoundResult();
+            }
+        }
+        
         // POST: api/TestSessions/{sessionId}/testcases/{testcaseId}/payload
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost("{protocol}/{testcaseId}/payload")]
+        [HttpPost("{testcaseId}/payload")]
         public async Task<ActionResult> UploadCustomPayload(string testcaseId)
         {
             Log.Information("UploadCustomPayload start");

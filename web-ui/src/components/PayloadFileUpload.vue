@@ -41,7 +41,7 @@ export default {
       let formData = new FormData();
       formData.append('file', this.file);
 
-      axios.post(`${this.apiBaseUrl}/${this.protocol}/${this.testId}/payload`,
+      axios.post(`${this.apiBaseUrl}/${this.testId}/payload`,
           formData,
           {
             headers: {

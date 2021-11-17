@@ -74,6 +74,7 @@
         :testCase="request.testCase"
         :isValidated="request.isFiksResponseValidated"
         :validationErrors="request.fiksResponseValidationErrors"
+        :testSessionId="testSession.id"
       />
     </div>
   </div>
@@ -104,6 +105,7 @@ export default {
   
   methods: {
     getTestSession: async function(testSessionId) {
+      this.testSessionId = testSessionId;
       this.testSession = null;
       this.loading = true;
       await axios.get(process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId)

@@ -101,6 +101,8 @@
                   :operation="operation"
                   :situation="situation"
                   :protocol="protocol"
+                  :testSessionId="testSessionId"
+                  :hasRun="hasRun"
                 />
               </b-col>
             </b-row>
@@ -124,6 +126,8 @@
                       :protocol="protocol"
                       :fileName="attachmentFileName"
                       :isAttachment="true"
+                      :testSessionId="testSessionId"
+                      :hasRun="hasRun"
                     />
                   </div>
                 </b-col>
@@ -208,10 +212,13 @@ export default {
       required: true,
       type: Boolean,
     },
-    protocol:{
+    protocol: {
       required:true,
       type: String,
-    }
+    },
+    testSessionId: {
+      type: String
+    } 
   },
 };
 </script>

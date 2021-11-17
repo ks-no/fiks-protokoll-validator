@@ -1,6 +1,9 @@
 <template>
   <div>
-    <span><a href="" v-on:click.prevent.capture="openWindow(fileUrl)">{{ fileName }}</a>
+    <span>
+      <button v-if="fileName !== null" class="btn btn-primary" style="margin-left: 10px;padding:1px;" v-on:click="openWindow(fileUrl)">
+      Last ned melding
+      </button>
       <button v-if="fileName !== null" class="btn btn-primary" style="margin-left: 10px;padding:1px;" v-on:click="handleButtonOnClick()">
       Se innhold
       </button>
@@ -53,7 +56,6 @@ export default {
       fileExtension: null,
       isTextContent: false,
       temporaryUrl: null,
-      fileUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.protocol + "/" + this.testId + "/payload",
     };
   },
   props: {
@@ -68,6 +70,10 @@ export default {
     },
     testId: {
       type: String
+    },
+    fileUrl: {
+      type: String,
+      required: true
     }
   },
 
