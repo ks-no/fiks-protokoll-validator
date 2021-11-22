@@ -1,11 +1,11 @@
 <template>
   <div>
     <span>
-      <button v-if="fileName !== null" class="btn btn-primary" style="margin-left: 10px;padding:1px;" v-on:click="openWindow(fileUrl)">
-      Last ned melding
+      <button v-if="fileName !== null" class="btn btn-link" v-on:click="openWindow(fileUrl)"> 
+        {{ fileName }}
       </button>
-      <button v-if="fileName !== null" class="btn btn-primary" style="margin-left: 10px;padding:1px;" v-on:click="handleButtonOnClick()">
-      Se innhold
+      <button v-if="fileName !== null" class="btn btn-primary" style="margin-left: 10px;padding: 1px 5px;" v-on:click="handleButtonOnClick()">
+        Se innhold
       </button>
     </span> <br/>
     <b-modal

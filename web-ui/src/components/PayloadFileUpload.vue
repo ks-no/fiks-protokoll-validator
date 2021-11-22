@@ -7,7 +7,7 @@
           <label class="custom-file-label" for="payloadUpload">{{fileUploadText}}</label>
         </div>
         <div class="input-group-append">
-          <button :disabled="file === ''" v-on:click="submitFile()" class="btn btn-outline-primary action-td" title="Last opp egen melding"><span class="fas fa-upload fa-lg"></span><span>Last opp</span></button>
+          <button :disabled="file === ''" v-on:click="submitFile()" class="btn btn-primary" title="Last opp egen melding"><span class="fas fa-upload fa-lg"></span><span>Last opp</span></button>
         </div>
       </div>
     </form>

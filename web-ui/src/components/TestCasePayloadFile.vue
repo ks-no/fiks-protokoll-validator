@@ -6,11 +6,11 @@
       :testId="testId"
       :protocol="protocol"
       :content="payloadFileContent"
-      :fileUrl="payloadUrl"
+      :fileUrl="isAttachment ? attachmentUrl : payloadUrl"
       v-on:get-content="isTextContent => getContent(isTextContent)"
     />
     </span>
-    <span v-if="!hasRun">
+    <span v-if="!hasRun && !isAttachment">
       <PayloadFileUpload 
         :fileName="fileName"
         :testId="testId"
@@ -40,7 +40,7 @@ export default {
       payloadFileContent: null,
       fileExtension: null,
       payloadUrl: this.hasRun ? process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
-      attachmentUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.operation + "/" + this.situation + "/" + "Attachement/" + this.fileName
+      attachmentUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.protocol + "/" + this.operation + "" + this.situation + "/" + "Attachement/" + this.fileName
     };
   },
   
