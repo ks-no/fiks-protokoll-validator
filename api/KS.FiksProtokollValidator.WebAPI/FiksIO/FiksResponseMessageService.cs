@@ -20,6 +20,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     public class FiksResponseMessageService : BackgroundService
     {
+        
         private readonly IFiksIOClient _client;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;

@@ -90,24 +90,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             Log.Information("PostTestSession start");
             
             TestSession testSession;
-            var newTestSession = false;
+            var isNewTestSession = false;
             var testSessionId = Request.Cookies["_testSessionId"];
             
             //Trim recipient for leading and trailing white-spaces
             testRequest.RecipientId = testRequest.RecipientId.Trim();
             
-            
             if(!string.IsNullOrEmpty(testSessionId))
             {
                 Log.Debug("Finding session with sessionId {SessionId}", testRequest.SessionId);
-                testSession = _context.TestSessions
-                    .Include(t => t.FiksRequests)
-                    .ThenInclude(f => f.CustomPayloadFile)
-                    .FirstOrDefaultAsync(s => s.Id.Equals(Guid.Parse(testSessionId))).Result;
-                
-                var testSessionFromRequest = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
-                testSession.RecipientId = testSessionFromRequest.RecipientId;
-                testSession.SelectedTestCaseIds = testSessionFromRequest.SelectedTestCaseIds;
+                testSession = GetAndUpdateTestSession(testRequest, testSessionId);
             }
             else
             {
@@ -128,20 +120,27 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     return BadRequest(message);
                 }
                 testSession.Id = Guid.NewGuid();
-                testSession.FiksRequests = new List<FiksRequest>();
-                newTestSession = true;
+                isNewTestSession = true;
             }
            
             testSession.CreatedAt = DateTime.Now;
+
+            testSession.FiksRequests ??= new List<FiksRequest>();
             
             foreach (var testId in testSession.SelectedTestCaseIds)
             {
                 var testCase = await _context.TestCases.FindAsync(testId);
-                var fiksRequest = testSession.FiksRequests.Find(fr => fr.TestCase == testCase) ?? new FiksRequest
-                {
-                    Id = Guid.NewGuid(),
-                    TestCase = testCase
-                };
+                var isNewFiksRequest = false;
+                var fiksRequest = testSession.FiksRequests.Find(fr => fr.TestCase == testCase);
+                
+                if(fiksRequest == null) {
+                    fiksRequest = new FiksRequest
+                    {
+                        Id = Guid.NewGuid(),
+                        TestCase = testCase
+                    };
+                    isNewFiksRequest = true;
+                }
 
                 try
                 {
@@ -158,14 +157,27 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     Log.Error("An Error occured when sending FIKS request with recipient ID {RecipientId}", testSession.RecipientId);
                     return StatusCode(500, e);
                 }
-                testSession.FiksRequests.Add(fiksRequest);
+
+                if (isNewFiksRequest)
+                {
+                    testSession.FiksRequests.Add(fiksRequest);
+                    await _context.FiksRequest.AddAsync(fiksRequest);
+                }
+                else
+                {
+                    _context.FiksRequest.Update(fiksRequest);
+                }
             }
 
             testSession.SelectedTestCaseIds.Clear();
 
-            if (newTestSession)
+            if (isNewTestSession)
             {
                 _context.TestSessions.Add(testSession);
+            }
+            else
+            {
+                _context.TestSessions.Update(testSession);
             }
 
             await _context.SaveChangesAsync();
@@ -173,6 +185,23 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             Log.Debug("Session successfully created with id {Id} and recipientId {RecipientId}", testSession.Id, testSession.RecipientId);
 
             return CreatedAtAction("GetTestSession", new {id = testSession.Id}, testSession);
+        }
+
+        private TestSession GetAndUpdateTestSession(TestRequest testRequest, string testSessionId)
+        {
+            var testSession = _context.TestSessions
+                .Include(t => t.FiksRequests)
+                .ThenInclude(f => f.CustomPayloadFile)
+                .FirstOrDefaultAsync(s => s.Id.Equals(Guid.Parse(testSessionId))).Result;
+
+            var testSessionFromRequest = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
+            if (testSessionFromRequest != null)
+            {
+                testSession.RecipientId = testSessionFromRequest.RecipientId;
+                testSession.SelectedTestCaseIds = testSessionFromRequest.SelectedTestCaseIds;
+            }
+
+            return testSession;
         }
     }
 }
