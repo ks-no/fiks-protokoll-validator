@@ -1,8 +1,8 @@
 ﻿{
     "dispensasjon": {
         "dispensasjon": {
-            "kodeverdi": "Hensynssone",
-            "kodebeskrivelse": "170"
+            "kodeverdi": "170",
+            "kodebeskrivelse": "Hensynssone"
         },
         "nasjonalArealplanId": {
             "administrativEnhet": {

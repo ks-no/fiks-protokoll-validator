@@ -72,6 +72,7 @@
         :sentAt="request.sentAt"
         :responses="request.fiksResponses"
         :testCase="request.testCase"
+        :customPayloadFilename="request.customPayloadFile == null ? null : request.customPayloadFile.filename"
         :isValidated="request.isFiksResponseValidated"
         :validationErrors="request.fiksResponseValidationErrors"
         :testSessionId="testSession.id"

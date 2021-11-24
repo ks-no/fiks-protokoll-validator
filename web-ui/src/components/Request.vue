@@ -4,7 +4,7 @@
       :testId="testCase.testId"
       :testName="testCase.testName"
       :messageType="testCase.messageType"
-      :payloadFileName="testCase.payloadFileName"
+      :payloadFileName="customPayloadFilename != null ? customPayloadFilename : testCase.payloadFileName"
       :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
       :description="testCase.description"
       :expectedResult="testCase.expectedResult"
@@ -152,6 +152,9 @@ export default {
       type: Array
     },
     testSessionId: {
+      type: String
+    },
+    customPayloadFilename: {
       type: String
     }
   },
