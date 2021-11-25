@@ -33,6 +33,7 @@
 	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvPlanvedtakN1\reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc" />
 	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\PlanEndeligVedtattN1\nasjonal_mal_reguleringsplanbestemmelserbokmaal.docx" />
 	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\PlanforslagTattTilBehandlingN1\nasjonal_mal_reguleringsplanbestemmelserbokmaal.docx" />
+	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\RegistrerDispensasjonFraPlanN1\vedtak.pdf" />
 	</ItemGroup>
 
 	<ItemGroup>
