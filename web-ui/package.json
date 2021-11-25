@@ -15,7 +15,7 @@
     "mime-types": "^2.1.34",
     "nginx": "1.0.3",
     "nginx-conf": "^2.0.0",
-    "simple-syntax-highlighter": "^1.4.10",
+    "simple-syntax-highlighter": "^1.5.0",
     "vue": "^2.6.14",
     "vue-axios": "^3.3.7",
     "vue-moment": "^4.1.0",
