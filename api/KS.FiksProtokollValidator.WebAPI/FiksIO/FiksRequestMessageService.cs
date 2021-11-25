@@ -6,7 +6,6 @@ using KS.Fiks.IO.Client;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
-using Microsoft.AspNetCore.Mvc;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
@@ -34,14 +33,13 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
             var payloads = new List<IPayload>();
 
-            var payLoadFileName = fiksRequest.TestCase.PayloadFileName;
-           
-            if (!string.IsNullOrEmpty(payLoadFileName))
+            if (fiksRequest.CustomPayloadFile != null)
             {
-                var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                var payLoadFilePath = fiksRequest.TestCase.PayloadFilePath;
-                IPayload payload = new StringPayload(File.ReadAllText(basepath + "/" + payLoadFilePath), payLoadFileName);
-                payloads.Add(payload);
+                CreateCustomPayload(fiksRequest, payloads);
+            }
+            else
+            {
+                CreateStandardPayload(fiksRequest, payloads);
             }
 
             var attachmentFileNames = fiksRequest.TestCase.PayloadAttachmentFileNames;
@@ -60,6 +58,27 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             var result = _client.Send(messageRequest, payloads).Result;
 
             return result.MeldingId;
+        }
+
+        private static void CreateStandardPayload(FiksRequest fiksRequest, List<IPayload> payloads)
+        {
+            var payLoadFileName = fiksRequest.TestCase.PayloadFileName;
+
+            if (!string.IsNullOrEmpty(payLoadFileName))
+            {
+                var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var payLoadFilePath = fiksRequest.TestCase.PayloadFilePath;
+                IPayload payload = new StringPayload(File.ReadAllText(basepath + "/" + payLoadFilePath),
+                    payLoadFileName);
+                payloads.Add(payload);
+            }
+        }
+
+        private static void CreateCustomPayload(FiksRequest fiksRequest, List<IPayload> payloads)
+        {
+            IPayload payload = new StreamPayload(new MemoryStream(fiksRequest.CustomPayloadFile.Payload),
+                fiksRequest.CustomPayloadFile.Filename);
+            payloads.Add(payload);
         }
 
         public void Dispose()

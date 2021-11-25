@@ -56,7 +56,7 @@
               class="ext-left"
               switch
               size="lg"
-              :value="testName"
+              :value="testId"
             />
           </b-col>
         </span>
@@ -95,11 +95,14 @@
               </b-col>
               <b-col>
                 <TestCasePayloadFile
+                  :testId="testId"
                   :testName="testName"
                   :fileName="payloadFileName"
                   :operation="operation"
                   :situation="situation"
                   :protocol="protocol"
+                  :testSessionId="testSessionId"
+                  :hasRun="hasRun"
                 />
               </b-col>
             </b-row>
@@ -116,12 +119,15 @@
                     :key="attachmentFileName"
                   >
                     <TestCasePayloadFile
+                      :testId="testId"
+                      :testName="testName"
                       :operation="operation"
                       :situation="situation"
                       :protocol="protocol"
                       :fileName="attachmentFileName"
-                      :testName="testName"
                       :isAttachment="true"
+                      :testSessionId="testSessionId"
+                      :hasRun="hasRun"
                     />
                   </div>
                 </b-col>
@@ -156,6 +162,10 @@ export default {
 
   props: {
     testName: {
+      required: true,
+      type: String,
+    },
+    testId: {
       required: true,
       type: String,
     },
@@ -202,10 +212,13 @@ export default {
       required: true,
       type: Boolean,
     },
-    protocol:{
+    protocol: {
       required:true,
       type: String,
-    }
+    },
+    testSessionId: {
+      type: String
+    } 
   },
 };
 </script>

@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Web;
+using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
+using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using static System.IO.File;
 
@@ -26,51 +28,76 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             _context = context;
         }
 
-        // GET api/<TestsCasePayloadFilesController>/TestCaseName/payload
-        [HttpGet("{protocol}/{testCaseName}/payload")]
-        public ActionResult GetMessagePayloadFile(string testCaseName, string protocol)
+        // GET api/<TestsCasePayloadFilesController>/Protocol/TestCaseId/payload
+        [HttpGet("{testCaseId}/payload")]
+        public ActionResult GetMessagePayloadFile(string testCaseId)
         {
-            var testName = "";
-            // Find the testname that is the actual key in the table
-            using( var streamReader = new StreamReader(Path.Combine(TestsDirectoryPath, protocol, testCaseName, "testInformation.json")))
-            {
-                var testInformationJson = streamReader.ReadToEnd();
-                var testInformation = JObject.Parse(testInformationJson);
-                testName = (string) testInformation["testName"];
-            }
-            
             try
             {
-                var testCase = _context.TestCases.FindAsync(testName).Result;
+                var testCase = _context.TestCases.FindAsync(testCaseId).Result;
+                
                 var filePath = testCase.PayloadFilePath;
 
                 Log.Information(
-                    "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName} with filePath {FilePath}",
-                    testCase.Protocol, testCase.TestName, filePath);
-
+                    "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName}, {TestCaseId} with filePath {FilePath}",
+                    testCase.Protocol, testCase.TestName, testCaseId, filePath);
+                
+                var contentDispositionHeader = new System.Net.Mime.ContentDisposition()
+                {
+                    FileName = testCase.PayloadFileName,
+                    DispositionType = "attachment"
+                };
+                
+                Response.Headers.Add("Content-Disposition", contentDispositionHeader.ToString());
+                
                 return GetPayload(filePath);
             }
             catch(Exception e)
             {
-                Log.Error(e,"GetMessagePayloadFile for protocol testCaseName {TestCaseName} failed", testCaseName);
+                Log.Error(e,"GetMessagePayloadFile for protocol testCaseName {TestCaseName} failed", testCaseId);
                 return new NotFoundResult();
             }
         }
-    
-        //TODO Denne kan brukes når ID blir fikset til å IKKE være testnavnet
-        /* // GET api/<TestsCasePayloadFilesController>/TestCaseId/payload
-        [HttpGet("{protocol}/{testCaseId}/payload")]
-        public ActionResult GetMessagePayloadFile(string testCaseId)
+        
+        // GET api/<TestsCasePayloadFilesController>/TestCaseId/payload
+        [HttpGet("{testSessionId}/{testCaseId}/payload")]
+        public ActionResult GetUsedMessagePayloadFile(string testSessionId, string testCaseId)
         {
-            var decodedId = HttpUtility.UrlDecode(testCaseId);
             try
             {
-                var testCase = _context.TestCases.FindAsync(decodedId).Result;
+                var testCase = _context.TestCases.FindAsync(testCaseId).Result;
+                var testSession = _context.TestSessions
+                    .Include(ts => ts.FiksRequests)
+                    .ThenInclude(fr => fr.TestCase)
+                    .Include(ts => ts.FiksRequests)
+                    .ThenInclude(fr => fr.CustomPayloadFile).FirstOrDefaultAsync(ts => ts.Id == Guid.Parse(testSessionId)).Result;
+
+                var fiksRequest = testSession.FiksRequests.FirstOrDefault(request => request.TestCase == testCase);
+
+                if (fiksRequest == null)
+                {
+                    Log.Error("Fant ikke testcase med id {TestCaseId} for testsession med id {TestSessionId}", testCaseId, testSessionId);
+                    return BadRequest($"Fant ikke testcase med id {testCaseId} for testsession med id {testSessionId}");
+                }
+                
+                var contentDispositionHeader = new System.Net.Mime.ContentDisposition()
+                {
+                    FileName = fiksRequest.CustomPayloadFile != null ? fiksRequest.CustomPayloadFile.Filename : testCase.PayloadFileName,
+                    DispositionType = "attachment"
+                };
+                
+                Response.Headers.Add("Content-Disposition", contentDispositionHeader.ToString());
+
+                if (fiksRequest.CustomPayloadFile != null)
+                {
+                    return new FileContentResult(fiksRequest.CustomPayloadFile.Payload, "application/octet-stream");
+                }
+                
                 var filePath = testCase.PayloadFilePath;
 
                 Log.Information(
-                    "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName} with filePath {FilePath}",
-                    testCase.Protocol, testCase.TestName, filePath);
+                    "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName}, {TestCaseId} with filePath {FilePath}",
+                    testCase.Protocol, testCase.TestName, testCaseId, filePath);
 
                 return GetPayload(filePath);
             }
@@ -80,7 +107,96 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 return new NotFoundResult();
             }
         }
-        */
+        
+        // POST: api/TestSessions/{sessionId}/testcases/{testcaseId}/payload
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost("{testcaseId}/payload")]
+        public async Task<ActionResult> UploadCustomPayload(string testcaseId)
+        {
+            Log.Information("UploadCustomPayload start");
+            // Get testSessionId from cookie
+            var testSessionId = Request.Cookies["_testSessionId"];
+            var newTestSession = false;
+            var testSession = new TestSession();
+            
+            if (string.IsNullOrEmpty(testSessionId))
+            {
+                Log.Information("UploadCustomPayload could not find a testSessionId from cookie. Creating a new TestSession");
+                testSession = new TestSession()
+                {
+                    Id = Guid.NewGuid(),
+                    CreatedAt = DateTime.Now
+                };
+                newTestSession = true;
+            }
+            else
+            {
+                testSession = _context.TestSessions.FirstAsync(s => s.Id == Guid.Parse(testSessionId)).Result ??
+                    new TestSession()
+                    {
+                        Id = Guid.NewGuid(),
+                    };
+            }
+
+            var file = Request.Form.Files[0];
+                
+            if(file.Length <= 0)
+            {
+                Log.Error("File size is zero");
+                return BadRequest();
+            }
+
+            var stream = new MemoryStream();
+            await file.CopyToAsync(stream);
+
+
+            var fiksRequest = testSession.FiksRequests?.Find(fr => fr.TestCase.TestId.Equals(testcaseId));
+
+            if (fiksRequest == null)
+            {
+                fiksRequest = new FiksRequest
+                {
+                    Id = Guid.NewGuid(),
+                    TestCase = await _context.TestCases.FindAsync(testcaseId),
+                    CustomPayloadFile = new FiksRequestPayload
+                    {
+                        Filename = file.FileName,
+                        Payload = stream.ToArray()
+                    }
+                };
+            }
+            else
+            {
+                fiksRequest.CustomPayloadFile = new FiksRequestPayload
+                {
+                    Filename = file.FileName,
+                    Payload = stream.ToArray()
+                };
+            }
+
+            if (testSession.FiksRequests == null)
+            {
+                testSession.FiksRequests = new List<FiksRequest> {fiksRequest};
+            }
+            else
+            {
+                testSession.FiksRequests.Add(fiksRequest);
+            }
+            
+            if (newTestSession)
+            {
+                await _context.TestSessions.AddAsync(testSession);    
+            }
+
+            await _context.FiksRequest.AddAsync(fiksRequest);
+            
+            await _context.SaveChangesAsync();
+            
+            Log.Information("UploadCustomPayload finished");
+            
+            return new OkResult();
+        }
         
         // GET api/<TestsCasePayloadFilesController>/TestCaseName/Attachement/attachmentFileName
         [HttpGet("{protocol}/{testCaseName}/Attachement/{attachmentFileName}")]

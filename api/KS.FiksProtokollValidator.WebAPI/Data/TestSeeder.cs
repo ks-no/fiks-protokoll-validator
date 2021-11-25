@@ -6,6 +6,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Newtonsoft.Json.Linq;
+using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data
 {
@@ -27,31 +28,45 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
 
             foreach (var protocolDirectory in tests.GetDirectories())
             {
+                var protocolName = protocolDirectory.Name;
                 foreach (var testDirectory in protocolDirectory.GetDirectories())
                 {
+                    var testDirectoryName = testDirectory.Name;
                     var testInformationJson =
                         File.ReadAllText(Path.Combine(testDirectory.FullName, "testInformation.json"));
                     var testInformation = JObject.Parse(testInformationJson);
 
-                    var updateTest = _context.TestCases.Where(t => t.TestName == (string)testInformation["testName"])
+                    var testId = $"{protocolName}-{testDirectoryName}";
+
+                    //var updateTest = _context.TestCases.Where(t => t.TestName == (string)testInformation["testName"])
+                    //    .Include(t => t.ExpectedResponseMessageTypes).Include(t => t.FiksResponseTests).FirstOrDefault();
+                    
+                    var updateTest = _context.TestCases.Where(t => t.TestId == testId)
                         .Include(t => t.ExpectedResponseMessageTypes).Include(t => t.FiksResponseTests).FirstOrDefault();
+                    
+                    
                     if (updateTest != null)
                     {
+                        Log.Information("Update test with id {TestCaseId}", testId);
                         _context.TestCases.Update(UpdateTest(testDirectory, updateTest, testInformation));
                     }
                     else
                     {
-                        var newTestEntry = new TestCase();
-                        newTestEntry.TestName = (string)testInformation["testName"];
+                        Log.Information("Create test with id {TestCaseId}", testId);
+                        var newTestEntry = new TestCase {TestId = testId};
                         _context.TestCases.Add(UpdateTest(testDirectory, newTestEntry, testInformation));
                     }
                     _context.SaveChanges();
                 }
             }
+            
+            //TODO søk gjennom TestCases og FiksResponseTest tabellene og slett eventuelle tester som ikke lenger eksisterer i mappene
+            
         }
 
         private TestCase UpdateTest(DirectoryInfo testDirectory, TestCase testCase, JObject testInformation)
         {
+            testCase.TestName = (string) testInformation["testName"];
             testCase.MessageType = (string)testInformation["messageType"];
             testCase.Description = (string)testInformation["description"];
             testCase.TestStep = (string)testInformation["testStep"];

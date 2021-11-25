@@ -52,6 +52,8 @@ namespace KS.FiksProtokollValidator.WebAPI
 
             var host = CreateHostBuilder(args).Build();
             
+            
+            
             MigrateAndSeedDatabase(host);
             
             host.Run();

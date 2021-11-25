@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.Controllers
@@ -30,7 +32,69 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         public async Task<ActionResult<IEnumerable<TestCase>>> GetTestCases()
         {
             Log.Information("Finding all TestCases");
+            
+            //Invalidate old cookie
+            Response.Cookies.Delete("_testSessionId", new CookieOptions()
+            {
+                Secure = false,
+            });
+            
+            var testSession = new TestSession()
+            {
+                Id = Guid.NewGuid(),
+            };
+            
+            // Set testSessionId as a cookie
+            var option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMinutes(30),
+                Path = "/",
+                HttpOnly = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            };
+            
+            Response.Cookies.Append("_testSessionId", testSession.Id.ToString(), option);  
+            
+            await _context.TestSessions.AddAsync(testSession);
+            await _context.SaveChangesAsync();
+         
             return await _context.TestCases.ToListAsync();
+        }
+        
+        // GET: api/TestCases/Protocol
+        [HttpGet("Protocol/{protocol}")]
+        public async Task<ActionResult<IEnumerable<TestCase>>> GetTestCases(string protocol)
+        {
+            Log.Information("Finding all TestCase for protocol {Protocol}", protocol);
+            
+            //Invalidate old cookie
+            Response.Cookies.Delete("_testSessionId", new CookieOptions()
+            {
+                Secure = false,
+            });
+            
+            var testSession = new TestSession()
+            {
+                Id = Guid.NewGuid(),
+                CreatedAt = DateTime.Now
+            };
+            
+            // Set testSessionId as a cookie
+            var option = new CookieOptions
+            {
+                Expires = DateTime.Now.AddMinutes(30),
+                Path = "/",
+                HttpOnly = false,
+                IsEssential = true,
+                SameSite = SameSiteMode.Lax
+            };
+            
+            Response.Cookies.Append("_testSessionId", testSession.Id.ToString(), option);  
+            
+            await _context.TestSessions.AddAsync(testSession);
+            await _context.SaveChangesAsync();
+            return await _context.TestCases.Where(t => t.Protocol == protocol).ToListAsync();
         }
 
         // GET: api/TestCases/5
@@ -88,7 +152,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             return NoContent();
         }
-
+                
         // POST: api/TestCases
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
@@ -96,7 +160,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         public async Task<ActionResult<TestCase>> PostTestCase([FromBody] TestCase testCase)
         {
             Log.Information("Posting testcases");
-            _context.TestCases.Add(testCase);
+            await _context.TestCases.AddAsync(testCase);
             await _context.SaveChangesAsync();
 
             Log.Debug("PostTestCase saved successfully to DB");

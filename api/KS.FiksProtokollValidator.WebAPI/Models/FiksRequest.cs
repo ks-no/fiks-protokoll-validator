@@ -9,12 +9,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
     public class FiksRequest
     {
         [Key]
+        public Guid Id { get; set; }
+        
         public Guid MessageGuid { get; set; }
 
         [Required, DataType(DataType.DateTime)]
         public DateTime SentAt { get; set; }
 
         public TestCase TestCase { get; set; }
+        
+        public FiksRequestPayload CustomPayloadFile { get; set; }
 
         public List<FiksResponse> FiksResponses { get; set; }
 

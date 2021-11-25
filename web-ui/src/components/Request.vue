@@ -1,9 +1,10 @@
 <template>
   <li class="list-group-item">
     <TestCase
+      :testId="testCase.testId"
       :testName="testCase.testName"
       :messageType="testCase.messageType"
-      :payloadFileName="testCase.payloadFileName"
+      :payloadFileName="customPayloadFilename != null ? customPayloadFilename : testCase.payloadFileName"
       :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
       :description="testCase.description"
       :expectedResult="testCase.expectedResult"
@@ -14,6 +15,7 @@
       :hasRun="hasRun"
       :validState="validState"
       :isCollapsed="isCollapsed"
+      :testSessionId="testSessionId"
     />
     <b-collapse :visible="!isCollapsed" :id="'collapse-' + testCase.operation+ '' + testCase.situation">
       <b-container fluid>
@@ -148,6 +150,12 @@ export default {
     },
     validationErrors: {
       type: Array
+    },
+    testSessionId: {
+      type: String
+    },
+    customPayloadFilename: {
+      type: String
     }
   },
 

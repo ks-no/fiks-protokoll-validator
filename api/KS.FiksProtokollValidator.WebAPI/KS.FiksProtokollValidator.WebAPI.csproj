@@ -11,13 +11,13 @@
 		<Content Remove="FiksIO\fiks-io-config.json" />
 		<Content Remove="FiksIO\fiks-io-config.template.json" />
 	  <Content Include="TestCases\**\*.docx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 		<Content Include="TestCases\**\*.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 		<Content Include="TestCases\**\*.pdf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
 	</ItemGroup>
 

@@ -11,6 +11,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         [Key]
         public string RecipientId { get; set; }
 
+        public string SessionId { get; set; }
+
         [Required]
         public List<string> SelectedTestCaseIds { get; set; }
     }

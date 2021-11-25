@@ -1,8 +1,13 @@
 <template>
   <div>
-    <button class="btn btn-link" v-on:click="handleButtonOnClick()">
-      {{ fileName }}
-    </button>
+    <span>
+      <button v-if="fileName !== null" class="btn btn-link" v-on:click="openWindow(fileUrl)"> 
+        {{ fileName }}
+      </button>
+      <button v-if="fileName !== null" class="btn btn-primary" style="margin-left: 10px;padding: 1px 5px;" v-on:click="handleButtonOnClick()">
+        Se innhold
+      </button>
+    </span> <br/>
     <b-modal
       v-model="modalIsOpen"
       :title="fileName"
@@ -50,7 +55,7 @@ export default {
       modalIsOpen: false,
       fileExtension: null,
       isTextContent: false,
-      temporaryUrl: null
+      temporaryUrl: null,
     };
   },
   props: {
@@ -58,6 +63,16 @@ export default {
       type: String
     },
     content: {
+      required: true
+    },
+    protocol: {
+      type: String
+    },
+    testId: {
+      type: String
+    },
+    fileUrl: {
+      type: String,
       required: true
     }
   },
@@ -123,6 +138,9 @@ export default {
           return content;
         }
       }
+    },
+    openWindow: function (link) {
+      window.open(link, '_blank');
     }
   }
 };

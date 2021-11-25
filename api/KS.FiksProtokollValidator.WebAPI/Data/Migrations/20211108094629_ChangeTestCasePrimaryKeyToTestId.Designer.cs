@@ -4,14 +4,16 @@ using KS.FiksProtokollValidator.WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 {
     [DbContext(typeof(FiksIOMessageDBContext))]
-    partial class FiksIOMessageDBContextModelSnapshot : ModelSnapshot
+    [Migration("20211108094629_ChangeTestCasePrimaryKeyToTestId")]
+    partial class ChangeTestCasePrimaryKeyToTestId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,15 +67,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksRequest", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid>("MessageGuid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("CustomPayloadFileId")
                         .HasColumnType("int");
-
-                    b.Property<Guid>("MessageGuid")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("datetime2");
@@ -84,7 +83,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                     b.Property<Guid?>("TestSessionId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+                    b.HasKey("MessageGuid");
 
                     b.HasIndex("CustomPayloadFileId");
 
@@ -95,24 +94,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                     b.ToTable("FiksRequest");
                 });
 
-            modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksRequestPayload", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Filename")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("Payload")
-                        .HasColumnType("varbinary(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("FiksRequestPayload");
-                });
-
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksResponse", b =>
                 {
                     b.Property<int>("Id")
@@ -120,7 +101,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<Guid?>("FiksRequestId")
+                    b.Property<Guid?>("FiksRequestMessageGuid")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("ReceivedAt")
@@ -132,7 +113,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FiksRequestId");
+                    b.HasIndex("FiksRequestMessageGuid");
 
                     b.ToTable("FiksResponse");
                 });
@@ -254,7 +235,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksRequest", b =>
                 {
-                    b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.FiksRequestPayload", "CustomPayloadFile")
+                    b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.FiksPayload", "CustomPayloadFile")
                         .WithMany()
                         .HasForeignKey("CustomPayloadFileId");
 
@@ -275,7 +256,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
                 {
                     b.HasOne("KS.FiksProtokollValidator.WebAPI.Models.FiksRequest", null)
                         .WithMany("FiksResponses")
-                        .HasForeignKey("FiksRequestId");
+                        .HasForeignKey("FiksRequestMessageGuid");
                 });
 
             modelBuilder.Entity("KS.FiksProtokollValidator.WebAPI.Models.FiksResponseTest", b =>
