@@ -119,6 +119,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             var testSessionId = Request.Cookies["_testSessionId"];
             var newTestSession = false;
             var testSession = new TestSession();
+            
             if (string.IsNullOrEmpty(testSessionId))
             {
                 Log.Information("UploadCustomPayload could not find a testSessionId from cookie. Creating a new TestSession");
@@ -148,19 +149,41 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             var stream = new MemoryStream();
             await file.CopyToAsync(stream);
-            
-            var fiksRequest = new FiksRequest
+
+
+            var fiksRequest = testSession.FiksRequests?.Find(fr => fr.TestCase.TestId.Equals(testcaseId));
+
+            if (fiksRequest == null)
             {
-                Id = Guid.NewGuid(),
-                TestCase = await _context.TestCases.FindAsync(testcaseId),
-                CustomPayloadFile = new FiksRequestPayload
+                fiksRequest = new FiksRequest
+                {
+                    Id = Guid.NewGuid(),
+                    TestCase = await _context.TestCases.FindAsync(testcaseId),
+                    CustomPayloadFile = new FiksRequestPayload
+                    {
+                        Filename = file.FileName,
+                        Payload = stream.ToArray()
+                    }
+                };
+            }
+            else
+            {
+                fiksRequest.CustomPayloadFile = new FiksRequestPayload
                 {
                     Filename = file.FileName,
                     Payload = stream.ToArray()
-                }
-            };
-            testSession.FiksRequests = new List<FiksRequest> {fiksRequest};
+                };
+            }
 
+            if (testSession.FiksRequests == null)
+            {
+                testSession.FiksRequests = new List<FiksRequest> {fiksRequest};
+            }
+            else
+            {
+                testSession.FiksRequests.Add(fiksRequest);
+            }
+            
             if (newTestSession)
             {
                 await _context.TestSessions.AddAsync(testSession);    
