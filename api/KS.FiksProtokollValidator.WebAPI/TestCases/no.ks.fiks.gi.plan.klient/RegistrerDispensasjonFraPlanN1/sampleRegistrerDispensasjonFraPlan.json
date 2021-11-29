@@ -13,5 +13,12 @@
         "vedtaksdato": "2020-01-01",
         "innvilgetDispensasjon": true,
         "varigDispensasjon": true
-    }
+    },
+    "plandokument": [
+        {
+            "tittel": "Vedtak",
+            "dokumenttype": "pdf",
+            "referanseDokumentfil": "vedtak.pdf"
+        }
+    ]
 }
