@@ -139,8 +139,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
             return new()
             {
-                ArkivintegrasjonMeldingTypeV1.Kvittering,
-                ArkivintegrasjonMeldingTypeV1.InnsynSokResultat,
+                ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering,
+                ArkivintegrasjonMeldingTypeV1.SokResultatMinimum,
+                ArkivintegrasjonMeldingTypeV1.SokResultatNoekler,
+                ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet,
                 WebAPI.Resources.ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
