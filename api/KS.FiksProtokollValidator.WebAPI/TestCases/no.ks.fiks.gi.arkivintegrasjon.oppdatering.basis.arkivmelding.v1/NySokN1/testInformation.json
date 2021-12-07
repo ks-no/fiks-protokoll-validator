@@ -2,12 +2,12 @@
     "testName": "Send ny Søk - Normalsituasjon 1",
     "description": "Søker på alle mapper som inneholder 'test' i tittelen",
     "testStep": "Normalsituasjon 1",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.innsyn.sok.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",
     "operation": "NySok",
     "situation": "N1",
     "expectedResult": "Søkresultat med utfylte standardverdier",
     "queriesWithExpectedValues": [
     ],
     "supported": true, 
-    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "protocol": "no.ks.fiks.arkiv.v1"
 }

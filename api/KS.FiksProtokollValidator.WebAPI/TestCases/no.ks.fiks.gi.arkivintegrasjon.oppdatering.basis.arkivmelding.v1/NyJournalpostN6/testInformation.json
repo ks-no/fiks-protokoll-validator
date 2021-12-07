@@ -2,7 +2,7 @@
     "testName": "Send ny Journalpost - Normalsituasjon 6 - Innkommende journalpost",
     "description": "tittel(Bestilling av oppmålingsforretning ...), journalposttype(I)", //TODO Hva skaljournalstatus ha for verdi? 
     "testStep": "Normalsituasjon 6 Input Journalpost med retur av Journalpost",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
     "operation": "NyJournalpost",
     "situation": "N6",
     "expectedResult": "Journalpost og avsender/mottak er med utfylte standardverdier",
@@ -34,5 +34,5 @@
         }
     ],
     "supported": true,
-    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "protocol": "no.ks.fiks.arkiv.v1"
 }

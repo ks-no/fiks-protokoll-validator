@@ -2,7 +2,7 @@
     "testName": "Send ny Saksmappe - Ugyldigforespørsel - Feil i arkivmelding.xml",
     "description": "Arkivmeldingen inneholder feil(tittel mangler) som ikke valideres",
     "testStep": "Feilsituasjon Ugyldigforespørsel Input Saksmappe med retur av feil",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
     "operation": "NySaksmappe",
     "situation": "FX",
     "expectedResult": "Melding med messagetype no.ks.fiks.gi.arkivintegrasjon.feil.v1",
@@ -35,5 +35,5 @@
     ],
     "expectedResponseMessageTypes": [ "no.ks.fiks.kvittering.ugyldigforespørsel.v1" ],
     "supported": true, 
-    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "protocol": "no.ks.fiks.arkiv.v1"
 }

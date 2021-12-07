@@ -138,9 +138,9 @@ export default {
       selectedProtocol: "ingen",
         options: [
           { value: "ingen", text: 'Velg en FIKS-protokoll'},
-          { value: 'no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1', text: 'no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.v1' },
-          { value: 'no.ks.fiks.politisk.behandling.klient.v1', text: 'no.ks.fiks.politisk.behandling.klient.v1' },
-          { value: 'no.ks.fiks.politisk.behandling.tjener.v1', text: 'no.ks.fiks.politisk.behandling.tjener.v1'},
+          { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
+          { value: 'no.ks.fiks.politisk.behandling.klient.v1', text: 'no.ks.fiks.politisk.behandling.v1 (klient)' },
+          { value: 'no.ks.fiks.politisk.behandling.tjener.v1', text: 'no.ks.fiks.politisk.behandling.v1 (tjener)'},
         ]
     };
   },
