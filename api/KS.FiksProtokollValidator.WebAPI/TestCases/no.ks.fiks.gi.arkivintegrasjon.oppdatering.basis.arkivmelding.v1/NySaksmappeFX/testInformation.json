@@ -33,7 +33,7 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "expectedResponseMessageTypes": [ "no.ks.fiks.kvittering.ugyldigforespørsel.v1" ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.kvittering.ugyldigforespoersel.v1" ],
     "supported": true, 
     "protocol": "no.ks.fiks.arkiv.v1"
 }
