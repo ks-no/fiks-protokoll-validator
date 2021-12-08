@@ -2,10 +2,11 @@
     "testName": "Besluttet offentlig ettersyn",
     "description": "Besluttet offentlig ettersyn",
     "testStep": "Normalsituasjon 1 Input BesluttetOffentligEttersyn, retur bekreftelse på mottak",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.planbehandling.registrer",
     "operation": "BesluttetOffentligEttersyn",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "sampleFile": "Samples/BesluttetOffentligEttersyn/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

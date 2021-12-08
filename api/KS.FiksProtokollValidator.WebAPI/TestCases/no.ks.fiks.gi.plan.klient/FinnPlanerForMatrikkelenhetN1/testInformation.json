@@ -2,10 +2,11 @@
     "testName": "Finn planer for matrikkelenhet",
     "description": "Send finn plan for matrikkelenhet, motta plan for matrikkelenhet",
     "testStep": "Normalsituasjon 1 Input Finn plan for matrikkelenhet, retur plan for matrikkelenhet",
-    "messageType": "no.ks.fiks.gi.plan.innsyn.finnplanerformatrikkelenhet.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.innsyn.planerformatrikkelenhet.finn",
     "operation": "FinnPlanerForMatrikkelenhet",
     "situation": "N1",
     "expectedResult": "Planer for matrikkelenhet",
+    "sampleFile": "Samples/FinnPlanerForMatrikkelenhet/payload.json",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",

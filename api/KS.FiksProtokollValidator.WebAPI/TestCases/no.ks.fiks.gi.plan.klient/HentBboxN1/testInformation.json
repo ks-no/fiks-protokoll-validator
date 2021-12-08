@@ -2,10 +2,11 @@
     "testName": "Hent Bbox",
     "description": "Hent Bbox",
     "testStep": "Normalsituasjon 1 Input HentBbox, retur Bbox",
-    "messageType": "no.ks.fiks.gi.plan.innsyn.hentbboxforplan.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.innsyn.bboxforplan.hent",
     "operation": "HentBbox",
     "situation": "N1",
     "expectedResult": "Retur av Bbox",
+    "sampleFile": "Samples/HentBbox/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

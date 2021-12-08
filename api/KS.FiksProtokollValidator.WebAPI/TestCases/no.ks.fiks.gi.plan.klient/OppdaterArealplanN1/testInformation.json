@@ -2,10 +2,11 @@
     "testName": "Oppdater arealplan",
     "description": "Oppdater arealplan",
     "testStep": "Normalsituasjon 1 Input OppdaterArealplan, retur melding om mottak",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.oppdaterarealplan.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.arealplan.oppdater",
     "operation": "OppdaterArealplan",
     "situation": "N1",
     "expectedResult": "Bekreftet mottak",
+    "sampleFile": "Samples/OppdaterArealplan/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

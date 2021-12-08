@@ -2,10 +2,11 @@
     "testName": "Hent gjeldende planbestemmelser",
     "description": "HentGjeldendePlanbestemmelser",
     "testStep": "Normalsituasjon 1 Input HentGjeldendePlanbestemmelser, retur gjeldende planbestemmelser",
-    "messageType": "no.ks.fiks.gi.plan.innsyn.hentgjeldendeplanbestemmelser.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.innsyn.gjeldendeplanbestemmelser.hent",
     "operation": "HentGjeldendePlanbestemmelser",
     "situation": "N1",
     "expectedResult": "Retur av planbestemmelser",
+    "sampleFile": "Samples/HentGjeldendePlanbestemmelser/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

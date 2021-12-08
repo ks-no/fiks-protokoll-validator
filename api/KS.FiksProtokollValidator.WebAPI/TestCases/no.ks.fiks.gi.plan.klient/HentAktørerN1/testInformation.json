@@ -2,10 +2,11 @@
     "testName": "Hent aktører",
     "description": "Hent aktører",
     "testStep": "Normalsituasjon 1 Input HentAktører, retur aktører",
-    "messageType": "no.ks.fiks.gi.plan.innsyn.hentaktører.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.innsyn.aktoerer.hent",
     "operation": "HentAktører",
     "situation": "N1",
     "expectedResult": "Retur av aktører",
+    "sampleFile": "Samples/HentAktører/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

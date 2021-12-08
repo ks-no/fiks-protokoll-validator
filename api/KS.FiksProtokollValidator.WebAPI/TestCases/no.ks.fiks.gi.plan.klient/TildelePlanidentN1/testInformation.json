@@ -2,10 +2,11 @@
     "testName": "Tildele Planident",
     "description": "Tildele Planident",
     "testStep": "Normalsituasjon 1 Input OpprettArealplan, retur planident",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.arealplan.opprett",
     "operation": "TildelePlanident",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat Opprettelse av arealplan, retur ny planident",
+    "sampleFile": "Samples/TildelePlanident/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

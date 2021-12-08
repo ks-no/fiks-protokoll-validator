@@ -6,6 +6,7 @@
     "operation": "RegistrerMidlertidigForbudMotTiltak",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering",
+    "sampleFile": "Samples/RegistrerMidlertidigForbudMotTiltak/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

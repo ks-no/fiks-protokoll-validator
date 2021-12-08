@@ -29,20 +29,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvOffentligEttersynN1\reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc" />
-	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvPlanvedtakN1\reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc" />
-	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\PlanEndeligVedtattN1\nasjonal_mal_reguleringsplanbestemmelserbokmaal.docx" />
-	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\PlanforslagTattTilBehandlingN1\nasjonal_mal_reguleringsplanbestemmelserbokmaal.docx" />
 	  <None Remove="TestCases\no.ks.fiks.gi.plan.klient\RegistrerDispensasjonFraPlanN1\vedtak.pdf" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Include="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvOffentligEttersynN1\reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
-	  <Content Include="TestCases\no.ks.fiks.gi.plan.klient\KunngjøringAvPlanvedtakN1\reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </Content>
 	</ItemGroup>
 
   <ItemGroup>
@@ -50,7 +37,7 @@
     <PackageReference Include="KS.Fiks.IO.Arkiv.Client" Version="2.0.5" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="1.2.3" />
     <PackageReference Include="KS.Fiks.IO.Politisk.Behandling.Client" Version="0.0.15" />
-    <PackageReference Include="KS.Fiks.Plan.Client" Version="0.0.1" />
+    <PackageReference Include="KS.Fiks.Plan.Client" Version="0.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.7" />

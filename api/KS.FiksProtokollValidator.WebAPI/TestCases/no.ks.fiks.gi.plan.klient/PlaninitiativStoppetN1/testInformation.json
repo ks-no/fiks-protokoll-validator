@@ -2,10 +2,11 @@
     "testName": "Planinitiativ stoppet",
     "description": "Planinitiativ stoppet for plan",
     "testStep": "Normalsituasjon 1 Input PlaninitiativStoppet, retur bekreftelse på mottak",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.planbehandling.registrer",
     "operation": "PlaninitiativStoppet",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "sampleFile": "Samples/PlaninitiativStoppet/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,
