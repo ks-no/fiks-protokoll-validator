@@ -30,7 +30,14 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                 fiksRequest.FiksResponseValidationErrors = new List<string>();
 
-                ValidateExistenceOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
+                if(fiksRequest.TestCase.MessageType.Equals(ArkivintegrasjonMeldingTypeV1.Sok))
+                {
+                    ValidateExistenceOfOneOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
+                }
+                else
+                {
+                    ValidateExistenceOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
+                }
 
                 foreach (var fiksResponse in fiksRequest.FiksResponses)
                 {
@@ -58,6 +65,28 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                     fiksRequest.FiksResponseValidationErrors.Add(validationError);
                 }
+            }
+        }
+        
+        private static void ValidateExistenceOfOneOfExpectedResponseMessageTypes(FiksRequest fiksRequest,
+            IEnumerable<string> expectedResponseMessageTypes)
+        {
+            var found = false;
+            var foundExpectedResponseMessageTypes = new List<string>();
+            foreach (var expectedResponseMessageType in expectedResponseMessageTypes)
+            {
+                if (fiksRequest.FiksResponses.Any(r => r.Type.Equals(expectedResponseMessageType)))
+                {
+                    return;
+                }
+            }
+
+            foreach (var expectedResponseMessageType in expectedResponseMessageTypes)
+            {
+                var validationError = string.Format(
+                    ValidationErrorMessages.MissingResponseMessage, expectedResponseMessageType
+                );
+                fiksRequest.FiksResponseValidationErrors.Add(validationError);
             }
         }
 
