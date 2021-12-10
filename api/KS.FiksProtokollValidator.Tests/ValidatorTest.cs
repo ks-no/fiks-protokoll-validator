@@ -36,7 +36,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _testCase = new TestCase
             {
-                MessageType = ArkivintegrasjonMeldingTypeV1.BasisArkivmelding,
+                MessageType = ArkivintegrasjonMeldingTypeV1.Arkivmelding,
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
@@ -47,7 +47,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseMottatt = new FiksResponse
             {
-                Type = ArkivintegrasjonMeldingTypeV1.Mottatt,
+                Type = ArkivintegrasjonMeldingTypeV1.ArkivmeldingMottatt,
             };
 
             var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
@@ -62,7 +62,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseKvittering = new FiksResponse
             {
-                Type = ArkivintegrasjonMeldingTypeV1.Kvittering,
+                Type = ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering,
                 ReceivedAt = DateTime.Now,
                 FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "svar_paa_ny_inngaaende.xml", Payload = fileAsBytes } },
             };

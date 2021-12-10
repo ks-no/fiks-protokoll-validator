@@ -2,7 +2,7 @@
     "testName": "Send ny Journalpost - Normalsituasjon 1 - Nytt internt notat",
     "description": "tittel(Internt notat) og journalposttype(X)",
     "testStep": "Normalsituasjon 1 Input Journalpost med retur av Journalpost",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
     "operation": "NyJournalpost",
     "situation": "N1",
     "expectedResult": "Journalpost med utfylte standardverdier",
@@ -34,5 +34,5 @@
         }
     ],
     "supported": true, 
-    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "protocol": "no.ks.fiks.arkiv.v1"
 }

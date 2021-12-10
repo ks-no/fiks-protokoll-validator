@@ -14,26 +14,20 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
             return new Dictionary<string, List<string>>
             {
                 {
-                    ArkivintegrasjonMeldingTypeV1.BasisArkivmelding,
+                    ArkivintegrasjonMeldingTypeV1.Arkivmelding,
                     new List<string>
                     {
-                        ArkivintegrasjonMeldingTypeV1.Mottatt,
-                        ArkivintegrasjonMeldingTypeV1.Kvittering
+                        ArkivintegrasjonMeldingTypeV1.ArkivmeldingMottatt,
+                        ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering
                     }
                 },
                 {
-                    ArkivintegrasjonMeldingTypeV1.BasisOppdaterSaksmappe,
+                    ArkivintegrasjonMeldingTypeV1.Sok,
                     new List<string>
                     {
-                        ArkivintegrasjonMeldingTypeV1.Mottatt,
-                        ArkivintegrasjonMeldingTypeV1.Kvittering
-                    }
-                },
-                {
-                    ArkivintegrasjonMeldingTypeV1.InnsynSok,
-                    new List<string>
-                    {
-                        ArkivintegrasjonMeldingTypeV1.InnsynSokResultat
+                        ArkivintegrasjonMeldingTypeV1.SokResultatMinimum,
+                        ArkivintegrasjonMeldingTypeV1.SokResultatNoekler,
+                        ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet
                     }
                 },
                 {

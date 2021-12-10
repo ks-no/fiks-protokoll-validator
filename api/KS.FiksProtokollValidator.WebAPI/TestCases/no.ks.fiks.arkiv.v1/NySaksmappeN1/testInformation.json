@@ -2,7 +2,7 @@
     "testName": "Send ny Saksmappe - Normalsituasjon 1",
     "description": "tittel(Test)",
     "testStep": "Normalsituasjon 1 Input Saksmappe med retur av Saksmappe",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
     "operation": "NySaksmappe",
     "situation": "N1",
     "expectedResult": "Saksmappe med utfylte standardverdier",
@@ -29,5 +29,5 @@
         }
     ],
     "supported": true, 
-    "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "protocol": "no.ks.fiks.arkiv.v1"
 }
