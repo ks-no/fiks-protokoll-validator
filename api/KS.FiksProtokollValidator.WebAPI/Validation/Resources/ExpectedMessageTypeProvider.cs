@@ -2,6 +2,7 @@
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.IO.Arkiv.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Models;
+using KS.Fiks.Plan.Client.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
 {
@@ -73,129 +74,129 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.FinnPlanerForMatrikkelEnhetV2,
+                        FiksPlanMeldingtypeV2.FinnPlanerForMatrikkelenhet,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2
+                        FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.RegistrerDispensasjonForPlanV2,
+                    FiksPlanMeldingtypeV2.RegistrerDispensasjonFraPlan,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                        FiksPlanMeldingtypeV2.ResultatMottat
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.RegistrerPlanavgrensingV2,
+                    FiksPlanMeldingtypeV2.RegistrertPlanavgrensning,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                        FiksPlanMeldingtypeV2.ResultatMottat
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.FinnPlanerV2,
+                    FiksPlanMeldingtypeV2.FinnPlaner,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.FinnPlanerV2
+                        FiksPlanMeldingtypeV2.ResultatFinnPlaner
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.FinnDispensasjonerV2,
+                    FiksPlanMeldingtypeV2.FinnDispensasjoner,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.FinnDispensasjonerForSøkV2
+                        FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.OpprettArealplanV2,
+                    FiksPlanMeldingtypeV2.OpprettArealplan,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2
+                        FiksPlanMeldingtypeV2.ResultatOpprettArealplan
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.RegistrerPlanbehandlingV2,
+                    FiksPlanMeldingtypeV2.RegistrerPlanbehandling,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                        FiksPlanMeldingtypeV2.ResultatMottat
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.OppdaterArealplanV2,
+                    FiksPlanMeldingtypeV2.OppdaterArealplan,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                        FiksPlanMeldingtypeV2.ResultatMottat
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentAktørerV2,
+                    FiksPlanMeldingtypeV2.HentAktoerer,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.AktørerV2
+                        FiksPlanMeldingtypeV2.ResultatHentAktoerer
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentBboxV2,
+                    FiksPlanMeldingtypeV2.HentBboxForPlan,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.BboxV2
+                        FiksPlanMeldingtypeV2.ResultatHentBboxForPlan
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentKodelisteV2,
+                    FiksPlanMeldingtypeV2.HentKodeliste,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.KodelisteV2
+                        FiksPlanMeldingtypeV2.ResultatHentKodeliste
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentPlanfilV2,
+                    FiksPlanMeldingtypeV2.HentPlanfil,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.PlanfilV2
+                        FiksPlanMeldingtypeV2.ResultatHentPlanfil
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentPlanområderV2,
+                    FiksPlanMeldingtypeV2.HentPlanomraader,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.PlanområderV2
+                        FiksPlanMeldingtypeV2.ResultatHentPlanomraader
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentRelatertePlanerV2,
+                    FiksPlanMeldingtypeV2.HentRelatertePlaner,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.RelatertePlanerV2
+                        FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.HentGjeldendePlanbestemmelserV2,
+                    FiksPlanMeldingtypeV2.HentGjeldendePlanbestemmelser,
                     new List<string>
                     {
-                        WebAPI.Resources.ResponseMessageTypes.GjeldendePlanbestemmelserV2
+                        FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.OppdaterDispensasjonV2,
+                    FiksPlanMeldingtypeV2.OppdaterDispensasjon,
                     new List<string>()
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                        FiksPlanMeldingtypeV2.ResultatMottat
                     }
                 },
                 {
                     WebAPI.Resources.RequestMessageTypes.RegistrerMidlertidigForbudMotTiltakV2,
                     new List<string>()
                     {
-                        WebAPI.Resources.ResponseMessageTypes.MottattGiPlanV2
+                        FiksPlanMeldingtypeV2.ResultatMottat
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.FinnPlandokumenterV2,
+                    FiksPlanMeldingtypeV2.FinnPlandokumenter,
                     new List<string>()
                     {
-                        WebAPI.Resources.ResponseMessageTypes.PlandokumenterV2
+                        FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
                     }
                 }
             };

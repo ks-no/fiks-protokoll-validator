@@ -2,10 +2,11 @@
     "testName": "Planforslag avvist",
     "description": "Planforslag avvist",
     "testStep": "Normalsituasjon 1 Input PlanforslagAvvist, retur bekreftelse på mottak",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.planbehandling.registrer",
     "operation": "PlanforslagAvvist",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "sampleFile": "Samples/PlanforslagAvvist/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

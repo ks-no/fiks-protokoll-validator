@@ -2,10 +2,11 @@
     "testName": "Planforslag tatt til behandling",
     "description": "Planforslag tatt til behandling",
     "testStep": "Normalsituasjon 1 Input PlanforslagTattTilBehandling, retur bekreftelse på mottak",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.planbehandling.registrer",
     "operation": "PlanforslagTattTilBehandling",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "sampleFile": "Samples/PlanforslagTattTilBehandling/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

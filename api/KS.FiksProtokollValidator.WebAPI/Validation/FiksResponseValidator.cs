@@ -5,6 +5,7 @@ using System.Xml.Linq;
 using KS.Fiks.IO.Arkiv.Client.Models;
 using KS.Fiks.IO.Client.Models.Feilmelding;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
+using KS.Fiks.Plan.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using Newtonsoft.Json.Linq;
@@ -176,16 +177,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
                 FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
-                WebAPI.Resources.ResponseMessageTypes.FinnPlanerForMatrikkelenhetV2,
-                WebAPI.Resources.ResponseMessageTypes.FinnPlanerV2,
-                WebAPI.Resources.ResponseMessageTypes.FinnDispensasjonerForSøkV2,
-                WebAPI.Resources.ResponseMessageTypes.MeldingOmPlanidentV2,
-                WebAPI.Resources.ResponseMessageTypes.AktørerV2,
-                WebAPI.Resources.ResponseMessageTypes.BboxV2,
-                WebAPI.Resources.ResponseMessageTypes.RelatertePlanerV2,
-                WebAPI.Resources.ResponseMessageTypes.GjeldendePlanbestemmelserV2,
-                WebAPI.Resources.ResponseMessageTypes.KodelisteV2,
-                WebAPI.Resources.ResponseMessageTypes.PlandokumenterV2
+                FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
+                FiksPlanMeldingtypeV2.ResultatFinnPlaner,
+                FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
+                FiksPlanMeldingtypeV2.ResultatOpprettArealplan,
+                FiksPlanMeldingtypeV2.ResultatHentAktoerer,
+                FiksPlanMeldingtypeV2.ResultatHentBboxForPlan,
+                FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner,
+                FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
+                FiksPlanMeldingtypeV2.ResultatHentKodeliste,
+                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
             };
         }
 

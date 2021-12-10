@@ -2,10 +2,11 @@
     "testName": "Hent planområder",
     "description": "Hent planområder",
     "testStep": "Normalsituasjon 1 Input HentPlanområder, retur planområde(r)",
-    "messageType": "no.ks.fiks.gi.plan.innsyn.hentplanområder.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.innsyn.planomraader.hent",
     "operation": "HentPlanområder",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av planområde(r)",
+    "sampleFile": "Samples/HentPlanområder/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

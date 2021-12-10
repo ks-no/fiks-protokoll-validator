@@ -2,10 +2,11 @@
     "testName": "Finn plandokumenter",
     "description": "Finn plandokumenter",
     "testStep": "Normalsituasjon 1 Input FinnPlandokumenter, retur plandokument(er)",
-    "messageType": "no.ks.fiks.gi.plan.innsyn.finnplandokumenter.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.innsyn.plandokumenter.finn",
     "operation": "FinnPlandokumenter",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av plandokument(er)",
+    "sampleFile": "Samples/FinnPlandokumenter/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

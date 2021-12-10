@@ -117,60 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FinnPlanerForMatrikkelEnhetV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.finnplanerformatrikkelenhet.v2</value>
-  </data>
-  <data name="RegistrerDispensasjonForPlanV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.oppdatering.registrerdispensasjonplan.v2</value>
-  </data>
-  <data name="RegistrerPlanavgrensingV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.oppdatering.registrerplanavgrensning.v2</value>
-  </data>
-  <data name="FinnPlanerV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.finnplaner.v2</value>
-  </data>
-  <data name="FinnDispensasjonerV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.finndispensasjoner.v2</value>
-  </data>
-  <data name="OpprettArealplanV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.oppdatering.opprettarealplan.v2</value>
-  </data>
-  <data name="RegistrerPlanbehandlingV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2</value>
-  </data>
-  <data name="OppdaterArealplanV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.oppdatering.oppdaterarealplan.v2</value>
-  </data>
-  <data name="FinnPlandokumenterV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.finnplandokumenter.v2</value>
-  </data>
-  <data name="FinnPlanerForOmrådeV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.finnplanerforområde.v2</value>
-  </data>
-  <data name="HentAktørerV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.hentaktører.v2</value>
-  </data>
-  <data name="HentBboxV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.hentbboxforplan.v2</value>
-  </data>
-  <data name="HentGjeldendePlanbestemmelserV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.hentgjeldendeplanbestemmelser.v2</value>
-  </data>
-  <data name="HentKodelisteV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.hentkodeliste.v2</value>
-  </data>
-  <data name="HentPlanfilV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.hentplanfil.v2</value>
-  </data>
-  <data name="HentPlanområderV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.hentplanområder.v2</value>
-  </data>
-  <data name="HentRelatertePlanerV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.innsyn.hentrelaterteplaner.v2</value>
-  </data>
-  <data name="OppdaterDispensasjonV2" xml:space="preserve">
-    <value>no.ks.fiks.gi.plan.oppdatering.oppdaterdispensasjon.v2</value>
-  </data>
   <data name="RegistrerMidlertidigForbudMotTiltakV2" xml:space="preserve">
     <value>no.ks.fiks.gi.plan.oppdatering.registrermidlertidigforbudmottiltak.v2</value>
   </data>

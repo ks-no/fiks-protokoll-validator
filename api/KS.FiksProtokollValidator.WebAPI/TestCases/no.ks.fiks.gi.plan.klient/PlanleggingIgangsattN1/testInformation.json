@@ -2,10 +2,11 @@
     "testName": "Planlegging igangsatt",
     "description": "Planlegging igangsatt for plan",
     "testStep": "Normalsituasjon 1 Input PlanleggingIgangsatt, retur bekreftelse på mottak",
-    "messageType": "no.ks.fiks.gi.plan.oppdatering.registrerplanbehandling.v2",
+    "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.planbehandling.registrer",
     "operation": "PlanleggingIgangsatt",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "sampleFile": "Samples/PlanleggingIgangsatt/payload.json",
     "queriesWithExpectedValues": [
     ],
     "supported": false,
