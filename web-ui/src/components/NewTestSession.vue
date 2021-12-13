@@ -126,7 +126,7 @@ export default {
       hasRun: false,
       loading: false,
       hasLoaded: false,
-      recipientId: null,
+      recipientId: this.$route.query.fikskonto,
       selectedTests: [],
       fiksAccountPresent: false,
       allTestsSelected: false,
@@ -143,6 +143,13 @@ export default {
           { value: 'no.ks.fiks.politisk.behandling.tjener.v1', text: 'no.ks.fiks.politisk.behandling.v1 (tjener)'},
         ]
     };
+  },
+  
+  mounted() {
+    this.recipientId = this.$route.query.fikskonto;
+    if(this.$route.query.fikskonto !== null) {
+      this.fiksAccountPresent = true;
+    }
   },
   
   computed: {

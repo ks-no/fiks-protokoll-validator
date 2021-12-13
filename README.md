@@ -12,17 +12,17 @@ Man kan kjøre det på flere måter:
 [Fiks-Protokollvalidator i development er her](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/) 
 
 Konto id man kan benytte:
-- Arkivsystem: 760fd7d6-435f-4c1b-97d5-92fbe2f603b0
-- Fagsystem arkiv: 4a416cde-2aca-4eef-bec4-efddcee0fcea
-- Politisk behandling: 33f6baa8-6645-4dca-9ffb-f95f43333f6c
+- Arkivsystem: [760fd7d6-435f-4c1b-97d5-92fbe2f603b0](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/NewTestSession?fikskonto=760fd7d6-435f-4c1b-97d5-92fbe2f603b0)
+- Fagsystem arkiv: [4a416cde-2aca-4eef-bec4-efddcee0fcea](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/NewTestSession?fikskonto=4a416cde-2aca-4eef-bec4-efddcee0fcea)
+- Politisk behandling: [33f6baa8-6645-4dca-9ffb-f95f43333f6c](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/NewTestSession?fikskonto=33f6baa8-6645-4dca-9ffb-f95f43333f6c)
 
 ## Testing i Test miljø
 [Fiks-Protokollvalidator i test er her](https://forvaltning.fiks.test.ks.no/fiks-validator/#/)
 
 Konto id man kan benytte:
-- Arkivsystem: 8752e128-0e2b-494c-8fab-8e3577aca13d
-- Fagsystem arkiv: 91307c59-0ddb-4212-bede-59f98e0edf77
-- Politisk behandling: f95f6811-99db-4169-b7df-7090cffa4174
+- Arkivsystem: [8752e128-0e2b-494c-8fab-8e3577aca13d](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=8752e128-0e2b-494c-8fab-8e3577aca13d)
+- Fagsystem arkiv: [91307c59-0ddb-4212-bede-59f98e0edf77](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=91307c59-0ddb-4212-bede-59f98e0edf77)
+- Politisk behandling: [f95f6811-99db-4169-b7df-7090cffa4174](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=f95f6811-99db-4169-b7df-7090cffa4174)
 
 ## Oppsett og kjøring lokalt vha docker-compose
 
