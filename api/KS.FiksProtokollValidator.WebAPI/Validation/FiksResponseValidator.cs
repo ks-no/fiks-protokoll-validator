@@ -72,8 +72,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         private static void ValidateExistenceOfOneOfExpectedResponseMessageTypes(FiksRequest fiksRequest,
             IEnumerable<string> expectedResponseMessageTypes)
         {
-            var found = false;
-            var foundExpectedResponseMessageTypes = new List<string>();
             foreach (var expectedResponseMessageType in expectedResponseMessageTypes)
             {
                 if (fiksRequest.FiksResponses.Any(r => r.Type.Equals(expectedResponseMessageType)))
