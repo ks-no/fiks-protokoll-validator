@@ -8,27 +8,27 @@
     "expectedResult": "Journalpost med utfylte standardverdier",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "/arkivmelding/registrering",
+            "payloadQuery": "/arkivmeldingKvittering/registrering",
             "expectedValue": "journalpost",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/arkivmelding/registrering/systemID",
+            "payloadQuery": "/arkivmeldingKvittering/registrering/systemID",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/arkivmelding/registrering/journalaar",
+            "payloadQuery": "/arkivmeldingKvittering/registrering/journalaar",
             "expectedValue": "2021",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/arkivmelding/registrering/journalsekvensnummer",
+            "payloadQuery": "/arkivmeldingKvittering/registrering/journalsekvensnummer",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/arkivmelding/registrering/journalpostnummer",
+            "payloadQuery": "/arkivmeldingKvittering/registrering/journalpostnummer",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
