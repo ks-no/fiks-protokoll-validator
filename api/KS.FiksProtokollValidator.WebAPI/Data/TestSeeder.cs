@@ -133,6 +133,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         {
             if (testInformation["queriesWithExpectedValues"] == null)
             {
+                testCase.FiksResponseTests.Clear();
                 return;
             }
             
@@ -141,36 +142,29 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                 testCase.FiksResponseTests = new List<FiksResponseTest>();
                 foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
                 {
-                    var fiksResponseTest = new FiksResponseTest
-                    {
-                        PayloadQuery = (string) queryWithExpectedValue["payloadQuery"],
-                        ExpectedValue = (string) queryWithExpectedValue["expectedValue"],
-                        ValueType = (SearchValueType) (int) queryWithExpectedValue["valueType"]
-                    };
-
-                    testCase.FiksResponseTests.Add(fiksResponseTest);
+                    AddNewFiksResponseTest(testCase, queryWithExpectedValue);
                 }
             }
             else
-            {
+            {  
+                testCase.FiksResponseTests.Clear();  
                 foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
                 {
-                    var fiksResponseTest = new FiksResponseTest
-                    {
-                        PayloadQuery = (string) queryWithExpectedValue["payloadQuery"],
-                        ExpectedValue = (string) queryWithExpectedValue["expectedValue"],
-                        ValueType = (SearchValueType) (int) queryWithExpectedValue["valueType"]
-                    };
-                    if (!testCase.FiksResponseTests.Any(
-                        r => (r.ExpectedValue.Equals(fiksResponseTest.ExpectedValue)
-                              && r.PayloadQuery.Equals(fiksResponseTest.PayloadQuery)
-                              && r.ValueType.Equals(fiksResponseTest.ValueType))
-                    ))
-                    {
-                        testCase.FiksResponseTests.Add(fiksResponseTest);
-                    }
+                    AddNewFiksResponseTest(testCase, queryWithExpectedValue);
                 }
             }
+        }
+
+        private static void AddNewFiksResponseTest(TestCase testCase, JToken queryWithExpectedValue)
+        {
+            var fiksResponseTest = new FiksResponseTest
+            {
+                PayloadQuery = (string)queryWithExpectedValue["payloadQuery"],
+                ExpectedValue = (string)queryWithExpectedValue["expectedValue"],
+                ValueType = (SearchValueType)(int)queryWithExpectedValue["valueType"]
+            };
+
+            testCase.FiksResponseTests.Add(fiksResponseTest);
         }
 
         private void DeleteFiksExpectedResponseMessageTypes(TestCase testCase, JObject testInformation)
