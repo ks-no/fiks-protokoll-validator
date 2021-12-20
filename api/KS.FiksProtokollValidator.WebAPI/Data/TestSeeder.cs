@@ -133,25 +133,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         {
             if (testInformation["queriesWithExpectedValues"] == null)
             {
-                testCase.FiksResponseTests.Clear();
                 return;
             }
             
-            if (testCase.FiksResponseTests == null)
+            testCase.FiksResponseTests ??= new List<FiksResponseTest>();
+            foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
             {
-                testCase.FiksResponseTests = new List<FiksResponseTest>();
-                foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
-                {
-                    AddNewFiksResponseTest(testCase, queryWithExpectedValue);
-                }
-            }
-            else
-            {  
-                testCase.FiksResponseTests.Clear();  
-                foreach (var queryWithExpectedValue in testInformation["queriesWithExpectedValues"])
-                {
-                    AddNewFiksResponseTest(testCase, queryWithExpectedValue);
-                }
+                AddNewFiksResponseTest(testCase, queryWithExpectedValue);
             }
         }
 
@@ -165,6 +153,51 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             };
 
             testCase.FiksResponseTests.Add(fiksResponseTest);
+        }
+        
+        private void DeleteQueriesWithExpectedValues(TestCase testCase, JObject queryWithExpectedValue)
+        {
+            // Delete all?
+            if ((queryWithExpectedValue["queriesWithExpectedValues"] == null || !queryWithExpectedValue["queriesWithExpectedValues"].HasValues) && testCase.FiksResponseTests?.Count > 0)
+            {
+                foreach (var dbFiksResponseTests in testCase.FiksResponseTests)
+                {
+                    _context.Entry(dbFiksResponseTests).State = EntityState.Deleted;
+                }
+                testCase.FiksResponseTests = null;
+                return;
+            }
+
+            if (testCase.FiksResponseTests == null)
+            {
+                return;
+            }
+            
+            // Find what to delete
+            var deleteList = new List<FiksResponseTest>();       
+            
+            foreach (var fiksResponseTest in testCase.FiksResponseTests)
+            {
+                var found = false;
+                foreach (var query in queryWithExpectedValue["queriesWithExpectedValues"])
+                {
+                    found = ((string) queryWithExpectedValue["payloadQuery"]).Equals(fiksResponseTest.PayloadQuery) 
+                            && ((string) queryWithExpectedValue["expectedValue"]).Equals(fiksResponseTest.ExpectedValue)
+                            && ((SearchValueType) (int) queryWithExpectedValue["valueType"]).Equals(fiksResponseTest.ValueType);
+                   
+                }
+
+                if (found) { continue; }
+                testCase.FiksResponseTests.Remove(fiksResponseTest);
+                deleteList.Add(fiksResponseTest);
+            }
+            
+            foreach (var fiksResponseTest in deleteList)
+            {
+                _context.Entry(fiksResponseTest).State = EntityState.Deleted;
+            }
+
+           
         }
 
         private void DeleteFiksExpectedResponseMessageTypes(TestCase testCase, JObject testInformation)
