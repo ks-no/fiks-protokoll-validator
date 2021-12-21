@@ -9,7 +9,7 @@
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "/arkivmeldingKvittering/mappeKvittering",
-            "expectedValue": "saksmappe",
+            "expectedValue": "saksmappeKvittering",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
