@@ -8,22 +8,22 @@
     "expectedResult": "Saksmappe med utfylte standardverdier",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "/arkivmelding/mappe",
+            "payloadQuery": "/arkivmeldingKvittering/mappeKvittering",
             "expectedValue": "saksmappe",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/arkivmelding/mappe/saksaar",
+            "payloadQuery": "/arkivmeldingKvittering/mappeKvittering/saksaar",
             "expectedValue": "2021",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/arkivmelding/mappe/systemID",
+            "payloadQuery": "/arkivmeldingKvittering/mappeKvittering/systemID",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/arkivmelding/mappe/sakssekvensnummer",
+            "payloadQuery": "/arkivmeldingKvittering/mappeKvittering/sakssekvensnummer",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
