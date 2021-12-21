@@ -26,6 +26,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         {
             var tests = new DirectoryInfo(@"TestCases/");
 
+            // Slett alt innhold i FiksResponseTest og bygg den opp fra scratch fra TestCase filene. Dette er mer effektivt og brekker ikke noen avhengigheter
+            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE FiksResponseTest");
+
             foreach (var protocolDirectory in tests.GetDirectories())
             {
                 var protocolName = protocolDirectory.Name;
@@ -38,9 +41,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
 
                     var testId = $"{protocolName}-{testDirectoryName}";
 
-                    //var updateTest = _context.TestCases.Where(t => t.TestName == (string)testInformation["testName"])
-                    //    .Include(t => t.ExpectedResponseMessageTypes).Include(t => t.FiksResponseTests).FirstOrDefault();
-                    
                     var updateTest = _context.TestCases.Where(t => t.TestId == testId)
                         .Include(t => t.ExpectedResponseMessageTypes).Include(t => t.FiksResponseTests).FirstOrDefault();
                     
@@ -59,9 +59,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                     _context.SaveChanges();
                 }
             }
-            
-            //TODO søk gjennom TestCases og FiksResponseTest tabellene og slett eventuelle tester som ikke lenger eksisterer i mappene
-            
         }
 
         private TestCase UpdateTest(DirectoryInfo testDirectory, TestCase testCase, JObject testInformation)
@@ -118,11 +115,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                 testCase.PayloadAttachmentFileNames = null;
             } 
 
-            // Legg til QueriesWithExpectedValues
-            //TODO lag en DeleteQueriesWithExpectedValues
+            // Legg til QueriesWithExpectedValues (FiksResponseTest table) Tabellen ble truncated i starten av seed.
             AddQueriesWithExpectedValues(testCase, testInformation);
 
-            // Slett og legg til expectedResponseMessageTypes
+            // Slett og legg til expectedResponseMessageTypes (FiksExpectedResponseMessageType table)
             DeleteFiksExpectedResponseMessageTypes(testCase, testInformation);
             AddFiksExpectedResponseMessageTypes(testCase, testInformation);
 
@@ -153,51 +149,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             };
 
             testCase.FiksResponseTests.Add(fiksResponseTest);
-        }
-        
-        private void DeleteQueriesWithExpectedValues(TestCase testCase, JObject queryWithExpectedValue)
-        {
-            // Delete all?
-            if ((queryWithExpectedValue["queriesWithExpectedValues"] == null || !queryWithExpectedValue["queriesWithExpectedValues"].HasValues) && testCase.FiksResponseTests?.Count > 0)
-            {
-                foreach (var dbFiksResponseTests in testCase.FiksResponseTests)
-                {
-                    _context.Entry(dbFiksResponseTests).State = EntityState.Deleted;
-                }
-                testCase.FiksResponseTests = null;
-                return;
-            }
-
-            if (testCase.FiksResponseTests == null)
-            {
-                return;
-            }
-            
-            // Find what to delete
-            var deleteList = new List<FiksResponseTest>();       
-            
-            foreach (var fiksResponseTest in testCase.FiksResponseTests)
-            {
-                var found = false;
-                foreach (var query in queryWithExpectedValue["queriesWithExpectedValues"])
-                {
-                    found = ((string) queryWithExpectedValue["payloadQuery"]).Equals(fiksResponseTest.PayloadQuery) 
-                            && ((string) queryWithExpectedValue["expectedValue"]).Equals(fiksResponseTest.ExpectedValue)
-                            && ((SearchValueType) (int) queryWithExpectedValue["valueType"]).Equals(fiksResponseTest.ValueType);
-                   
-                }
-
-                if (found) { continue; }
-                testCase.FiksResponseTests.Remove(fiksResponseTest);
-                deleteList.Add(fiksResponseTest);
-            }
-            
-            foreach (var fiksResponseTest in deleteList)
-            {
-                _context.Entry(fiksResponseTest).State = EntityState.Deleted;
-            }
-
-           
         }
 
         private void DeleteFiksExpectedResponseMessageTypes(TestCase testCase, JObject testInformation)
