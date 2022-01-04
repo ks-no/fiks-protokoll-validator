@@ -1,5 +1,5 @@
 ﻿{
-    "testName": "Send ny Søk - Normalsituasjon 1",
+    "testName": "Send ny Søk med type 'utvidet' - Normalsituasjon 1",
     "description": "Søker på alle mapper som inneholder 'test' i tittelen",
     "testStep": "Normalsituasjon 1",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",
