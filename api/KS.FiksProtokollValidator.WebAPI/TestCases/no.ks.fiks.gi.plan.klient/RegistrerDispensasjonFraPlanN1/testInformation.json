@@ -6,9 +6,9 @@
     "operation": "RegistrerDispensasjonFraPlan",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering",
-    "sampleFile": "Samples/RegistrerDispensasjonFraPlan/payload.json",
+    "samplePath": "Samples/RegistrerDispensasjonFraPlan",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

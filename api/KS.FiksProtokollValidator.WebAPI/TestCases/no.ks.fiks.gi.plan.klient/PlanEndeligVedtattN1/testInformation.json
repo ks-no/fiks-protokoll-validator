@@ -1,7 +1,7 @@
 ﻿{
-    "testName": "Plan vedtatt med innsigelse",
-    "description": "Plan vedtatt med innsigelse",
-    "testStep": "Normalsituasjon 1 Input PlanVedtattMedInnsigelse, retur bekreftelse på mottak",
+    "testName": "Plan endelig vedtatt",
+    "description": "Plan endelig vedtatt",
+    "testStep": "Normalsituasjon 1 Input PlanEndeligVedtatt, retur bekreftelse på mottak",
     "messageType": "no.ks.fiks.gi.plan.v2.oppdatering.planbehandling.registrer",
     "operation": "PlanEndeligVedtatt",
     "situation": "N1",
