@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
@@ -101,14 +102,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         private static void ValidatePayload(FiksResponse fiksResponse, List<FiksResponseTest> fiksResponseTests,
             List<string> validationErrors)
         {
-            FiksPayload fiksPayload = GetFiksPayload(fiksResponse.FiksPayloads);
+            var fiksPayload = GetFiksPayload(fiksResponse.FiksPayloads);
             var receivedPayloadFileName = fiksPayload != null ? fiksPayload.Filename : null;
             var messageType = fiksResponse.Type;
 
-            if (!ResponseMessageShouldHavePayload(messageType) && receivedPayloadFileName == null)
+            // Ingen payload forventet og heller ingen payload mottatt. Alt ok.
+            if (!ShouldHavePayload(messageType) && receivedPayloadFileName == null)
                 return;
 
-            if (ResponseMessageShouldHavePayload(messageType) && receivedPayloadFileName == null)
+            // Forventet payload men ingen mottatt. Feil!
+            if (ShouldHavePayload(messageType) && receivedPayloadFileName == null)
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.MissingPayloadFileMessage, messageType
@@ -116,7 +119,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            if (receivedPayloadFileName != null && !ResponseMessageShouldHavePayload(messageType))
+            // Ingen paylod forventet men det er mottatt fil. Feil!
+            if (!ShouldHavePayload(messageType) && receivedPayloadFileName != null) 
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.UnexpectedPayloadFileMessage, messageType
@@ -124,7 +128,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            if (receivedPayloadFileName != null && !hasAllowedFileFormat(receivedPayloadFileName))
+            // Payload mottat som forventet men feil filformat. Feil!
+            if (receivedPayloadFileName != null && !HasValidFileFormat(receivedPayloadFileName))
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.InvalidPayloadFileFormatMessage, receivedPayloadFileName.Split('.').Last()
@@ -132,13 +137,24 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            if (receivedPayloadFileName.EndsWith(".xml"))
+            // Payload har ikke korrekt filnavn i forhold til meldingstype. Feil!
+            if (!HasCorrectFilename(fiksResponse.Type, receivedPayloadFileName))
             {
-                ValidateXmlPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksResponseTests, validationErrors);
+                validationErrors.Add(string.Format(
+                    ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName
+                ));
+                return;
+            }
+
+            if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".xml"))
+            {
+                var xmlContent = System.Text.Encoding.Default.GetString(fiksPayload.Payload);
+                ValidateXmlWithSchema(xmlContent, validationErrors);
+                ValidateXmlPayloadContent(xmlContent, fiksResponseTests, validationErrors);
             }
             else
             {
-                if (receivedPayloadFileName.EndsWith(".json"))
+                if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".json"))
                 {
                     ValidateJsonPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksResponseTests, validationErrors);
                 }
@@ -150,17 +166,51 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             return fiksPayloads != null && fiksPayloads.Count > 0 ? fiksPayloads[0] : null;
         }
 
-        private static bool hasAllowedFileFormat(string receivedPayloadFileName)
+        private static bool HasValidFileFormat(string receivedPayloadFileName)
         {
             return receivedPayloadFileName.EndsWith(".xml") || 
                 receivedPayloadFileName.EndsWith(".json") || 
                 receivedPayloadFileName.EndsWith(".txt");
         }
 
-        private static bool ResponseMessageShouldHavePayload(string responseMessageType)
+        private static bool ShouldHavePayload(string responseMessageType)
         {
             _messageTypesWithPayloads ??= GetMessageTypesWithPayload();
             return _messageTypesWithPayloads.Contains(responseMessageType);
+        }
+
+        private static bool HasCorrectFilename(string messageType, string filename)
+        {
+            return GetExpectedFileName(messageType).Equals(filename);
+        }
+        
+        
+        private static string GetExpectedFileName(string messageType)
+        {
+            switch (messageType)
+            {
+                case ArkivintegrasjonMeldingTypeV1.Arkivmelding:
+                    return "arkivmelding.xml";
+                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
+                    return "arkivmeldingKvittering.xml";
+                case ArkivintegrasjonMeldingTypeV1.Sok:
+                    return "sok.xml";
+                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
+                    return "sokeresultatMinimum.xml";
+                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
+                    return "sokeresultatNoekler.xml";
+                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
+                    return "sokeresultatUtvidet.xml";
+                case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
+                case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
+                case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
+                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssak:
+                case PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak:
+                case PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg:
+                    return "payload.json";
+                default:
+                    return string.Empty;
+            }
         }
 
         private static HashSet<string> GetMessageTypesWithPayload()
@@ -186,6 +236,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksPlanMeldingtypeV2.ResultatHentKodeliste,
                 FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
             };
+        }
+
+        private static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors)
+        {
+            XsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
         }
 
         private static void ValidateXmlPayloadContent(string xmlPayloadContent, List<FiksResponseTest> fiksResponseTests,
