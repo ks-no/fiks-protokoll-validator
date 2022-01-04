@@ -14,7 +14,7 @@
         },
         {
             "payloadQuery": "/arkivmeldingKvittering/mappeKvittering/saksaar",
-            "expectedValue": "2021",
+            "expectedValue": "2022",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
