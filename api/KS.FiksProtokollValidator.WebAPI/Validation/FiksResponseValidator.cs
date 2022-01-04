@@ -192,15 +192,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case ArkivintegrasjonMeldingTypeV1.Arkivmelding:
                     return "arkivmelding.xml";
                 case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
-                    return "arkivmeldingKvittering.xml";
+                    return "arkivmelding-kvittering.xml";
                 case ArkivintegrasjonMeldingTypeV1.Sok:
                     return "sok.xml";
                 case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
-                    return "sokeresultatMinimum.xml";
+                    return "sokeresultat-minimum.xml";
                 case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
-                    return "sokeresultatNoekler.xml";
+                    return "sokeresultat-noekler.xml";
                 case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
-                    return "sokeresultatUtvidet.xml";
+                    return "sokeresultat-utvidet.xml";
                 case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
                 case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
