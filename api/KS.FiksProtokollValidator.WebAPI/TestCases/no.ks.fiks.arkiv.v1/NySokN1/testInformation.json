@@ -8,6 +8,7 @@
     "expectedResult": "Søkresultat med utfylte standardverdier",
     "queriesWithExpectedValues": [
     ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.sok.resultat.utvidet" ],
     "supported": true, 
     "protocol": "no.ks.fiks.arkiv.v1"
 }
