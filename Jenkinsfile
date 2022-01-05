@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImageApi(API_APP_NAME, [env.FULL_VERSION, 'latest'], ["build_version_number=${env.FULL_VERSION}"], params.isRelease, 'api')
+                    buildAndPushDockerImageApi(params.isRelease);
                 }
             }
         }
