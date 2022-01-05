@@ -207,6 +207,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case PolitiskBehandlingMeldingTypeV1.SendUtvalgssak:
                 case PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak:
                 case PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg:
+                case FeilmeldingMeldingTypeV1.Ugyldigforespørsel:
+                case FeilmeldingMeldingTypeV1.Serverfeil:
                     return "payload.json";
                 default:
                     return string.Empty;

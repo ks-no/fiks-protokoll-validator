@@ -386,3 +386,6 @@ MigrationBackup/
 fiks-io-config.json
 appsettings.development.json
 appsettings.Test.json
+
+published-app
+api/published-api
