@@ -167,7 +167,7 @@ def getTimestamp() {
 
 def buildCodeInDockerApi() {
   println("Building API code in Docker image")
-  sh 'docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet restore KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet build --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --no-build --output published-api'
+  sh 'docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api'
 }
 
 def buildImageApi() {
