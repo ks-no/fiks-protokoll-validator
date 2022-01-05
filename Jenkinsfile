@@ -165,28 +165,30 @@ def getTimestamp() {
     return java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
 }
 
-def buildApiCodeInDocker() {
+def buildCodeInDockerApi() {
   println("Building API code in Docker image")
   sh 'docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet restore KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet build --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --no-build --output published-api'
 }
 
 def buildImageApi() {
   docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS) {
-    def customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", "api")
+    def customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
     return customImage
   }
 }
 
 def buildAndPushDockerImageApi(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
-  script {
-    buildApiCodeInDocker()
-    def customImage = buildImageApi()
-    docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
+  dir("api") {
+    script {
+      buildCodeInDockerApi()
+      def customImage = buildImageApi()
+      docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
       {
         customImage.push()
         customImage.push('latest')
       }
+    }
   }
 }
 
