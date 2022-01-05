@@ -50,6 +50,21 @@ Opprett/oppdater databasen ved å navigere til *fiks-protokoll-validator/api/KS.
 
 
 ### Docker
+Hvis du ønsker å bygge docker lokalt gjør følgende.
+#### API
+Naviger deg til /api mappen: ``cd api``
+
+Bygg koden: `docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet restore KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet build --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --no-build --output published-api`
+
+Bygg Docker image: `docker build -t fiks-protokoll-validator-api .`
+
+#### WEB
+Naviger deg til /web-ui mappen: ``cd web-ui``
+
+Bygg koden: `docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet restore KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet build --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj && dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --no-build --output published-api`
+
+Bygg Docker image: `docker build -t fiks-protokoll-validator-api .`
+
 Gå til web-ui mappen og bygg docker image: `docker build -t fiks-protokoll-validator-web .`
 Gå til api mappen og bygg docker image: `docker build -t fiks-protokoll-validator-api .`
 
