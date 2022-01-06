@@ -166,39 +166,18 @@ def getTimestamp() {
     return java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
 }
 
-def buildCodeInDockerApi() {
-  println("Building API code in Docker image")
-  sh 'docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api'
-}
-
-def buildCodeInDockerWeb() {
-  println("Building WEB code in Docker image")
-  sh '''docker run -v $(pwd):/source -w /source node:16 npm install && npm run build -- --mode production'''
-}
-
-def buildImageApi() {
-  docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS) {
-    def customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
-    return customImage
-  }
-}
-
 def buildAndPushDockerImageApi(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("api") {
     script {
-      //buildCodeInDockerApi()
-      //def customImage = buildImageApi()
       docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
       {
         println("Building API code in Docker image")
-        //docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').withRun('-v $(pwd):/source -w /source').inside('dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api')
         docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').inside() {
             sh '''
                 dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
             '''
         }
-
         println("Building API image")
         def customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
         customImage.push()
@@ -208,21 +187,23 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
   }
 }
 
-def buildImageWeb() {
-  docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS) {
-    def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", "web-ui")
-    return customImage
-  }
-}
-
 def buildAndPushDockerImageWeb(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("web-ui") {
     script {
-      buildCodeInDockerWeb()
-      def customImage = buildImageWeb()
       docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
       {
+        println("Building WEB code in Docker image")
+        docker.image('node:16').inside() {
+          sh '''
+             npm install
+          '''
+          sh '''
+             npm run build -- --mode production
+          '''
+        }
+        println("Building WEB image")
+        def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
         customImage.push()
         customImage.push('latest')
       }
