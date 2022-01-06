@@ -180,6 +180,7 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
         }
         println("Building API image")
         def customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
+        println("Publishing API image")
         customImage.push()
         customImage.push('latest')
       }
@@ -191,7 +192,8 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("web-ui") {
     script {
-      docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
+      def customImage    
+      docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS)
       {
         println("Building WEB code in Docker image")
         docker.image('node:16').inside() {
@@ -201,9 +203,13 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
           sh '''
              npm run build -- --mode production
           '''
-        }
+        
         println("Building WEB image")
-        def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
+        customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
+      }
+      docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
+      {
+        println("Publishing WEB image")
         customImage.push()
         customImage.push('latest')
       }
