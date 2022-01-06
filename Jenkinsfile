@@ -170,7 +170,8 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("api") {
     script {
-      docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
+      def customImage
+      docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS)
       {
         println("Building API code in Docker image")
         docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').inside() {
@@ -179,7 +180,10 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
             '''
         }
         println("Building API image")
-        def customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
+        customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
+      }
+      docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
+      {
         println("Publishing API image")
         customImage.push()
         customImage.push('latest')
