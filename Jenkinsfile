@@ -172,7 +172,7 @@ def buildCodeInDockerApi() {
 
 def buildCodeInDockerWeb() {
   println("Building WEB code in Docker image")
-  sh '''docker run -v $(pwd):/source -w /source node:16 npm install \&\& npm run build -- --mode production'''
+  sh '''docker run -v $(pwd):/source -w /source node:16 npm install && npm run build -- --mode production'''
 }
 
 def buildImageApi() {
