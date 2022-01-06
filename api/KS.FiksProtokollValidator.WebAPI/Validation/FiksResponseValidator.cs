@@ -201,12 +201,26 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                     return "sokeresultat-noekler.xml";
                 case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
                     return "sokeresultat-utvidet.xml";
+                case ArkivintegrasjonMeldingTypeV1.DokumentfilHent:
+                case ArkivintegrasjonMeldingTypeV1.DokumentfilHentResultat:
+                case ArkivintegrasjonMeldingTypeV1.MappeHent:
+                case ArkivintegrasjonMeldingTypeV1.MappeHentResultat:
+                case ArkivintegrasjonMeldingTypeV1.JournalpostHent:
+                case ArkivintegrasjonMeldingTypeV1.JournalpostHentResultat:
+                    return "arkivmelding.xml";
                 case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
                 case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
                 case PolitiskBehandlingMeldingTypeV1.SendUtvalgssak:
                 case PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak:
                 case PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg:
+                case PolitiskBehandlingMeldingTypeV1.SendMoeteplanTilEInnsyn:
+                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssakerTilEInnsyn:
+                case PolitiskBehandlingMeldingTypeV1.SendVedtakTilEInnsyn:
+                case PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan:
+                case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
+                case FeilmeldingMeldingTypeV1.Ugyldigforespørsel:
+                case FeilmeldingMeldingTypeV1.Serverfeil:
                     return "payload.json";
                 default:
                     return string.Empty;
