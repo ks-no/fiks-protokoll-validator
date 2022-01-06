@@ -14,6 +14,7 @@ pipeline {
         DOCKER_REPO_RELEASE = "https://docker-all.artifactory.fiks.ks.no"
         // URL to artifactory Docker Snapshot repo
         DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
+        DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
