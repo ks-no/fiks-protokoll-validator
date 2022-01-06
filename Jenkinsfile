@@ -192,7 +192,7 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
       {
         println("Building API code in Docker image")
         //docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').withRun('-v $(pwd):/source -w /source').inside('dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api')
-        docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').withRun('-v $(pwd):/source -w /source') {
+        docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').inside('-v $(pwd):/source -w /source') {
             sh '''
                 dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
             '''
