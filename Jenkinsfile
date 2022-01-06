@@ -203,7 +203,7 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
           sh '''
              npm run build -- --mode production
           '''
-        
+        }
         println("Building WEB image")
         customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
       }
