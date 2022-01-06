@@ -186,7 +186,6 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
       {
         println("Publishing API image")
         customImage.push()
-        customImage.push('latest')
       }
     }
   }
@@ -215,7 +214,6 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
       {
         println("Publishing WEB image")
         customImage.push()
-        customImage.push('latest')
       }
     }
   }
