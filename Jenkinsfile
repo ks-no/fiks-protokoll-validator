@@ -172,7 +172,7 @@ def buildCodeInDockerApi() {
 
 def buildCodeInDockerWeb() {
   println("Building WEB code in Docker image")
-  sh "docker run -v $(pwd):/source -w /source node:16 npm install && npm run build -- --mode production"
+  sh '''docker run -v $(pwd):/source -w /source node:16 npm install \&\& npm run build -- --mode production'''
 }
 
 def buildImageApi() {
@@ -186,10 +186,16 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("api") {
     script {
-      buildCodeInDockerApi()
-      def customImage = buildImageApi()
+      //buildCodeInDockerApi()
+      //def customImage = buildImageApi()
       docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
       {
+        println("Building API code in Docker image")
+        docker.image("mcr.microsoft.com/dotnet/sdk:5.0-alpine").withRun('-v $(pwd):/source -w /source ') {
+          sh 'dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api'
+        }
+        println("Building API image")
+        def customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
         customImage.push()
         customImage.push('latest')
       }
