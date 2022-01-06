@@ -50,8 +50,20 @@ Opprett/oppdater databasen ved å navigere til *fiks-protokoll-validator/api/KS.
 
 
 ### Docker
-Gå til web-ui mappen og bygg docker image: `docker build -t fiks-protokoll-validator-web .`
-Gå til api mappen og bygg docker image: `docker build -t fiks-protokoll-validator-api .`
+Hvis du ønsker å bygge docker lokalt gjør følgende.
+#### API
+Naviger til /api mappen: ``cd api``
+
+Bygg koden: `docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api`
+
+Bygg Docker image: `docker build -t fiks-protokoll-validator-api .`
+
+#### WEB
+Naviger til /web-ui mappen: ``cd web-ui``
+
+Bygg koden: `docker run -v $(pwd):/source -w /source node:16 npm install && npm run build -- --mode production `
+
+Bygg Docker image: `docker build -t fiks-protokoll-validator-web .`
 
 ## Oppsett og kjøring i lokalt utviklingsmiljø med lokal sqlexpress
 

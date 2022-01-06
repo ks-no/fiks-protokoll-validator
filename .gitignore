@@ -387,5 +387,7 @@ fiks-io-config.json
 appsettings.development.json
 appsettings.Test.json
 
+# App build folders
 published-app
 api/published-api
+web-ui/dist
