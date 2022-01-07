@@ -171,17 +171,16 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
   dir("api") {
     script {
       def customImage
-      docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS)
-      {
-        println("Building API code in Docker image")
-        docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').inside() {
-            sh '''
-                dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
-            '''
-        }
-        println("Building API image")
-        customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
+    
+      println("Building API code in Docker image")
+      docker.image('mcr.microsoft.com/dotnet/sdk:5.0-alpine').inside() {
+        sh '''
+            dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
+        '''
       }
+      println("Building API image")
+      customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
+      
       docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
       {
         println("Publishing API image")
@@ -196,20 +195,19 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
   dir("web-ui") {
     script {
       def customImage    
-      docker.withRegistry(DOCKER_REPO_RELEASE, ARTIFACTORY_CREDENTIALS)
-      {
-        println("Building WEB code in Docker image")
-        docker.image('node:16').inside() {
-          sh '''
-             npm install
-          '''
-          sh '''
-             npm run build -- --mode production
-          '''
-        }
-        println("Building WEB image")
-        customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
+     
+      println("Building WEB code in Docker image")
+      docker.image('node:16').inside() {
+        sh '''
+           npm install
+        '''
+        sh '''
+          npm run build -- --mode production
+        '''
       }
+      println("Building WEB image")
+      customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
+      
       docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
       {
         println("Publishing WEB image")
