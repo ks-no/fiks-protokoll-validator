@@ -1,11 +1,10 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 using FluentAssertions;
 using NUnit.Framework;
-
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {

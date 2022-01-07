@@ -1,14 +1,14 @@
 ﻿{
-    "testName": "Send ny Søk med responsType 'minimum' - Normalsituasjon 1",
+    "testName": "Send ny Søk med responsType 'utvidet' - Normalsituasjon 2",
     "description": "Søker på alle mapper som inneholder 'test' i tittelen",
-    "testStep": "Normalsituasjon 1",
+    "testStep": "Normalsituasjon 2",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",
     "operation": "NySok",
-    "situation": "N1",
+    "situation": "N2",
     "expectedResult": "Søkresultat med utfylte standardverdier",
     "queriesWithExpectedValues": [
     ],
-    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.sok.resultat.minimum" ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.sok.resultat.utvidet" ],
     "supported": true, 
     "protocol": "no.ks.fiks.arkiv.v1"
 }
