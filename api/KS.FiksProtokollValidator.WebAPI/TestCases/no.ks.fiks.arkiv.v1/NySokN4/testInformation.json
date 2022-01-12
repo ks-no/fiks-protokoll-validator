@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Send ny Søk (minimum) på saker mellom datoer - Normalsituasjon 4",
+    "description": "Søker på alle mapper som er mellom 2 datoer",
+    "testStep": "Normalsituasjon 4",
+    "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",
+    "operation": "NySok",
+    "situation": "N4",
+    "expectedResult": "Søkresultat med utfylte standardverdier",
+    "queriesWithExpectedValues": [
+    ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.sok.resultat.minimum" ],
+    "supported": true, 
+    "protocol": "no.ks.fiks.arkiv.v1"
+}

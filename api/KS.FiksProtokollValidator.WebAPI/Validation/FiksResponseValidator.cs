@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 using KS.Fiks.IO.Arkiv.Client.Models;
+using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
 using KS.Fiks.IO.Client.Models.Feilmelding;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
@@ -46,8 +50,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                     ValidateActualResponseMessageType(fiksResponse.Type, expectedResponseMessageTypes,
                         fiksRequest.FiksResponseValidationErrors);
 
-                    ValidatePayload(fiksResponse, fiksRequest.TestCase.FiksResponseTests,
-                        fiksRequest.FiksResponseValidationErrors);
+                    ValidatePayload(fiksResponse, fiksRequest);
                 }
 
                 fiksRequest.IsFiksResponseValidated = true;
@@ -99,8 +102,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 ));
         }
 
-        private static void ValidatePayload(FiksResponse fiksResponse, List<FiksResponseTest> fiksResponseTests,
-            List<string> validationErrors)
+        private static void ValidatePayload(FiksResponse fiksResponse, FiksRequest fiksRequest)
         {
             var fiksPayload = GetFiksPayload(fiksResponse.FiksPayloads);
             var receivedPayloadFileName = fiksPayload != null ? fiksPayload.Filename : null;
@@ -113,7 +115,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             // Forventet payload men ingen mottatt. Feil!
             if (ShouldHavePayload(messageType) && receivedPayloadFileName == null)
             {
-                validationErrors.Add(string.Format(
+                fiksRequest.FiksResponseValidationErrors.Add(string.Format(
                     ValidationErrorMessages.MissingPayloadFileMessage, messageType
                 ));
                 return;
@@ -122,16 +124,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             // Ingen paylod forventet men det er mottatt fil. Feil!
             if (!ShouldHavePayload(messageType) && receivedPayloadFileName != null) 
             {
-                validationErrors.Add(string.Format(
+                fiksRequest.FiksResponseValidationErrors.Add(string.Format(
                     ValidationErrorMessages.UnexpectedPayloadFileMessage, messageType
                 ));
                 return;
             }
 
             // Payload mottat som forventet men feil filformat. Feil!
-            if (receivedPayloadFileName != null && !HasValidFileFormat(receivedPayloadFileName))
+            if (receivedPayloadFileName != null && !PayloadChecksHelper.HasValidFileFormat(receivedPayloadFileName))
             {
-                validationErrors.Add(string.Format(
+                fiksRequest.FiksResponseValidationErrors.Add(string.Format(
                     ValidationErrorMessages.InvalidPayloadFileFormatMessage, receivedPayloadFileName.Split('.').Last()
                 ));
                 return;
@@ -140,7 +142,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             // Payload har ikke korrekt filnavn i forhold til meldingstype. Feil!
             if (!HasCorrectFilename(fiksResponse.Type, receivedPayloadFileName))
             {
-                validationErrors.Add(string.Format(
+                fiksRequest.FiksResponseValidationErrors.Add(string.Format(
                     ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName
                 ));
                 return;
@@ -149,126 +151,108 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".xml"))
             {
                 var xmlContent = System.Text.Encoding.Default.GetString(fiksPayload.Payload);
-                ValidateXmlWithSchema(xmlContent, validationErrors);
-                ValidateXmlPayloadContent(xmlContent, fiksResponseTests, validationErrors);
+                ValidateXmlWithSchema(xmlContent, fiksRequest.FiksResponseValidationErrors);
+                ValidateXmlPayloadContent(xmlContent, fiksRequest.TestCase, fiksRequest.FiksResponseValidationErrors);
             }
             else
             {
                 if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".json"))
                 {
-                    ValidateJsonPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksResponseTests, validationErrors);
+                    ValidateJsonPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksRequest.TestCase.FiksResponseTests, fiksRequest.FiksResponseValidationErrors);
                 }
             }
         }
 
         private static FiksPayload GetFiksPayload(List<FiksPayload> fiksPayloads)
         {
-            return fiksPayloads != null && fiksPayloads.Count > 0 ? fiksPayloads[0] : null;
-        }
-
-        private static bool HasValidFileFormat(string receivedPayloadFileName)
-        {
-            return receivedPayloadFileName.EndsWith(".xml") || 
-                receivedPayloadFileName.EndsWith(".json") || 
-                receivedPayloadFileName.EndsWith(".txt");
+            return fiksPayloads is { Count: > 0 } ? fiksPayloads[0] : null;
         }
 
         private static bool ShouldHavePayload(string responseMessageType)
         {
-            _messageTypesWithPayloads ??= GetMessageTypesWithPayload();
+            _messageTypesWithPayloads ??= PayloadChecksHelper.GetMessageTypesWithPayload();
             return _messageTypesWithPayloads.Contains(responseMessageType);
         }
 
         private static bool HasCorrectFilename(string messageType, string filename)
         {
-            return GetExpectedFileName(messageType).Equals(filename);
+            return PayloadChecksHelper.GetExpectedFileName(messageType).Equals(filename);
         }
         
-        
-        private static string GetExpectedFileName(string messageType)
-        {
-            switch (messageType)
-            {
-                case ArkivintegrasjonMeldingTypeV1.Arkivmelding:
-                    return "arkivmelding.xml";
-                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
-                    return "arkivmelding-kvittering.xml";
-                case ArkivintegrasjonMeldingTypeV1.Sok:
-                    return "sok.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
-                    return "sokeresultat-minimum.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
-                    return "sokeresultat-noekler.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
-                    return "sokeresultat-utvidet.xml";
-                case ArkivintegrasjonMeldingTypeV1.DokumentfilHent:
-                case ArkivintegrasjonMeldingTypeV1.DokumentfilHentResultat:
-                case ArkivintegrasjonMeldingTypeV1.MappeHent:
-                case ArkivintegrasjonMeldingTypeV1.MappeHentResultat:
-                case ArkivintegrasjonMeldingTypeV1.JournalpostHent:
-                case ArkivintegrasjonMeldingTypeV1.JournalpostHentResultat:
-                    return "arkivmelding.xml";
-                case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
-                case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
-                case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
-                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssak:
-                case PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak:
-                case PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg:
-                case PolitiskBehandlingMeldingTypeV1.SendMoeteplanTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssakerTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.SendVedtakTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan:
-                case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
-                case FeilmeldingMeldingTypeV1.Ugyldigforespørsel:
-                case FeilmeldingMeldingTypeV1.Serverfeil:
-                    return "payload.json";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        private static HashSet<string> GetMessageTypesWithPayload()
-        { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
-            return new()
-            {
-                ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering,
-                ArkivintegrasjonMeldingTypeV1.SokResultatMinimum,
-                ArkivintegrasjonMeldingTypeV1.SokResultatNoekler,
-                ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet,
-                WebAPI.Resources.ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
-                PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
-                PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
-                FiksPlanMeldingtypeV2.ResultatFinnPlaner,
-                FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
-                FiksPlanMeldingtypeV2.ResultatOpprettArealplan,
-                FiksPlanMeldingtypeV2.ResultatHentAktoerer,
-                FiksPlanMeldingtypeV2.ResultatHentBboxForPlan,
-                FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner,
-                FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
-                FiksPlanMeldingtypeV2.ResultatHentKodeliste,
-                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
-            };
-        }
-
         private static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors)
         {
             XsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
         }
 
-        private static void ValidateXmlPayloadContent(string xmlPayloadContent, List<FiksResponseTest> fiksResponseTests,
-            List<string> validationErrors)
+        private static void ValidateXmlPayloadContent(string xmlPayloadContent, FiksRequest fiksRequest,
+            ICollection<string> validationErrors)
         {
+            if (fiksRequest.TestCase.MessageType == ArkivintegrasjonMeldingTypeV1.Sok)
+            {
+                var sokXml = ""; //TODO load sok.xml from TestCase
+                if (fiksRequest.CustomPayloadFile != null)
+                {
+                    sokXml = GetCustomRequestXml(fiksRequest);
+                }
+                else
+                {
+                    sokXml = GetStandardRequestXml(fiksRequest);
+                }
+                using( var sokTextReader = (TextReader) new StringReader(sokXml))
+                {
+                    //Parse the sok request
+                    var sok = (Sok) new XmlSerializer(typeof(Sok)).Deserialize(sokTextReader);
+
+                    SokeresultatMinimum sokResponse = null;
+                    //Parse the sok response
+                    using (var sokResponseTextReader = (TextReader)new StringReader(xmlPayloadContent))
+                    {
+                        switch (sok.ResponsType)
+                        {
+                            case ResponsType.Minimum:
+                                sokResponse =
+                                    (SokeresultatMinimum)new XmlSerializer(typeof(SokeresultatMinimum)).Deserialize(
+                                        sokResponseTextReader);
+                                
+                                break;
+                        }
+                    }
+
+                    foreach (var parameter in sok.Parameter)
+                    {
+                        switch (parameter.Operator)
+                        {
+                            case OperatorType.Equal:
+                                // sjekk at resultat inneholder forventet verdi 
+                                break;
+                            case OperatorType.Between:
+                                if (isDateSokeFelt(parameter.Felt))
+                                {
+                                    var listOfDates = getDateResults(sokResponse, parameter.Felt);
+                                    
+                                    foreach (var dateTimeValue in listOfDates)
+                                    {
+                                        ValidateBetweenDates(dateTimeValue, parameter.Parameterverdier.Datevalues[0], parameter.Parameterverdier.Datevalues[1], validationErrors);
+                                    }
+                                }
+                                break;
+                        }   
+                    }
+
+                }
+            }
+            
+            // Use of xpath checks in testinformation.json
             var xmlDoc = XDocument.Parse(xmlPayloadContent);
 
-            foreach (var fiksResponseTest in fiksResponseTests)
+            foreach (var fiksResponseTest in fiksRequest.TestCase.FiksResponseTests)
             {
                 var expectedElement = fiksResponseTest.PayloadQuery.Split('/').Last();
                 var expectedValue = fiksResponseTest.ExpectedValue;
                 var expectedValueType = fiksResponseTest.ValueType;
 
                 var xpathQuery = fiksResponseTest.PayloadQuery.Replace("/", "/*:");
+                
                 var node = xmlDoc.XPath2SelectElement(xpathQuery);
 
                 if (node == null)
@@ -286,7 +270,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                             ValidationErrorMessages.MissingAttributeOnPayloadElement, expectedValue, expectedElement
                         ));
                 }
-                else if (expectedValueType == SearchValueType.Value)
+                else if (expectedValueType == SearchValueType.ValueEqual)
                 {
                     if (string.IsNullOrWhiteSpace(node.Value))
                         validationErrors.Add(string.Format(
@@ -298,9 +282,86 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                         validationErrors.Add(string.Format(
                             ValidationErrorMessages.WrongValueOnPayloadElement, expectedElement, expectedValue, node.Value
                         ));
+                } else if (expectedValueType == SearchValueType.YearNow)
+                {
+                    if (node.Value != DateTime.Now.Year.ToString())
+                    {
+                        validationErrors.Add(string.Format(
+                            ValidationErrorMessages.WrongValueOnPayloadElement, expectedElement, expectedValue,
+                            node.Value
+                        ));
+                    }
+                }
+                else if (expectedValueType == SearchValueType.Regex)
+                {
+                    var m = Regex.Match(node.Value, expectedValue);
+                    if(!m.Success)
+                    {
+                        validationErrors.Add(string.Format(
+                            ValidationErrorMessages.FailedRegexPattern, expectedElement, expectedValue,
+                            node.Value
+                        ));
+                    }
                 }
             }
         }
+
+        private static string GetStandardRequestXml(FiksRequest fiksRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        private static string GetCustomRequestXml(FiksRequest fiksRequest)
+        {
+            var stream = new StreamReader(new MemoryStream(fiksRequest.CustomPayloadFile.Payload));
+            return stream.ReadToEnd();
+        }
+
+        private static List<DateTime> getDateResults(SokeresultatMinimum sokResponse, SokFelt parameterFelt)
+        {
+            switch (parameterFelt)
+            {
+                case SokFelt.SakPeriodSaksdato:
+                    return sokResponse.ResultatListe.Select(r => r.Saksmappe.Saksdato).ToList();
+                
+                default:
+                    return new List<DateTime>();
+            }
+        }
+
+        private static void ValidateBetweenDates(DateTime value, DateTime dateFrom, DateTime dateTo,
+            ICollection<string> validationErrors)
+        {
+            if (value < dateFrom || value > dateTo)
+            {
+                validationErrors.Add($"Date {value} out of range from {dateFrom} to {dateTo}");   
+            }
+        }
+
+        private static bool isDateSokeFelt(SokFelt parameterFelt)
+        {
+            switch (parameterFelt)
+            {
+                case SokFelt.JournalpostPeriodDokumentetsdato:
+                case SokFelt.JournalpostPeriodForfallsdato:
+                case SokFelt.JournalpostPeriodJournaldato:
+                case SokFelt.DokumentbeskrivelsePeriodOpprettetDato:
+                case SokFelt.MappePeriodOpprettetDato:
+                case SokFelt.MappePeriodAvsluttetDato:
+                case SokFelt.DokumentbeskrivelsePeriodSkjermingPeriodSkjermingOpphoererDato:
+                case SokFelt.RegistreringPeriodOpprettetDato:
+                case SokFelt.SakPeriodSaksdato:
+                case SokFelt.RegistreringPeriodSkjermingPeriodSkjermingOpphoererDato:
+                case SokFelt.MappePeriodSkjermingPeriodSkjermingOpphoererDato:    
+                case SokFelt.JournalpostPeriodSaksaar:
+                case SokFelt.SakPeriodSaksaar:
+                case SokFelt.JournalpostPeriodJournalaar:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         private static void ValidateJsonPayloadContent(string jsonPayloadContent, List<FiksResponseTest> fiksResponseTests,
             List<string> validationErrors)
         {
@@ -362,7 +423,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                             }
                         }
                     }
-                    else if (expectedValueType == SearchValueType.Value)
+                    else if (expectedValueType == SearchValueType.ValueEqual)
                     {
                         var tokens = json.SelectTokens(path);
 

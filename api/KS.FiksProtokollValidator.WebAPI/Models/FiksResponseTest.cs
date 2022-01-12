@@ -16,10 +16,4 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
         [Required]
         public SearchValueType ValueType { get; set; }
     }
-
-    public enum SearchValueType
-    {
-        Value,
-        Attribute
-    }
 }

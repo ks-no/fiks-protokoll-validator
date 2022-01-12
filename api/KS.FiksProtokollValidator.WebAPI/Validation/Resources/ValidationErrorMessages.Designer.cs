@@ -122,5 +122,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
                 return ResourceManager.GetString("WrongValueOnPayloadElement", resourceCulture);
             }
         }
+        
+        public static string FailedRegexPattern {
+            get {
+                return ResourceManager.GetString("FailedRegexPattern", resourceCulture);
+            }
+        }
     }
 }

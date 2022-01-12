@@ -156,4 +156,7 @@
   <data name="WrongValueOnPayloadElement" xml:space="preserve">
     <value>Xml-node {0} var forventet med verdi {1}, men {2} ble funnet</value>
   </data>
+  <data name="FailedRegexPattern" xml:space="preserve">
+    <value>Xml-node {0} med resultatet {2} var forventet å treffe regex pattern {1}.</value>
+  </data>
 </root>

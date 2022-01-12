@@ -7,6 +7,11 @@
     "situation": "N2",
     "expectedResult": "Søkresultat med utfylte standardverdier",
     "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/sokeresultatUtvidet/resultatListe/resultatUtvidet/mappe/tittel",
+            "expectedValue": "Test", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
     ],
     "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.sok.resultat.utvidet" ],
     "supported": true, 
