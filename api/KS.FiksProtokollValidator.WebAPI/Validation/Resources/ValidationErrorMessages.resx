@@ -121,7 +121,7 @@
     <value>Ugyldig filformat på payload: {0}</value>
   </data>
   <data name="InvalidPayloadFilename" xml:space="preserve">
-    <value>Ugyldig filnavn på payload: {0}</value>
+    <value>Ugyldig filnavn på payload: {0}. Forventet filnavn: {1}</value>
   </data>
   <data name="MissingAttributeOnPayloadElement" xml:space="preserve">
     <value>Fant ikke attributt {0} på node {1}</value>
