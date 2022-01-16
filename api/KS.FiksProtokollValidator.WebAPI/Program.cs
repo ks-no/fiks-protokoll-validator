@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -51,8 +52,6 @@ namespace KS.FiksProtokollValidator.WebAPI
             Log.Information("Path.PathSeparator: {PathSeparator}", Path.PathSeparator);
 
             var host = CreateHostBuilder(args).Build();
-            
-            
             
             MigrateAndSeedDatabase(host);
             
