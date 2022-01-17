@@ -71,14 +71,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             _xmlValidationMessages.Should().BeEmpty();
         }
         
-        [Theory]
-        public void ValidateSokeresultatNoekler(string caseFolder)
-        {
-            var xsdValidator = new XsdValidator();
-            List<string> validationErrors = new List<string>();
-            string sokeresultatNoekler = 
-            xsdValidator.ValidateArkivmeldingSokeresultatNoekler(sokeresultatNoekler, validationErrors);
-        }
+     
         
         private void XmlReaderSettingsValidationEventHandler(object? sender, ValidationEventArgs e)
         {

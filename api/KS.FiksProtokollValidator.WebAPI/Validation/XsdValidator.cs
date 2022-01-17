@@ -15,6 +15,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
         } 
         
+        public XsdValidator(string baseDirectory)
+        {
+            this.baseDirectory = baseDirectory;
+        } 
+        
         private void Validate(string payload, List<string> validationErrors, XmlReaderSettings xmlReaderSettings)
         {
             var validationHandler = new ValidationHandler();
