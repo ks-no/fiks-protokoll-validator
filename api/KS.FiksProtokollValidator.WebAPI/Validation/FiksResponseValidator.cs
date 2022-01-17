@@ -141,7 +141,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             if (!HasCorrectFilename(fiksResponse.Type, receivedPayloadFileName))
             {
                 validationErrors.Add(string.Format(
-                    ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName
+                    ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName, GetExpectedFileName(messageType)
                 ));
                 return;
             }
@@ -183,7 +183,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         {
             return GetExpectedFileName(messageType).Equals(filename);
         }
-        
         
         private static string GetExpectedFileName(string messageType)
         {
@@ -350,10 +349,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                                     keyIsPresent = JObject.Parse(token.ToString()).ContainsKey(expectedValue);
                                 }
 
-                                    if (keyIsPresent)
-                                    {
-                                        foundExpectedValue = true;
-                                    }
+                                if (keyIsPresent)
+                                {
+                                    foundExpectedValue = true;
+                                }
                                   
                             }
                             if (!foundExpectedValue)
