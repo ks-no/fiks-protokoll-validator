@@ -149,7 +149,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".xml"))
             {
                 var xmlContent = System.Text.Encoding.Default.GetString(fiksPayload.Payload);
-                ValidateXmlWithSchema(xmlContent, validationErrors);
+                ValidateXmlWithSchema(xmlContent, validationErrors, messageType);
                 ValidateXmlPayloadContent(xmlContent, fiksResponseTests, validationErrors);
             }
             else
@@ -251,9 +251,27 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             };
         }
 
-        private static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors)
+        private static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors, string messageType)
         {
-            XsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
+            var xsdValidator = new XsdValidator();
+            switch (messageType)
+            {
+                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
+                    xsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
+                    break;
+                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
+                   xsdValidator.ValidateArkivmeldingSokeresultatMinimum(xmlPayloadContent, validationErrors);
+                   break;
+                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
+                    xsdValidator.ValidateArkivmeldingSokeresultatNoekler(xmlPayloadContent, validationErrors);
+                    break;
+                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
+                    xsdValidator.ValidateArkivmeldingSokeresultatUtvidet(xmlPayloadContent, validationErrors);
+                    break;
+                default:
+                    //do nothing? Or display a warning that the message type was not checked against xsd?
+                    break;
+            }
         }
 
         private static void ValidateXmlPayloadContent(string xmlPayloadContent, List<FiksResponseTest> fiksResponseTests,
