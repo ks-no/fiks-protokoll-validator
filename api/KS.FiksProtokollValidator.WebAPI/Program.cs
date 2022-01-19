@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using KS.FiksProtokollValidator.WebAPI.Data;
+using KS.FiksProtokollValidator.WebAPI.Logging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -38,7 +39,7 @@ namespace KS.FiksProtokollValidator.WebAPI
 
             if (!string.IsNullOrEmpty(logstashDestination))
             {
-                loggerConfiguration.WriteTo.TCPSink($"tcp://{logstashDestination}"); 
+                loggerConfiguration.WriteTo.TCPSink($"tcp://{logstashDestination}", new CustomLogstashJsonFormatter()); 
             }
             
             Log.Logger = loggerConfiguration.CreateLogger();
