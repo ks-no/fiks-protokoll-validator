@@ -8,6 +8,15 @@
 
   <ItemGroup>
     <None Remove="TestData\Requests\ny_inngaaende.xml" />
+    <None Update="TestData\Responses\sokeresultatNoekler.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Responses\sokeresultatUtvidet.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\Responses\sokeresultatMinimum.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +25,20 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sok.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sok2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sokeresultatMinimum.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sokeresultatMinimum2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum2.xml" />
+    <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +74,10 @@
     <None Update="TestData\Responses\svar_paa_soek.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestData\ValidatorTests" />
   </ItemGroup>
 
 </Project>
