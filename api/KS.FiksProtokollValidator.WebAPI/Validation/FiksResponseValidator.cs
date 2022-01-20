@@ -278,6 +278,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
        public static void ValidateXmlPayloadContent(string xmlPayloadContent, FiksRequest fiksRequest,
             List<string> validationErrors)
         {
+            // If Fiks-Arkiv search, check result against the actual search request
             if (fiksRequest.TestCase.MessageType == ArkivintegrasjonMeldingTypeV1.Sok)
             {
                 FiksArkivValidator.ValidateXmlPayloadWithSokRequest(xmlPayloadContent, fiksRequest, validationErrors);

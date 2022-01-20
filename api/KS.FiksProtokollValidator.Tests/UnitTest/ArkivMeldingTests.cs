@@ -34,7 +34,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             var arkivmeldingXmlSchemaSet = new XmlSchemaSet();
             arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/arkivmelding/v2", "./Schema/arkivmelding.xsd");
             arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2", "./Schema/metadatakatalog.xsd");
-            arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/sok", "./Schema/sok.xsd");
+            arkivmeldingXmlSchemaSet.Add("http://www.ks.no/standarder/fiks/arkiv/sok/v1", "./Schema/sok.xsd");
             _xmlReaderSettings = new XmlReaderSettings
             {
                 ValidationType = ValidationType.Schema
