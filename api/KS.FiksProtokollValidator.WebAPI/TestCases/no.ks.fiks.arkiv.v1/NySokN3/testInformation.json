@@ -6,13 +6,7 @@
     "operation": "NySok",
     "situation": "N3",
     "expectedResult": "Søkresultat med utfylte standardverdier",
-    "queriesWithExpectedValues": [
-        {
-            "payloadQuery": "/sokeresultatNoekler/resultatListe/resultatNoekler/mappe/tittel",
-            "expectedValue": "Test", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
-            "valueType": 0 // 0 = Verdi er lik, 1 = Attributt
-        }
-    ],
+    "queriesWithExpectedValues": [],
     "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.sok.resultat.noekler" ],
     "supported": true, 
     "protocol": "no.ks.fiks.arkiv.v1"
