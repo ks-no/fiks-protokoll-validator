@@ -1,5 +1,5 @@
 ﻿{
-    "testName": "Send ny Søk (minimum) på saker mellom datoer - Normalsituasjon 4",
+    "testName": "Send ny Søk med responsType 'minimum' på saker mellom datoer - Normalsituasjon 4",
     "description": "Søker på alle mapper som er mellom 2 datoer",
     "testStep": "Normalsituasjon 4",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",

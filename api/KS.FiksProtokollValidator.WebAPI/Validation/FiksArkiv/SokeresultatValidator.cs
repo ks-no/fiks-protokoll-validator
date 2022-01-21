@@ -34,11 +34,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                    switch (sok.ResponsType)
                    {
                        case ResponsType.Utvidet:
-                           SokeresultatUtvidetValidator.Validate((Sokeresultat) new XmlSerializer(typeof(SokeresultatMinimum)).Deserialize(
+                           SokeresultatUtvidetValidator.Validate((Sokeresultat) new XmlSerializer(typeof(Sokeresultat)).Deserialize(
                                sokResponseTextReader), sok, validationErrors);
                            break;
                        case ResponsType.Noekler:
-                           SokeresultatNoeklerValidator.Validate((SokeresultatNoekler) new XmlSerializer(typeof(SokeresultatMinimum)).Deserialize(
+                           SokeresultatNoeklerValidator.Validate((SokeresultatNoekler) new XmlSerializer(typeof(SokeresultatNoekler)).Deserialize(
                                sokResponseTextReader), sok, validationErrors);
                            break;
                        case ResponsType.Minimum:
