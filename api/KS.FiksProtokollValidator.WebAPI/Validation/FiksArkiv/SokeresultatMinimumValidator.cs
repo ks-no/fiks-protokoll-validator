@@ -23,19 +23,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                     case OperatorType.Equal:
                         if (parameter.Felt == SokFelt.MappePeriodTittel)
                         {
-                            foreach (var resultatMinimum in sokResponse.ResultatListe)
-                            {
-                                var searchText = parameter.Parameterverdier.Stringvalues.First();
-                                var searchTextStripped = searchText.Replace("*", string.Empty);
-
-                                if (!resultatMinimum.Mappe.Tittel.Contains(searchTextStripped))
-                                {
-                                    validationErrors.Add(
-                                        $"The result for '{parameter.Felt}' with value '{resultatMinimum.Mappe.Tittel}' doesnt match the search text '{searchText}'?");
-                                }
-                            }
+                            ValidateMappePeriodTittelEqual(sokResponse, validationErrors, parameter);
                         }
-
                         break;
                     case OperatorType.Between:
                         if (isDateSokeFelt(parameter.Felt))
@@ -48,8 +37,23 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                                     parameter.Parameterverdier.Datevalues[1], validationErrors);
                             }
                         }
-
                         break;
+                }
+            }
+        }
+
+        private static void ValidateMappePeriodTittelEqual(SokeresultatMinimum sokResponse, List<string> validationErrors,
+            Parameter parameter)
+        {
+            foreach (var resultatMinimum in sokResponse.ResultatListe)
+            {
+                var searchText = parameter.Parameterverdier.Stringvalues.First(); //TODO skal vi støtte * 
+                var searchTextStripped = searchText.Replace("*", string.Empty); 
+
+                if (!resultatMinimum.Mappe.Tittel.Contains(searchTextStripped))
+                {
+                    validationErrors.Add(
+                        $"The result for '{parameter.Felt}' with value '{resultatMinimum.Mappe.Tittel}' doesnt match the search text '{searchText}'?");
                 }
             }
         }
