@@ -6,7 +6,13 @@
     "operation": "NySok",
     "situation": "N1",
     "expectedResult": "Søkresultat med utfylte standardverdier",
-    "queriesWithExpectedValues": [],
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/sokeresultatMinimum/resultatListe/resultatMinimum/mappe/tittel",
+            "expectedValue": "Test*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
     "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.sok.resultat.minimum" ],
     "supported": true, 
     "protocol": "no.ks.fiks.arkiv.v1"
