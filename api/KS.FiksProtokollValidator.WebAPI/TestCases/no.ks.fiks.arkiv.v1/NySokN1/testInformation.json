@@ -8,7 +8,7 @@
     "expectedResult": "Søkresultat med utfylte standardverdier",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "/sokeresultatMinimum/resultatListe/resultatMinimum/mappe/tittel",
+            "payloadQuery": "/sokeresultatMinimum/resultatListe/resultatMinimum//mappe/tittel",
             "expectedValue": "Test*",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
