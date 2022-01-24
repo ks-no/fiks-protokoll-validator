@@ -159,4 +159,13 @@
   <data name="FailedRegexPattern" xml:space="preserve">
     <value>Xml-node {0} med resultatet {2} var forventet å treffe regex pattern {1}.</value>
   </data>
+  <data name="CouldNotFindSaksmappe" xml:space="preserve">
+    <value>Kunne ikke finne en 'Saksmappe' i 'ResultatListe'. Er resultatet korrekt?</value>
+  </data>
+  <data name="TooLongResultListAccordingToTakeParameter" xml:space="preserve">
+    <value>ResultatListe lenger enn forventet. Parameteren 'take' i request var {0} mens responsen hadde {1} resultater i ResultatListe</value>
+  </data>
+  <data name="ResultDontMatchSearchText" xml:space="preserve">
+    <value>Resultatet for '{0}' med verdien '{1}' matcher ikke søket '{2}</value>
+  </data>
 </root>

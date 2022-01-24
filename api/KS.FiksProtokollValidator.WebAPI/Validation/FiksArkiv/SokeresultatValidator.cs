@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Expressions;
 using System.Xml.Serialization;
 using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
 using KS.FiksProtokollValidator.WebAPI.Models;

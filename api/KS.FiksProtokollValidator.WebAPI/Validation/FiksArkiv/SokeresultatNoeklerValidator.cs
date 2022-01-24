@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
+using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 {
@@ -12,8 +13,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
             // Too many responses. Doesnt match Take request. 
             if (sokResponse.ResultatListe.Count > sok.Take)
             {
-                validationErrors.Add(
-                    $"Too large ResultatListe. The 'take' parameter was {sok.Take} and the response had {sokResponse.ResultatListe.Count} items in ResultatListe");
+                validationErrors.Add(string.Format(
+                    ValidationErrorMessages.TooLongResultListAccordingToTakeParameter, sok.Take,
+                    sokResponse.ResultatListe.Count));
             }
 
             foreach (var parameter in sok.Parameter)
@@ -52,7 +54,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                 case SokFelt.SakPeriodSaksdato:
                     if (sokResponse.ResultatListe.All(r => r.Saksmappe == null))
                     {
-                        validationErrors.Add("Could not find any 'Saksmappe' in 'ResultatListe'. Is the result correct?");
+                        validationErrors.Add(ValidationErrorMessages.CouldNotFindSaksmappe);
                         return new List<DateTime>();
                     }
                     return sokResponse.ResultatListe.Select(r => r.Saksmappe.Saksdato).ToList();

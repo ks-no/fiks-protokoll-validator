@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation
 {
@@ -12,7 +10,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         {
             if (value < dateFrom || value > dateTo)
             {
-                validationErrors.Add($"Date {value} out of range from {dateFrom} to {dateTo}");   
+                validationErrors.Add($"Dato {value} treffer ikke søket mellom 'fra dato' {dateFrom} og 'til dato' {dateTo}");   
             }
         }
     }
