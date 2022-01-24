@@ -5,15 +5,16 @@
 	<tidspunkt>2021-03-23T10:28:33.1952112+01:00</tidspunkt>
 	<take>100</take>
 	<skip>0</skip>
-	<respons>mappe</respons>
+	<respons>saksmappe</respons>
 	<parameter>
-		<felt>mappe.tittel</felt>
-		<operator>equal</operator>
+		<felt>sak.saksdato</felt>
+		<operator>between</operator>
 		<parameterverdier>
-			<stringvalues>
-				<value>Test*</value>
-			</stringvalues>
+			<datevalues>
+				<value>2021-11-01T00:00:00.0</value>
+				<value>2021-12-31T23:59:59.0</value>
+			</datevalues>
 		</parameterverdier>
 	</parameter>
-	<responsType>utvidet</responsType>
-</sok>
+	<responsType>minimum</responsType>
+</sok> 

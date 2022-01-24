@@ -11,7 +11,7 @@
 		<operator>equal</operator>
 		<parameterverdier>
 			<stringvalues>
-				<value>test*</value>
+				<value>Test*</value>
 			</stringvalues>
 		</parameterverdier>
 	</parameter>

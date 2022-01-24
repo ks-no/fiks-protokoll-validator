@@ -95,7 +95,7 @@ namespace KS.FiksProtokollValidator.Tests
         {
             _fiksResponseTest.PayloadQuery = "/denne/noden/eksisterer/ikke";
             _fiksResponseTest.ExpectedValue = "*";
-            _fiksResponseTest.ValueType = SearchValueType.Value;
+            _fiksResponseTest.ValueType = SearchValueType.ValueEqual;
 
             _validator.Validate(_testSession);
 

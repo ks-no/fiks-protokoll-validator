@@ -122,5 +122,29 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
                 return ResourceManager.GetString("WrongValueOnPayloadElement", resourceCulture);
             }
         }
+        
+        public static string FailedRegexPattern {
+            get {
+                return ResourceManager.GetString("FailedRegexPattern", resourceCulture);
+            }
+        }
+        
+        public static string CouldNotFindSaksmappe {
+            get {
+                return ResourceManager.GetString("CouldNotFindSaksmappe", resourceCulture);
+            }
+        }
+        
+        public static string TooLongResultListAccordingToTakeParameter {
+            get {
+                return ResourceManager.GetString("TooLongResultListAccordingToTakeParameter", resourceCulture);
+            }
+        }
+        
+        public static string ResultDontMatchSearchText {
+            get {
+                return ResourceManager.GetString("ResultDontMatchSearchText", resourceCulture);
+            }
+        }
     }
 }

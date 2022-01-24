@@ -25,11 +25,37 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sok.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sok2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sokeresultatMinimum.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN1\sokeresultatMinimum2.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN4\sok.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN4\sokeresultatMinimum.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN4\sokeresultatMinimumInvalid.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\ValidatorTests\NySokN4\sokeresultatMinimumSaksdatoFeil.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum2.xml" />
+    <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.3.0" />
-    <PackageReference Include="KS.Fiks.IO.Arkiv.Client" Version="2.0.10" />
+    <PackageReference Include="KS.Fiks.IO.Arkiv.Client" Version="2.0.11" />
     <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="nunit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.0" />

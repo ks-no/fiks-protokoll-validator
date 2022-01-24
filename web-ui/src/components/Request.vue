@@ -92,12 +92,7 @@
               :class="'validState ' + validState"
               title="Ugyldig"
             />
-            {{
-              error
-                .replace("/", "&lt;")
-                .replace(/\//g, "> &lt;")
-                .replace(" i svar", "> i svar")
-            }}
+            {{error}}
           </label>
         </div>
       </b-card>

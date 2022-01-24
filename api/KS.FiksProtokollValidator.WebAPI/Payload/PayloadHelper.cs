@@ -1,0 +1,35 @@
+using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using KS.Fiks.IO.Client.Models;
+using KS.FiksProtokollValidator.WebAPI.Models;
+
+namespace KS.FiksProtokollValidator.WebAPI.Payload
+{
+    public class PayloadHelper
+    {
+        public static void CreateStandardPayload(FiksRequest fiksRequest, List<IPayload> payloads)
+        {
+            var payLoadFileName = fiksRequest.TestCase.PayloadFileName;
+
+            if (string.IsNullOrEmpty(payLoadFileName)) return;
+            
+            IPayload payload = new StringPayload(GetStandardPayloadAsText(fiksRequest), payLoadFileName);
+            payloads.Add(payload);
+        }
+
+        public static string GetStandardPayloadAsText(FiksRequest fiksRequest)
+        {
+            var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var payLoadFilePath = fiksRequest.TestCase.PayloadFilePath;
+            return File.ReadAllText(basepath + "/" + payLoadFilePath);
+        }
+
+        public static void CreateCustomPayload(FiksRequest fiksRequest, List<IPayload> payloads)
+        {
+            IPayload payload = new StreamPayload(new MemoryStream(fiksRequest.CustomPayloadFile.Payload),
+                fiksRequest.CustomPayloadFile.Filename);
+            payloads.Add(payload);
+        }
+    }
+}
