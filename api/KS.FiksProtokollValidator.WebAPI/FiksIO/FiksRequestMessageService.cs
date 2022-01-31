@@ -31,7 +31,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         {
             var ttl = new TimeSpan(0, TTLMinutes, 0); 
             var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType, ttl);
-            
+
             var payloads = new List<IPayload>();
 
             if (fiksRequest.CustomPayloadFile != null)
