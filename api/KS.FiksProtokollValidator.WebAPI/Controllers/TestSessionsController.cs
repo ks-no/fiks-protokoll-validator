@@ -155,7 +155,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                         return BadRequest("Ugyldig konto: " + testSession.RecipientId);
                     }
                     Log.Error("An Error occured when sending FIKS request with recipient ID {RecipientId}", testSession.RecipientId);
-                    return StatusCode(500, e);
+                    return StatusCode(500, e.Message);
                 }
 
                 if (isNewFiksRequest)
