@@ -146,5 +146,23 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
                 return ResourceManager.GetString("ResultDontMatchSearchText", resourceCulture);
             }
         }
+        
+        public static string FoundUnexpectedResultTypeAccordingToRespons {
+            get {
+                return ResourceManager.GetString("FoundUnexpectedResultTypeAccordingToRespons", resourceCulture);
+            }
+        }
+        
+        public static string CouldNotParseSokeresultat {
+            get {
+                return ResourceManager.GetString("CouldNotParseSokeresultat", resourceCulture);
+            }
+        }
+        
+        public static string SokeresultatIsNull {
+            get {
+                return ResourceManager.GetString("SokeresultatIsNull", resourceCulture);
+            }
+        }
     }
 }

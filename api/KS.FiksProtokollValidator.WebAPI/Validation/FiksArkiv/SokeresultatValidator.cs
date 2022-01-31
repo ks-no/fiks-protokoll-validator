@@ -26,29 +26,23 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                //Parse the sok request
                var sok = (Sok) new XmlSerializer(typeof(Sok)).Deserialize(sokTextReader);
 
-               
                //Parse the sok response
                using (var sokResponseTextReader = (TextReader)new StringReader(xmlPayloadContent))
                {
                    switch (sok.ResponsType)
                    {
                        case ResponsType.Utvidet:
-                           SokeresultatUtvidetValidator.Validate((Sokeresultat) new XmlSerializer(typeof(Sokeresultat)).Deserialize(
-                               sokResponseTextReader), sok, validationErrors);
+                           SokeresultatUtvidetValidator.Validate(sokResponseTextReader, sok, validationErrors);
                            break;
                        case ResponsType.Noekler:
-                           SokeresultatNoeklerValidator.Validate((SokeresultatNoekler) new XmlSerializer(typeof(SokeresultatNoekler)).Deserialize(
-                               sokResponseTextReader), sok, validationErrors);
+                           SokeresultatNoeklerValidator.Validate(sokResponseTextReader, sok, validationErrors);
                            break;
                        case ResponsType.Minimum:
                        default:
-                           SokeresultatMinimumValidator.Validate((SokeresultatMinimum) new XmlSerializer(typeof(SokeresultatMinimum)).Deserialize(
-                               sokResponseTextReader), sok, validationErrors);
+                           SokeresultatMinimumValidator.Validate(sokResponseTextReader, sok, validationErrors);
                            break;
                    }
                }
-               
-               
                
            }
        }

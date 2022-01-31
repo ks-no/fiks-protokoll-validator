@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 
@@ -8,8 +10,26 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 {
     public class SokeresultatNoeklerValidator : AbstractSokeResultatValidator
     {
-        public static void Validate(SokeresultatNoekler sokResponse, Sok sok, List<string> validationErrors)
+        public static void Validate(TextReader sokResponseTextReader, Sok sok, List<string> validationErrors)
         {
+            SokeresultatNoekler sokResponse = null;
+            try
+            {
+                sokResponse = (SokeresultatNoekler)new XmlSerializer(typeof(SokeresultatNoekler)).Deserialize(
+                    sokResponseTextReader);
+            }
+            catch (Exception e)
+            {
+                validationErrors.Add(string.Format(ValidationErrorMessages.CouldNotParseSokeresultat, "noekler"));
+                return;
+            }
+
+            if (sokResponse == null)
+            {
+                validationErrors.Add(ValidationErrorMessages.SokeresultatIsNull);
+                return;
+            }
+
             // Too many responses. Doesnt match Take request. 
             if (sokResponse.ResultatListe.Count > sok.Take)
             {
