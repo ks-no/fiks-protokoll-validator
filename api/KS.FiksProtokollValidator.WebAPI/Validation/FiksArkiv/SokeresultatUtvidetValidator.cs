@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
 using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 
@@ -8,8 +10,26 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 {
     public class SokeresultatUtvidetValidator : AbstractSokeResultatValidator
     {
-        public static void Validate(Sokeresultat sokResponse, Sok sok, List<string> validationErrors)
+        public static void Validate(TextReader sokResponseTextReader, Sok sok, List<string> validationErrors)
         {
+            Sokeresultat sokResponse = null;
+            try
+            {
+                 sokResponse = (Sokeresultat)new XmlSerializer(typeof(Sokeresultat)).Deserialize(
+                    sokResponseTextReader);
+            }
+            catch (Exception e)
+            {
+                validationErrors.Add(string.Format(ValidationErrorMessages.CouldNotParseSokeresultat, "utvidet"));
+                return;
+            }
+
+            if (sokResponse == null)
+            {
+                validationErrors.Add(ValidationErrorMessages.SokeresultatIsNull);
+                return;
+            }
+            
             // Too many responses. Doesnt match Take request. 
             if (sokResponse.ResultatListe.Count > sok.Take)
             {
@@ -25,16 +45,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                     case OperatorType.Equal:
                         if (parameter.Felt == SokFelt.MappePeriodTittel)
                         {
-                            foreach (var resultatMinimum in sokResponse.ResultatListe)
-                            {
-                                var searchText = parameter.Parameterverdier.Stringvalues.First();
-                                var searchTextStripped = searchText.Replace("*", string.Empty);
-
-                                if (!resultatMinimum.Mappe.Tittel.Contains(searchTextStripped))
-                                {
-                                    validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText, parameter.Felt, resultatMinimum.Mappe.Tittel, searchText));
-                                }
-                            }
+                            ValidateMappePeriodTittelEqual(sok, sokResponse, validationErrors, parameter);
                         }
 
                         break;
@@ -51,6 +62,42 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                         }
 
                         break;
+                }
+            }
+        }
+
+        private static void ValidateMappePeriodTittelEqual(Sok sok, Sokeresultat sokResponse, List<string> validationErrors, Parameter parameter)
+        {
+            var notFoundExpectedRespons = false;
+            foreach (var resultat in sokResponse.ResultatListe)
+            {
+                var searchText = parameter.Parameterverdier.Stringvalues.First();
+                var searchTextStripped = searchText.Replace("*", string.Empty);
+                if (sok.Respons == Respons.Mappe)
+                {
+                    if (resultat.Mappe == null && !notFoundExpectedRespons)
+                    {
+                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString()));
+                        notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
+                    }
+                    if (resultat.Mappe != null && !resultat.Mappe.Tittel.Contains(searchTextStripped))
+                    {
+                        validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
+                            parameter.Felt,
+                            resultat.Mappe.Tittel, searchText));
+                    }
+                } else if (sok.Respons == Respons.Saksmappe)
+                {
+                    if (resultat.Saksmappe == null && !notFoundExpectedRespons)
+                    {
+                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString())); 
+                        notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
+                    }
+                    if (resultat.Saksmappe != null && !resultat.Saksmappe.Tittel.Contains(searchTextStripped))
+                    {
+                        validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
+                            parameter.Felt, resultat.Mappe.Tittel, searchText));
+                    }
                 }
             }
         }

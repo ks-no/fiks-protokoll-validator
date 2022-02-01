@@ -168,4 +168,13 @@
   <data name="ResultDontMatchSearchText" xml:space="preserve">
     <value>Resultatet for '{0}' med verdien '{1}' matcher ikke søket '{2}</value>
   </data>
+  <data name="FoundUnexpectedResultTypeAccordingToRespons" xml:space="preserve">
+    <value>Fant item i ResultatListe som ikke var av forventet respons type {0} slik den er definert i sok.xml.</value>
+  </data>
+  <data name="CouldNotParseSokeresultat" xml:space="preserve">
+    <value>Klarte ikke parse søkeresultat xml for forventet type {0}</value>
+  </data>
+  <data name="SokeresultatIsNull" xml:space="preserve">
+    <value>Søkeresultat var null</value>
+  </data>
 </root>
