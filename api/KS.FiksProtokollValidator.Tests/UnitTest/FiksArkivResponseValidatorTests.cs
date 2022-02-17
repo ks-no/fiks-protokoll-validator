@@ -21,7 +21,8 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 TestCase = new TestCase
                 {
                     MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
-                    PayloadFilePath = "/TestData/ValidatorTests/NySokN1/sok.xml"
+                    PayloadFileName = "sok.xml",
+                    SamplePath = "/TestData/ValidatorTests/NySokN1"
                 }
             };
             
@@ -44,7 +45,8 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 TestCase = new TestCase
                 {
                     MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
-                    PayloadFilePath = "/TestData/ValidatorTests/NySokN1/sok2.xml"
+                    PayloadFileName = "sok2.xml",
+                    SamplePath = "/TestData/ValidatorTests/NySokN1"
                 }
             };
             
@@ -67,7 +69,8 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 TestCase = new TestCase
                 {
                     MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
-                    PayloadFilePath = "/TestData/ValidatorTests/NySokN4/sok.xml"
+                    PayloadFileName = "sok.xml",
+                    SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
             };
             
@@ -91,7 +94,8 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 TestCase = new TestCase
                 {
                     MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
-                    PayloadFilePath = "/TestData/ValidatorTests/NySokN4/sok.xml"
+                    PayloadFileName = "sok.xml",
+                    SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
             };
             
@@ -115,14 +119,15 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 TestCase = new TestCase
                 {
                     MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
-                    PayloadFilePath = "/TestData/ValidatorTests/NySokN4/sok.xml"
+                    PayloadFileName = "sok.xml",
+                    SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
             };
             
             FiksResponseValidator.ValidateXmlPayloadContent(responseXml, fiksRequest, validationErrors);
             foreach (var validationError in validationErrors)
             {
-                Assert.True(validationError.Contains("out of range"));
+                Assert.True(validationError.Contains("treffer ikke søket mellom"));
                 Console.Out.WriteLine(validationError);
             }
             Assert.True(validationErrors.Count == 2);

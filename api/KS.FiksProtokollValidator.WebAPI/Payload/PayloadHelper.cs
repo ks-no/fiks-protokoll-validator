@@ -23,7 +23,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Payload
             var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var payLoadFilePath = fiksRequest.TestCase.SamplePath;
             var payloadFileName = fiksRequest.TestCase.PayloadFileName;
-            return File.ReadAllText(Path.Combine(basepath, payLoadFilePath, payloadFileName));
+            var completePath = Path.GetFullPath(basepath + "/" + payLoadFilePath + "/" + payloadFileName);
+            return File.ReadAllText(completePath);
         }
 
         public static void CreateCustomPayload(FiksRequest fiksRequest, List<IPayload> payloads)
