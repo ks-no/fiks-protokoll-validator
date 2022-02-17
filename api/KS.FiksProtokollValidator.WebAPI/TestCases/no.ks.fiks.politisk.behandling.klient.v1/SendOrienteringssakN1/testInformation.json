@@ -6,7 +6,7 @@
     "operation": "SendOrienteringssak",
     "situation": "N1",
     "expectedResult": "En kvittering på mottak",
-    "sampleFile": "Samples/orienteringssak/sampleSendOrienteringssak.json",
+    "samplePath": "Samples/orienteringssak",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

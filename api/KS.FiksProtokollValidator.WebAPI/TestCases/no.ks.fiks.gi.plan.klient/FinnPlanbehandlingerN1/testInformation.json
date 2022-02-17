@@ -6,9 +6,9 @@
     "operation": "FinnPlanbehandlinger",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og planbehandling(er)",
-    "sampleFile": "Samples/FinnPlanbehandlinger/payload.json",
+    "samplePath": "Samples/FinnPlanbehandlinger",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

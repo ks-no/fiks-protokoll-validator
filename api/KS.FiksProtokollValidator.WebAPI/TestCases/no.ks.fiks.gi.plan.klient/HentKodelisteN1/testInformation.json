@@ -6,7 +6,7 @@
     "operation": "HentKodeliste",
     "situation": "N1",
     "expectedResult": "Retur av kodeliste",
-    "sampleFile": "Samples/HentKodeliste/payload.json",
+    "samplePath": "Samples/HentKodeliste",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

@@ -6,7 +6,7 @@
     "operation": "TildelePlanident",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat Opprettelse av arealplan, retur ny planident",
-    "sampleFile": "Samples/TildelePlanident/payload.json",
+    "samplePath": "Samples/TildelePlanident",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

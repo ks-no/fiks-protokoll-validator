@@ -6,7 +6,7 @@
     "operation": "RegistrerPlanavgrensing",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering",
-    "sampleFile": "Samples/RegistrerPlanavgrensing/payload.json",
+    "samplePath": "Samples/RegistrerPlanavgrensing",
     "queriesWithExpectedValues": [
 
     ],

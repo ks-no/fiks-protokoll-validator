@@ -6,7 +6,7 @@
     "operation": "Planvedtak",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planvedtak",
-    "sampleFile": "Samples/Planvedtak/payload.json",
+    "samplePath": "Samples/Planvedtak",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

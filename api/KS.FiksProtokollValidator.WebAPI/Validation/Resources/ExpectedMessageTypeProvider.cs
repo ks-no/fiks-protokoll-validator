@@ -198,6 +198,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
                     }
+                },
+                {
+                    FiksPlanMeldingtypeV2.FinnPlanbehandlinger,
+                    new List<string>()
+                    {
+                        FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger
+                    }
                 }
             };
         }

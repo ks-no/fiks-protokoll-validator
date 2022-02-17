@@ -6,7 +6,7 @@
     "operation": "KunngjøringAvPlanvedtak",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/KunngjøringAvPlanvedtak/payload.json",
+    "samplePath": "Samples/KunngjøringAvPlanvedtak",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

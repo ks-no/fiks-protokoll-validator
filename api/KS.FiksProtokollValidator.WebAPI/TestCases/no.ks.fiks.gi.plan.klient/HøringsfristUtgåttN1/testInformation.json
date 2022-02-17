@@ -6,7 +6,7 @@
     "operation": "HøringsfristUtgått",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/HøringsfristUtgått/payload.json",
+    "samplePath": "Samples/HøringsfristUtgått",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

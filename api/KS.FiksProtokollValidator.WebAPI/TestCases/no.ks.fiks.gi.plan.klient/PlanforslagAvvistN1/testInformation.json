@@ -6,7 +6,7 @@
     "operation": "PlanforslagAvvist",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/PlanforslagAvvist/payload.json",
+    "samplePath": "Samples/PlanforslagAvvist",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

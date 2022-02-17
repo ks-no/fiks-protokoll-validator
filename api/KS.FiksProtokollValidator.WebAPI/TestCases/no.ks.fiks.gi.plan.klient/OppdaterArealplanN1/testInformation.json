@@ -6,7 +6,7 @@
     "operation": "OppdaterArealplan",
     "situation": "N1",
     "expectedResult": "Bekreftet mottak",
-    "sampleFile": "Samples/OppdaterArealplan/payload.json",
+    "samplePath": "Samples/OppdaterArealplan",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

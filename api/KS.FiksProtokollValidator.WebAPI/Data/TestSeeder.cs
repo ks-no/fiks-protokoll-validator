@@ -76,10 +76,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             testCase.Protocol = testInformation["protocol"] == null ? "" : (string)testInformation["protocol"];
 
             var fileName = PayloadNames.Dictionary[testCase.Protocol];
-            testCase.PayloadFileName = fileName;
 
             if (!string.IsNullOrEmpty((string) testInformation["samplePath"]))
             {
+                testCase.PayloadFileName = fileName;
                 var samplePath = (string) testInformation["samplePath"];
                 testCase.SamplePath = samplePath;
 

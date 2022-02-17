@@ -147,7 +147,7 @@ export default {
   
   mounted() {
     this.recipientId = this.$route.query.fikskonto;
-    if(this.$route.query.fikskonto !== null) {
+    if(this.$route.query.fikskonto) {
       this.fiksAccountPresent = true;
     }
   },

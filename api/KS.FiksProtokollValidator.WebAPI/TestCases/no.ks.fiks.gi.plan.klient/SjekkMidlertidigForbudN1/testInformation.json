@@ -6,7 +6,7 @@
     "operation": "SjekkMidlertidigForbud",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og midlertidige forbud",
-    "sampleFile": "Samples/SjekkMidlertidigForbud/payload.json",
+    "samplePath": "Samples/SjekkMidlertidigForbud",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

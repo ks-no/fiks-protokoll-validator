@@ -38,7 +38,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 var testCase = _context.TestCases.FindAsync(testCaseId).Result;
                 var payloadFileName = PayloadNames.Dictionary[testCase.Protocol];
 
-
+                if (testCase.SamplePath == null)
+                {
+                    return new NoContentResult();
+                }
                 var filePath = Path.Combine(testCase.SamplePath, payloadFileName);
 
                 Log.Information(

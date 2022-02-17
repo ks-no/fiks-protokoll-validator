@@ -6,7 +6,7 @@
     "operation": "HentBbox",
     "situation": "N1",
     "expectedResult": "Retur av Bbox",
-    "sampleFile": "Samples/HentBbox/payload.json",
+    "samplePath": "Samples/HentBbox",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

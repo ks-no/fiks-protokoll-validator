@@ -1,0 +1,40 @@
+﻿{
+    "utvalgId": "345345345345",
+    "utvalgNavn": "Kommunestyre",
+    "moeteId": "3",
+    "moetedato": "2021-05-20T00:00:00+00:00",
+    "erEndeligVedtak": true,
+    "sak": {
+        "referanseEksternNoekkel": {
+            "fagsystem": "Politisk behandling",
+            "nøkkel": "PB123456789"
+        },
+        "fagsystemetsSaksnummer": {
+            "saksaar": 2021,
+            "sakssekvensnummer": 2
+        },
+        "utvalgetsSaksnummer": {
+            "saksaar": 2021,
+            "sakssekvensnummer": 34
+        },
+        "tittel": "OMRÅDEREGULERING FOR HIS Allè - Endelig vedtak",
+        "vedtaksdato": "2021-05-20",
+        "hoveddokument": {
+            "tittel": "OMRÅDEREGULERING FOR HIS Allè - Endelig vedtak",
+            "skjermetDokument": false,
+            "dokumenttype": {
+                "kodeverdi": "VEDTAK"
+            },
+            "referanseDokumentfil": "vedtak.docx",
+            "mimetype": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        },
+        "vedtak": {
+            "tekstInnhold": "Områderegulering for His Allè med tilhørende reguleringsbestemmelser vedtas. ....",
+            "tekstFormat": {
+                "kodeverdi": "markup"
+            }
+        },
+        "saksansvarlig": "saksb.politisk"
+
+    }
+}

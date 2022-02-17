@@ -6,7 +6,7 @@
     "operation": "FinnPlanerForMatrikkelenhet",
     "situation": "N1",
     "expectedResult": "Planer for matrikkelenhet",
-    "sampleFile": "Samples/FinnPlanerForMatrikkelenhet/payload.json",
+    "samplePath": "Samples/FinnPlanerForMatrikkelenhet",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",

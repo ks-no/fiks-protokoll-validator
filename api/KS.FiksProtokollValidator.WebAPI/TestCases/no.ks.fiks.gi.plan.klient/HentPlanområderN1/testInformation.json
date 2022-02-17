@@ -6,7 +6,7 @@
     "operation": "HentPlanområder",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av planområde(r)",
-    "sampleFile": "Samples/HentPlanområder/payload.json",
+    "samplePath": "Samples/HentPlanområder",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

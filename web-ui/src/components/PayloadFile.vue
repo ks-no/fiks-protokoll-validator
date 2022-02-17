@@ -73,7 +73,6 @@ export default {
     },
     fileUrl: {
       type: String,
-      required: true
     }
   },
 
@@ -90,30 +89,10 @@ export default {
       }
     },
     getTemporaryUrl(content) {
-      if (content.type == "application/octet-stream") {
-        const contentType = this.fileExtension === "pdf" ? { type: "application/pdf" } : null;
-        const blob = new Blob([content], contentType);
-        const temporaryUrl = URL.createObjectURL(blob);
-        this.temporaryUrl = temporaryUrl; // Used to revoke URL
-        return temporaryUrl;
-      } else {
-        const decodedContent = atob(content);
-        let binaryLen = decodedContent.length;
-
-        let bytes = new Uint8Array(binaryLen);
-
-        for (let i = 0; i < binaryLen; i++) {
-            let ascii = decodedContent.charCodeAt(i);
-            bytes[i] = ascii;
-        }
-        
-        const mimeType = MimeTypes.lookup(this.fileExtension);
-        const contentType = { type: mimeType };
-        const blob = new Blob([bytes], contentType);
-        const temporaryUrl = URL.createObjectURL(blob);
-        this.temporaryUrl = temporaryUrl; // Used to revoke URL
-        return temporaryUrl;
-      }
+      var blob = this.getAsBlob(content);
+      const temporaryUrl = URL.createObjectURL(blob);
+      this.temporaryUrl = temporaryUrl; // Used to revoke URL
+      return temporaryUrl;
     },
     getFileExtension(fileName) {
       if (fileName) {
@@ -139,8 +118,47 @@ export default {
         }
       }
     },
+    getAsBlob(content){
+       if (content.type == "application/octet-stream") {
+        const contentType = this.fileExtension === "pdf" ? { type: "application/pdf" } : null;
+        return new Blob([content], contentType);
+      } else {
+        const decodedContent = atob(content);
+        let binaryLen = decodedContent.length;
+
+        let bytes = new Uint8Array(binaryLen);
+
+        for (let i = 0; i < binaryLen; i++) {
+            let ascii = decodedContent.charCodeAt(i);
+            bytes[i] = ascii;
+        }
+        
+        const mimeType = MimeTypes.lookup(this.fileExtension);
+        const contentType = { type: mimeType };
+        return new Blob([bytes], contentType);
+      }
+    },
+    getAsFile(content) {
+        var blob = this.getAsBlob(content);
+        const temporaryUrl = URL.createObjectURL(blob);
+        this.temporaryUrl = temporaryUrl; // Used to revoke URL
+        var a = document.createElement("a");
+        document.body.appendChild(a);
+        a.style = "display: none";
+
+        var url = window.URL.createObjectURL(blob);
+        a.href = url;
+        a.download = this.fileName;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    },
     openWindow: function (link) {
-      window.open(link, '_blank');
+      if (!link) {
+        this.getAsFile(this.content);
+      }
+      else{
+          window.open(link, '_blank');
+      }
     }
   }
 };
