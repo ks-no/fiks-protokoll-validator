@@ -6,7 +6,7 @@
     "operation": "PlanvedtakMedUtsattRettsvirkning",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat Planvedtak med utsatt rettsvirkning",
-    "sampleFile": "Samples/PlanvedtakMedUtsattRettsvirkning/payload.json",
+    "samplePath": "Samples/PlanvedtakMedUtsattRettsvirkning",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

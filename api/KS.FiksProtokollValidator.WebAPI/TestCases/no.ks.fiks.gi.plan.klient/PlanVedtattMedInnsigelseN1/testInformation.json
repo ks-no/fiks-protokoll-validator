@@ -6,7 +6,7 @@
     "operation": "PlanVedtattMedInnsigelse",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/PlanVedtattMedInnsigelse/payload.json",
+    "samplePath": "Samples/PlanVedtattMedInnsigelse",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

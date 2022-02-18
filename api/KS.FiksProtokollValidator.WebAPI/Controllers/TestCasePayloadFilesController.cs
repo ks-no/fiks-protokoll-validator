@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
+using KS.FiksProtokollValidator.WebAPI.Resources;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -35,8 +36,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             try
             {
                 var testCase = _context.TestCases.FindAsync(testCaseId).Result;
-                
-                var filePath = testCase.PayloadFilePath;
+                var payloadFileName = PayloadNames.Dictionary[testCase.Protocol];
+
+                if (testCase.SamplePath == null)
+                {
+                    return new NoContentResult();
+                }
+                var filePath = Path.Combine(testCase.SamplePath, payloadFileName);
 
                 Log.Information(
                     "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName}, {TestCaseId} with filePath {FilePath}",
@@ -79,21 +85,21 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     Log.Error("Fant ikke testcase med id {TestCaseId} for testsession med id {TestSessionId}", testCaseId, testSessionId);
                     return BadRequest($"Fant ikke testcase med id {testCaseId} for testsession med id {testSessionId}");
                 }
-                
+
                 var contentDispositionHeader = new System.Net.Mime.ContentDisposition()
                 {
                     FileName = fiksRequest.CustomPayloadFile != null ? fiksRequest.CustomPayloadFile.Filename : testCase.PayloadFileName,
                     DispositionType = "attachment"
                 };
-                
+
                 Response.Headers.Add("Content-Disposition", contentDispositionHeader.ToString());
 
                 if (fiksRequest.CustomPayloadFile != null)
                 {
                     return new FileContentResult(fiksRequest.CustomPayloadFile.Payload, "application/octet-stream");
                 }
-                
-                var filePath = testCase.PayloadFilePath;
+
+                var filePath = Path.Combine(testCase.SamplePath, PayloadNames.Dictionary[testCase.Protocol]);
 
                 Log.Information(
                     "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName}, {TestCaseId} with filePath {FilePath}",
@@ -198,13 +204,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             return new OkResult();
         }
         
-        // GET api/<TestsCasePayloadFilesController>/TestCaseName/Attachement/attachmentFileName
-        [HttpGet("{protocol}/{testCaseName}/Attachement/{attachmentFileName}")]
-        public ActionResult GetAttachmentPayloadFile(string protocol, string testCaseName, string attachmentFileName)
+        // GET api/<TestsCasePayloadFilesController>/testCaseId/Attachement/attachmentFileName
+        [HttpGet("{testCaseId}/Attachment/{attachmentFileName}")]
+        public async Task<ActionResult> GetAttachmentPayloadFileAsync(string testCaseId, string attachmentFileName)
         {
-            var filePath = Path.Combine(TestsDirectoryPath, protocol, testCaseName, "Attachments", attachmentFileName);
+            var testCase = await _context.TestCases.FindAsync(testCaseId); 
             
-            Log.Information("GetAttachmentPayloadFile get attachment for protocol {Protocol} testCaseName {TestCaseName}, attachmentFileName {AttachmentFileName} with filePath {FilePath}", protocol, testCaseName, filePath, attachmentFileName);
+            var filePath = Path.Combine(testCase.SamplePath, "Attachments", attachmentFileName);
+            
+            Log.Information("GetAttachmentPayloadFile get attachment for protocol {Protocol} testCaseId {testCaseId}, attachmentFileName {AttachmentFileName} with filePath {FilePath}");
 
             return GetPayload(filePath);
         }

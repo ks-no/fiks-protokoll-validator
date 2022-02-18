@@ -6,7 +6,7 @@
     "operation": "FinnPlandokumenter",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av plandokument(er)",
-    "sampleFile": "Samples/FinnPlandokumenter/payload.json",
+    "samplePath": "Samples/FinnPlandokumenter",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

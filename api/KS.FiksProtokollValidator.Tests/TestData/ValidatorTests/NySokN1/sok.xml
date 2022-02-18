@@ -5,7 +5,7 @@
 	<tidspunkt>2021-03-23T10:28:33.1952112+01:00</tidspunkt>
 	<take>100</take>
 	<skip>0</skip>
-	<respons>mappe</respons>
+	<respons>saksmappe</respons>
 	<parameter>
 		<felt>mappe.tittel</felt>
 		<operator>equal</operator>

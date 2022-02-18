@@ -6,7 +6,7 @@
     "operation": "BestillingAvOppstartsmøte",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/BestillingAvOppstartsmøte/payload.json",
+    "samplePath": "Samples/BestillingAvOppstartsmøte",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

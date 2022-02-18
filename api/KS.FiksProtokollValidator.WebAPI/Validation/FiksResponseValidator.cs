@@ -248,7 +248,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner,
                 FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
                 FiksPlanMeldingtypeV2.ResultatHentKodeliste,
-                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
+                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter,
+                FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger
             };
         }
 

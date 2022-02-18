@@ -6,7 +6,7 @@
     "operation": "OppdaterDispensasjon",
     "situation": "N1",
     "expectedResult": "Bekreftet mottak",
-    "sampleFile": "Samples/OppdaterDispensasjon/payload.json",
+    "samplePath": "Samples/OppdaterDispensasjon",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

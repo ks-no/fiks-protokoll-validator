@@ -6,7 +6,7 @@
     "operation": "MottattKlage",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/MottattKlage/payload.json",
+    "samplePath": "Samples/MottattKlage",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

@@ -71,7 +71,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
             foreach (var resultatMinimum in sokResponse.ResultatListe)
             {
                 var searchText = parameter.Parameterverdier.Stringvalues.First(); //TODO skal vi støtte * 
-                var searchTextStripped = searchText.Replace("*", string.Empty);
+                var searchTextStripped = searchText.Replace("*", string.Empty).ToLower();
                 if (sok.Respons == Respons.Mappe)
                 {
                     if (resultatMinimum.Mappe == null && !notFoundExpectedRespons)
@@ -92,7 +92,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                         validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString())); 
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     }
-                    if (resultatMinimum.Saksmappe != null && !resultatMinimum.Saksmappe.Tittel.Contains(searchTextStripped))
+                    if (resultatMinimum.Saksmappe != null && !resultatMinimum.Saksmappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
                             parameter.Felt, resultatMinimum.Mappe.Tittel, searchText));

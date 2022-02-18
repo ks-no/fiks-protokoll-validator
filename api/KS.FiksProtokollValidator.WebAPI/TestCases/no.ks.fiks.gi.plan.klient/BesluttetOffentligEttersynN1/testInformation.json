@@ -6,7 +6,7 @@
     "operation": "BesluttetOffentligEttersyn",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/BesluttetOffentligEttersyn/payload.json",
+    "samplePath": "Samples/BesluttetOffentligEttersyn",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

@@ -6,7 +6,7 @@
     "operation": "KunngjøringAvOffentligEttersyn",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/KunngjøringAvOffentligEttersyn/payload.json",
+    "samplePath": "Samples/KunngjøringAvOffentligEttersyn",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

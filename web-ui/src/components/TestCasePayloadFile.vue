@@ -40,7 +40,7 @@ export default {
       payloadFileContent: null,
       fileExtension: null,
       payloadUrl: this.hasRun ? process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
-      attachmentUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.protocol + "/" + this.operation + "" + this.situation + "/" + "Attachement/" + this.fileName
+      attachmentUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/Attachment/"+ this.fileName
     };
   },
   

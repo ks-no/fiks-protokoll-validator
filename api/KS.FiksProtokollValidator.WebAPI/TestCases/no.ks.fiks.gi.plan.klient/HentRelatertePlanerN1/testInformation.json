@@ -6,7 +6,7 @@
     "operation": "HentRelatertePlaner",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur relaterte planer",
-    "sampleFile": "Samples/HentRelatertePlaner/payload.json",
+    "samplePath": "Samples/HentRelatertePlaner",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

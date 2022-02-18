@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using KS.FiksProtokollValidator.WebAPI.Models;
+using KS.FiksProtokollValidator.WebAPI.Resources;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.Internal;
@@ -73,12 +75,22 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             testCase.Supported = (bool)testInformation["supported"];
             testCase.Protocol = testInformation["protocol"] == null ? "" : (string)testInformation["protocol"];
 
-            if (!string.IsNullOrEmpty((string) testInformation["sampleFile"]))
+            var fileName = PayloadNames.Dictionary[testCase.Protocol];
+
+            if (!string.IsNullOrEmpty((string) testInformation["samplePath"]))
             {
-                var sampleFile = (string) testInformation["sampleFile"];
-                var fileName = sampleFile.Split('/').Last();
                 testCase.PayloadFileName = fileName;
-                testCase.PayloadFilePath = sampleFile;
+                var samplePath = (string) testInformation["samplePath"];
+                testCase.SamplePath = samplePath;
+
+
+                var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+                string attachmentDirectory = Path.Combine(samplePath, "Attachments");
+
+                var fullAttachementPath = Path.Combine(basepath, attachmentDirectory);
+
+                testCase = SupplyAttachments(testCase, fullAttachementPath);
             }
             else
             {
@@ -92,17 +104,30 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                     
                     testCase.PayloadFileName = fileInfo.Name;
                     var testCaseDirectory = Path.Combine(TestsDirectory, testCase.Protocol, testCase.Operation + testCase.Situation);
-                    testCase.PayloadFilePath = testCaseDirectory + "/" + fileInfo.Name;
+                    testCase.SamplePath = testCaseDirectory;
                 }
+                var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
+                testCase = SupplyAttachments(testCase, attachmentDirectory);
             }
 
-            var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
-            
-            if (Directory.Exists(attachmentDirectory))
+            // Legg til QueriesWithExpectedValues
+            //TODO lag en DeleteQueriesWithExpectedValues
+            AddQueriesWithExpectedValues(testCase, testInformation);
+
+            // Slett og legg til expectedResponseMessageTypes
+            DeleteFiksExpectedResponseMessageTypes(testCase, testInformation);
+            AddFiksExpectedResponseMessageTypes(testCase, testInformation);
+
+            return testCase;
+        }
+
+        private TestCase SupplyAttachments(TestCase testCase, string directoryPath)
+        {
+            if (Directory.Exists(directoryPath))
             {
                 var payloadAttachmentFileNames = "";
 
-                foreach (var fileInfo in new DirectoryInfo(attachmentDirectory)
+                foreach (var fileInfo in new DirectoryInfo(directoryPath)
                     .GetFiles())
                 {
                     payloadAttachmentFileNames += fileInfo.Name + ";";
@@ -110,18 +135,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
 
                 testCase.PayloadAttachmentFileNames = payloadAttachmentFileNames.TrimEnd(';');
             }
-            else if(!string.IsNullOrEmpty(testCase.PayloadAttachmentFileNames))
+            else if (!string.IsNullOrEmpty(testCase.PayloadAttachmentFileNames))
             {
                 testCase.PayloadAttachmentFileNames = null;
-            } 
-
-            // Legg til QueriesWithExpectedValues (FiksResponseTest table) Tabellen ble truncated i starten av seed.
-            AddQueriesWithExpectedValues(testCase, testInformation);
-
-            // Slett og legg til expectedResponseMessageTypes (FiksExpectedResponseMessageType table)
-            DeleteFiksExpectedResponseMessageTypes(testCase, testInformation);
-            AddFiksExpectedResponseMessageTypes(testCase, testInformation);
-
+            }
             return testCase;
         }
 

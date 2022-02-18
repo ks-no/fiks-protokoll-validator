@@ -6,7 +6,7 @@
     "operation": "HentGjeldendePlanbestemmelser",
     "situation": "N1",
     "expectedResult": "Retur av planbestemmelser",
-    "sampleFile": "Samples/HentGjeldendePlanbestemmelser/payload.json",
+    "samplePath": "Samples/HentGjeldendePlanbestemmelser",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

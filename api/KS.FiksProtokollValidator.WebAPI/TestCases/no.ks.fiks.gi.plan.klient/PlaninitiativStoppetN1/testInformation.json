@@ -6,7 +6,7 @@
     "operation": "PlaninitiativStoppet",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/PlaninitiativStoppet/payload.json",
+    "samplePath": "Samples/PlaninitiativStoppet",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

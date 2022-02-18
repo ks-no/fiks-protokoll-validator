@@ -49,7 +49,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             {
                 foreach (var payloadFileName in attachmentFileNames.Split(";"))
                 {
-                    var testCaseDirectory = Path.Combine(TestSeeder.TestsDirectory, fiksRequest.TestCase.Protocol, fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation);
+                    var testCaseDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), fiksRequest.TestCase.SamplePath);
                     var fileStream = File.OpenRead(Path.Combine(testCaseDirectory, "Attachments", payloadFileName));
                     payloads.Add(new StreamPayload(fileStream, payloadFileName));
                 }

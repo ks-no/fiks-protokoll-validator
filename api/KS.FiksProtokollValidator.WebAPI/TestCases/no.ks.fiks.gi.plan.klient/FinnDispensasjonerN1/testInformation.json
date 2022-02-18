@@ -6,7 +6,7 @@
     "operation": "FinnDispensasjoner",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og dispensasjon(er)",
-    "sampleFile": "Samples/FinnDispensasjoner/payload.json",
+    "samplePath": "Samples/FinnDispensasjoner",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",

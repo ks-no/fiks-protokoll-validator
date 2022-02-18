@@ -6,7 +6,7 @@
     "operation": "HentPlanfil",
     "situation": "N1",
     "expectedResult": "Retur av planfil",
-    "sampleFile": "Samples/HentPlanfil/payload.json",
+    "samplePath": "Samples/HentPlanfil",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

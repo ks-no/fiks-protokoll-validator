@@ -6,7 +6,7 @@
     "operation": "FinnPlanerForOmråde",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av plan(er)",
-    "sampleFile": "Samples/FinnPlanerForOmråde/payload.json",
+    "samplePath": "Samples/FinnPlanerForOmraade",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

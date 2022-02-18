@@ -6,7 +6,7 @@
     "operation": "HentArealplan",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og arealplan(er)",
-    "sampleFile": "Samples/HentArealplan/payload.json",
+    "samplePath": "Samples/HentArealplan",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

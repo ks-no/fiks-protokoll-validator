@@ -6,7 +6,7 @@
     "operation": "MottattInnsigelse",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "sampleFile": "Samples/MottattInnsigelse/payload.json",
+    "samplePath": "Samples/MottattInnsigelse",
     "queriesWithExpectedValues": [
     ],
     "supported": false,
