@@ -90,7 +90,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
 
                 var fullAttachementPath = Path.Combine(basepath, attachmentDirectory);
 
-                testCase = SupplyAttachents(testCase, fullAttachementPath);
+                testCase = SupplyAttachments(testCase, fullAttachementPath);
             }
             else
             {
@@ -107,7 +107,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                     testCase.SamplePath = testCaseDirectory;
                 }
                 var attachmentDirectory = Path.Combine(testDirectory.FullName, "Attachments");
-                testCase = SupplyAttachents(testCase, attachmentDirectory);
+                testCase = SupplyAttachments(testCase, attachmentDirectory);
             }
 
             // Legg til QueriesWithExpectedValues
@@ -121,7 +121,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             return testCase;
         }
 
-        private TestCase SupplyAttachents(TestCase testCase, string directoryPath)
+        private TestCase SupplyAttachments(TestCase testCase, string directoryPath)
         {
             if (Directory.Exists(directoryPath))
             {
