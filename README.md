@@ -9,12 +9,12 @@ Deretter har hver TestCase definert tester på innholdet i meldingen som blir va
 ## TestCase
 TestCasene ligger i mappen `KS.FiksProtokollValidator.WebAPI/TestCases`. Deretter under mappe for den protokollen TestCase tilhører. F.eks. mappen `no.ks.fiks.arkiv.v1` for Fiks-Arkiv protokollen.
 Et TestCase har sin egen mappe med et kortnavn for testen. Typisk er navnet bestående av den meldingstypen den tester + en suffix. 
-F.eks. HentMoeteplanN1 som da er en test av HentMoeteplan meldingen og N1 står da for "normalsituasjon 1". En test som skal feile vil da være naturlig å bruke F1 som suffix ("feilsituasjon 1"). 
+F.eks. HentMoeteplanN1 som da er en test av HentMoeteplan-meldingen og N1 står da for "normalsituasjon 1". En test som skal feile vil da være naturlig å bruke F1 som suffix ("feilsituasjon 1"). 
 Så øker man suffix til N2, N3, F2, F3 osv etterhvert som det blir flere tester. 
 
 
 #### TestCase beskrivelsen:
-Beskrivelsen og innstruksene for selve TestCaset ligger i en json-fil med navnet `testInformation.json` i root av den aktuelle TestCase mappen.
+Beskrivelsen og innstruksene for selve TestCaset ligger i en json-fil med navnet `testInformation.json` i root av den aktuelle TestCase-mappen.
 
 Eksempel fra politisk behandling:
 
@@ -27,8 +27,8 @@ Eksempel fra politisk behandling:
     "operation": "HentMoteplan",
     "situation": "N1",
     "expectedResult": "Møteplan med utfylte standardverdier",  // Beskrivelse av hva testen forventer av svar
-    "sampleFile": "Samples/moeteplan/sampleHentMoeteplan.json", //OPTIONAL: Path til melding som sendes hvis den ligger tilgjengelig utenfor testens mappe.
-    "queriesWithExpectedValues": [ // Spørringer på resultatet som xpath spørringer
+    "samplePath": "Samples/moeteplan/sampleHentMoeteplan.json", //OPTIONAL: Path til melding som sendes hvis den ligger tilgjengelig utenfor testens mappe.
+    "queriesWithExpectedValues": [ // Spørringer på resultatet som xpath-spørringer
         {
             "payloadQuery": "$", // Path til det som skal testes
             "expectedValue": "utvalgId", F/ forventet verdi
@@ -45,7 +45,7 @@ Eksempel fra politisk behandling:
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.utvalgId", // Path er utvalgId attributt på root
+            "payloadQuery": "$.utvalgId", // Path er utvalgId-attributt på root
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
@@ -64,15 +64,18 @@ Eksempel fra politisk behandling:
     "protocol": "no.ks.fiks.politisk.behandling.klient.v1"
 ```
 
-Meldingen som skal sendes, payload.json for json meldinger, kan enten ligge i rooten på den aktuelle TestCase mappen eller man hvis man som i dette tilfellet har en samplefile inkludert fra en nuget-pakke, bruke `sampleFile` attributtet i stedet.
+Meldingen som skal sendes, payload.json for json meldinger, kan enten ligge i rooten på den aktuelle TestCase-mappen eller man hvis man som i dette tilfellet har en samplefile inkludert fra en nuget-pakke, bruke `sampleFile` attributtet i stedet.
 
 
-VIKTIG: operation og situation må tilsvar TestCase mappenavn, det vil si at mappenavn er operation + situation. Altså i dette eksempelet er mappenavnet `HentMoteplanN1`
+**VIKTIG**: operation og situation må tilsvare TestCase-mappenavn, det vil si at mappenavn er operation + situation. Altså i dette eksempelet er mappenavnet `HentMoteplanN1`
 
 
 
 #### Vedlegg
-I TestCase mappen skal man putte evt. vedlegg som skal sendes av TestCaset i en undermappe med navnet `Attachments`. Disse blir plukket opp av validator applikasjonen ved oppstart. Det skal ikke puttes inn noen referanse i `testInformation.json`.  
+I TestCase-mappen skal man putte evt. vedlegg som skal sendes av TestCaset i en undermappe med navnet `Attachments`. Disse blir plukket opp av validatorapplikasjonen ved oppstart. Det skal ikke puttes inn noen referanse i `testInformation.json`.
+
+#### Pull-request på Github
+Hvis man ønsker å få nye TestCase ut i test-miljøet kan man forke dette repoet på Github, legge til TestCase man ønsker, 
 
 
 ## Test miljø
