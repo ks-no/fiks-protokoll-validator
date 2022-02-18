@@ -36,7 +36,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             try
             {
                 var testCase = _context.TestCases.FindAsync(testCaseId).Result;
-                var payloadFileName = PayloadNames.Dictionary[testCase.Protocol];
+                var payloadFileName = testCase.PayloadFileName != null ? testCase.PayloadFileName : PayloadNames.Dictionary[testCase.Protocol];
 
                 if (testCase.SamplePath == null)
                 {
@@ -99,7 +99,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     return new FileContentResult(fiksRequest.CustomPayloadFile.Payload, "application/octet-stream");
                 }
 
-                var filePath = Path.Combine(testCase.SamplePath, PayloadNames.Dictionary[testCase.Protocol]);
+                var filePath = Path.Combine(testCase.SamplePath, testCase.PayloadFileName !=null ? testCase.PayloadFileName : PayloadNames.Dictionary[testCase.Protocol]);
 
                 Log.Information(
                     "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName}, {TestCaseId} with filePath {FilePath}",
