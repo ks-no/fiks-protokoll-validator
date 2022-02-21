@@ -72,7 +72,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
             foreach (var resultat in sokResponse.ResultatListe)
             {
                 var searchText = parameter.Parameterverdier.Stringvalues.First();
-                var searchTextStripped = searchText.Replace("*", string.Empty);
+                var searchTextStripped = searchText.Replace("*", string.Empty).ToLower();
                 if (sok.Respons == Respons.Mappe)
                 {
                     if (resultat.Mappe == null && !notFoundExpectedRespons)
@@ -80,7 +80,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                         validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString()));
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     }
-                    if (resultat.Mappe != null && !resultat.Mappe.Tittel.Contains(searchTextStripped))
+                    if (resultat.Mappe != null && !resultat.Mappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
                             parameter.Felt,
@@ -93,7 +93,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                         validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString())); 
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     }
-                    if (resultat.Saksmappe != null && !resultat.Saksmappe.Tittel.Contains(searchTextStripped))
+                    if (resultat.Saksmappe != null && !resultat.Saksmappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
                             parameter.Felt, resultat.Mappe.Tittel, searchText));

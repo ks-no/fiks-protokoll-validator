@@ -79,7 +79,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                         validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString()));
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     } 
-                    if (resultatMinimum.Mappe != null && !resultatMinimum.Mappe.Tittel.Contains(searchTextStripped))
+                    if (resultatMinimum.Mappe != null && !resultatMinimum.Mappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
                             parameter.Felt, resultatMinimum.Mappe.Tittel, searchText));
