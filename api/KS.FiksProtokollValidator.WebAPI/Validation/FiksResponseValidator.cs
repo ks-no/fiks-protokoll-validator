@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -16,6 +17,7 @@ using KS.FiksProtokollValidator.WebAPI.Payload;
 using KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using Wmhelp.XPath2;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation
@@ -164,6 +166,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             {
                 if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".json"))
                 {
+                    ValidateJsonWithSchema(System.Text.Encoding.Default.GetString(fiksPayload.Payload), validationErrors, messageType);
                     ValidateJsonPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksRequest.TestCase.FiksResponseTests, validationErrors);
                 }
             }
@@ -183,6 +186,43 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         private static bool HasCorrectFilename(string messageType, string filename)
         {
             return PayloadChecksHelper.GetExpectedFileName(messageType).Equals(filename);
+        }
+
+        private static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
+        {
+            var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+            var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
+            using (TextReader file = File.OpenText(pathToSchema))
+            {
+                JObject jObject = JObject.Parse(payload);
+                JSchema schema = JSchema.Parse(file.ReadToEnd());
+
+                schema.ExtensionData.Remove("definitions");
+                AddAdditionalPropertiesFalseToSchemaProperties(schema.Properties);
+                schema.AllowAdditionalProperties = false;
+
+                Console.WriteLine(schema.ToString());
+
+                //TODO:Skille mellom errors og warnings hvis det er 
+                jObject.Validate(schema, (o, a) =>
+                {
+                    validationErrors.Add(a.Message);
+                });
+            }
+        }
+
+        private static void AddAdditionalPropertiesFalseToSchemaProperties(IDictionary<string, JSchema> properties)
+        {
+            foreach (var item in properties)
+            {
+                item.Value.AllowAdditionalProperties = false;
+                foreach (var itemItem in item.Value.Items)
+                {
+                    AddAdditionalPropertiesFalseToSchemaProperties(itemItem.Properties);
+
+                }
+                AddAdditionalPropertiesFalseToSchemaProperties(item.Value.Properties);
+            }
         }
 
         private static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors, string messageType)
