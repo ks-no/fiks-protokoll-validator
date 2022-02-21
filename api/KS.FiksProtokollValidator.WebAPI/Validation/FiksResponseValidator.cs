@@ -185,32 +185,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             return PayloadChecksHelper.GetExpectedFileName(messageType).Equals(filename);
         }
 
-        private static HashSet<string> GetMessageTypesWithPayload()
-        { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
-            return new()
-            {
-                ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering,
-                ArkivintegrasjonMeldingTypeV1.SokResultatMinimum,
-                ArkivintegrasjonMeldingTypeV1.SokResultatNoekler,
-                ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet,
-                WebAPI.Resources.ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
-                PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
-                PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
-                FiksPlanMeldingtypeV2.ResultatFinnPlaner,
-                FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
-                FiksPlanMeldingtypeV2.ResultatOpprettArealplan,
-                FiksPlanMeldingtypeV2.ResultatHentAktoerer,
-                FiksPlanMeldingtypeV2.ResultatHentBboxForPlan,
-                FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner,
-                FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
-                FiksPlanMeldingtypeV2.ResultatHentKodeliste,
-                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger
-            };
-        }
-
         private static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors, string messageType)
         {
             var xsdValidator = new XsdValidator();
