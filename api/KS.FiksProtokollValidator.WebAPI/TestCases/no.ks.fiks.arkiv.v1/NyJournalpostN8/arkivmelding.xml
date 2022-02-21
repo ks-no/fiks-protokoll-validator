@@ -7,6 +7,7 @@
 	<registrering xsi:type="journalpost">
 		<opprettetAv>Fagsystemets brukerid</opprettetAv>
 		<arkivertAv>Fagsystemets brukerid</arkivertAv>
+		<referanseForelderMappe>22f05e04-37c4-4051-8b3a-853c8eac4b33</referanseForelderMappe>
 		<dokumentbeskrivelse>
 			<dokumenttype>SØKNAD</dokumenttype>
 			<dokumentstatus>F</dokumentstatus>
