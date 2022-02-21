@@ -69,6 +69,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
                 case FeilmeldingMeldingTypeV1.Ugyldigforespørsel:
                 case FeilmeldingMeldingTypeV1.Serverfeil:
+                case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
                     return "payload.json";
                 default:
                     return string.Empty;
