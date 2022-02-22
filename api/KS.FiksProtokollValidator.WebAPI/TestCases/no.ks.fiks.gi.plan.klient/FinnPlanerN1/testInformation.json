@@ -49,6 +49,6 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

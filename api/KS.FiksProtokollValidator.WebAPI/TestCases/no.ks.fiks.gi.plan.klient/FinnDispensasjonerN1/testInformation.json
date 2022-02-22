@@ -10,30 +10,30 @@
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",
-            "expectedValue": "dispensasjon",
+            "expectedValue": "dispensasjoner",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.dispensasjon.[0]",
+            "payloadQuery": "$.dispensasjoner.[0]",
             "expectedValue": "nasjonalArealplanID",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.dispensasjon.[0]",
+            "payloadQuery": "$.dispensasjoner.[0]",
             "expectedValue": "vedtaksdato",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.dispensasjon.[0]",
+            "payloadQuery": "$.dispensasjoner.[0]",
             "expectedValue": "innvilgetDispensasjon",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.dispensasjon.[0]",
+            "payloadQuery": "$.dispensasjoner.[0]",
             "expectedValue": "varigDispensasjon",
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

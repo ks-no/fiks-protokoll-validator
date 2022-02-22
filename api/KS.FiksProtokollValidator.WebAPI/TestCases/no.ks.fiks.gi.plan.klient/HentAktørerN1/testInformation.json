@@ -6,9 +6,9 @@
     "operation": "HentAktører",
     "situation": "N1",
     "expectedResult": "Retur av aktører",
-    "samplePath": "Samples/HentAktører",
+    "samplePath": "Samples/HentAktoerer",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

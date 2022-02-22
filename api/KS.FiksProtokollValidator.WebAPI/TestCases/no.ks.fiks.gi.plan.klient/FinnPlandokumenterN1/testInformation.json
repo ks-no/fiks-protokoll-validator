@@ -9,6 +9,6 @@
     "samplePath": "Samples/FinnPlandokumenter",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }
