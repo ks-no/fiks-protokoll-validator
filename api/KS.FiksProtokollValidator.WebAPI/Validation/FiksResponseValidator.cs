@@ -201,8 +201,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 AddAdditionalPropertiesFalseToSchemaProperties(schema.Properties);
                 schema.AllowAdditionalProperties = false;
 
-                Console.WriteLine(schema.ToString());
-
                 //TODO:Skille mellom errors og warnings hvis det er 
                 jObject.Validate(schema, (o, a) =>
                 {

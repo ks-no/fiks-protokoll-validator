@@ -23,13 +23,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
                 FiksPlanMeldingtypeV2.ResultatFinnPlaner,
                 FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
+                FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger,
                 FiksPlanMeldingtypeV2.ResultatOpprettArealplan,
                 FiksPlanMeldingtypeV2.ResultatHentAktoerer,
+                FiksPlanMeldingtypeV2.ResultatHentArealplan,
                 FiksPlanMeldingtypeV2.ResultatHentBboxForPlan,
                 FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner,
                 FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
                 FiksPlanMeldingtypeV2.ResultatHentKodeliste,
-                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
+                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter,
             };
         }
 
@@ -70,16 +72,27 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FeilmeldingMeldingTypeV1.Ugyldigforespørsel:
                 case FeilmeldingMeldingTypeV1.Serverfeil:
                 case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
+                case FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger:
+                case FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter:
+                case FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet:
+                case FiksPlanMeldingtypeV2.ResultatFinnPlaner:
+                case FiksPlanMeldingtypeV2.ResultatHentAktoerer:
+                case FiksPlanMeldingtypeV2.ResultatHentArealplan:
+                case FiksPlanMeldingtypeV2.ResultatHentBboxForPlan:
+                case FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser:
+                case FiksPlanMeldingtypeV2.ResultatHentKodeliste:
+                case FiksPlanMeldingtypeV2.ResultatHentPlanomraader:
+                case FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner:
                     return "payload.json";
                 default:
                     return string.Empty;
             }
         }
-        
+
         public static bool HasValidFileFormat(string receivedPayloadFileName)
         {
-            return receivedPayloadFileName.EndsWith(".xml") || 
-                   receivedPayloadFileName.EndsWith(".json") || 
+            return receivedPayloadFileName.EndsWith(".xml") ||
+                   receivedPayloadFileName.EndsWith(".json") ||
                    receivedPayloadFileName.EndsWith(".txt");
         }
     }
