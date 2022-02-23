@@ -32,6 +32,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
                 FiksPlanMeldingtypeV2.ResultatHentKodeliste,
                 FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter,
+                FiksPlanMeldingtypeV2.OpprettArealplan,
+                FiksPlanMeldingtypeV2.ResultatHentPlanomraader,
+                FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade,
+                FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud,
             };
         }
 
@@ -83,6 +87,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksPlanMeldingtypeV2.ResultatHentKodeliste:
                 case FiksPlanMeldingtypeV2.ResultatHentPlanomraader:
                 case FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner:
+                case FiksPlanMeldingtypeV2.ResultatOpprettArealplan:
+                case FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade:
+                case FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud:
                     return "payload.json";
                 default:
                     return string.Empty;

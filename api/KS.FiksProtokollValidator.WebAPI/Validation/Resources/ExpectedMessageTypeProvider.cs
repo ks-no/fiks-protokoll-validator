@@ -226,6 +226,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud
                     }
+                },
+                {
+                    FiksPlanMeldingtypeV2.RegistrerMidlertidigForbudMotTiltak,
+                    new List<string>()
+                    {
+                        FiksPlanMeldingtypeV2.ResultatMottat
+                    }
                 }
             };
         }
