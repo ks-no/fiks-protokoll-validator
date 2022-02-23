@@ -1,8 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using KS.Fiks.IO.Arkiv.Client.Models;
 using KS.Fiks.IO.Client.Models.Feilmelding;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation
 {
@@ -101,6 +106,64 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             return receivedPayloadFileName.EndsWith(".xml") ||
                    receivedPayloadFileName.EndsWith(".json") ||
                    receivedPayloadFileName.EndsWith(".txt");
+        }
+
+        internal static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
+        {
+            var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+            var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
+            using (TextReader file = File.OpenText(pathToSchema))
+            {
+                JObject jObject = JObject.Parse(payload);
+                JSchema schema = JSchema.Parse(file.ReadToEnd());
+
+                schema.ExtensionData.Remove("definitions");
+                AddAdditionalPropertiesFalseToSchemaProperties(schema.Properties);
+                schema.AllowAdditionalProperties = false;
+
+                //TODO:Skille mellom errors og warnings hvis det er 
+                jObject.Validate(schema, (o, a) =>
+                {
+                    validationErrors.Add(a.Message);
+                });
+            }
+        }
+
+        private static void AddAdditionalPropertiesFalseToSchemaProperties(IDictionary<string, JSchema> properties)
+        {
+            foreach (var item in properties)
+            {
+                item.Value.AllowAdditionalProperties = false;
+                foreach (var itemItem in item.Value.Items)
+                {
+                    AddAdditionalPropertiesFalseToSchemaProperties(itemItem.Properties);
+
+                }
+                AddAdditionalPropertiesFalseToSchemaProperties(item.Value.Properties);
+            }
+        }
+
+        internal static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors, string messageType)
+        {
+            var xsdValidator = new XsdValidator();
+            switch (messageType)
+            {
+                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
+                    xsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
+                    break;
+                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
+                    xsdValidator.ValidateArkivmeldingSokeresultatMinimum(xmlPayloadContent, validationErrors);
+                    break;
+                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
+                    xsdValidator.ValidateArkivmeldingSokeresultatNoekler(xmlPayloadContent, validationErrors);
+                    break;
+                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
+                    xsdValidator.ValidateArkivmeldingSokeresultatUtvidet(xmlPayloadContent, validationErrors);
+                    break;
+                default:
+                    //do nothing? Or display a warning that the message type was not checked against xsd?
+                    break;
+            }
         }
     }
 }
