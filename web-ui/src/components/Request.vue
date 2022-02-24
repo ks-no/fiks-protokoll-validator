@@ -23,7 +23,7 @@
           <b-col cols="2"> <strong class="header">Sendt: </strong> </b-col>
           <b-col> {{ formatDate(sentAt) }} </b-col>
         </b-row>
-        <div v-if="testCase.fiksResponseTests != null">
+        <div v-if="testCase.fiksResponseTests != null && testCase.fiksResponseTests.length > 0">
           <b-row style="margin-bottom: 5px">
             <b-col cols="2">
               <strong class="header">Testspørringer:</strong>

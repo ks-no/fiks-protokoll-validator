@@ -9,22 +9,12 @@
     "samplePath": "Samples/FinnPlanerForMatrikkelenhet",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "$",
-            "expectedValue": "matrikkelnummer",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$",
-            "expectedValue": "plan",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
             "payloadQuery": "$.matrikkelnummer.kommunenummer",
             "expectedValue": "4203",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.matrikkelnummer.gårdsnummer",
+            "payloadQuery": "$.matrikkelnummer.gaardsnummer",
             "expectedValue": 1,
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
@@ -39,6 +29,6 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

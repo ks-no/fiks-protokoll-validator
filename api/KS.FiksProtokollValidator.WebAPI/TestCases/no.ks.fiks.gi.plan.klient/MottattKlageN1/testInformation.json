@@ -9,6 +9,6 @@
     "samplePath": "Samples/MottattKlage",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

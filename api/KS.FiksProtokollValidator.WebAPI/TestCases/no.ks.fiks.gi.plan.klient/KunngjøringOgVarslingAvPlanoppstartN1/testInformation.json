@@ -6,9 +6,9 @@
     "operation": "KunngjøringOgVarslingAvPlanoppstart",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/KunngjøringOgVarslingAvPlanoppstart",
+    "samplePath": "Samples/KunngjoeringOgVarslingAvPlanoppstart",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

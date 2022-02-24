@@ -6,9 +6,9 @@
     "operation": "KunngjøringAvPlanvedtak",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/KunngjøringAvPlanvedtak",
+    "samplePath": "Samples/KunngjoeringAvPlanvedtak",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

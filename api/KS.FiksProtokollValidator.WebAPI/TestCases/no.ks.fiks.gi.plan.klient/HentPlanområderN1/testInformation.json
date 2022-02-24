@@ -6,9 +6,9 @@
     "operation": "HentPlanområder",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av planområde(r)",
-    "samplePath": "Samples/HentPlanområder",
+    "samplePath": "Samples/HentPlanomraader",
     "queriesWithExpectedValues": [
     ],
-    "supported": false,
+    "supported": true,
     "protocol": "no.ks.fiks.gi.plan.klient"
 }

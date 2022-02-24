@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -16,6 +17,7 @@ using KS.FiksProtokollValidator.WebAPI.Payload;
 using KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Schema;
 using Wmhelp.XPath2;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation
@@ -148,7 +150,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             {
 
                 validationErrors.Add(string.Format(
-                    ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName, GetExpectedFileName(messageType)
+                    ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName, PayloadChecksHelper.GetExpectedFileName(messageType)
                 ));
                 return;
             }
@@ -157,13 +159,14 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             {
                 var xmlContent = System.Text.Encoding.Default.GetString(fiksPayload.Payload);
 
-                ValidateXmlWithSchema(xmlContent, validationErrors, messageType);
+                PayloadChecksHelper.ValidateXmlWithSchema(xmlContent, validationErrors, messageType);
                 ValidateXmlPayloadContent(xmlContent, fiksRequest, validationErrors);
             }
             else
             {
                 if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".json"))
                 {
+                    PayloadChecksHelper.ValidateJsonWithSchema(System.Text.Encoding.Default.GetString(fiksPayload.Payload), validationErrors, messageType);
                     ValidateJsonPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksRequest.TestCase.FiksResponseTests, validationErrors);
                 }
             }
@@ -183,97 +186,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         private static bool HasCorrectFilename(string messageType, string filename)
         {
             return PayloadChecksHelper.GetExpectedFileName(messageType).Equals(filename);
-        }
-        
-        private static string GetExpectedFileName(string messageType)
-        {
-            switch (messageType)
-            {
-                case ArkivintegrasjonMeldingTypeV1.Arkivmelding:
-                    return "arkivmelding.xml";
-                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
-                    return "arkivmelding-kvittering.xml";
-                case ArkivintegrasjonMeldingTypeV1.Sok:
-                    return "sok.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
-                    return "sokeresultat-minimum.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
-                    return "sokeresultat-noekler.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
-                    return "sokeresultat-utvidet.xml";
-                case ArkivintegrasjonMeldingTypeV1.DokumentfilHent:
-                case ArkivintegrasjonMeldingTypeV1.DokumentfilHentResultat:
-                case ArkivintegrasjonMeldingTypeV1.MappeHent:
-                case ArkivintegrasjonMeldingTypeV1.MappeHentResultat:
-                case ArkivintegrasjonMeldingTypeV1.JournalpostHent:
-                case ArkivintegrasjonMeldingTypeV1.JournalpostHentResultat:
-                    return "arkivmelding.xml";
-                case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
-                case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
-                case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
-                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssak:
-                case PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak:
-                case PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg:
-                case PolitiskBehandlingMeldingTypeV1.SendMoeteplanTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssakerTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.SendVedtakTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan:
-                case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
-                case FeilmeldingMeldingTypeV1.Ugyldigforespørsel:
-                case FeilmeldingMeldingTypeV1.Serverfeil:
-                    return "payload.json";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        private static HashSet<string> GetMessageTypesWithPayload()
-        { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
-            return new()
-            {
-                ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering,
-                ArkivintegrasjonMeldingTypeV1.SokResultatMinimum,
-                ArkivintegrasjonMeldingTypeV1.SokResultatNoekler,
-                ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet,
-                WebAPI.Resources.ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
-                PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
-                PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
-                FiksPlanMeldingtypeV2.ResultatFinnPlaner,
-                FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
-                FiksPlanMeldingtypeV2.ResultatOpprettArealplan,
-                FiksPlanMeldingtypeV2.ResultatHentAktoerer,
-                FiksPlanMeldingtypeV2.ResultatHentBboxForPlan,
-                FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner,
-                FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
-                FiksPlanMeldingtypeV2.ResultatHentKodeliste,
-                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger
-            };
-        }
-
-        private static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors, string messageType)
-        {
-            var xsdValidator = new XsdValidator();
-            switch (messageType)
-            {
-                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
-                    xsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
-                    break;
-                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
-                   xsdValidator.ValidateArkivmeldingSokeresultatMinimum(xmlPayloadContent, validationErrors);
-                   break;
-                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
-                    xsdValidator.ValidateArkivmeldingSokeresultatNoekler(xmlPayloadContent, validationErrors);
-                    break;
-                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
-                    xsdValidator.ValidateArkivmeldingSokeresultatUtvidet(xmlPayloadContent, validationErrors);
-                    break;
-                default:
-                    //do nothing? Or display a warning that the message type was not checked against xsd?
-                    break;
-            }
         }
 
        public static void ValidateXmlPayloadContent(string xmlPayloadContent, FiksRequest fiksRequest,

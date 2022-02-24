@@ -205,6 +205,34 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     {
                         FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger
                     }
+                },
+                {
+                    FiksPlanMeldingtypeV2.FinnPlanerForOmraade,
+                    new List<string>()
+                    {
+                        FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade
+                    }
+                },
+                {
+                    FiksPlanMeldingtypeV2.HentArealplan,
+                    new List<string>()
+                    {
+                        FiksPlanMeldingtypeV2.ResultatHentArealplan
+                    }
+                },
+                {
+                    FiksPlanMeldingtypeV2.SjekkMidlertidigForbud,
+                    new List<string>()
+                    {
+                        FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud
+                    }
+                },
+                {
+                    FiksPlanMeldingtypeV2.RegistrerMidlertidigForbudMotTiltak,
+                    new List<string>()
+                    {
+                        FiksPlanMeldingtypeV2.ResultatMottat
+                    }
                 }
             };
         }
