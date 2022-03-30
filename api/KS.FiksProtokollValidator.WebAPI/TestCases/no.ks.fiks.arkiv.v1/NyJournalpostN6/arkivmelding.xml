@@ -9,34 +9,56 @@
 		<arkivertAv>Fagsystemets brukerid</arkivertAv>
 		<referanseForelderMappe>22f05e04-37c4-4051-8b3a-853c8eac4b33</referanseForelderMappe>
 		<dokumentbeskrivelse>
-			<dokumenttype>SØKNAD</dokumenttype>
-			<dokumentstatus>F</dokumentstatus>
+			<dokumenttype>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">SØKNAD</kode>
+			</dokumenttype>
+			<dokumentstatus>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+			</dokumentstatus>
 			<tittel>Rekvisisjon av oppmålingsforretning</tittel>
-			<tilknyttetRegistreringSom>H</tilknyttetRegistreringSom>
+			<tilknyttetRegistreringSom>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">H</kode>
+			</tilknyttetRegistreringSom>
 			<dokumentobjekt>
 				<versjonsnummer>1</versjonsnummer>
-				<variantformat>P</variantformat>
-				<format>PDF</format>
+				<variantformat>
+					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">P</kode>
+				</variantformat>
+				<format>
+					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">PDF</kode>
+				</format>
 				<filnavn>rekvisisjon.pdf</filnavn>
 				<referanseDokumentfil>rekvisisjon.pdf</referanseDokumentfil>
 			</dokumentobjekt>
 		</dokumentbeskrivelse>
 		<dokumentbeskrivelse>
-			<dokumenttype>SØKNAD</dokumenttype>
-			<dokumentstatus>F</dokumentstatus>
+			<dokumenttype>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">SØKNAD</kode>
+			</dokumenttype>
+			<dokumentstatus>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+			</dokumentstatus>
 			<tittel>Vedlegg 1</tittel>
-			<tilknyttetRegistreringSom>V</tilknyttetRegistreringSom>
+			<tilknyttetRegistreringSom>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">V</kode>
+			</tilknyttetRegistreringSom>
 			<dokumentobjekt>
 				<versjonsnummer>1</versjonsnummer>
-				<variantformat>P</variantformat>
-				<format>PDF</format>
+				<variantformat>
+					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">V</kode>
+				</variantformat>
+				<format>
+					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">PDF</kode>
+				</format>
 				<filnavn>vedlegg.pdf</filnavn>
 				<referanseDokumentfil>vedlegg.pdf</referanseDokumentfil>
 			</dokumentobjekt>
 		</dokumentbeskrivelse>
 		<tittel>Bestilling av oppmålingsforretning ...</tittel>
 		<korrespondansepart>
-			<korrespondanseparttype>EM</korrespondanseparttype>
+			<korrespondanseparttype>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">EM</kode>
+			</korrespondanseparttype>
 			<korrespondansepartNavn>Test kommune</korrespondansepartNavn>
 			<organisasjonid>123456789</organisasjonid>
 			<postadresse>Oppmålingsetaten</postadresse>
@@ -45,7 +67,9 @@
 			<poststed>Bø</poststed>
 		</korrespondansepart>
 		<korrespondansepart>
-			<korrespondanseparttype>EA</korrespondanseparttype>
+			<korrespondanseparttype>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">EA</kode>
+			</korrespondanseparttype>
 			<korrespondansepartNavn>Anita Avsender</korrespondansepartNavn>
 			<personid>12345678901</personid>
 			<postadresse>Gate 1</postadresse>
@@ -53,7 +77,9 @@
 			<poststed>Bø</poststed>
 		</korrespondansepart>
 		<korrespondansepart>
-			<korrespondanseparttype>IM</korrespondanseparttype>
+			<korrespondanseparttype>
+				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">IM</kode>
+			</korrespondanseparttype>
 			<korrespondansepartNavn>Oppmålingsetaten</korrespondansepartNavn>
 			<administrativEnhet>Oppmålingsetaten</administrativEnhet>
 		</korrespondansepart>
@@ -61,8 +87,12 @@
 			<fagsystem>Fagsystem X</fagsystem>
 			<noekkel>e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
 		</referanseEksternNoekkel>
-		<journalposttype>I</journalposttype>
-		<journalstatus>F</journalstatus>
+		<journalposttype>
+			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">I</kode>
+		</journalposttype>
+		<journalstatus>
+			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+		</journalstatus>
 		<dokumentetsDato>2021-03-20</dokumentetsDato>
 		<mottattDato>2021-03-22T00:00:00+01:00</mottattDato>
 		<offentlighetsvurdertDato>2021-03-22</offentlighetsvurdertDato>
