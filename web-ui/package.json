@@ -17,7 +17,7 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.20.3",
     "mime-types": "^2.1.35",
-    "nginx": "1.0.6",
+    "nginx": "1.0.7",
     "nginx-conf": "^2.0.0",
     "simple-syntax-highlighter": "^1.5.0",
     "vue": "^2.6.14",
