@@ -33,8 +33,8 @@
 	</ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.0.4-rc.build.20220405081424801" />
     <PackageReference Include="KS.Fiks.ASiC-E" Version="1.0.3" />
-    <PackageReference Include="KS.Fiks.IO.Arkiv.Client" Version="2.0.16" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="1.2.6" />
     <PackageReference Include="KS.Fiks.IO.Politisk.Behandling.Client" Version="0.0.17" />
     <PackageReference Include="KS.Fiks.Plan.Client" Version="0.0.13" />

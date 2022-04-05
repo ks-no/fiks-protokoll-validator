@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
-using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
+using KS.Fiks.Arkiv.Models.V1.Innsyn.Sok;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv

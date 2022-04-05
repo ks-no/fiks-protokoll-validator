@@ -1,4 +1,4 @@
-using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
+using KS.Fiks.Arkiv.Models.V1.Innsyn.Sok;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 {

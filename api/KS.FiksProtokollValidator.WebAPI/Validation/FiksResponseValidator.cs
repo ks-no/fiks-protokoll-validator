@@ -1,23 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
-using System.Xml.Serialization;
-using KS.Fiks.IO.Arkiv.Client.Models;
-using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
-using KS.Fiks.IO.Client.Models.Feilmelding;
-using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Models;
-using KS.FiksProtokollValidator.WebAPI.Payload;
 using KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
 using Wmhelp.XPath2;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation
@@ -40,7 +31,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                 fiksRequest.FiksResponseValidationErrors = new List<string>();
 
-                if(fiksRequest.TestCase.MessageType.Equals(ArkivintegrasjonMeldingTypeV1.Sok))
+                if(fiksRequest.TestCase.MessageType.Equals(FiksArkivV1Meldingtype.Sok))
                 {
                     ValidateExistenceOfOneOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
                 }
@@ -157,7 +148,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
             if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".xml"))
             {
-                var xmlContent = System.Text.Encoding.Default.GetString(fiksPayload.Payload);
+                var xmlContent = Encoding.Default.GetString(fiksPayload.Payload);
 
                 PayloadChecksHelper.ValidateXmlWithSchema(xmlContent, validationErrors, messageType);
                 ValidateXmlPayloadContent(xmlContent, fiksRequest, validationErrors);
@@ -166,8 +157,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             {
                 if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".json"))
                 {
-                    PayloadChecksHelper.ValidateJsonWithSchema(System.Text.Encoding.Default.GetString(fiksPayload.Payload), validationErrors, messageType);
-                    ValidateJsonPayloadContent(System.Text.Encoding.Default.GetString(fiksPayload.Payload), fiksRequest.TestCase.FiksResponseTests, validationErrors);
+                    PayloadChecksHelper.ValidateJsonWithSchema(Encoding.Default.GetString(fiksPayload.Payload), validationErrors, messageType);
+                    ValidateJsonPayloadContent(Encoding.Default.GetString(fiksPayload.Payload), fiksRequest.TestCase.FiksResponseTests, validationErrors);
                 }
             }
         }
@@ -192,7 +183,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             List<string> validationErrors)
         {
             // If Fiks-Arkiv search, check result against the actual search request
-            if (fiksRequest.TestCase.MessageType == ArkivintegrasjonMeldingTypeV1.Sok)
+            if (fiksRequest.TestCase.MessageType == FiksArkivV1Meldingtype.Sok)
             {
                 FiksArkivValidator.ValidateXmlPayloadWithSokRequest(xmlPayloadContent, fiksRequest, validationErrors);
             }

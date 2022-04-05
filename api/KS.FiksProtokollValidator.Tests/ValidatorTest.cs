@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using KS.Fiks.IO.Arkiv.Client.Models;
-using KS.Fiks.IO.Client.Models.Feilmelding;
+using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
@@ -36,7 +35,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _testCase = new TestCase
             {
-                MessageType = ArkivintegrasjonMeldingTypeV1.Arkivmelding,
+                MessageType = FiksArkivV1Meldingtype.Arkivmelding,
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
@@ -47,7 +46,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseMottatt = new FiksResponse
             {
-                Type = ArkivintegrasjonMeldingTypeV1.ArkivmeldingMottatt,
+                Type = FiksArkivV1Meldingtype.ArkivmeldingMottatt,
             };
 
             var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
@@ -62,7 +61,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseKvittering = new FiksResponse
             {
-                Type = ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering,
+                Type = FiksArkivV1Meldingtype.ArkivmeldingKvittering,
                 ReceivedAt = DateTime.Now,
                 FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "svar_paa_ny_inngaaende.xml", Payload = fileAsBytes } },
             };

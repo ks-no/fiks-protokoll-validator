@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.IO.Arkiv.Client.Models;
-using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.Fiks.Plan.Client.Models;
+using KS.FiksProtokollValidator.WebAPI.Models;
+using KS.FiksProtokollValidator.WebAPI.Resources;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
 {
@@ -15,20 +16,20 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
             return new Dictionary<string, List<string>>
             {
                 {
-                    ArkivintegrasjonMeldingTypeV1.Arkivmelding,
+                    FiksArkivV1Meldingtype.Arkivmelding,
                     new List<string>
                     {
-                        ArkivintegrasjonMeldingTypeV1.ArkivmeldingMottatt,
-                        ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering
+                        FiksArkivV1Meldingtype.ArkivmeldingMottatt,
+                        FiksArkivV1Meldingtype.ArkivmeldingKvittering
                     }
                 },
                 {
-                    ArkivintegrasjonMeldingTypeV1.Sok,
+                    FiksArkivV1Meldingtype.Sok,
                     new List<string>
                     {
-                        ArkivintegrasjonMeldingTypeV1.SokResultatMinimum,
-                        ArkivintegrasjonMeldingTypeV1.SokResultatNoekler,
-                        ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet
+                        FiksArkivV1Meldingtype.SokResultatMinimum,
+                        FiksArkivV1Meldingtype.SokResultatNoekler,
+                        FiksArkivV1Meldingtype.SokResultatUtvidet
                     }
                 },
                 {
@@ -186,7 +187,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
                     }
                 },
                 {
-                    WebAPI.Resources.RequestMessageTypes.RegistrerMidlertidigForbudMotTiltakV2,
+                    RequestMessageTypes.RegistrerMidlertidigForbudMotTiltakV2,
                     new List<string>()
                     {
                         FiksPlanMeldingtypeV2.ResultatMottat
