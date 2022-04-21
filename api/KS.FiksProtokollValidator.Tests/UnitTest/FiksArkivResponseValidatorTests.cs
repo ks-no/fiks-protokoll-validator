@@ -127,7 +127,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             FiksResponseValidator.ValidateXmlPayloadContent(responseXml, fiksRequest, validationErrors);
             foreach (var validationError in validationErrors)
             {
-                Assert.True(validationError.Contains("treffer ikke s�ket mellom"));
+                Assert.True(validationError.Contains("treffer ikke søket mellom"));
                 Console.Out.WriteLine(validationError);
             }
             Assert.True(validationErrors.Count == 2);

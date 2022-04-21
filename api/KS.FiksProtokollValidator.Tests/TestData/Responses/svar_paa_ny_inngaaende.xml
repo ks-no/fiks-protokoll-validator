@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/arkivmelding/v2">
+<arkivmeldingKvittering xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/arkivmeldingkvittering/v2">
+  <system>Fagsystem X</system>
+  <meldingId>e4712424-883c-4068-9cb7-97ac679d7232</meldingId>
   <tidspunkt>2020-10-20T08:24:43.0191652+02:00</tidspunkt>
-  <antallFiler>0</antallFiler>
-  <registrering xsi:type="journalpost">
+  <registreringKvittering xsi:type="journalpostKvittering">
     <systemID>99c8b83b-0ae7-4b71-9705-cd2cbd3842cd</systemID>
     <journalaar>2020</journalaar>
     <journalsekvensnummer>2072868876</journalsekvensnummer>
     <journalpostnummer>16</journalpostnummer>
-  </registrering>
-</arkivmelding>
+    <journalposttype>16</journalposttype>
+    <journalstatus>16</journalstatus>
+    <journaldato>2020-10-20</journaldato>
+  </registreringKvittering>
+</arkivmeldingKvittering>

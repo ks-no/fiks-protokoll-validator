@@ -26,7 +26,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseTest = new FiksResponseTest
             {
-                PayloadQuery = "/arkivmelding/registrering",
+                PayloadQuery = "/arkivmeldingKvittering/registreringKvittering",
                 ExpectedValue = "someValue",
                 ValueType = SearchValueType.Attribute,
             };
@@ -39,7 +39,7 @@ namespace KS.FiksProtokollValidator.Tests
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
-                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>() { new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = "no.ks.fiks.gi.arkivintegrasjon.mottatt.v1" }, new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = "no.ks.fiks.gi.arkivintegrasjon.kvittering.v1" } }
+                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>() { new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivV1Meldingtype.ArkivmeldingMottatt }, new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivV1Meldingtype.ArkivmeldingKvittering } }
             };
 
             _testCase.FiksResponseTests.Add(_fiksResponseTest);
@@ -63,7 +63,7 @@ namespace KS.FiksProtokollValidator.Tests
             {
                 Type = FiksArkivV1Meldingtype.ArkivmeldingKvittering,
                 ReceivedAt = DateTime.Now,
-                FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "svar_paa_ny_inngaaende.xml", Payload = fileAsBytes } },
+                FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "arkivmelding-kvittering.xml", Payload = fileAsBytes } },
             };
 
             _fiksRequest = new FiksRequest
@@ -126,12 +126,12 @@ namespace KS.FiksProtokollValidator.Tests
         [Test]
         public void ExistingAttributeIsFound()
         {
-            _fiksResponseTest.ExpectedValue = "journalpost";
+            _fiksResponseTest.ExpectedValue = "journalpostKvittering";
             _fiksResponseTest.ValueType = SearchValueType.Attribute;
 
             var customTest = new FiksResponseTest
             {
-                PayloadQuery = "/arkivmelding/registrering",
+                PayloadQuery = "/arkivmeldingKvittering/registreringKvittering",
                 ExpectedValue = "apekatt",
                 ValueType = SearchValueType.Attribute,
             };
