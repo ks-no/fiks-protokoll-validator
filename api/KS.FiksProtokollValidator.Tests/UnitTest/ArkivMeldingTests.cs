@@ -42,20 +42,31 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 //.SingleOrDefault(assembly => assembly.GetName().Name == "KS.Fiks.Arkiv.Models.V1");
             
             // Arkivmelding 
-            using (var schemaStream = arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.arkivmelding.xsd")) {
-                using (var schemaReader = XmlReader.Create(schemaStream)) {
-                    arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/arkivmelding/v2", schemaReader);
+            using (var schemaStream = arkivModelsAssembly?.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.arkivmelding.xsd"))
+            {
+                if (schemaStream != null)
+                {
+                    using var schemaReader = XmlReader.Create(schemaStream);
+                    arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/arkivmelding/v2",
+                        schemaReader);
                 }
             }
             // Metadatakatalog 
-            using (var schemaStream = arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.metadatakatalog.xsd")) {
-                using (var schemaReader = XmlReader.Create(schemaStream)) {
-                    arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2", schemaReader);
+            using (var schemaStream = arkivModelsAssembly?.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.metadatakatalog.xsd"))
+            {
+                if (schemaStream != null)
+                {
+                    using var schemaReader = XmlReader.Create(schemaStream);
+                    arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2",
+                        schemaReader);
                 }
             }
             // Sok
-            using (var schemaStream = arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.sok.xsd")) {
-                using (var schemaReader = XmlReader.Create(schemaStream)) {
+            using (var schemaStream = arkivModelsAssembly?.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.sok.xsd"))
+            {
+                if (schemaStream != null)
+                {
+                    using var schemaReader = XmlReader.Create(schemaStream);
                     arkivmeldingXmlSchemaSet.Add("http://www.ks.no/standarder/fiks/arkiv/sok/v1", schemaReader);
                 }
             }

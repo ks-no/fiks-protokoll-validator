@@ -8,12 +8,12 @@
 	<mappe xsi:type="saksmappe">
 		<tittel>Test</tittel>
 		<klassifikasjon>
-			<klassifikasjonssystem>Personnummer</klassifikasjonssystem>
-			<klasseID>19085830948</klasseID>
+			<klassifikasjonssystem xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">Personnummer</klassifikasjonssystem>
+			<klasseID xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">19085830948</klasseID>
 		</klassifikasjon>
 		<referanseEksternNoekkel>
-			<fagsystem>Fagsystem X</fagsystem>
-			<noekkel>1234</noekkel>
+			<fagsystem xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">Fagsystem X</fagsystem>
+			<noekkel xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">1234</noekkel>
 		</referanseEksternNoekkel>
 	</mappe>
 </arkivmelding>

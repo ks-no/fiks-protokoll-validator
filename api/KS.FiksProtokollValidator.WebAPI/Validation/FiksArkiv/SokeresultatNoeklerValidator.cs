@@ -18,7 +18,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                 sokResponse = (SokeresultatNoekler)new XmlSerializer(typeof(SokeresultatNoekler)).Deserialize(
                     sokResponseTextReader);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 validationErrors.Add(string.Format(ValidationErrorMessages.CouldNotParseSokeresultat, "noekler"));
                 return;

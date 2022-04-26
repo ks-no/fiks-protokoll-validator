@@ -9,6 +9,7 @@ using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using Newtonsoft.Json.Linq;
+using Serilog;
 using Wmhelp.XPath2;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation
@@ -150,7 +151,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             {
                 var xmlContent = Encoding.Default.GetString(fiksPayload.Payload);
 
-                PayloadChecksHelper.ValidateXmlWithSchema(xmlContent, validationErrors, messageType);
+                PayloadChecksHelper.ValidateXmlWithSchema(xmlContent, validationErrors);
                 ValidateXmlPayloadContent(xmlContent, fiksRequest, validationErrors);
             }
             else
@@ -208,7 +209,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                var xpathQuery = fiksResponseTest.PayloadQuery.Replace("/", "/*:");
 
-               var node = xmlDoc.XPath2SelectElement(xpathQuery);
+               XElement node = null;
+               try
+               {
+                   node = xmlDoc.XPath2SelectElement(xpathQuery);
+               }
+               catch (Exception e)
+               {
+                   Log.Error("Klarte ikke validere mot xpathQuery {Xpathquery}", xpathQuery);
+                   node = null;
+               }
 
                if (node == null)
                {

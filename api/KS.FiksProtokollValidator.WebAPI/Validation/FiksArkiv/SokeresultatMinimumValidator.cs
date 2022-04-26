@@ -18,7 +18,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                 sokResponse = (SokeresultatMinimum)new XmlSerializer(typeof(SokeresultatMinimum)).Deserialize(
                     sokResponseTextReader);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 validationErrors.Add(string.Format(ValidationErrorMessages.CouldNotParseSokeresultat, "minimum"));
                 return;

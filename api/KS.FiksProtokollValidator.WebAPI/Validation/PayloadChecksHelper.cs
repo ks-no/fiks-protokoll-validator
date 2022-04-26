@@ -143,27 +143,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             }
         }
 
-        internal static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors, string messageType)
+        internal static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors)
         {
             var xsdValidator = new XsdValidator();
-            switch (messageType)
-            {
-                case FiksArkivV1Meldingtype.ArkivmeldingKvittering:
-                    xsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
-                    break;
-                case FiksArkivV1Meldingtype.SokResultatMinimum:
-                    xsdValidator.ValidateArkivmeldingSokeresultatMinimum(xmlPayloadContent, validationErrors);
-                    break;
-                case FiksArkivV1Meldingtype.SokResultatNoekler:
-                    xsdValidator.ValidateArkivmeldingSokeresultatNoekler(xmlPayloadContent, validationErrors);
-                    break;
-                case FiksArkivV1Meldingtype.SokResultatUtvidet:
-                    xsdValidator.ValidateArkivmeldingSokeresultatUtvidet(xmlPayloadContent, validationErrors);
-                    break;
-                default:
-                    //do nothing? Or display a warning that the message type was not checked against xsd?
-                    break;
-            }
+            xsdValidator.Validate(xmlPayloadContent, validationErrors);
         }
     }
 }

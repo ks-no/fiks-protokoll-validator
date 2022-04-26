@@ -16,10 +16,10 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
         [Test]
         public void ValidateSokeresultatNoekler()
         {
-            var xsdValidator = new XsdValidator(Directory.GetCurrentDirectory());
+            var xsdValidator = new XsdValidator();
             List<string> validationErrors = new List<string>();
             string sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatNoekler.xml");
-            xsdValidator.ValidateArkivmeldingSokeresultatNoekler(sokeresultat, validationErrors);
+            xsdValidator.Validate(sokeresultat, validationErrors);
             foreach (var validationError in validationErrors)
             {
                 Console.Out.WriteLine(validationError);
@@ -30,10 +30,10 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
         [Test]
         public void ValidateSokeresultatMinimum()
         {
-            var xsdValidator = new XsdValidator(Directory.GetCurrentDirectory());
+            var xsdValidator = new XsdValidator();
             List<string> validationErrors = new List<string>();
             string sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatMinimum.xml");
-            xsdValidator.ValidateArkivmeldingSokeresultatMinimum(sokeresultat, validationErrors);
+            xsdValidator.Validate(sokeresultat, validationErrors);
             foreach (var validationError in validationErrors)
             {
                 Console.Out.WriteLine(validationError);
@@ -44,10 +44,10 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
         [Test]
         public void ValidateSokeresultatUtvidet()
         {
-            var xsdValidator = new XsdValidator(Directory.GetCurrentDirectory());
+            var xsdValidator = new XsdValidator();
             List<string> validationErrors = new List<string>();
             string sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatUtvidet.xml");
-            xsdValidator.ValidateArkivmeldingSokeresultatUtvidet(sokeresultat, validationErrors);
+            xsdValidator.Validate(sokeresultat, validationErrors);
             foreach (var validationError in validationErrors)
             {
                 Console.Out.WriteLine(validationError);

@@ -18,7 +18,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                  sokResponse = (Sokeresultat)new XmlSerializer(typeof(Sokeresultat)).Deserialize(
                     sokResponseTextReader);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 validationErrors.Add(string.Format(ValidationErrorMessages.CouldNotParseSokeresultat, "utvidet"));
                 return;
