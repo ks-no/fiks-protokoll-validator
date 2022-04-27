@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 using FluentAssertions;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
@@ -16,7 +15,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
         private List<string> _xmlValidationMessages;
         private readonly XmlReaderSettings _xmlReaderSettings;
         private readonly string _baseFilePath;
-
         
         [DatapointSource]
         public string[] TestCasesValues = 
@@ -28,7 +26,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             "NySokN1"
         };
 
-
         public ArkivMeldingUnitTest()
         {
             _baseFilePath = "./TestCases/no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1/";
@@ -39,7 +36,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 .GetExecutingAssembly()
                 .GetReferencedAssemblies()
                 .Select(a => Assembly.Load(a.FullName)).SingleOrDefault(assembly => assembly.GetName().Name == "KS.Fiks.Arkiv.Models.V1");// AppDomain.CurrentDomain.GetAssemblies()
-                //.SingleOrDefault(assembly => assembly.GetName().Name == "KS.Fiks.Arkiv.Models.V1");
             
             // Arkivmelding 
             using (var schemaStream = arkivModelsAssembly?.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.arkivmelding.xsd"))
@@ -80,7 +76,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             _xmlReaderSettings.ValidationEventHandler += XmlReaderSettingsValidationEventHandler;
         }
         
-
         [Theory]
         public void ValidateArkivMelding(string caseFolder)
         {
@@ -107,8 +102,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             _xmlValidationMessages.Should().BeEmpty();
         }
         
-     
-        
         private void XmlReaderSettingsValidationEventHandler(object? sender, ValidationEventArgs e)
         {
             switch (e.Severity)
@@ -121,6 +114,5 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                     break;
             }
         }
-
     }
 }
