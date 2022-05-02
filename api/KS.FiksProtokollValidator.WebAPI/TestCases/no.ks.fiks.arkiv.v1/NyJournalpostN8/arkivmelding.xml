@@ -85,8 +85,8 @@
 			<saksbehandler>Sigve Saksbehandler</saksbehandler>
 		</korrespondansepart>
 		<referanseEksternNoekkel>
-			<fagsystem>Fagsystem X</fagsystem>
-			<noekkel>759d7aab-6f41-487d-bdb9-dd177ee887c1</noekkel>
+			<fagsystem xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">Fagsystem X</fagsystem>
+			<noekkel xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">759d7aab-6f41-487d-bdb9-dd177ee887c1</noekkel>
 		</referanseEksternNoekkel>
 		<journalposttype>
 			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">U</kode>

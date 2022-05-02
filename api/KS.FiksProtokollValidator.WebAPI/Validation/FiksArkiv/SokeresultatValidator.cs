@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
-using KS.Fiks.IO.Arkiv.Client.Models.Innsyn.Sok;
+using KS.Fiks.Arkiv.Models.V1.Arkivstruktur;
+using KS.Fiks.Arkiv.Models.V1.Innsyn.Sok;
 using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv

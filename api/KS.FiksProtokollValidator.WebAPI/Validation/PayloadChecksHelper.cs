@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using KS.Fiks.IO.Arkiv.Client.Models;
+using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Client.Models.Feilmelding;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
+using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 
@@ -17,11 +17,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
             return new HashSet<string>
             {
-                ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering,
-                ArkivintegrasjonMeldingTypeV1.SokResultatMinimum,
-                ArkivintegrasjonMeldingTypeV1.SokResultatNoekler,
-                ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet,
-                WebAPI.Resources.ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
+                FiksArkivV1Meldingtype.ArkivmeldingKvittering,
+                FiksArkivV1Meldingtype.SokResultatMinimum,
+                FiksArkivV1Meldingtype.SokResultatNoekler,
+                FiksArkivV1Meldingtype.SokResultatUtvidet,
+                ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
                 FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
@@ -48,24 +48,24 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         {
             switch (messageType)
             {
-                case ArkivintegrasjonMeldingTypeV1.Arkivmelding:
+                case FiksArkivV1Meldingtype.Arkivmelding:
                     return "arkivmelding.xml";
-                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
+                case FiksArkivV1Meldingtype.ArkivmeldingKvittering:
                     return "arkivmelding-kvittering.xml";
-                case ArkivintegrasjonMeldingTypeV1.Sok:
+                case FiksArkivV1Meldingtype.Sok:
                     return "sok.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
+                case FiksArkivV1Meldingtype.SokResultatMinimum:
                     return "sokeresultat-minimum.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
+                case FiksArkivV1Meldingtype.SokResultatNoekler:
                     return "sokeresultat-noekler.xml";
-                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
+                case FiksArkivV1Meldingtype.SokResultatUtvidet:
                     return "sokeresultat-utvidet.xml";
-                case ArkivintegrasjonMeldingTypeV1.DokumentfilHent:
-                case ArkivintegrasjonMeldingTypeV1.DokumentfilHentResultat:
-                case ArkivintegrasjonMeldingTypeV1.MappeHent:
-                case ArkivintegrasjonMeldingTypeV1.MappeHentResultat:
-                case ArkivintegrasjonMeldingTypeV1.JournalpostHent:
-                case ArkivintegrasjonMeldingTypeV1.JournalpostHentResultat:
+                case FiksArkivV1Meldingtype.DokumentfilHent:
+                case FiksArkivV1Meldingtype.DokumentfilHentResultat:
+                case FiksArkivV1Meldingtype.MappeHent:
+                case FiksArkivV1Meldingtype.MappeHentResultat:
+                case FiksArkivV1Meldingtype.JournalpostHent:
+                case FiksArkivV1Meldingtype.JournalpostHentResultat:
                     return "arkivmelding.xml";
                 case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
@@ -143,27 +143,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             }
         }
 
-        internal static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors, string messageType)
+        internal static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors)
         {
             var xsdValidator = new XsdValidator();
-            switch (messageType)
-            {
-                case ArkivintegrasjonMeldingTypeV1.ArkivmeldingKvittering:
-                    xsdValidator.ValidateArkivmeldingKvittering(xmlPayloadContent, validationErrors);
-                    break;
-                case ArkivintegrasjonMeldingTypeV1.SokResultatMinimum:
-                    xsdValidator.ValidateArkivmeldingSokeresultatMinimum(xmlPayloadContent, validationErrors);
-                    break;
-                case ArkivintegrasjonMeldingTypeV1.SokResultatNoekler:
-                    xsdValidator.ValidateArkivmeldingSokeresultatNoekler(xmlPayloadContent, validationErrors);
-                    break;
-                case ArkivintegrasjonMeldingTypeV1.SokResultatUtvidet:
-                    xsdValidator.ValidateArkivmeldingSokeresultatUtvidet(xmlPayloadContent, validationErrors);
-                    break;
-                default:
-                    //do nothing? Or display a warning that the message type was not checked against xsd?
-                    break;
-            }
+            xsdValidator.Validate(xmlPayloadContent, validationErrors);
         }
     }
 }

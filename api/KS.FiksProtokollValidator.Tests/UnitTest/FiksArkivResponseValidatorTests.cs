@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using KS.Fiks.IO.Arkiv.Client.Models;
+using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
@@ -20,7 +20,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
+                    MessageType = FiksArkivV1Meldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN1"
                 }
@@ -44,7 +44,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
+                    MessageType = FiksArkivV1Meldingtype.Sok,
                     PayloadFileName = "sok2.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN1"
                 }
@@ -68,7 +68,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
+                    MessageType = FiksArkivV1Meldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
@@ -93,7 +93,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
+                    MessageType = FiksArkivV1Meldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
@@ -118,7 +118,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = ArkivintegrasjonMeldingTypeV1.Sok,
+                    MessageType = FiksArkivV1Meldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
@@ -127,7 +127,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             FiksResponseValidator.ValidateXmlPayloadContent(responseXml, fiksRequest, validationErrors);
             foreach (var validationError in validationErrors)
             {
-                Assert.True(validationError.Contains("treffer ikke søket mellom"));
+                Assert.True(validationError.Contains("treffer ikke sÃ¸ket mellom"));
                 Console.Out.WriteLine(validationError);
             }
             Assert.True(validationErrors.Count == 2);

@@ -1,10 +1,11 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 using FluentAssertions;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
@@ -14,7 +15,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
         private List<string> _xmlValidationMessages;
         private readonly XmlReaderSettings _xmlReaderSettings;
         private readonly string _baseFilePath;
-
         
         [DatapointSource]
         public string[] TestCasesValues = 
@@ -26,15 +26,47 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             "NySokN1"
         };
 
-
         public ArkivMeldingUnitTest()
         {
             _baseFilePath = "./TestCases/no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1/";
             // Process the message
             var arkivmeldingXmlSchemaSet = new XmlSchemaSet();
-            arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/arkivmelding/v2", "./Schema/arkivmelding.xsd");
-            arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2", "./Schema/metadatakatalog.xsd");
-            arkivmeldingXmlSchemaSet.Add("http://www.ks.no/standarder/fiks/arkiv/sok/v1", "./Schema/sok.xsd");
+
+            var arkivModelsAssembly = Assembly
+                .GetExecutingAssembly()
+                .GetReferencedAssemblies()
+                .Select(a => Assembly.Load(a.FullName)).SingleOrDefault(assembly => assembly.GetName().Name == "KS.Fiks.Arkiv.Models.V1");// AppDomain.CurrentDomain.GetAssemblies()
+            
+            // Arkivmelding 
+            using (var schemaStream = arkivModelsAssembly?.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.arkivmelding.xsd"))
+            {
+                if (schemaStream != null)
+                {
+                    using var schemaReader = XmlReader.Create(schemaStream);
+                    arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/arkivmelding/v2",
+                        schemaReader);
+                }
+            }
+            // Metadatakatalog 
+            using (var schemaStream = arkivModelsAssembly?.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.metadatakatalog.xsd"))
+            {
+                if (schemaStream != null)
+                {
+                    using var schemaReader = XmlReader.Create(schemaStream);
+                    arkivmeldingXmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2",
+                        schemaReader);
+                }
+            }
+            // Sok
+            using (var schemaStream = arkivModelsAssembly?.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.sok.xsd"))
+            {
+                if (schemaStream != null)
+                {
+                    using var schemaReader = XmlReader.Create(schemaStream);
+                    arkivmeldingXmlSchemaSet.Add("http://www.ks.no/standarder/fiks/arkiv/sok/v1", schemaReader);
+                }
+            }
+            
             _xmlReaderSettings = new XmlReaderSettings
             {
                 ValidationType = ValidationType.Schema
@@ -44,7 +76,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             _xmlReaderSettings.ValidationEventHandler += XmlReaderSettingsValidationEventHandler;
         }
         
-
         [Theory]
         public void ValidateArkivMelding(string caseFolder)
         {
@@ -71,8 +102,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             _xmlValidationMessages.Should().BeEmpty();
         }
         
-     
-        
         private void XmlReaderSettingsValidationEventHandler(object? sender, ValidationEventArgs e)
         {
             switch (e.Severity)
@@ -85,6 +114,5 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                     break;
             }
         }
-
     }
 }
