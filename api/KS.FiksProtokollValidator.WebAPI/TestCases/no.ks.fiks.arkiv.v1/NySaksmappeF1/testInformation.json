@@ -1,5 +1,5 @@
 {
-    "testName": "Send ny Saksmappe - Feilsituasjon 1",
+    "testName": "Ny Saksmappe - Feilsituasjon 1",
     "description": "Uten tittel",
     "testStep": "Feilsituasjon 1 Finnes ikke",
     "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",

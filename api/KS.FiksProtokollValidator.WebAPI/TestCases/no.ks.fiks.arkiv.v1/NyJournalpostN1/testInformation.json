@@ -1,5 +1,5 @@
 {
-    "testName": "Send ny Journalpost - Normalsituasjon 1 - Nytt internt notat",
+    "testName": "Ny Journalpost - Normalsituasjon 1 - Nytt internt notat",
     "description": "tittel(Internt notat) og journalposttype(X)",
     "testStep": "Normalsituasjon 1 Input Journalpost med retur av Journalpost",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",

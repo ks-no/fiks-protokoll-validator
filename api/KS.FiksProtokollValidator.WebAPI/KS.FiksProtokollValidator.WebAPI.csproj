@@ -104,4 +104,9 @@
     <Folder Include="TestCases\no.ks.fiks.gi.plan.tjener\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="TestCases\no.ks.fiks.arkiv.v1\FinnJournalposterUnderArbeidN1\testInformation.json" />
+    <_ContentIncludedByDefault Remove="TestCases\no.ks.fiks.arkiv.v1\FinnJournalposterUnderArbeidN3\testInformation.json" />
+  </ItemGroup>
+
 </Project>

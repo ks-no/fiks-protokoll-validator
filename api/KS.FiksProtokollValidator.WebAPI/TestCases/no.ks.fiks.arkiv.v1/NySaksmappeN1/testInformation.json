@@ -1,5 +1,5 @@
 {
-    "testName": "Send ny Saksmappe - Normalsituasjon 1",
+    "testName": "Ny Saksmappe - Normalsituasjon 1",
     "description": "tittel(Test)",
     "testStep": "Normalsituasjon 1 Input Saksmappe med retur av Saksmappe",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
