@@ -1,5 +1,5 @@
 ﻿{
-    "testName": "Send ny Søk på respons='saksmappe' og felt='mappe.tittel' med responsType='noekler'",
+    "testName": "Søk på respons='saksmappe' og felt='mappe.tittel' med responsType='noekler'",
     "description": "Søker på alle mapper som inneholder 'test' i tittelen. felt='mappe.tittel', respons='saksmappe', responsType='noekler'",
     "testStep": "Normalsituasjon 7",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",
