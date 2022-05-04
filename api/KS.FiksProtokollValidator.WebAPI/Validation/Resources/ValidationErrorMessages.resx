@@ -145,7 +145,7 @@
     <value>Xml-node {0} har ingen verdi</value>
   </data>
   <data name="UnexpectedPayloadFileMessage" xml:space="preserve">
-    <value>Uventet innhold i svarmelding: {0}</value>
+    <value>Forventet ikke innhold (payload) i svarmelding. Skal den ha payload?: {0}</value>
   </data>
   <data name="UnexpectedResponseMessage" xml:space="preserve">
     <value>Uventet svarmelding: {0}</value>

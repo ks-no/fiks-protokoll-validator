@@ -21,6 +21,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksArkivV1Meldingtype.SokResultatMinimum,
                 FiksArkivV1Meldingtype.SokResultatNoekler,
                 FiksArkivV1Meldingtype.SokResultatUtvidet,
+                FiksArkivV1Meldingtype.JournalpostHentResultat,
+                FiksArkivV1Meldingtype.MappeHentResultat,
+                FiksArkivV1Meldingtype.DokumentfilHentResultat,
                 ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
@@ -49,24 +52,21 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             switch (messageType)
             {
                 case FiksArkivV1Meldingtype.Arkivmelding:
+                case FiksArkivV1Meldingtype.DokumentfilHent:
+                case FiksArkivV1Meldingtype.MappeHent:
+                case FiksArkivV1Meldingtype.JournalpostHent:
                     return "arkivmelding.xml";
                 case FiksArkivV1Meldingtype.ArkivmeldingKvittering:
                     return "arkivmelding-kvittering.xml";
                 case FiksArkivV1Meldingtype.Sok:
                     return "sok.xml";
                 case FiksArkivV1Meldingtype.SokResultatMinimum:
-                    return "sokeresultat-minimum.xml";
                 case FiksArkivV1Meldingtype.SokResultatNoekler:
-                    return "sokeresultat-noekler.xml";
                 case FiksArkivV1Meldingtype.SokResultatUtvidet:
-                    return "sokeresultat-utvidet.xml";
-                case FiksArkivV1Meldingtype.DokumentfilHent:
-                case FiksArkivV1Meldingtype.DokumentfilHentResultat:
-                case FiksArkivV1Meldingtype.MappeHent:
-                case FiksArkivV1Meldingtype.MappeHentResultat:
-                case FiksArkivV1Meldingtype.JournalpostHent:
                 case FiksArkivV1Meldingtype.JournalpostHentResultat:
-                    return "arkivmelding.xml";
+                case FiksArkivV1Meldingtype.DokumentfilHentResultat:
+                case FiksArkivV1Meldingtype.MappeHentResultat:
+                    return "resultat.xml";
                 case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
                 case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
