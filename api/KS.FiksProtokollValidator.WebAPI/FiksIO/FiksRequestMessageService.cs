@@ -29,8 +29,10 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         public Guid Send(FiksRequest fiksRequest, Guid receiverId)
         {
+            var testName = fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation;
+            var headere = new Dictionary<string, string>() { { "protokollValidatorTestName", testName } };
             var ttl = new TimeSpan(0, TTLMinutes, 0); 
-            var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType, ttl);
+            var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType, ttl, headere);
 
             var payloads = new List<IPayload>();
 

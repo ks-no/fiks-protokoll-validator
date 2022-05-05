@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -106,7 +105,57 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                         schemaReader);
                 }
             }
-
+            
+            using (var schemaStream =
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.journalpostHent.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/journalpost/hent/v2",
+                        schemaReader);
+                }
+            }
+            
+            using (var schemaStream =
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.journalpostHentResultat.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/journalpost/hent/resultat/v2",
+                        schemaReader);
+                }
+            }
+            
+            using (var schemaStream =
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.mappeHent.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/mappe/hent/v2",
+                        schemaReader);
+                }
+            }
+            
+            using (var schemaStream =
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.mappeHentResultat.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/mappe/hent/resultat/v2",
+                        schemaReader);
+                }
+            }
+            
+            using (var schemaStream =
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.dokumentfilHent.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("http://www.arkivverket.no/standarder/noark5/dokumentfil/hent/v2",
+                        schemaReader);
+                }
+            }
+            
             xmlReaderSettings = new XmlReaderSettings();
             xmlReaderSettings.Schemas.Add(_xmlSchemaSet);
         }

@@ -130,13 +130,13 @@
     <value>Tom respons</value>
   </data>
   <data name="MissingJsonPayloadToken" xml:space="preserve">
-    <value>Fant ingen forekomster i svarmeldingens innhold med path {0}</value>
+    <value>Fant ingen forekomster i svarmeldingens payload med path {0}</value>
   </data>
   <data name="MissingPayloadElement" xml:space="preserve">
-    <value>Fant ingen forekomster av {0} i svarmeldingens innhold</value>
+    <value>Fant ingen forekomster av {0} i svarmeldingens payload</value>
   </data>
   <data name="MissingPayloadFileMessage" xml:space="preserve">
-    <value>Mangler innhold i svarmelding: {0}</value>
+    <value>Mangler payload i svarmelding: {0}</value>
   </data>
   <data name="MissingResponseMessage" xml:space="preserve">
     <value>Manglende forventet svarmelding: {0}</value>
@@ -145,7 +145,7 @@
     <value>Xml-node {0} har ingen verdi</value>
   </data>
   <data name="UnexpectedPayloadFileMessage" xml:space="preserve">
-    <value>Uventet innhold i svarmelding: {0}</value>
+    <value>Forventet ikke payload i svarmelding. Skal den ha payload?: {0}</value>
   </data>
   <data name="UnexpectedResponseMessage" xml:space="preserve">
     <value>Uventet svarmelding: {0}</value>

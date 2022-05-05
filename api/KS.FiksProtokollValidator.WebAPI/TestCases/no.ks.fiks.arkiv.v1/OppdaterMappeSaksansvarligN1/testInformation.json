@@ -1,6 +1,6 @@
 ﻿{
     "testName":
-        "Oppdater mappe - Ny Saksansvarlig på saksmappe", //Forutsetter at det er registrert en enhet med kode Nivå1.Nivå2 og en saksbehandler med initialer Sbh. Små / store bokstaver er ikke signifikante.
+        "Oppdater mappe - Normalsituasjon 1 - Ny Saksansvarlig på saksmappe", //Forutsetter at det er registrert en enhet med kode Nivå1.Nivå2 og en saksbehandler med initialer Sbh. Små / store bokstaver er ikke signifikante.
     "description":
         "Oppdater saksmappe med ny saksansvarlig på saksmappen",
     "testStep": "Normalsituasjon 1 Input Ansvarlig saksbehandler og enhet med retur av Saksmappe",
