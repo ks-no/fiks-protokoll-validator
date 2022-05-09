@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Xml;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
@@ -110,23 +112,46 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
         internal static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
         {
-            var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
-            var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
-            using (TextReader file = File.OpenText(pathToSchema))
+            switch (messageType)
             {
-                JObject jObject = JObject.Parse(payload);
-                JSchema schema = JSchema.Parse(file.ReadToEnd());
-
-                schema.ExtensionData.Remove("definitions");
-                AddAdditionalPropertiesFalseToSchemaProperties(schema.Properties);
-                schema.AllowAdditionalProperties = false;
-
-                //TODO:Skille mellom errors og warnings hvis det er 
-                jObject.Validate(schema, (o, a) =>
-                {
-                    validationErrors.Add(a.Message);
-                });
+                case FeilmeldingType.Ikkefunnet:
+                case FeilmeldingType.Serverfeil:
+                case FeilmeldingType.Ugyldigforespørsel:
+                    var fiksProtokollerAssembly = Assembly.Load("KS.Fiks.Protokoller.V1");
+                    using (var schemaStream =
+                        fiksProtokollerAssembly.GetManifestResourceStream($"KS.Fiks.Protokoller.V1.Schema.{messageType}.schema.json"))
+                    {
+                        if (schemaStream != null)
+                        {
+                            var reader = new StreamReader(schemaStream);
+                            var schemaString = reader.ReadToEnd();
+                            ValidateJsonWithSchemaString(payload, validationErrors, schemaString);
+                        }
+                    }
+                    break;
+                default:
+                    var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+                    var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
+                    using (TextReader file = File.OpenText(pathToSchema))
+                    {
+                        var schemaString = file.ReadToEnd();
+                        ValidateJsonWithSchemaString(payload, validationErrors, schemaString);
+                    }
+                    break;
             }
+        }
+
+        private static void ValidateJsonWithSchemaString(string payload, List<string> validationErrors, string schemaString)
+        {
+            var jObject = JObject.Parse(payload);
+            var schema = JSchema.Parse(schemaString);
+
+            schema.ExtensionData.Remove("definitions");
+            AddAdditionalPropertiesFalseToSchemaProperties(schema.Properties);
+            schema.AllowAdditionalProperties = false;
+
+            //TODO:Skille mellom errors og warnings hvis det er 
+            jObject.Validate(schema, (o, a) => { validationErrors.Add(a.Message); });
         }
 
         private static void AddAdditionalPropertiesFalseToSchemaProperties(IDictionary<string, JSchema> properties)
