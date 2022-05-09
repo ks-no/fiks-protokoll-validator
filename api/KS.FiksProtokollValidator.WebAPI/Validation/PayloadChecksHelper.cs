@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
-using KS.Fiks.IO.Client.Models.Feilmelding;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Protokoller.V1.Models.Feilmelding;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -27,7 +27,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FeilmeldingMeldingTypeV1.Ugyldigforespørsel,
+                FeilmeldingType.Ugyldigforespørsel,
                 FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
                 FiksPlanMeldingtypeV2.ResultatFinnPlaner,
                 FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
@@ -78,8 +78,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case PolitiskBehandlingMeldingTypeV1.SendVedtakTilEInnsyn:
                 case PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
-                case FeilmeldingMeldingTypeV1.Ugyldigforespørsel:
-                case FeilmeldingMeldingTypeV1.Serverfeil:
+                case FeilmeldingType.Ugyldigforespørsel:
+                case FeilmeldingType.Serverfeil:
                 case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter:
