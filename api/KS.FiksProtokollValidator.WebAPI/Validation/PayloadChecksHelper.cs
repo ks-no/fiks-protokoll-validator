@@ -30,6 +30,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
                 FeilmeldingType.Ugyldigforespørsel,
+                FeilmeldingType.Ikkefunnet,
+                FeilmeldingType.Serverfeil,
                 FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
                 FiksPlanMeldingtypeV2.ResultatFinnPlaner,
                 FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
@@ -82,6 +84,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
                 case FeilmeldingType.Ugyldigforespørsel:
                 case FeilmeldingType.Serverfeil:
+                case FeilmeldingType.Ikkefunnet:
                 case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter:
