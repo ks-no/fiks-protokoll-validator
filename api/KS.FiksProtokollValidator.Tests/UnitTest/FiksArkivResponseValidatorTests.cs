@@ -20,7 +20,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = FiksArkivV1Meldingtype.Sok,
+                    MessageType = FiksArkivMeldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN1"
                 }
@@ -44,7 +44,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = FiksArkivV1Meldingtype.Sok,
+                    MessageType = FiksArkivMeldingtype.Sok,
                     PayloadFileName = "sok2.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN1"
                 }
@@ -68,7 +68,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = FiksArkivV1Meldingtype.Sok,
+                    MessageType = FiksArkivMeldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
@@ -93,7 +93,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = FiksArkivV1Meldingtype.Sok,
+                    MessageType = FiksArkivMeldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }
@@ -118,7 +118,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 TestCase = new TestCase
                 {
-                    MessageType = FiksArkivV1Meldingtype.Sok,
+                    MessageType = FiksArkivMeldingtype.Sok,
                     PayloadFileName = "sok.xml",
                     SamplePath = "/TestData/ValidatorTests/NySokN4"
                 }

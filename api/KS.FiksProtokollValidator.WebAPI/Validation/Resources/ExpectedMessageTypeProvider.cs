@@ -16,20 +16,20 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
             return new Dictionary<string, List<string>>
             {
                 {
-                    FiksArkivV1Meldingtype.Arkivmelding,
+                    FiksArkivMeldingtype.Arkivmelding,
                     new List<string>
                     {
-                        FiksArkivV1Meldingtype.ArkivmeldingMottatt,
-                        FiksArkivV1Meldingtype.ArkivmeldingKvittering
+                        FiksArkivMeldingtype.ArkivmeldingMottatt,
+                        FiksArkivMeldingtype.ArkivmeldingKvittering
                     }
                 },
                 {
-                    FiksArkivV1Meldingtype.Sok,
+                    FiksArkivMeldingtype.Sok,
                     new List<string>
                     {
-                        FiksArkivV1Meldingtype.SokResultatMinimum,
-                        FiksArkivV1Meldingtype.SokResultatNoekler,
-                        FiksArkivV1Meldingtype.SokResultatUtvidet
+                        FiksArkivMeldingtype.SokResultatMinimum,
+                        FiksArkivMeldingtype.SokResultatNoekler,
+                        FiksArkivMeldingtype.SokResultatUtvidet
                     }
                 },
                 {

@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Xml;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
@@ -19,13 +17,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
             return new HashSet<string>
             {
-                FiksArkivV1Meldingtype.ArkivmeldingKvittering,
-                FiksArkivV1Meldingtype.SokResultatMinimum,
-                FiksArkivV1Meldingtype.SokResultatNoekler,
-                FiksArkivV1Meldingtype.SokResultatUtvidet,
-                FiksArkivV1Meldingtype.JournalpostHentResultat,
-                FiksArkivV1Meldingtype.MappeHentResultat,
-                FiksArkivV1Meldingtype.DokumentfilHentResultat,
+                FiksArkivMeldingtype.ArkivmeldingKvittering,
+                FiksArkivMeldingtype.SokResultatMinimum,
+                FiksArkivMeldingtype.SokResultatNoekler,
+                FiksArkivMeldingtype.SokResultatUtvidet,
+                FiksArkivMeldingtype.JournalpostHentResultat,
+                FiksArkivMeldingtype.MappeHentResultat,
+                FiksArkivMeldingtype.DokumentfilHentResultat,
                 ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
@@ -55,21 +53,21 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         {
             switch (messageType)
             {
-                case FiksArkivV1Meldingtype.Arkivmelding:
-                case FiksArkivV1Meldingtype.DokumentfilHent:
-                case FiksArkivV1Meldingtype.MappeHent:
-                case FiksArkivV1Meldingtype.JournalpostHent:
+                case FiksArkivMeldingtype.Arkivmelding:
+                case FiksArkivMeldingtype.DokumentfilHent:
+                case FiksArkivMeldingtype.MappeHent:
+                case FiksArkivMeldingtype.JournalpostHent:
                     return "arkivmelding.xml";
-                case FiksArkivV1Meldingtype.ArkivmeldingKvittering:
+                case FiksArkivMeldingtype.ArkivmeldingKvittering:
                     return "arkivmelding-kvittering.xml";
-                case FiksArkivV1Meldingtype.Sok:
+                case FiksArkivMeldingtype.Sok:
                     return "sok.xml";
-                case FiksArkivV1Meldingtype.SokResultatMinimum:
-                case FiksArkivV1Meldingtype.SokResultatNoekler:
-                case FiksArkivV1Meldingtype.SokResultatUtvidet:
-                case FiksArkivV1Meldingtype.JournalpostHentResultat:
-                case FiksArkivV1Meldingtype.DokumentfilHentResultat:
-                case FiksArkivV1Meldingtype.MappeHentResultat:
+                case FiksArkivMeldingtype.SokResultatMinimum:
+                case FiksArkivMeldingtype.SokResultatNoekler:
+                case FiksArkivMeldingtype.SokResultatUtvidet:
+                case FiksArkivMeldingtype.JournalpostHentResultat:
+                case FiksArkivMeldingtype.DokumentfilHentResultat:
+                case FiksArkivMeldingtype.MappeHentResultat:
                     return "resultat.xml";
                 case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.HentUtvalg:

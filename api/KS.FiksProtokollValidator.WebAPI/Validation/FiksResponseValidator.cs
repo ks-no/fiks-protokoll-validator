@@ -32,7 +32,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                 fiksRequest.FiksResponseValidationErrors = new List<string>();
 
-                if(fiksRequest.TestCase.MessageType.Equals(FiksArkivV1Meldingtype.Sok))
+                if(fiksRequest.TestCase.MessageType.Equals(FiksArkivMeldingtype.Sok))
                 {
                     ValidateExistenceOfOneOfExpectedResponseMessageTypes(fiksRequest, expectedResponseMessageTypes);
                 }
@@ -184,7 +184,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             List<string> validationErrors)
         {
             // If Fiks-Arkiv search, check result against the actual search request
-            if (fiksRequest.TestCase.MessageType == FiksArkivV1Meldingtype.Sok)
+            if (fiksRequest.TestCase.MessageType == FiksArkivMeldingtype.Sok)
             {
                 FiksArkivValidator.ValidateXmlPayloadWithSokRequest(xmlPayloadContent, fiksRequest, validationErrors);
             }

@@ -5,6 +5,7 @@ using System.Linq;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation;
+using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using NUnit.Framework;
 
 namespace KS.FiksProtokollValidator.Tests
@@ -35,18 +36,18 @@ namespace KS.FiksProtokollValidator.Tests
 
             _testCase = new TestCase
             {
-                MessageType = FiksArkivV1Meldingtype.Arkivmelding,
+                MessageType = FiksArkivMeldingtype.Arkivmelding,
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
-                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>() { new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivV1Meldingtype.ArkivmeldingMottatt }, new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivV1Meldingtype.ArkivmeldingKvittering } }
+                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>() { new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivMeldingtype.ArkivmeldingMottatt }, new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivMeldingtype.ArkivmeldingKvittering } }
             };
 
             _testCase.FiksResponseTests.Add(_fiksResponseTest);
 
             _fiksResponseMottatt = new FiksResponse
             {
-                Type = FiksArkivV1Meldingtype.ArkivmeldingMottatt,
+                Type = FiksArkivMeldingtype.ArkivmeldingMottatt,
             };
 
             var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
@@ -61,7 +62,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseKvittering = new FiksResponse
             {
-                Type = FiksArkivV1Meldingtype.ArkivmeldingKvittering,
+                Type = FiksArkivMeldingtype.ArkivmeldingKvittering,
                 ReceivedAt = DateTime.Now,
                 FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "arkivmelding-kvittering.xml", Payload = fileAsBytes } },
             };
@@ -99,7 +100,7 @@ namespace KS.FiksProtokollValidator.Tests
             _validator.Validate(_testSession);
 
             var expectedMessage = string.Format(
-                WebAPI.Validation.Resources.ValidationErrorMessages.MissingPayloadElement,
+                ValidationErrorMessages.MissingPayloadElement,
                 _fiksResponseTest.PayloadQuery
             );
 
@@ -117,7 +118,7 @@ namespace KS.FiksProtokollValidator.Tests
             var xmlNodeToLookAt = _fiksResponseTest.PayloadQuery.Split('/').Last();
 
             var expectedMessage = string.Format(
-                WebAPI.Validation.Resources.ValidationErrorMessages.MissingAttributeOnPayloadElement,
+                ValidationErrorMessages.MissingAttributeOnPayloadElement,
                 _fiksResponseTest.ExpectedValue, xmlNodeToLookAt);
 
             Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
@@ -143,7 +144,7 @@ namespace KS.FiksProtokollValidator.Tests
             var xmlNodeToLookAt = _fiksResponseTest.PayloadQuery.Split('/').Last();
 
             var expectedMessage = string.Format(
-                WebAPI.Validation.Resources.ValidationErrorMessages.MissingAttributeOnPayloadElement,
+                ValidationErrorMessages.MissingAttributeOnPayloadElement,
                 customTest.ExpectedValue, xmlNodeToLookAt);
 
             Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
