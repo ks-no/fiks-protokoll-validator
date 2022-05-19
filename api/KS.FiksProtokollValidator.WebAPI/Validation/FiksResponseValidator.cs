@@ -230,10 +230,22 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
                if (expectedValueType == SearchValueType.Attribute)
                {
-                   if (!node.Attributes().Any(a => a.Value.Equals(expectedValue)))
+                   if (expectedValue.Contains("*"))
+                   {
+                       var strippedExpectedValue = expectedValue.Replace("*", "");
+                       if (!node.Attributes().Any(a => a.Value.Contains(strippedExpectedValue)))
+                       {
+                           validationErrors.Add(string.Format(
+                               ValidationErrorMessages.MissingAttributeOnPayloadElement, expectedValue, expectedElement
+                           ));
+                       }
+                   }
+                   else if (!node.Attributes().Any(a => a.Value.Equals(expectedValue)))
+                   {
                        validationErrors.Add(string.Format(
                            ValidationErrorMessages.MissingAttributeOnPayloadElement, expectedValue, expectedElement
                        ));
+                   }
                }
                else if (expectedValueType == SearchValueType.ValueEqual)
                {

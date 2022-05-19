@@ -1,10 +1,10 @@
 {
-    "testName": "Ny Saksmappe - Feilsituasjon 1 - Ugyldigforespørsel - Feil i arkivmelding.xml",
-    "description": "Arkivmeldingen inneholder feil(tittel mangler) som ikke valideres",
-    "testStep": "Feilsituasjon Ugyldigforespørsel Input Saksmappe med retur av feil",
-    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
-    "operation": "NySaksmappe",
-    "situation": "FX",
+    "testName": "Hent Journalpost - Feilsituasjon 2 - Ugyldigforespoersel - Feil i hent melding",
+    "description": "Forsøker å hente en journalpost basert på SystemID som nøkkel. Hent melding inneholder en feil og man får feilmelding tilbake.",
+    "testStep": "Feilsituasjon 2",
+    "messageType": "no.ks.fiks.arkiv.v1.innsyn.journalpost.hent",
+    "operation": "HentJournalpost",
+    "situation": "F2",
     "expectedResult": "Melding med messagetype no.ks.fiks.kvittering.ugyldigforespoersel.v1",
     "queriesWithExpectedValues": [
         {
@@ -34,6 +34,6 @@
         }
     ],
     "expectedResponseMessageTypes": [ "no.ks.fiks.kvittering.ugyldigforespoersel.v1" ],
-    "supported": true, 
+    "supported": true,
     "protocol": "no.ks.fiks.arkiv.v1"
 }

@@ -1,0 +1,24 @@
+{
+    "testName": "Hent Saksmappe - Normalsituasjon 1 - ReferanseEksternNoekkel som nøkkel",
+    "description": "Henter en saksmappe basert på ReferanseEksternNoekkel som nøkkel. ReferanseEksternNoekkel tilsvarer den saksmappen som blir opprettet i testen NySaksmappeN1. Hvis man kjører den testen først så skal man få saksmappen som ble opprettet da med denne testen.",
+    "testStep": "Normalsituasjon 1",
+    "messageType": "no.ks.fiks.arkiv.v1.innsyn.mappe.hent",
+    "operation": "HentSaksmappe",
+    "situation": "N1",
+    "expectedResult": "Leverer en saksmappe fra arkiv som har en referanseEksternNoekkel",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/mappeHentResultat/mappe",
+            "expectedValue": "*saksmappe", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/mappeHentResultat/mappe/referanseEksternNoekkel/noekkel",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.mappe.hent.resultat" ],
+    "supported": true, 
+    "protocol": "no.ks.fiks.arkiv.v1"
+}
