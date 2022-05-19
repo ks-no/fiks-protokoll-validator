@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <journalpostHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/journalpost/hent/v2">
-	<systemID>6f358ced-036d-4c9b-b372-a2b7d83c5cc5</systemID>
+	<systemID>00000000-0000-0000-0000-000000000000</systemID>
+	<responsType>minimum</responsType>
 </journalpostHent>
