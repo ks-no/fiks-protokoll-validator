@@ -5,7 +5,7 @@
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
     "operation": "NySaksmappe",
     "situation": "FX",
-    "expectedResult": "Melding med messagetype no.ks.fiks.kvittering.ugyldigforespoersel.v1",
+    "expectedResult": "Melding med messagetype no.ks.fiks.arkiv.v1.feilmelding.ugyldigforespoersel",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",
@@ -33,7 +33,7 @@
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "expectedResponseMessageTypes": [ "no.ks.fiks.kvittering.ugyldigforespoersel.v1" ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.feilmelding.ugyldigforespoersel" ],
     "supported": true, 
     "protocol": "no.ks.fiks.arkiv.v1"
 }
