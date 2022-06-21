@@ -8,27 +8,12 @@
     "expectedResult": "Melding med messagetype no.ks.fiks.arkiv.v1.feilmelding.ikkefunnet",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "$",
-            "expectedValue": "errorId",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$",
-            "expectedValue": "feilmelding",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$",
-            "expectedValue": "correlationId",
-            "valueType": 1 // 0 = Verdi, 1 = Attributt
-        },
-        {
-            "payloadQuery": "$.errorId",
+            "payloadQuery": "/ikkefunnet/feilId",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "$.correlationId",
+            "payloadQuery": "/ikkefunnet/feilmelding",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }

@@ -7,7 +7,9 @@
 	<registrering xsi:type="journalpost">
 		<opprettetAv>Fagsystemets brukerid</opprettetAv>
 		<arkivertAv>Fagsystemets brukerid</arkivertAv>
-		<referanseForelderMappe>22f05e04-37c4-4051-8b3a-853c8eac4b33</referanseForelderMappe>
+		<referanseForelderMappe>
+			<systemID>22f05e04-37c4-4051-8b3a-853c8eac4b33</systemID>
+		</referanseForelderMappe>
 		<dokumentbeskrivelse>
 			<dokumenttype>
 				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">SØKNAD</kode>

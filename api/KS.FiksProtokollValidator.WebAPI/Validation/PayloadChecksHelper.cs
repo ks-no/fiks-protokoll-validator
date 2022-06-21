@@ -14,7 +14,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
     public static class PayloadChecksHelper
     {
         public static HashSet<string> GetMessageTypesWithPayload()
-        { //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
+        {
             return new HashSet<string>
             {
                 FiksArkivMeldingtype.ArkivmeldingKvittering,
@@ -24,12 +24,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksArkivMeldingtype.JournalpostHentResultat,
                 FiksArkivMeldingtype.MappeHentResultat,
                 FiksArkivMeldingtype.DokumentfilHentResultat,
+                FiksArkivMeldingtype.Ugyldigforespørsel,
+                FiksArkivMeldingtype.Ikkefunnet,
+                FiksArkivMeldingtype.Serverfeil,
                 ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FeilmeldingType.Ugyldigforespørsel,
-                FeilmeldingType.Ikkefunnet,
-                FeilmeldingType.Serverfeil,
                 FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
                 FiksPlanMeldingtypeV2.ResultatFinnPlaner,
                 FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
@@ -47,6 +47,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade,
                 FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud,
             };
+            //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
         }
 
         public static string GetExpectedFileName(string messageType)
@@ -69,6 +70,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksArkivMeldingtype.DokumentfilHentResultat:
                 case FiksArkivMeldingtype.MappeHentResultat:
                     return "resultat.xml";
+                case FiksArkivMeldingtype.Ugyldigforespørsel:
+                case FiksArkivMeldingtype.Serverfeil:
+                case FiksArkivMeldingtype.Ikkefunnet:
+                    return "feilmelding.xml";
                 case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
                 case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
@@ -80,9 +85,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case PolitiskBehandlingMeldingTypeV1.SendVedtakTilEInnsyn:
                 case PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan:
                 case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
-                case FeilmeldingType.Ugyldigforespørsel:
-                case FeilmeldingType.Serverfeil:
-                case FeilmeldingType.Ikkefunnet:
                 case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter:
