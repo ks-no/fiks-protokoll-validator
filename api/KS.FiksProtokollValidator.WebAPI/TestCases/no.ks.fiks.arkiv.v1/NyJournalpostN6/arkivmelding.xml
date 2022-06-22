@@ -47,7 +47,7 @@
 			<dokumentobjekt>
 				<versjonsnummer>1</versjonsnummer>
 				<variantformat>
-					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">V</kode>
+					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">A</kode>
 				</variantformat>
 				<format>
 					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">PDF</kode>
