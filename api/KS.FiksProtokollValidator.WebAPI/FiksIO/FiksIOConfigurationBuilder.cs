@@ -53,7 +53,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             // Optional: Use custom amqp host (i.e. for connection to test queue)
             AmqpConfiguration amqpConfiguration = new AmqpConfiguration(
                 host: appSettings.FiksIOConfig.AmqpHost,
-                port: appSettings.FiksIOConfig.AmqpPort, sslOption1);
+                port: appSettings.FiksIOConfig.AmqpPort, 
+                sslOption1,
+                "Fiks Protokollvalidator");
 
             // Combine all configurations
             return new FiksIOConfiguration(

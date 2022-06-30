@@ -45,7 +45,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                     case OperatorType.Equal:
                         if (parameter.Felt == SokFelt.MappePeriodTittel)
                         {
-                            //TODO should we test this at all? 
+                            //TODO Skal vi teste dette? 
                         }
 
                         break;
@@ -77,7 +77,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                         validationErrors.Add(ValidationErrorMessages.CouldNotFindSaksmappe);
                         return new List<DateTime>();
                     }
-                    return sokResponse.ResultatListe.Select(r => r.Saksmappe.Saksdato).ToList();
+                    //TODO Dette er ikke lenger mulig å gjøre siden Saksdato ikke lenger er med i resultatet
+                    return new List<DateTime>(); //sokResponse.ResultatListe.Select(r => r.Saksmappe.Saksdato).ToList();
                 default:
                     return new List<DateTime>();
             }

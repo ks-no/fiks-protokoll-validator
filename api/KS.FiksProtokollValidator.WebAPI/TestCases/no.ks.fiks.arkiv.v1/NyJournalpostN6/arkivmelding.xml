@@ -86,8 +86,8 @@
 			<administrativEnhet>Oppmålingsetaten</administrativEnhet>
 		</korrespondansepart>
 		<referanseEksternNoekkel>
-			<fagsystem xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">Fiks protokoll validator</fagsystem>
-			<noekkel xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
+			<fagsystem>Fiks protokoll validator</fagsystem>
+			<noekkel>e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
 		</referanseEksternNoekkel>
 		<journalposttype>
 			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">I</kode>
