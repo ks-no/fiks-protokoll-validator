@@ -43,7 +43,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                 switch (parameter.Operator)
                 {
                     case OperatorType.Equal:
-                        if (parameter.Felt == SokFelt.MappePeriodTittel)
+                        if (parameter.Felt == SokFelt.MappeTittel)
                         {
                             //TODO Skal vi teste dette? 
                         }
@@ -71,7 +71,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
         {
             switch (parameterFelt)
             {
-                case SokFelt.SakPeriodSaksdato:
+                case SokFelt.SakSaksdato:
                     if (sokResponse.ResultatListe.All(r => r.Saksmappe == null))
                     {
                         validationErrors.Add(ValidationErrorMessages.CouldNotFindSaksmappe);

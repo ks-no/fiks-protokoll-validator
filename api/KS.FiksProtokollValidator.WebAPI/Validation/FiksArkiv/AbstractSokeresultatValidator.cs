@@ -8,20 +8,20 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
         {
             switch (parameterFelt)
             {
-                case SokFelt.JournalpostPeriodDokumentetsdato:
-                case SokFelt.JournalpostPeriodForfallsdato:
-                case SokFelt.JournalpostPeriodJournaldato:
-                case SokFelt.DokumentbeskrivelsePeriodOpprettetDato:
-                case SokFelt.MappePeriodOpprettetDato:
-                case SokFelt.MappePeriodAvsluttetDato:
-                case SokFelt.DokumentbeskrivelsePeriodSkjermingPeriodSkjermingOpphoererDato:
-                case SokFelt.RegistreringPeriodOpprettetDato:
-                case SokFelt.SakPeriodSaksdato:
-                case SokFelt.RegistreringPeriodSkjermingPeriodSkjermingOpphoererDato:
-                case SokFelt.MappePeriodSkjermingPeriodSkjermingOpphoererDato:    
-                case SokFelt.JournalpostPeriodSaksaar:
-                case SokFelt.SakPeriodSaksaar:
-                case SokFelt.JournalpostPeriodJournalaar:
+                case SokFelt.JournalpostDokumentetsdato:
+                case SokFelt.JournalpostForfallsdato:
+                case SokFelt.JournalpostJournaldato:
+                case SokFelt.DokumentbeskrivelseOpprettetDato:
+                case SokFelt.MappeOpprettetDato:
+                case SokFelt.MappeAvsluttetDato:
+                case SokFelt.DokumentbeskrivelseSkjermingSkjermingOpphoererDato:
+                case SokFelt.RegistreringOpprettetDato:
+                case SokFelt.SakSaksdato:
+                case SokFelt.RegistreringSkjermingSkjermingOpphoererDato:
+                case SokFelt.MappeSkjermingSkjermingOpphoererDato:    
+                case SokFelt.JournalpostSaksaar:
+                case SokFelt.SakSaksaar:
+                case SokFelt.JournalpostJournalaar:
                     return true;
                 default:
                     return false;

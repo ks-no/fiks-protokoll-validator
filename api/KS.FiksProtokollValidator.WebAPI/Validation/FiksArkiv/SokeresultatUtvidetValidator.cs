@@ -43,9 +43,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                 switch (parameter.Operator)
                 {
                     case OperatorType.Equal:
-                        if (parameter.Felt == SokFelt.MappePeriodTittel)
+                        if (parameter.Felt == SokFelt.MappeTittel)
                         {
-                            ValidateMappePeriodTittelEqual(sok, sokResponse, validationErrors, parameter);
+                            ValidateMappeTittelEqual(sok, sokResponse, validationErrors, parameter);
                         }
 
                         break;
@@ -66,7 +66,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
             }
         }
 
-        private static void ValidateMappePeriodTittelEqual(Sok sok, Sokeresultat sokResponse, List<string> validationErrors, Parameter parameter)
+        private static void ValidateMappeTittelEqual(Sok sok, Sokeresultat sokResponse, List<string> validationErrors, Parameter parameter)
         {
             var notFoundExpectedRespons = false;
             foreach (var resultat in sokResponse.ResultatListe)
@@ -107,7 +107,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
         {
             switch (parameterFelt)
             {
-                case SokFelt.SakPeriodSaksdato:
+                case SokFelt.SakSaksdato:
                     if (sokResponse.ResultatListe.All(r => r.Saksmappe == null))
                     {
                         validationErrors.Add(ValidationErrorMessages.CouldNotFindSaksmappe);
