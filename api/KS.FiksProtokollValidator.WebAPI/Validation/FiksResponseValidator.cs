@@ -186,7 +186,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             // If Fiks-Arkiv search, check result against the actual search request
             if (fiksRequest.TestCase.MessageType == FiksArkivMeldingtype.Sok)
             {
-                FiksArkivValidator.ValidateXmlPayloadWithSokRequest(xmlPayloadContent, fiksRequest, validationErrors);
+                SokeresultatValidator.ValidateXmlPayloadWithSokRequest(xmlPayloadContent, fiksRequest, validationErrors);
             }
             
             // Use of xpath checks in testinformation.json

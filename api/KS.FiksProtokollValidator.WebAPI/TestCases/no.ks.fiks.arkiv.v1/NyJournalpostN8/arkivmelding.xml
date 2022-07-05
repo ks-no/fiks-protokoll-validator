@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/arkivmelding/v2">
+<arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivmelding/v1">
 	<system>Fiks protokoll validator</system>
 	<meldingId>759d7aab-6f41-487d-bdb9-dd177ee887c1</meldingId>
 	<tidspunkt>2021-03-22T12:45:03.483113+01:00</tidspunkt>
@@ -12,22 +12,22 @@
 		</referanseForelderMappe>
 		<dokumentbeskrivelse>
 			<dokumenttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">SØKNAD</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">SØKNAD</kode>
 			</dokumenttype>
 			<dokumentstatus>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">F</kode>
 			</dokumentstatus>
 			<tittel>Vedtak om tillatelse til ...</tittel>
 			<tilknyttetRegistreringSom>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">H</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">H</kode>
 			</tilknyttetRegistreringSom>
 			<dokumentobjekt>
 				<versjonsnummer>1</versjonsnummer>
 				<variantformat>
-					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">P</kode>
+					<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">P</kode>
 				</variantformat>
 				<format>
-					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">PDF</kode>
+					<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">PDF</kode>
 				</format>
 				<filnavn>vedtak.pdf</filnavn>
 				<referanseDokumentfil>vedtak.pdf</referanseDokumentfil>
@@ -35,22 +35,22 @@
 		</dokumentbeskrivelse>
 		<dokumentbeskrivelse>
 			<dokumenttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">SØKNAD</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">SØKNAD</kode>
 			</dokumenttype>
 			<dokumentstatus>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">F</kode>
 			</dokumentstatus>
 			<tittel>Vedlegg 1</tittel>
 			<tilknyttetRegistreringSom>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">V</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">V</kode>
 			</tilknyttetRegistreringSom>
 			<dokumentobjekt>
 				<versjonsnummer>1</versjonsnummer>
 				<variantformat>
-					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">P</kode>
+					<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">P</kode>
 				</variantformat>
 				<format>
-					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">PDF</kode>
+					<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">PDF</kode>
 				</format>
 				<filnavn>vedlegg1.pdf</filnavn>
 				<referanseDokumentfil>vedlegg1.pdf</referanseDokumentfil>
@@ -59,7 +59,7 @@
 		<tittel>Tillatelse til ...</tittel>
 		<korrespondansepart>
 			<korrespondanseparttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">EM</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">EM</kode>
 			</korrespondanseparttype>
 			<korrespondansepartNavn>Mons Mottaker</korrespondansepartNavn>
 			<postadresse>Gate 1</postadresse>
@@ -68,7 +68,7 @@
 		</korrespondansepart>
 		<korrespondansepart>
 			<korrespondanseparttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">EM</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">EM</kode>
 			</korrespondanseparttype>
 			<korrespondansepartNavn>Foretak Mottaker</korrespondansepartNavn>
 			<organisasjonid>
@@ -81,7 +81,7 @@
 		</korrespondansepart>
 		<korrespondansepart>
 			<korrespondanseparttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">IA</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">IA</kode>
 			</korrespondanseparttype>
 			<korrespondansepartNavn>Sigve Saksbehandler</korrespondansepartNavn>
 			<saksbehandler>Sigve Saksbehandler</saksbehandler>
@@ -91,10 +91,10 @@
 			<noekkel>759d7aab-6f41-487d-bdb9-dd177ee887c1</noekkel>
 		</referanseEksternNoekkel>
 		<journalposttype>
-			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">U</kode>
+			<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">U</kode>
 		</journalposttype>
 		<journalstatus>
-			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+			<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">F</kode>
 		</journalstatus>
 		<dokumentetsDato>2021-03-20</dokumentetsDato>
 		<mottattDato>2021-03-22T00:00:00+01:00</mottattDato>

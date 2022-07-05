@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
@@ -7,7 +8,7 @@ using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 {
-    public class FiksArkivValidator : AbstractXmlValidator
+    public class SokeresultatValidator : AbstractXmlValidator
     {
         public static void ValidateXmlPayloadWithSokRequest(string xmlPayloadContent, FiksRequest fiksRequest,
             List<string> validationErrors)
@@ -24,8 +25,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 
            using (var sokTextReader = (TextReader)new StringReader(sokXml))
            {
-               //Parse the sok request
-               var sok = (Sok) new XmlSerializer(typeof(Sok)).Deserialize(sokTextReader);
+               Sok sok;
+               try
+               {
+                   sok = (Sok)new XmlSerializer(typeof(Sok)).Deserialize(sokTextReader);
+               }
+               catch (Exception e)
+               {
+                   validationErrors.Add(e.Message);
+                   return;
+               }
 
                //Parse the sok response
                using (var sokResponseTextReader = (TextReader)new StringReader(xmlPayloadContent))
