@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
-			  xmlns="http://www.arkivverket.no/standarder/noark5/arkivmelding/v2">
+			  xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivmelding/v1">
 	<system>Fiks protokoll validator</system>
 	<meldingId>e4712424-883c-4068-9cb7-97ac679d7232</meldingId>
 	<tidspunkt>2021-03-22T12:31:44.2982517+01:00</tidspunkt>
@@ -13,22 +13,22 @@
 		</referanseForelderMappe>
 		<dokumentbeskrivelse>
 			<dokumenttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">SØKNAD</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">SØKNAD</kode>
 			</dokumenttype>
 			<dokumentstatus>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">F</kode>
 			</dokumentstatus>
 			<tittel>Rekvisisjon av oppmålingsforretning</tittel>
 			<tilknyttetRegistreringSom>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">H</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">H</kode>
 			</tilknyttetRegistreringSom>
 			<dokumentobjekt>
 				<versjonsnummer>1</versjonsnummer>
 				<variantformat>
-					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">P</kode>
+					<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">P</kode>
 				</variantformat>
 				<format>
-					<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">PDF</kode>
+					<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">PDF</kode>
 				</format>
 				<filnavn>rekvisisjon.pdf</filnavn>
 				<referanseDokumentfil>rekvisisjon.pdf</referanseDokumentfil>
@@ -37,7 +37,7 @@
 		<tittel>Internt notat</tittel>
 		<korrespondansepart>
 			<korrespondanseparttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">IM</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">IM</kode>
 			</korrespondanseparttype>
 			<korrespondansepartNavn>Oppmålingsetaten</korrespondansepartNavn>
 			<administrativEnhet>Oppmålingsetaten</administrativEnhet>
@@ -45,7 +45,7 @@
 		</korrespondansepart>
 		<korrespondansepart>
 			<korrespondanseparttype>
-				<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">IA</kode>
+				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">IA</kode>
 			</korrespondanseparttype>
 			<korrespondansepartNavn>Oppmålingsetaten</korrespondansepartNavn>
 			<administrativEnhet>Oppmålingsetaten</administrativEnhet>
@@ -56,10 +56,10 @@
 			<noekkel>e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
 		</referanseEksternNoekkel>
 		<journalposttype>
-			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">X</kode>
+			<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">X</kode>
 		</journalposttype>
 		<journalstatus>
-			<kode xmlns="http://www.arkivverket.no/standarder/noark5/metadatakatalog/v2">F</kode>
+			<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">F</kode>
 		</journalstatus>
 		<dokumentetsDato>2021-03-20</dokumentetsDato>
 		<mottattDato>2021-03-22T00:00:00+01:00</mottattDato>

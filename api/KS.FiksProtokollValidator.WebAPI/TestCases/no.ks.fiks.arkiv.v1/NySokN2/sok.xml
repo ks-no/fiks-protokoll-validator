@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<sok xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.ks.no/standarder/fiks/arkiv/sok/v1">
+<sok xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/sok/v1">
 	<system>Fiks protokoll validator</system>
 	<meldingId>09f6cf81-cb45-4abc-9065-68f5abb3d866</meldingId>
 	<tidspunkt>2021-03-23T10:28:33.1952112+01:00</tidspunkt>
@@ -7,7 +7,7 @@
 	<skip>0</skip>
 	<respons>mappe</respons>
 	<parameter>
-		<felt>mappe.tittel</felt>
+		<felt>mappeTittel</felt>
 		<operator>equal</operator>
 		<parameterverdier>
 			<stringvalues>

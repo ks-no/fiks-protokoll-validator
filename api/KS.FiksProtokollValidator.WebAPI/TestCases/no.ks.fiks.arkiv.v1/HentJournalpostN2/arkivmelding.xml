@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<journalpostHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.arkivverket.no/standarder/noark5/journalpost/hent/v2">
+<journalpostHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/journalpost/hent/v1">
 	<referanseEksternNoekkel>
-		<fagsystem xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">Fiks protokoll validator</fagsystem>
-		<noekkel xmlns="http://www.arkivverket.no/standarder/noark5/arkivstruktur">86af5c8f-e06e-4c5c-b49b-97ccb1ce68a2</noekkel>
+		<fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivstruktur/v1">Fiks protokoll validator</fagsystem>
+		<noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivstruktur/v1">86af5c8f-e06e-4c5c-b49b-97ccb1ce68a2</noekkel>
 	</referanseEksternNoekkel>
 </journalpostHent>
