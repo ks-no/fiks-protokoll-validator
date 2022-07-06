@@ -107,7 +107,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             }
             
             using (var schemaStream =
-                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.jounalpost.hent.xsd"))
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.journalpost.hent.xsd"))
             {
                 using (var schemaReader = XmlReader.Create(schemaStream))
                 {
@@ -117,7 +117,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             }
             
             using (var schemaStream =
-                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.jounalpost.hent.resultat.xsd"))
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.journalpost.hent.resultat.xsd"))
             {
                 using (var schemaReader = XmlReader.Create(schemaStream))
                 {
