@@ -15,7 +15,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.22.0",
-    "core-js": "^3.23.1",
+    "core-js": "^3.24.0",
     "mime-types": "^2.1.35",
     "nginx": "1.0.7",
     "nginx-conf": "^2.0.0",
