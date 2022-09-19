@@ -56,7 +56,7 @@
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.5.1" />
     <PackageReference Include="Moq" Version="4.18.1" />
-    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.0.19" />
+    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.2" />
     <PackageReference Include="nunit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
