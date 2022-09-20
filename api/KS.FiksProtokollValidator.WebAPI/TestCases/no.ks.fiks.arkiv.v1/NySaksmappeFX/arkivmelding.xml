@@ -7,12 +7,12 @@
 	<antallFiler>0</antallFiler>
 	<mappe xsi:type="saksmappe">
 		<klassifikasjon>
-			<klassifikasjonssystem>Personnummer</klassifikasjonssystem>
+			<klassifikasjonssystemID>Personnummer</klassifikasjonssystemID>
 			<klasseID>19085830948</klasseID>
 		</klassifikasjon>
 		<referanseEksternNoekkel>
-			<fagsystem>Fiks protokoll validator</fagsystem>
-			<noekkel>1234</noekkel>
+			<fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Fiks protokoll validator</fagsystem>
+			<noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">1234</noekkel>
 		</referanseEksternNoekkel>
 	</mappe>
 </arkivmelding>

@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <mappeHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/mappe/hent/v1">
-	<referanseEksternNoekkel>
-		<fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivstruktur/v1">Fiks protokoll validator</fagsystem>
-		<noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivstruktur/v1">45d947ed-8455-46e2-a04f-ee18da433fe0</noekkel>
-	</referanseEksternNoekkel>
+	<referanseTilMappe>
+		<referanseEksternNoekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">
+			<fagsystem>Fiks protokoll validator</fagsystem>
+			<noekkel>45d947ed-8455-46e2-a04f-ee18da433fe0</noekkel>
+		</referanseEksternNoekkel>
+	</referanseTilMappe>
 </mappeHent>

@@ -1,29 +1,29 @@
 {
-    "testName": "Hent Journalpost - Normalsituasjon 2 - ReferanseEksternNoekkel som nøkkel",
+    "testName": "Hent Registrering - Normalsituasjon 2 - ReferanseEksternNoekkel som nøkkel",
     "description": "Henter en journalpost basert på ReferanseEksternNoekkel som nøkkel",
     "testStep": "Normalsituasjon 2 Input Journalpost med retur av Journalpost",
-    "messageType": "no.ks.fiks.arkiv.v1.innsyn.journalpost.hent",
+    "messageType": "no.ks.fiks.arkiv.v1.innsyn.registrering.hent",
     "operation": "HentJournalpost",
     "situation": "N2",
     "expectedResult": "Journalpost med utfylte standardverdier",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "/journalpostHentResultat/journalpost/systemID",
+            "payloadQuery": "/registreringHentResultat/journalpost/systemID",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/journalpostHentResultat/journalpost/referanseEksternNoekkel/fagsystem",
+            "payloadQuery": "/registreringHentResultat/journalpost/referanseEksternNoekkel/fagsystem",
             "expectedValue": "Fiks protokoll validator",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/journalpostHentResultat/journalpost/referanseEksternNoekkel/noekkel",
+            "payloadQuery": "/registreringHentResultat/journalpost/referanseEksternNoekkel/noekkel",
             "expectedValue": "86af5c8f-e06e-4c5c-b49b-97ccb1ce68a2",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
     ],
-    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.journalpost.hent.resultat" ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.innsyn.registrering.hent.resultat" ],
     "supported": true, 
     "protocol": "no.ks.fiks.arkiv.v1"
 }

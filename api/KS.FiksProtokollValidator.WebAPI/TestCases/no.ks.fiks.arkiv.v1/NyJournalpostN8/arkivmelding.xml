@@ -61,6 +61,7 @@
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">EM</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>false</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Mons Mottaker</korrespondansepartNavn>
 			<postadresse>Gate 1</postadresse>
 			<postnummer>3801</postnummer>
@@ -70,6 +71,7 @@
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">EM</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>false</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Foretak Mottaker</korrespondansepartNavn>
 			<organisasjonid>
 				123456789
@@ -83,12 +85,15 @@
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">IA</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>true</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Sigve Saksbehandler</korrespondansepartNavn>
-			<saksbehandler>Sigve Saksbehandler</saksbehandler>
+			<saksbehandler>
+				<navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Sigve Saksbehandler</navn>
+			</saksbehandler>
 		</korrespondansepart>
 		<referanseEksternNoekkel>
-			<fagsystem>Fiks protokoll validator</fagsystem>
-			<noekkel>759d7aab-6f41-487d-bdb9-dd177ee887c1</noekkel>
+			<fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Fiks protokoll validator</fagsystem>
+			<noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">759d7aab-6f41-487d-bdb9-dd177ee887c1</noekkel>
 		</referanseEksternNoekkel>
 		<journalposttype>
 			<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">U</kode>
@@ -98,5 +103,6 @@
 		</journalstatus>
 		<dokumentetsDato>2021-03-20</dokumentetsDato>
 		<mottattDato>2021-03-22T00:00:00+01:00</mottattDato>
+		<avskrivningsdato>2023-03-22</avskrivningsdato>
 	</registrering>
 </arkivmelding>

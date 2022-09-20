@@ -144,7 +144,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
                 try
                 {
-                    fiksRequest.MessageGuid = _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId);
+                    fiksRequest.MessageGuid = await _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId);
                 }
                 catch (Exception e)
                 {

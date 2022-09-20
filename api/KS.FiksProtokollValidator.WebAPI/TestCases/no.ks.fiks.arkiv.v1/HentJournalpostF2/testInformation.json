@@ -1,8 +1,8 @@
 {
-    "testName": "Hent Journalpost - Feilsituasjon 2 - Ugyldigforespoersel - Feil i hent melding",
+    "testName": "Hent Registrering - Feilsituasjon 2 - Ugyldigforespoersel - Feil i hent melding",
     "description": "Forsøker å hente en journalpost basert på SystemID som nøkkel. Hent melding inneholder en feil og man får feilmelding tilbake.",
     "testStep": "Feilsituasjon 2",
-    "messageType": "no.ks.fiks.arkiv.v1.innsyn.journalpost.hent",
+    "messageType": "no.ks.fiks.arkiv.v1.innsyn.registrering.hent",
     "operation": "HentJournalpost",
     "situation": "F2",
     "expectedResult": "Melding med messagetype no.ks.fiks.arkiv.v1.feilmelding.ugyldigforespoersel",
@@ -19,6 +19,6 @@
         }
     ],
     "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.feilmelding.ugyldigforespoersel" ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.arkiv.v1"
 }

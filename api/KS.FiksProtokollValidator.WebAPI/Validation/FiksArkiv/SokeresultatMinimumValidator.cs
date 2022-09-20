@@ -12,7 +12,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
     {
         public static void Validate(TextReader sokResponseTextReader, Sok sok, List<string> validationErrors)
         {
-            SokeresultatMinimum sokResponse = null;
+            SokeresultatMinimum sokResponse;
             try
             {
                 sokResponse = (SokeresultatMinimum)new XmlSerializer(typeof(SokeresultatMinimum)).Deserialize(
@@ -38,12 +38,22 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                     sokResponse.ResultatListe.Count));
             }
 
-            foreach (var parameter in sok.Parameter)
+            switch (sok.Sokdefinisjon)
+            {
+                case SaksmappeSokdefinisjon sokdefinisjon :
+                    ValidateSaksmappeSok(sok, sokdefinisjon, sokResponse, validationErrors);
+                    break;
+            }
+        }
+        
+        private static void ValidateSaksmappeSok(Sok sok, SaksmappeSokdefinisjon sokdefinisjon, SokeresultatMinimum sokResponse, List<string> validationErrors)
+        {
+            foreach (var parameter in sokdefinisjon.Parametere)
             {
                 switch (parameter.Operator)
                 {
                     case OperatorType.Equal:
-                        if (parameter.Felt == SokFelt.MappeTittel)
+                        if (parameter.Felt == SaksmappeSokefelt.MappeTittel)
                         {
                             ValidateMappeTittelEqual(sok, sokResponse, validationErrors, parameter);
                         }
@@ -55,8 +65,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 
                             foreach (var dateTimeValue in listOfDates)
                             {
-                                ValidateBetweenDates(dateTimeValue, parameter.Parameterverdier.Datevalues[0],
-                                    parameter.Parameterverdier.Datevalues[1], validationErrors);
+                                ValidateBetweenDates(dateTimeValue, parameter.SokVerdier.Datevalues[0],
+                                    parameter.SokVerdier.Datevalues[1], validationErrors);
                             }
                         }
                         break;
@@ -70,43 +80,44 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
             var notFoundExpectedRespons = false;
             foreach (var resultatMinimum in sokResponse.ResultatListe)
             {
-                var searchText = parameter.Parameterverdier.Stringvalues.First(); //TODO skal vi støtte * 
+                var searchText = parameter.SokVerdier.Stringvalues.First(); 
                 var searchTextStripped = searchText.Replace("*", string.Empty).ToLower();
-                if (sok.Respons == Respons.Mappe)
+                if (sok.Sokdefinisjon is MappeSokdefinisjon)
                 {
                     if (resultatMinimum.Mappe == null && !notFoundExpectedRespons)
                     {
-                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString()));
+                        validationErrors.Add(
+                            string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Sokdefinisjon.GetType()));
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     } 
                     if (resultatMinimum.Mappe != null && !resultatMinimum.Mappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
-                            parameter.Felt, resultatMinimum.Mappe.Tittel, searchText));
+                            ((MappeParameter) parameter).Felt, resultatMinimum.Mappe.Tittel, searchText));
                     }
                 }
-                else if(sok.Respons == Respons.Saksmappe)
+                else if(sok.Sokdefinisjon is SaksmappeSokdefinisjon)
                 {
                     if (resultatMinimum.Saksmappe == null && !notFoundExpectedRespons)
                     {
-                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString())); 
+                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Sokdefinisjon.GetType())); 
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     }
                     if (resultatMinimum.Saksmappe != null && !resultatMinimum.Saksmappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
-                            parameter.Felt, resultatMinimum.Mappe.Tittel, searchText));
+                            ((SaksmappeParameter) parameter).Felt, resultatMinimum.Mappe.Tittel, searchText));
                     }
                 }
             }
         }
 
-        private static List<DateTime> GetDateResults(SokeresultatMinimum sokResponse, SokFelt parameterFelt,
+        private static List<DateTime> GetDateResults(SokeresultatMinimum sokResponse, SaksmappeSokefelt parameterFelt,
             List<string> validationErrors)
         {
             switch (parameterFelt)
             {
-                case SokFelt.SakSaksdato:
+                case SaksmappeSokefelt.SakSaksdato:
                     if (sokResponse.ResultatListe.All(r => r.Saksmappe == null))
                     {
                         validationErrors.Add(ValidationErrorMessages.CouldNotFindSaksmappe);

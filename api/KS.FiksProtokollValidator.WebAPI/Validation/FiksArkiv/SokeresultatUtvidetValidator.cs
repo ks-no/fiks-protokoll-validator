@@ -38,12 +38,17 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                     sokResponse.ResultatListe.Count));
             }
 
-            foreach (var parameter in sok.Parameter)
+            
+        }
+        
+        private static void ValidateSaksmappeSok(Sok sok, SaksmappeSokdefinisjon sokdefinisjon, Sokeresultat sokResponse, List<string> validationErrors)
+        {
+            foreach (var parameter in sokdefinisjon.Parametere)
             {
                 switch (parameter.Operator)
                 {
                     case OperatorType.Equal:
-                        if (parameter.Felt == SokFelt.MappeTittel)
+                        if (parameter.Felt == SaksmappeSokefelt.MappeTittel)
                         {
                             ValidateMappeTittelEqual(sok, sokResponse, validationErrors, parameter);
                         }
@@ -56,8 +61,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 
                             foreach (var dateTimeValue in listOfDates)
                             {
-                                ValidateBetweenDates(dateTimeValue, parameter.Parameterverdier.Datevalues[0],
-                                    parameter.Parameterverdier.Datevalues[1], validationErrors);
+                                ValidateBetweenDates(dateTimeValue, parameter.SokVerdier.Datevalues[0],
+                                    parameter.SokVerdier.Datevalues[1], validationErrors);
                             }
                         }
 
@@ -71,43 +76,43 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
             var notFoundExpectedRespons = false;
             foreach (var resultat in sokResponse.ResultatListe)
             {
-                var searchText = parameter.Parameterverdier.Stringvalues.First();
+                var searchText = parameter.SokVerdier.Stringvalues.First();
                 var searchTextStripped = searchText.Replace("*", string.Empty).ToLower();
-                if (sok.Respons == Respons.Mappe)
+                if (sok.Sokdefinisjon is MappeSokdefinisjon)
                 {
                     if (resultat.Mappe == null && !notFoundExpectedRespons)
                     {
-                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString()));
+                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Sokdefinisjon.GetType()));
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     }
                     if (resultat.Mappe != null && !resultat.Mappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
-                            parameter.Felt,
+                            ((MappeParameter) parameter).Felt,
                             resultat.Mappe.Tittel, searchText));
                     }
-                } else if (sok.Respons == Respons.Saksmappe)
+                } else if (sok.Sokdefinisjon is SaksmappeSokdefinisjon)
                 {
                     if (resultat.Saksmappe == null && !notFoundExpectedRespons)
                     {
-                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Respons.ToString())); 
+                        validationErrors.Add(string.Format(ValidationErrorMessages.FoundUnexpectedResultTypeAccordingToRespons, sok.Sokdefinisjon.GetType())); 
                         notFoundExpectedRespons = true; //Only show this validation message once. Else it will overflow the list.
                     }
                     if (resultat.Saksmappe != null && !resultat.Saksmappe.Tittel.ToLower().Contains(searchTextStripped))
                     {
                         validationErrors.Add(string.Format(ValidationErrorMessages.ResultDontMatchSearchText,
-                            parameter.Felt, resultat.Mappe.Tittel, searchText));
+                            ((SaksmappeParameter) parameter).Felt, resultat.Mappe.Tittel, searchText));
                     }
                 }
             }
         }
 
-        private static List<DateTime> GetDateResults(Sokeresultat sokResponse, SokFelt parameterFelt,
+        private static List<DateTime> GetDateResults(Sokeresultat sokResponse, SaksmappeSokefelt parameterFelt,
             List<string> validationErrors)
         {
             switch (parameterFelt)
             {
-                case SokFelt.SakSaksdato:
+                case SaksmappeSokefelt.SakSaksdato:
                     if (sokResponse.ResultatListe.All(r => r.Saksmappe == null))
                     {
                         validationErrors.Add(ValidationErrorMessages.CouldNotFindSaksmappe);

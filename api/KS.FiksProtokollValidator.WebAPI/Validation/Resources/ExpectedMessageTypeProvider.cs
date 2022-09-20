@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Plan.Models.V2.Meldingstyper;
+using KS.Fiks.Plan.Models.V2.oppdatering.MeldingomplanidentResultat;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 

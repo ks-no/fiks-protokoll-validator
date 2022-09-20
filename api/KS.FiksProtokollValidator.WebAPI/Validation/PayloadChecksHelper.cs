@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.Fiks.Protokoller.V1.Models.Feilmelding;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
@@ -21,7 +21,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksArkivMeldingtype.SokResultatMinimum,
                 FiksArkivMeldingtype.SokResultatNoekler,
                 FiksArkivMeldingtype.SokResultatUtvidet,
-                FiksArkivMeldingtype.JournalpostHentResultat,
+                FiksArkivMeldingtype.RegistreringHentResultat,
                 FiksArkivMeldingtype.MappeHentResultat,
                 FiksArkivMeldingtype.DokumentfilHentResultat,
                 FiksArkivMeldingtype.Ugyldigforespørsel,
@@ -57,7 +57,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksArkivMeldingtype.Arkivmelding:
                 case FiksArkivMeldingtype.DokumentfilHent:
                 case FiksArkivMeldingtype.MappeHent:
-                case FiksArkivMeldingtype.JournalpostHent:
+                case FiksArkivMeldingtype.RegistreringHent:
                     return "arkivmelding.xml";
                 case FiksArkivMeldingtype.ArkivmeldingKvittering:
                     return "arkivmelding-kvittering.xml";
@@ -66,7 +66,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksArkivMeldingtype.SokResultatMinimum:
                 case FiksArkivMeldingtype.SokResultatNoekler:
                 case FiksArkivMeldingtype.SokResultatUtvidet:
-                case FiksArkivMeldingtype.JournalpostHentResultat:
+                case FiksArkivMeldingtype.RegistreringHentResultat:
                 case FiksArkivMeldingtype.DokumentfilHentResultat:
                 case FiksArkivMeldingtype.MappeHentResultat:
                     return "resultat.xml";
