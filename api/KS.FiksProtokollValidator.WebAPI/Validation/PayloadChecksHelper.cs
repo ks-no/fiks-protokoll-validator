@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.Plan.Models.V2.Meldingstyper;
+using KS.Fiks.Plan.Client.Models;
 using KS.Fiks.Protokoller.V1.Models.Feilmelding;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
