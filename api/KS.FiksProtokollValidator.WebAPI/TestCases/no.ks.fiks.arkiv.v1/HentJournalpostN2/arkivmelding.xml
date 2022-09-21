@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<journalpostHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/journalpost/hent/v1">
-	<referanseEksternNoekkel>
-		<fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivstruktur/v1">Fiks protokoll validator</fagsystem>
-		<noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivstruktur/v1">86af5c8f-e06e-4c5c-b49b-97ccb1ce68a2</noekkel>
-	</referanseEksternNoekkel>
-</journalpostHent>
+<registreringHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/registrering/hent/v1">
+	<referanseTilRegistrering>
+		<referanseEksternNoekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">
+			<fagsystem>Fiks protokoll validator</fagsystem>
+			<noekkel>86af5c8f-e06e-4c5c-b49b-97ccb1ce68a2</noekkel>
+		</referanseEksternNoekkel>
+	</referanseTilRegistrering>
+</registreringHent>

@@ -39,15 +39,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                //Parse the sok response
                using (var sokResponseTextReader = (TextReader)new StringReader(xmlPayloadContent))
                {
-                   switch (sok.ResponsType)
+                   switch (sok.Sokdefinisjon.Responstype)
                    {
-                       case ResponsType.Utvidet:
+                       case Responstype.Utvidet:
                            SokeresultatUtvidetValidator.Validate(sokResponseTextReader, sok, validationErrors);
                            break;
-                       case ResponsType.Noekler:
+                       case Responstype.Noekler:
                            SokeresultatNoeklerValidator.Validate(sokResponseTextReader, sok, validationErrors);
                            break;
-                       case ResponsType.Minimum:
+                       case Responstype.Minimum:
                        default:
                            SokeresultatMinimumValidator.Validate(sokResponseTextReader, sok, validationErrors);
                            break;

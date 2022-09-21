@@ -38,12 +38,22 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                     sokResponse.ResultatListe.Count));
             }
 
-            foreach (var parameter in sok.Parameter)
+            switch (sok.Sokdefinisjon)
+            {
+                case SaksmappeSokdefinisjon sokdefinisjon :
+                    ValidateSaksmappeSok(sokdefinisjon, sokResponse, validationErrors);
+                    break;
+            }
+        }
+
+        private static void ValidateSaksmappeSok(SaksmappeSokdefinisjon sokdefinisjon, SokeresultatNoekler sokResponse, List<string> validationErrors)
+        {
+            foreach (var parameter in sokdefinisjon.Parametere)
             {
                 switch (parameter.Operator)
                 {
                     case OperatorType.Equal:
-                        if (parameter.Felt == SokFelt.MappeTittel)
+                        if (parameter.Felt == SaksmappeSokefelt.MappeTittel)
                         {
                             //TODO Skal vi teste dette? 
                         }
@@ -56,8 +66,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 
                             foreach (var dateTimeValue in listOfDates)
                             {
-                                ValidateBetweenDates(dateTimeValue, parameter.Parameterverdier.Datevalues[0],
-                                    parameter.Parameterverdier.Datevalues[1], validationErrors);
+                                ValidateBetweenDates(dateTimeValue, parameter.SokVerdier.Datevalues[0],
+                                    parameter.SokVerdier.Datevalues[1], validationErrors);
                             }
                         }
 
@@ -66,12 +76,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
             }
         }
 
-        private static List<DateTime> GetDateResults(SokeresultatNoekler sokResponse, SokFelt parameterFelt,
+        private static List<DateTime> GetDateResults(SokeresultatNoekler sokResponse, SaksmappeSokefelt parameterFelt,
             List<string> validationErrors)
         {
             switch (parameterFelt)
             {
-                case SokFelt.SakSaksdato:
+                case SaksmappeSokefelt.SakSaksdato:
                     if (sokResponse.ResultatListe.All(r => r.Saksmappe == null))
                     {
                         validationErrors.Add(ValidationErrorMessages.CouldNotFindSaksmappe);

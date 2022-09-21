@@ -61,6 +61,7 @@
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">EM</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>true</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Test kommune</korrespondansepartNavn>
 			<organisasjonid>123456789</organisasjonid>
 			<postadresse>Oppmålingsetaten</postadresse>
@@ -72,6 +73,7 @@
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">EA</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>false</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Anita Avsender</korrespondansepartNavn>
 			<personid>12345678901</personid>
 			<postadresse>Gate 1</postadresse>
@@ -82,12 +84,15 @@
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">IM</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>true</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Oppmålingsetaten</korrespondansepartNavn>
-			<administrativEnhet>Oppmålingsetaten</administrativEnhet>
+			<administrativEnhet>
+				<navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Oppmålingsetaten</navn>
+			</administrativEnhet>
 		</korrespondansepart>
 		<referanseEksternNoekkel>
-			<fagsystem>Fiks protokoll validator</fagsystem>
-			<noekkel>e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
+			<fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Fiks protokoll validator</fagsystem>
+			<noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
 		</referanseEksternNoekkel>
 		<journalposttype>
 			<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">I</kode>
@@ -98,5 +103,6 @@
 		<dokumentetsDato>2021-03-20</dokumentetsDato>
 		<mottattDato>2021-03-22T00:00:00+01:00</mottattDato>
 		<offentlighetsvurdertDato>2021-03-22</offentlighetsvurdertDato>
+		<avskrivningsdato>2023-03-22</avskrivningsdato>
 	</registrering>
 </arkivmelding>

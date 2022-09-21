@@ -4,24 +4,17 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
 {
     public class AbstractSokeResultatValidator : AbstractXmlValidator
     {
-        public static bool isDateSokeFelt(SokFelt parameterFelt)
+        public static bool isDateSokeFelt(SaksmappeSokefelt sokefelt)
         {
-            switch (parameterFelt)
+            switch (sokefelt)
             {
-                case SokFelt.JournalpostDokumentetsdato:
-                case SokFelt.JournalpostForfallsdato:
-                case SokFelt.JournalpostJournaldato:
-                case SokFelt.DokumentbeskrivelseOpprettetDato:
-                case SokFelt.MappeOpprettetDato:
-                case SokFelt.MappeAvsluttetDato:
-                case SokFelt.DokumentbeskrivelseSkjermingSkjermingOpphoererDato:
-                case SokFelt.RegistreringOpprettetDato:
-                case SokFelt.SakSaksdato:
-                case SokFelt.RegistreringSkjermingSkjermingOpphoererDato:
-                case SokFelt.MappeSkjermingSkjermingOpphoererDato:    
-                case SokFelt.JournalpostSaksaar:
-                case SokFelt.SakSaksaar:
-                case SokFelt.JournalpostJournalaar:
+                case SaksmappeSokefelt.MappeOpprettetDato:
+                case SaksmappeSokefelt.MappeAvsluttetDato:
+                case SaksmappeSokefelt.MappeSkjermingSkjermingOpphoererDato:
+                case SaksmappeSokefelt.SakSaksaar:
+                case SaksmappeSokefelt.SakSaksdato:
+                case SaksmappeSokefelt.MappeEndretEtterDato:
+                case SaksmappeSokefelt.MappeEndretFoerDato:
                     return true;
                 default:
                     return false;

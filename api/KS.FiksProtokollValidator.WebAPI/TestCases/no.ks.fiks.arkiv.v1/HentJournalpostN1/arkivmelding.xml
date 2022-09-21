@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<journalpostHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/journalpost/hent/v1">
-	<systemID>6f358ced-036d-4c9b-b372-a2b7d83c5cc5</systemID>
-</journalpostHent>
+<registreringHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/registrering/hent/v1">
+	<referanseTilRegistrering>
+		<systemID xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">6f358ced-036d-4c9b-b372-a2b7d83c5cc5</systemID>
+	</referanseTilRegistrering>
+</registreringHent>

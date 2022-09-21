@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using KS.Fiks.IO.Client;
+using KS.Fiks.IO.Client.Configuration;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
@@ -10,25 +12,34 @@ using KS.FiksProtokollValidator.WebAPI.Payload;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
-    public class FiksRequestMessageService : IFiksRequestMessageService
+    public class FiksRequestMessageService : IFiksRequestMessageService, IAsyncInitialization
     {
         private readonly Guid _senderId;
         private FiksIOClient _client;
         private AppSettings _appSettings;
-        private const int TTLMinutes = 5; 
+        private const int TTLMinutes = 5;
+        private readonly FiksIOConfiguration _config;
 
         public FiksRequestMessageService(AppSettings appAppSettings)
         {
             _appSettings = appAppSettings;
-            var config = FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings);
-
-            _client = new FiksIOClient(config);
-
-            _senderId = config.KontoConfiguration.KontoId;
+            _config = FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings);
+            _senderId = _config.KontoConfiguration.KontoId;
+            Initialization = InitializeAsync();
         }
 
-        public Guid Send(FiksRequest fiksRequest, Guid receiverId)
+        public Task Initialization { get; private set; }
+        
+        private async Task InitializeAsync()
         {
+            _client = await FiksIOClient.CreateAsync(_config);
+        }
+
+        public async Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId)
+        {
+            // await FiksIOClient initialization
+            await Initialization;
+            
             var testName = fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation;
             var headere = new Dictionary<string, string>() { { "protokollValidatorTestName", testName } };
             var ttl = new TimeSpan(0, TTLMinutes, 0); 
@@ -58,7 +69,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
 
             fiksRequest.SentAt = DateTime.Now;
-            var result = _client.Send(messageRequest, payloads).Result;
+            var result = await _client.Send(messageRequest, payloads);
 
             return result.MeldingId;
         }

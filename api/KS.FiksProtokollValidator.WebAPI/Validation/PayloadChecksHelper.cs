@@ -21,7 +21,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 FiksArkivMeldingtype.SokResultatMinimum,
                 FiksArkivMeldingtype.SokResultatNoekler,
                 FiksArkivMeldingtype.SokResultatUtvidet,
-                FiksArkivMeldingtype.JournalpostHentResultat,
+                FiksArkivMeldingtype.RegistreringHentResultat,
                 FiksArkivMeldingtype.MappeHentResultat,
                 FiksArkivMeldingtype.DokumentfilHentResultat,
                 FiksArkivMeldingtype.Ugyldigforespørsel,
@@ -57,7 +57,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksArkivMeldingtype.Arkivmelding:
                 case FiksArkivMeldingtype.DokumentfilHent:
                 case FiksArkivMeldingtype.MappeHent:
-                case FiksArkivMeldingtype.JournalpostHent:
+                case FiksArkivMeldingtype.RegistreringHent:
                     return "arkivmelding.xml";
                 case FiksArkivMeldingtype.ArkivmeldingKvittering:
                     return "arkivmelding-kvittering.xml";
@@ -66,7 +66,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksArkivMeldingtype.SokResultatMinimum:
                 case FiksArkivMeldingtype.SokResultatNoekler:
                 case FiksArkivMeldingtype.SokResultatUtvidet:
-                case FiksArkivMeldingtype.JournalpostHentResultat:
+                case FiksArkivMeldingtype.RegistreringHentResultat:
                 case FiksArkivMeldingtype.DokumentfilHentResultat:
                 case FiksArkivMeldingtype.MappeHentResultat:
                     return "resultat.xml";

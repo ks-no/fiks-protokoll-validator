@@ -1,8 +1,8 @@
 {
-    "testName": "Hent Journalpost - Feilsituasjon 1 - Ikkefunnet - Ikke eksisterende SystemID som nøkkel",
+    "testName": "Hent Registrering - Feilsituasjon 1 - Ikkefunnet - Ikke eksisterende SystemID som nøkkel",
     "description": "Forsøker å hente en journalpost basert på SystemID som nøkkel. Men får feilmelding tilbake.",
     "testStep": "Feilsituasjon 1",
-    "messageType": "no.ks.fiks.arkiv.v1.innsyn.journalpost.hent",
+    "messageType": "no.ks.fiks.arkiv.v1.innsyn.registrering.hent",
     "operation": "HentJournalpost",
     "situation": "F1",
     "expectedResult": "Melding med messagetype no.ks.fiks.arkiv.v1.feilmelding.ikkefunnet",

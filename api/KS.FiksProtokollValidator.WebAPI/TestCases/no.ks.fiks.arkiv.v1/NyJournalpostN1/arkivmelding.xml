@@ -39,21 +39,31 @@
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">IM</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>true</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Oppmålingsetaten</korrespondansepartNavn>
-			<administrativEnhet>Oppmålingsetaten</administrativEnhet>
-			<saksbehandler>Ingrid Mottaker</saksbehandler>
+			<administrativEnhet>
+				<navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Oppmålingsetaten</navn>
+			</administrativEnhet>
+			<saksbehandler>
+				<navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Ingrid Mottaker</navn>
+			</saksbehandler>
 		</korrespondansepart>
 		<korrespondansepart>
 			<korrespondanseparttype>
 				<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">IA</kode>
 			</korrespondanseparttype>
+			<erBehandlingsansvarlig>false</erBehandlingsansvarlig>
 			<korrespondansepartNavn>Oppmålingsetaten</korrespondansepartNavn>
-			<administrativEnhet>Oppmålingsetaten</administrativEnhet>
-			<saksbehandler>Ingar Avsender</saksbehandler>
+			<administrativEnhet>
+				<navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Oppmålingsetaten</navn>
+			</administrativEnhet>
+			<saksbehandler>
+				<navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Ingar Avsender</navn>
+			</saksbehandler>
 		</korrespondansepart>
 		<referanseEksternNoekkel>
-			<fagsystem>Fiks protokoll validator</fagsystem>
-			<noekkel>e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
+			<fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Fiks protokoll validator</fagsystem>
+			<noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
 		</referanseEksternNoekkel>
 		<journalposttype>
 			<kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">X</kode>
@@ -63,5 +73,6 @@
 		</journalstatus>
 		<dokumentetsDato>2021-03-20</dokumentetsDato>
 		<mottattDato>2021-03-22T00:00:00+01:00</mottattDato>
+		<avskrivningsdato>2023-03-22</avskrivningsdato>
 	</registrering>
 </arkivmelding>

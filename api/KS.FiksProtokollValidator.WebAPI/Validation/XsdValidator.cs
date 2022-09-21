@@ -107,21 +107,21 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             }
             
             using (var schemaStream =
-                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.journalpost.hent.xsd"))
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.registrering.hent.xsd"))
             {
                 using (var schemaReader = XmlReader.Create(schemaStream))
                 {
-                    _xmlSchemaSet.Add("https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/journalpost/hent/v1",
+                    _xmlSchemaSet.Add("https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/registrering/hent/v1",
                         schemaReader);
                 }
             }
             
             using (var schemaStream =
-                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.journalpost.hent.resultat.xsd"))
+                arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.registrering.hent.resultat.xsd"))
             {
                 using (var schemaReader = XmlReader.Create(schemaStream))
                 {
-                    _xmlSchemaSet.Add("https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/journalpost/hent/resultat/v1",
+                    _xmlSchemaSet.Add("https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/registrering/hent/resultat/v1",
                         schemaReader);
                 }
             }

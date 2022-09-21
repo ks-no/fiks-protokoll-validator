@@ -8,12 +8,12 @@
     "expectedResult": "Leverer en saksmappe fra arkiv som har en referanseEksternNoekkel",
     "queriesWithExpectedValues": [
         {
-            "payloadQuery": "/mappeHentResultat/mappe",
-            "expectedValue": "*saksmappe", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "payloadQuery": "/mappeHentResultat/saksmappe",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 1 // 0 = Verdi, 1 = Attributt
         },
         {
-            "payloadQuery": "/mappeHentResultat/mappe/referanseEksternNoekkel/noekkel",
+            "payloadQuery": "/mappeHentResultat/saksmappe/referanseEksternNoekkel/noekkel",
             "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         }
