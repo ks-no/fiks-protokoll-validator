@@ -8,7 +8,7 @@
 		<opprettetAv>Fagsystemets brukerid</opprettetAv>
 		<arkivertAv>Fagsystemets brukerid</arkivertAv>
 		<referanseForelderMappe>
-			<systemID>22f05e04-37c4-4051-8b3a-853c8eac4b33</systemID>
+			<systemID xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">22f05e04-37c4-4051-8b3a-853c8eac4b33</systemID>
 		</referanseForelderMappe>
 		<dokumentbeskrivelse>
 			<dokumenttype>
