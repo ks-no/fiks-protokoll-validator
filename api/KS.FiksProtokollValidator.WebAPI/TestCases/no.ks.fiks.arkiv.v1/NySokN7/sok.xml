@@ -5,15 +5,16 @@
 	<tidspunkt>2021-03-23T10:28:33.1952112+01:00</tidspunkt>
 	<take>100</take>
 	<skip>0</skip>
-	<respons>saksmappe</respons>
-	<parameter>
-		<felt>mappeTittel</felt>
-		<operator>equal</operator>
-		<parameterverdier>
-			<stringvalues>
-				<value>Test*</value>
-			</stringvalues>
-		</parameterverdier>
-	</parameter>
-	<responsType>noekler</responsType>
+	<sokdefinisjon xsi:type="saksmappeSokdefinisjon">
+		<responstype>noekler</responstype>
+		<parametere>
+			<operator>equal</operator>
+			<sokVerdier>
+				<stringvalues>
+					<value>Test*</value>
+				</stringvalues>
+			</sokVerdier>
+			<felt>mappeTittel</felt>
+		</parametere>
+	</sokdefinisjon>
 </sok>

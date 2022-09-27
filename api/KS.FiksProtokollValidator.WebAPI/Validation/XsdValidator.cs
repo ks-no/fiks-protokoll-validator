@@ -45,6 +45,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                         schemaReader);
                 }
             }
+            
+            using (var schemaStream =
+                   arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.sok.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/sok/v1",
+                        schemaReader);
+                }
+            }
 
             using (var schemaStream =
                 arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.innsyn.sok.resultat.minimum.xsd"))
