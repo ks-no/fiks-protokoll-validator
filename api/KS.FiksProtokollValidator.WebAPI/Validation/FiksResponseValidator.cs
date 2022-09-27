@@ -184,10 +184,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             List<string> validationErrors)
         {
             // If Fiks-Arkiv search, check result against the actual search request
-            if (fiksRequest.TestCase.MessageType == FiksArkivMeldingtype.Sok)
+            //TODO either fix this search validation or delete it. Doesnt work at the moment
+            /*
+             if (fiksRequest.TestCase.MessageType == FiksArkivMeldingtype.Sok)
             {
                 SokeresultatValidator.ValidateXmlPayloadWithSokRequest(xmlPayloadContent, fiksRequest, validationErrors);
             }
+            */
             
             // Use of xpath checks in testinformation.json
             var xmlDoc = XDocument.Parse(xmlPayloadContent);

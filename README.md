@@ -120,7 +120,7 @@ OBS: For Windows og OSX vil man få begge deler installert hvis man bruker Docke
 #### Database
 **Dette må kun gjøres første gang**:
 
-Start sqlexpress i docker ved å kjøre `docker-compose up protokoll-validator-sqlexpress`.
+Start sqlexpress i docker ved å kjøre `docker-compose up fiks-protokoll-validator-sqlexpress`.
 Sørg for at din config (appsettings.Development.json) peker til riktig database.
 
 **Oppdater databasen:**
