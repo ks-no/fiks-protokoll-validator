@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <StartupObject>KS.FiksProtokollValidator.WebAPI.Program</StartupObject>
-    <VersionPrefix>1.0.40</VersionPrefix>
+    <VersionPrefix>1.0.41</VersionPrefix>
   </PropertyGroup>
 
 	<ItemGroup>
