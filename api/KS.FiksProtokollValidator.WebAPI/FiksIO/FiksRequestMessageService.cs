@@ -76,7 +76,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         public void Dispose()
         {
-            _client.Dispose();
+            _client?.Dispose();
         }
     }
 }

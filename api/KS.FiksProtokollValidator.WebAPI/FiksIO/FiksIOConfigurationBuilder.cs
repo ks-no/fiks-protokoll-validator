@@ -55,7 +55,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 host: appSettings.FiksIOConfig.AmqpHost,
                 port: appSettings.FiksIOConfig.AmqpPort, 
                 sslOption1,
-                "Fiks Protokollvalidator");
+                "Fiks Protokollvalidator",
+                keepAlive: true);
 
             // Combine all configurations
             return new FiksIOConfiguration(
