@@ -2,7 +2,9 @@ using System;
 using System.IO;
 using System.Reflection;
 using KS.FiksProtokollValidator.WebAPI.Data;
+using KS.FiksProtokollValidator.WebAPI.Health;
 using KS.FiksProtokollValidator.WebAPI.Logging;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -52,11 +54,13 @@ namespace KS.FiksProtokollValidator.WebAPI
             Log.Information("LOGSTASH_DESTINATION: {LogstashDestination}", logstashDestination);
             Log.Information("Path.PathSeparator: {PathSeparator}", Path.PathSeparator);
 
-            var host = CreateHostBuilder(args).Build();
+            var app = CreateHostBuilder2(args).Build();
+            app.MapHealthChecks("/healthz");
+
             
-            MigrateAndSeedDatabase(host);
+            MigrateAndSeedDatabase(app);
             
-            host.Run();
+            app.Run();
         }
         
         private static void MigrateAndSeedDatabase(IHost host)
@@ -76,6 +80,15 @@ namespace KS.FiksProtokollValidator.WebAPI
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
+        }
+
+        private static WebApplicationBuilder CreateHostBuilder2(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddHealthChecks().AddCheck<FiksIOHealthCheck>("FiksIO");
+            builder.Configuration.AddEnvironmentVariables("fiksProtokollValidator_");
+            builder.Host.UseSerilog();
+            return builder;
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

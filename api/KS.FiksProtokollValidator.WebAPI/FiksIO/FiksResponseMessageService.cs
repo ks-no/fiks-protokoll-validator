@@ -141,5 +141,10 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 mottattMeldingArgs.SvarSender?.Ack();
             }
         }
+        
+        public bool isHealthy()
+        {
+            return _client.IsOpen();
+        }
     }
 }

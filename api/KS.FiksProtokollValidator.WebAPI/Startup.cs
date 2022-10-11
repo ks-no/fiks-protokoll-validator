@@ -14,8 +14,8 @@ namespace KS.FiksProtokollValidator.WebAPI
 {
     public class Startup
     {
-        private readonly string AllowedOrigins = "_allowedOrigins";
-        
+        private const string AllowedOrigins = "_allowedOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
