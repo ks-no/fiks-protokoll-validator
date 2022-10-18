@@ -175,7 +175,7 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
       println("Building API code in Docker image")
       docker.image('mcr.microsoft.com/dotnet/sdk:6.0-alpine').inside() {
         sh '''
-            dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
+            dotnet publish -e XDG_DATA_HOME=/tmp --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
         '''
       }
       println("Building API image")
