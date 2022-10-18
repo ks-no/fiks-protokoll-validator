@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using KS.Fiks.ASiC_E;
-using KS.Fiks.IO.Client;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
@@ -18,43 +16,44 @@ using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
-    public class FiksResponseMessageService : BackgroundService, IAsyncInitialization
+    /* This is the consumer that receives messages from Fiks-Protokoller/Fiks-IO
+     * That means we are interested in keeping the connection to Fiks-IO open.
+     * Here we are using the health-check (IsOpen) on the Fiks-IO client and have implemented a self-healing BackgroundService
+     * We are also exposing the health as a healthz endpoint. That is why the FiksIOClient is kept in a singleton outside this BackgroundService.
+     * This way we can use the health status for the healthz endpoint in the running application.
+     */
+    public class FiksResponseMessageService : BackgroundService
     {
         
-        private IFiksIOClient _client;
+        private readonly IFiksIOClientConsumerService _fiksIoClientConsumerService;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly AppSettings _appSettings;
+        private const int HealthCheckInterval = 5 * 60 * 1000;
+        
+        private Timer _ensureFiksIOConnectionIsOpenTimer { get; set; }
 
-        public FiksResponseMessageService(IServiceScopeFactory scopeFactory, AppSettings appSettings)
+        public FiksResponseMessageService(IServiceScopeFactory scopeFactory, IFiksIOClientConsumerService fiksIoFiksIoClientConsumerService)
         {
             _scopeFactory = scopeFactory;
-            _appSettings = appSettings;
-            Initialization = InitializeAsync();
-        }
-        
-        public Task Initialization { get; private set; }
-        
-        private async Task InitializeAsync()
-        {
-            _client = await FiksIOClient.CreateAsync(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
+            _fiksIoClientConsumerService = fiksIoFiksIoClientConsumerService;
+            // Self-healing check
+            _ensureFiksIOConnectionIsOpenTimer = new Timer(Callback, null, HealthCheckInterval, HealthCheckInterval);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Logger.Information("Starter subscription - ExectueAsync");
             
-            // await FiksIOClient initialization
-            await Initialization;
-            
+            await _fiksIoClientConsumerService.Initialization;
+
             stoppingToken.ThrowIfCancellationRequested();
-            _client.NewSubscription(OnMottattMelding);   
+            _fiksIoClientConsumerService.FiksIOConsumerClient.NewSubscription(OnMottattMelding);   
             await Task.CompletedTask;
         }
 
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
         {
-            Logger.Information("Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
+            Logger.Information("FiksResponseMessageService: Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new List<FiksPayload>();
 
             if (mottattMeldingArgs.Melding.HasPayload)
@@ -81,7 +80,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 catch (Exception e)
                 {
-                    Logger.Error("Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                    Logger.Error("FiksResponseMessageService: Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                     mottattMeldingArgs.SvarSender?.Ack();
                     return;
                 }
@@ -94,7 +93,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 var testSession = context.TestSessions.Include(t => t.FiksRequests).FirstOrDefaultAsync(t =>
                     t.FiksRequests.Any(r => r.MessageGuid.Equals(mottattMeldingArgs.Melding.SvarPaMelding))).Result;
 
-                // Ikke optimalt? Det er gjort slik fordi man ikke vet om databasen har rukket å skrive før man får svar.
+                // Not optimal? Det er gjort slik fordi man ikke vet om databasen har rukket å skrive før man får svar.
                 var timesTried = 1;
                 while (testSession == null && timesTried <= 5)
                 {
@@ -120,7 +119,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     if (fiksRequest == null)
                     {
                         mottattMeldingArgs.SvarSender?.Ack();
-                        Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
+                        Logger.Error("FiksResponseMessageService: Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
                         return;
                     }
 
@@ -133,7 +132,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 else
                 {
-                    Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
+                    Logger.Error("FiksResponseMessageService: Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
                 }
             }
             finally
@@ -142,9 +141,28 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
         }
         
-        public bool isHealthy()
+        private async void Callback(object o)
         {
-            return _client.IsOpen();
+            await EnsureFiksIOConnectionIsOpen().ConfigureAwait(false);
+        }
+        
+        
+        private async Task EnsureFiksIOConnectionIsOpen()
+        {
+            // await FiksIOClient initialization
+            await _fiksIoClientConsumerService.Initialization;
+            
+            if (!_fiksIoClientConsumerService.IsHealthy())
+            {
+                Logger.Error("FiksResponseMessageService: self-check detects FiksIOClient connection is down! Restarting background service");
+                _fiksIoClientConsumerService.Reconnect();
+                await StopAsync(default);
+                await StartAsync(default);
+            }
+            else
+            {
+                Logger.Information("FiksResponseMessageService: self-check detects FiksIOClient is ok");
+            }
         }
     }
 }

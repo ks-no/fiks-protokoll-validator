@@ -1,6 +1,9 @@
 using System;
+using System.Threading.Tasks;
+using KS.Fiks.IO.Client;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
+using KS.FiksProtokollValidator.WebAPI.Health;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,9 +25,8 @@ namespace KS.FiksProtokollValidator.WebAPI
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        
+        public async Task ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
             {
@@ -51,16 +53,19 @@ namespace KS.FiksProtokollValidator.WebAPI
             });
             
             // get configuration from appsettings.json - use as singleton
-            services.AddSingleton(CreateAppSettings());
-            
+            var appSettings = CreateAppSettings();
+            services.AddSingleton(appSettings);
+            var fiksIOClientService = new FiksIOClientConsumerService(appSettings);
+            services.AddSingleton<IFiksIOClientConsumerService>(fiksIOClientService);
             services.AddControllers();
             services.AddHostedService<FiksResponseMessageService>();
             services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IFiksRequestMessageService, FiksRequestMessageService>();
+            var fiksRequestMessageService = new FiksRequestMessageService(appSettings);
+            services.AddSingleton<IFiksRequestMessageService>(fiksRequestMessageService);
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }
-
+        
         public AppSettings CreateAppSettings()
         {
             var appSettings = Configuration.GetSection("AppSettings").Get<AppSettings>();

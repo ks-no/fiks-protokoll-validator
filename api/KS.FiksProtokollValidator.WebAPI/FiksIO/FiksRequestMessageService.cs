@@ -6,19 +6,26 @@ using System.Threading.Tasks;
 using KS.Fiks.IO.Client;
 using KS.Fiks.IO.Client.Configuration;
 using KS.Fiks.IO.Client.Models;
-using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Payload;
+using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
-    public class FiksRequestMessageService : IFiksRequestMessageService, IAsyncInitialization
+    
+    /* This is the producer that sends messages to Fiks-Protokoller/Fiks-IO
+     * The FiksIOClient is only used for sending and we are not using the Fiks-IO connection for receiving messages
+     * That means we are not interested in any health check or keepAlive for this Fiks-IO connection
+     */
+    public class FiksRequestMessageService : IFiksRequestMessageService
     {
+        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly Guid _senderId;
-        private FiksIOClient _client;
         private AppSettings _appSettings;
         private const int TTLMinutes = 5;
         private readonly FiksIOConfiguration _config;
+        private FiksIOClient Client { get; set; }
+
 
         public FiksRequestMessageService(AppSettings appAppSettings)
         {
@@ -28,16 +35,15 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             Initialization = InitializeAsync();
         }
 
-        public Task Initialization { get; private set; }
-        
+        private Task Initialization { get; set; }
+
         private async Task InitializeAsync()
         {
-            _client = await FiksIOClient.CreateAsync(_config);
+            Client = await FiksIOClient.CreateAsync(_config);
         }
 
         public async Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId)
         {
-            // await FiksIOClient initialization
             await Initialization;
             
             var testName = fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation;
@@ -69,14 +75,15 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
 
             fiksRequest.SentAt = DateTime.Now;
-            var result = await _client.Send(messageRequest, payloads);
+            var result = await Client.Send(messageRequest, payloads);
 
             return result.MeldingId;
         }
 
         public void Dispose()
         {
-            _client?.Dispose();
+            Logger.Information("FiksRequestMessageService: Dispose");
+            Client?.Dispose();
         }
     }
 }

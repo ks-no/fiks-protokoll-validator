@@ -7,26 +7,23 @@ namespace KS.FiksProtokollValidator.WebAPI.Health;
 
 public class FiksIOHealthCheck : IHealthCheck
 {
-    private readonly FiksResponseMessageService _fiksResponseMessageService;
+    private readonly IFiksIOClientConsumerService _fiksIoClientService;
     
-    public FiksIOHealthCheck(FiksResponseMessageService fiksResponseMessageService)
+    public FiksIOHealthCheck(IFiksIOClientConsumerService fiksIoClientService)
     {
-        _fiksResponseMessageService = fiksResponseMessageService;
+        _fiksIoClientService = fiksIoClientService;
     }
     
     public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
     {
-        var isHealthy = _fiksResponseMessageService.isHealthy();
-        
-        if (isHealthy)
+        if (!_fiksIoClientService.IsHealthy())
         {
             return Task.FromResult(
-                HealthCheckResult.Healthy("Validator API health er ok."));
+                new HealthCheckResult(
+                    context.Registration.FailureStatus, "Validator API health er ikke ok. FiksIOClient for consumer er ikke healthy."));
         }
 
         return Task.FromResult(
-            new HealthCheckResult(
-                context.Registration.FailureStatus, "Validator API health er ikke ok."));
-
+            HealthCheckResult.Healthy("Validator API health er ok."));
     }
 }

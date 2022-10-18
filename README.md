@@ -6,6 +6,14 @@ Det er da ferdige TestCases for meldingene som brukes til dette.
 Dette gjøres først ved at xml eller json meldingene validerer mot tilhørende skjema (xsd, json-schema) for den meldingstypen i protokollen.
 Deretter har hver TestCase definert tester på innholdet i meldingen som blir validert.
 
+## Applikasjon
+
+Applikasjonen kjører front-end for seg selv og ligger i **web-ui** mappen og backend som en enkeltstående applikasjon som ligger i **api** mappen. 
+Backend har en BackgroundService (FiksResponseMessageService.cs) som konsumerer meldinger fra Fiks-IO og har dermed sin egen Fiks-IO klient. 
+Sending av meldinger tar FiksRequestMessageService.cs seg av og har også sin egen Fiks-IO klient. 
+Merk at denne todelingen gjør at FiksRequestMessageService ikke trenger å bry seg om tilstanden til connection mot Fiks-IO (health/keepAlive) da den bare bruker rest-api for å sende meldinger. 
+
+
 ## TestCase
 TestCasene ligger i mappen `KS.FiksProtokollValidator.WebAPI/TestCases`. Deretter under mappe for den protokollen TestCase tilhører. F.eks. mappen `no.ks.fiks.arkiv.v1` for Fiks-Arkiv protokollen.
 Et TestCase har sin egen mappe med et kortnavn for testen. Typisk er navnet bestående av den meldingstypen den tester + en suffix. 

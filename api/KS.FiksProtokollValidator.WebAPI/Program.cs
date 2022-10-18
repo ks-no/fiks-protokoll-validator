@@ -1,12 +1,11 @@
 using System;
 using System.IO;
-using System.Reflection;
+using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Health;
 using KS.FiksProtokollValidator.WebAPI.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +19,7 @@ namespace KS.FiksProtokollValidator.WebAPI
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var aspnetcoreEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var logstashDestination = Environment.GetEnvironmentVariable("LOGSTASH_DESTINATION");
@@ -54,12 +53,24 @@ namespace KS.FiksProtokollValidator.WebAPI
             Log.Information("LOGSTASH_DESTINATION: {LogstashDestination}", logstashDestination);
             Log.Information("Path.PathSeparator: {PathSeparator}", Path.PathSeparator);
 
-            var app = CreateHostBuilder2(args).Build();
-            app.MapHealthChecks("/healthz");
+            var appBuilder = CreateHostBuilder(args);
+            
+            var startup = new Startup(appBuilder.Configuration);
+            startup.ConfigureServices(appBuilder.Services);
 
-            
+            var app = appBuilder.Build();
+            startup.Configure(app, appBuilder.Environment);
+
+            app.MapHealthChecks("/api/healthz");
+
             MigrateAndSeedDatabase(app);
-            
+
+            Log.Information("WebApplication api started running with urls: ");
+            foreach (var appUrl in app.Urls)
+            {
+                Log.Information(appUrl);
+            }
+
             app.Run();
         }
         
@@ -82,7 +93,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             }
         }
 
-        private static WebApplicationBuilder CreateHostBuilder2(string[] args)
+        private static WebApplicationBuilder CreateHostBuilder(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddHealthChecks().AddCheck<FiksIOHealthCheck>("FiksIO");
@@ -90,16 +101,5 @@ namespace KS.FiksProtokollValidator.WebAPI
             builder.Host.UseSerilog();
             return builder;
         }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                }).ConfigureAppConfiguration((config) =>
-                {
-                    config.AddEnvironmentVariables("fiksProtokollValidator_");
-                })
-                .UseSerilog();
     }
 }
