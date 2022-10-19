@@ -1,6 +1,6 @@
 ﻿{
-    "testName": "Søk på respons='saksmappe' og felt='mappe.tittel' med responsType='utvidet'",
-    "description": "Søker på alle saksmapper som inneholder 'test' i tittelen. felt='mappe.tittel', respons='saksmappe', responsType='utvidet'",
+    "testName": "Søk på saksmappe (saksmappeSokdefinisjon) og felt='mappeTittel' med responsType='utvidet'",
+    "description": "Søker på alle saksmapper som inneholder 'test' i tittelen. felt='mappeTittel', sokdefinisjon er saksmappeSokdefinisjon, responsType='utvidet'",
     "testStep": "Normalsituasjon 6",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",
     "operation": "NySok",
