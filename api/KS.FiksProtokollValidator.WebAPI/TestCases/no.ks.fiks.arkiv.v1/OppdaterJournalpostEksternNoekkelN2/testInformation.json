@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Oppdater journalpost referanseEksternNoekkel - med registreringsID som identifikator",
+    "description": "Sender en arkivmelding.oppdater melding for å oppdatere to journalposters referanseEksternNoekkel med registreringsID som identifikator. OBS: bytt ut registreringsID i arkivmelding.xml med noe som eksisterer i ditt arkiv",
+    "testStep": "Normalsituasjon 1 oppdater referanseEksterNoekkel basert på registreringsID",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterJournalpostEksternNoekkel",
+    "situation": "N2",
+    "expectedResult": "",
+    "queriesWithExpectedValues": [],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.kvittering" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.arkiv.v1"
+}

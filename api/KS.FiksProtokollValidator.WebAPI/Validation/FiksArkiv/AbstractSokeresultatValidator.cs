@@ -13,8 +13,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv
                 case SaksmappeSokefelt.MappeSkjermingSkjermingOpphoererDato:
                 case SaksmappeSokefelt.SakSaksaar:
                 case SaksmappeSokefelt.SakSaksdato:
-                case SaksmappeSokefelt.MappeEndretEtterDato:
-                case SaksmappeSokefelt.MappeEndretFoerDato:
+                case SaksmappeSokefelt.MappeEndretDato:
                     return true;
                 default:
                     return false;

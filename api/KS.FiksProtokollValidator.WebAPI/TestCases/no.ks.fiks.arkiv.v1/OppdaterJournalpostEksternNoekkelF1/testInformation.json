@@ -4,7 +4,7 @@
         "eksternnoekkel.fagsystem(FEIL).noekkel(1234) og journalnoekkel.saksaar(2011).sakssekvensnummer(1).journalpostnummer(1)",
     "testStep": "Feilsituasjon 1 Finnes ikke",
     "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
-    "operation": "OppdaterJournalpostEksternNøkkel",
+    "operation": "OppdaterJournalpostEksternNoekkel",
     "situation": "F1",
     "expectedResult": "FinderFault med info om at fagsystem ikke finnes",
     "queriesWithExpectedValues": [],

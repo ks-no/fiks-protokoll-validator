@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<arkivmeldingOppdatering xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivmeldingoppdatering/v1">
+  <meldingId>0717a74b-b429-46ce-b05b-f0ae36dacfe0</meldingId>
+  <tidspunkt>2022-05-02T09:48:34.424087+02:00</tidspunkt>
+  <mappeOppdateringer xsi:type="saksmappeOppdatering">
+    <referanseTilMappe>
+      <mappeID xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">en-mappe-id</mappeID> <!-- you need to replace this with an existing mappeID in your arkiv -->
+    </referanseTilMappe>
+    <saksansvarlig><navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Nelly Ny Saksansvarlig</navn></saksansvarlig>
+  </mappeOppdateringer>
+</arkivmeldingOppdatering>
