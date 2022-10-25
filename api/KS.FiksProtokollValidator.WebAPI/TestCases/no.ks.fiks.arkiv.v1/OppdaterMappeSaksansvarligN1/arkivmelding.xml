@@ -3,10 +3,14 @@
   <meldingId>0717a74b-b429-46ce-b05b-f0ae36dacfe0</meldingId>
   <tidspunkt>2022-05-02T09:48:34.424087+02:00</tidspunkt>
   <mappeOppdateringer xsi:type="saksmappeOppdatering">
-    <referanseEksternNoekkel>
-      <fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivmelding/v1">Fiks protokoll validator</fagsystem>
-      <noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivmelding/v1">ca3ce092-0bfa-46bb-ad18-b00a340cdd8c</noekkel>
-    </referanseEksternNoekkel>
-    <saksansvarlig>Nelly Ny Saksansvarlig</saksansvarlig>
+    <referanseTilMappe>
+      <referanseEksternNoekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1"> <!-- you need to replace this with an existing referanseEksternNoekkel in your arkiv -->
+        <fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Fiks protokoll validator</fagsystem>
+        <noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">ca3ce092-0bfa-46bb-ad18-b00a340cdd8c</noekkel>
+      </referanseEksternNoekkel>
+    </referanseTilMappe>
+    <saksansvarlig>
+      <navn xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Nelly Ny Saksansvarlig</navn>
+    </saksansvarlig>
   </mappeOppdateringer>
 </arkivmeldingOppdatering>

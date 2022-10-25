@@ -38,7 +38,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                     continue;
                 }
 
-
                 if (TestCasesShouldBeInvalid.Contains(testCaseName))
                 {
                     Console.Out.WriteLine($"Skipping validating testcase that should be invalid {testCaseName}");

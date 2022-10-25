@@ -1,0 +1,15 @@
+﻿{
+    "testName":
+        "Oppdater mappe med saksnummer som identifikator - Ny Saksansvarlig på saksmappe", //Forutsetter at det er registrert en enhet med kode Nivå1.Nivå2 og en saksbehandler med initialer Sbh. Små / store bokstaver er ikke signifikante.
+    "description":
+        "Oppdater saksmappe med ny saksansvarlig på saksmappen med saksnummer som identifikator",
+    "testStep": "Normalsituasjon 1 Input Ansvarlig saksbehandler med retur av Saksmappe",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater",
+    "operation": "OppdaterMappeSaksansvarlig",
+    "situation": "N3",
+    "expectedResult": "Kvittering for oppdatert mappe",
+    "queriesWithExpectedValues": [],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.kvittering" ],
+    "supported": true, 
+    "protocol": "no.ks.fiks.arkiv.v1"
+}

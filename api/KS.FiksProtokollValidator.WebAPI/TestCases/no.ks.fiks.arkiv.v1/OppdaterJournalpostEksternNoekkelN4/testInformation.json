@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Oppdater journalpost referanseEksternNoekkel - med referanseEksternNoekkel som identifikator",
+    "description": "Sender en arkivmelding.oppdater melding for å oppdatere en journalpost referanseEksternNoekkel med referanseEksternNoekkel som identifikator.  OBS: bytt ut referanseEksternNoekkel i arkivmelding.xml med noe som eksisterer i ditt arkiv",
+    "testStep": "Normalsituasjon 1 oppdater referanseEksterNoekkel basert på referanseEksternNoekkel",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterJournalpostEksternNoekkel",
+    "situation": "N4",
+    "expectedResult": "",
+    "queriesWithExpectedValues": [],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.kvittering" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.arkiv.v1"
+}
