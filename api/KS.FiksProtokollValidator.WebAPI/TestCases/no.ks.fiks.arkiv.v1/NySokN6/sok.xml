@@ -8,7 +8,7 @@
 	<sokdefinisjon xsi:type="saksmappeSokdefinisjon">
 		<responstype>utvidet</responstype>
 		<parametere>
-			<operator>equal</operator>
+			<operator>wildcardquery</operator>
 			<sokVerdier>
 				<stringvalues>
 					<value>Test*</value>
