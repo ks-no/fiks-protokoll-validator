@@ -155,7 +155,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             if (!_fiksIoClientConsumerService.IsHealthy())
             {
                 Logger.Error("FiksResponseMessageService: self-check detects FiksIOClient connection is down! Restarting background service");
-                _fiksIoClientConsumerService.Reconnect();
+                await _fiksIoClientConsumerService.Reconnect();
                 await StopAsync(default);
                 await StartAsync(default);
             }
