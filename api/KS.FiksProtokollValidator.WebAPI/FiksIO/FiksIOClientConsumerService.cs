@@ -39,6 +39,7 @@ public class FiksIOClientConsumerService : IFiksIOClientConsumerService
     public async Task Reconnect()
     {
         FiksIOConsumerClient.Dispose();
-        await InitializeAsync();
+        Initialization = InitializeAsync();
+        await Initialization;
     }
 }
