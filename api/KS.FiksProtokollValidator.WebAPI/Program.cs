@@ -19,7 +19,7 @@ namespace KS.FiksProtokollValidator.WebAPI
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             var aspnetcoreEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var logstashDestination = Environment.GetEnvironmentVariable("LOGSTASH_DESTINATION");
@@ -57,20 +57,21 @@ namespace KS.FiksProtokollValidator.WebAPI
             
             var startup = new Startup(appBuilder.Configuration);
             startup.ConfigureServices(appBuilder.Services);
-
+            
             var app = appBuilder.Build();
-            startup.Configure(app, appBuilder.Environment);
 
             app.MapHealthChecks("/api/healthz");
 
             MigrateAndSeedDatabase(app);
+            
+            startup.Configure(app, appBuilder.Environment);
 
             Log.Information("WebApplication api started running with urls: ");
             foreach (var appUrl in app.Urls)
             {
                 Log.Information(appUrl);
             }
-
+            
             app.Run();
         }
         

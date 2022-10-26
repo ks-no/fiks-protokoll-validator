@@ -9,7 +9,7 @@ public class FiksIOClientConsumerService : IFiksIOClientConsumerService
 {
     private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
     public IFiksIOClient FiksIOConsumerClient { get; private set; }
-    private AppSettings _appSettings;
+    private readonly AppSettings _appSettings;
 
     public FiksIOClientConsumerService(AppSettings appAppSettings)
     {
@@ -39,6 +39,6 @@ public class FiksIOClientConsumerService : IFiksIOClientConsumerService
     public async Task Reconnect()
     {
         FiksIOConsumerClient.Dispose();
-        Initialization = InitializeAsync();
+        await InitializeAsync();
     }
 }

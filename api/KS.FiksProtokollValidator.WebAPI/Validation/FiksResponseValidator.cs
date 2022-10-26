@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -17,6 +18,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
     public class FiksResponseValidator : IFiksResponseValidator
     {
         private static HashSet<string> _messageTypesWithPayloads;
+        private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
 
         public void Validate(TestSession testSession)
         {
@@ -191,13 +193,21 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 SokeresultatValidator.ValidateXmlPayloadWithSokRequest(xmlPayloadContent, fiksRequest, validationErrors);
             }
             */
-            
-            // Use of xpath checks in testinformation.json
-            var xmlDoc = XDocument.Parse(xmlPayloadContent);
 
-            if (fiksRequest.TestCase.FiksResponseTests != null)
+            try
             {
-                ValidateXmlPayloadWithFiksResponseTests(fiksRequest, validationErrors, xmlDoc);
+                // Use of xpath checks in testinformation.json
+                var xmlDoc = XDocument.Parse(xmlPayloadContent);
+
+                if (fiksRequest.TestCase.FiksResponseTests != null)
+                {
+                    ValidateXmlPayloadWithFiksResponseTests(fiksRequest, validationErrors, xmlDoc);
+                }
+            }
+            catch (Exception e)
+            {
+                Logger.Error($"Klarte ikke å parse xml for validering: {xmlPayloadContent}");
+                validationErrors.Add("Klarte ikke å parse xml for validering.");
             }
         }
 

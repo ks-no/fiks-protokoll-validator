@@ -26,7 +26,7 @@ namespace KS.FiksProtokollValidator.WebAPI
 
         public IConfiguration Configuration { get; }
         
-        public async Task ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
             {

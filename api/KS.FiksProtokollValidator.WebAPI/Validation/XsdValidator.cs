@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -188,10 +189,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
             var xmlReader = XmlReader.Create(new StringReader(payload), xmlReaderSettings);
 
-            while (xmlReader.Read())
+            try
             {
+                while (xmlReader.Read())
+                {
+                }
             }
-
+            catch (Exception e)
+            {
+                validationErrors.Add($"Validating the xml failed. {e.Message}");
+            }
             if (validationHandler.HasErrors())
             {
                 validationErrors.AddRange(validationHandler.errors);
