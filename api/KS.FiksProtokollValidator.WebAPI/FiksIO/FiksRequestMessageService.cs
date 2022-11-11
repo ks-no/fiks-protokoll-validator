@@ -22,7 +22,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly Guid _senderId;
         private AppSettings _appSettings;
-        private const int TTLMinutes = 5;
+        private const int TTLMinutes = 60;
         private readonly FiksIOConfiguration _config;
         private FiksIOClient Client { get; set; }
 
