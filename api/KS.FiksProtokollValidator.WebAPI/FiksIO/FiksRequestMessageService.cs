@@ -75,7 +75,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
 
             fiksRequest.SentAt = DateTime.Now;
-            var result = await Client.Send(messageRequest, payloads);
+            var result = await Client.Send(messageRequest, payloads).ConfigureAwait(false);
 
             return result.MeldingId;
         }
