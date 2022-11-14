@@ -25,7 +25,7 @@ import PayloadFile from "./PayloadFile.vue";
 import axios from "axios";
 import PayloadFileUpload from "@/components/PayloadFileUpload";
 
-require("dotenv").config()
+//require("dotenv").config()
 
 export default {
   name: "testCasePayloadFile",
@@ -39,8 +39,8 @@ export default {
     return {
       payloadFileContent: null,
       fileExtension: null,
-      payloadUrl: this.hasRun ? process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
-      attachmentUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/Attachment/"+ this.fileName
+      payloadUrl: this.hasRun ? import.meta.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : import.meta.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
+      attachmentUrl: import.meta.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/Attachment/"+ this.fileName
     };
   },
   

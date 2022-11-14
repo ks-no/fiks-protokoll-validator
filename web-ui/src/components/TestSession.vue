@@ -85,7 +85,7 @@
 import axios from "axios";
 import Request from "./Request";
 
-require("dotenv").config()
+//require("dotenv").config()
 
 export default {
   name: "TestSession",
