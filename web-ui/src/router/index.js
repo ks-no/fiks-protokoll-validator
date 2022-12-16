@@ -5,14 +5,14 @@ import { createApp } from 'vue';
 import App from './../App.vue';
 import { createRouter, createWebHistory } from "vue-router";
 
-const app = createApp(App);
+//const app = createApp(App);
 
 //app.use(require("moment"));
 
 const routes = [
   {
     path: "/",
-    name: "StartePage",
+    name: "StartPage",
     component: StartPage
   },
   {
