@@ -108,8 +108,6 @@
 import axios from "axios";
 import TestCase from "./TestCase";
 
-//require("dotenv").config()
-
 export default {
   name: "newTestSession",
   
