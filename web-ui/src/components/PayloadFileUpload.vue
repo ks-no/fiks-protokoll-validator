@@ -7,7 +7,7 @@
           <label class="custom-file-label" for="payloadUpload">{{fileUploadText}}</label>
         </div>
         <div class="input-group-append">
-          <button :disabled="file === ''" v-on:click="submitFile()" class="btn btn-primary" title="Last opp egen melding"><span class="fas fa-upload fa-lg"></span><span>Last opp</span></button><div style="width: 30px"><span v-show="fileUploadSuccess === true" style="color:Green; font-size: 30px; margin-left: 10px;"><font-awesome-icon icon="check"></font-awesome-icon></span></div>
+          <button type="button" :disabled="file === ''" v-on:click="submitFile()" class="btn btn-primary" title="Last opp egen melding"><span class="fas fa-upload fa-lg"></span><span>Last opp</span></button><div style="width: 30px"><span v-show="fileUploadSuccess === true" style="color:Green; font-size: 30px; margin-left: 10px;"><font-awesome-icon icon="check"></font-awesome-icon></span></div>
         </div>
       </div>
     </form>
@@ -50,8 +50,7 @@ export default {
             },
             withCredentials: true,
           }
-      ).then(
-          this.uploadSuccess()
+      ).then(value => this.uploadSuccess()
       ).catch(function() {
         console.log("Uploading file failed!")
       })

@@ -25,8 +25,6 @@ import PayloadFile from "./PayloadFile.vue";
 import axios from "axios";
 import PayloadFileUpload from "@/components/PayloadFileUpload";
 
-require("dotenv").config()
-
 export default {
   name: "testCasePayloadFile",
   
