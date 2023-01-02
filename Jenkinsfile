@@ -173,11 +173,13 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
       def customImage
     
       println("Building API code in Docker image")
-      docker.image('docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0').withRun('-e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp').inside() {
+      
+      docker.image('docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0').inside('-e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp') {
         sh '''
             dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
         '''
       }
+      
       println("Building API image")
       customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
       
