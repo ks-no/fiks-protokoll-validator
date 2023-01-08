@@ -25,5 +25,7 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string MaskinPortenCompanyCertificatePassword { get; set; }
         public string MaskinPortenIssuer { get; set; }
         public string MaskinPortenTokenUrl { get; set; }
+        public string AsiceSigningPrivateKey { get; set; }
+        public string AsiceSigningPublicKey { get; set; }
     }
 }

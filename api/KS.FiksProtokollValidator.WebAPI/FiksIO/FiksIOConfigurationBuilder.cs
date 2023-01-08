@@ -51,18 +51,21 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 : null;
             
             // Optional: Use custom amqp host (i.e. for connection to test queue)
-            AmqpConfiguration amqpConfiguration = new AmqpConfiguration(
+            var amqpConfiguration = new AmqpConfiguration(
                 host: appSettings.FiksIOConfig.AmqpHost,
                 port: appSettings.FiksIOConfig.AmqpPort, 
                 sslOption1,
                 "Fiks Protokollvalidator",
                 keepAlive: false);
 
+            var asiceSigningConfiguration = new AsiceSigningConfiguration(appSettings.FiksIOConfig.AsiceSigningPublicKey, appSettings.FiksIOConfig.AsiceSigningPrivateKey);
+
             // Combine all configurations
             return new FiksIOConfiguration(
                 kontoConfiguration: accountConfiguration,
                 integrasjonConfiguration: integrationConfiguration,
                 maskinportenConfiguration: maskinportenClientConfiguration,
+                asiceSigningConfiguration: asiceSigningConfiguration,
                 apiConfiguration: apiConfiguration,
                 amqpConfiguration: amqpConfiguration);
         }
