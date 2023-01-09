@@ -61,6 +61,12 @@ spec:
             - name: protokoll-validator-fiks-io-kryptering
               readOnly: true
               mountPath: /etc/fiks/fiks-io
+            - name: protokoll-validator-fiks-io-asice-privatekey
+              readOnly: true
+              mountPath: /etc/fiks/fiks-io/asice/privatekey
+            - name: protokoll-validator-fiks-io-asice-publickey
+              readOnly: true
+              mountPath: /etc/fiks/fiks-io/asice/publickey
       volumes:
         - name: ks-virksomhetssertifikat-store
           secret:
