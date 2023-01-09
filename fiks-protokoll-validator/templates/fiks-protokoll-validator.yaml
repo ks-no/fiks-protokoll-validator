@@ -68,6 +68,12 @@ spec:
         - name: protokoll-validator-fiks-io-kryptering
           secret:
             secretName: protokoll-validator-fiks-io-kryptering
+        - name: protokoll-validator-fiks-io-asice-privatekey
+            secret:
+              secretName: protokoll-validator-fiks-io-asice-privatekey
+        - name: protokoll-validator-fiks-io-asice-publickey
+            secret:
+              secretName: protokoll-validator-fiks-io-asice-publickey
 ---
 kind: Service
 apiVersion: v1
