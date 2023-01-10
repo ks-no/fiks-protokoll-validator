@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.ASiC_E;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
@@ -51,6 +52,13 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             await Task.CompletedTask;
         }
 
+        private bool AsiceIsVerified(Stream inputStream)
+        {
+            var asiceVerifier = new AsiceVerifier();
+            var asicManifest = asiceVerifier.Verify(inputStream);
+            return asicManifest != null && asicManifest.certificate != null && asicManifest.certificate.Length == 1 && asicManifest.file != null && asicManifest.file.Length == 2 && asicManifest.rootfile == null;
+        }
+
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
         {
             Logger.Information("FiksResponseMessageService: Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
@@ -63,6 +71,23 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     // Verify that message has payload
                     IAsicReader reader = new AsiceReader();
                     await using var inputStream = mottattMeldingArgs.Melding.DecryptedStream.Result;
+                  
+                    if (!AsiceIsVerified(inputStream))
+                    {
+                        if (FiksArkivMeldingtype.IsGyldigProtokollType(mottattMeldingArgs.Melding.MeldingType))
+                        {
+                            mottattMeldingArgs.SvarSender.Svar(FiksArkivMeldingtype.Ugyldigforespørsel,
+                                "Message payload was not signed correctly according to asice standard",
+                                "feilmeldingstype.xml");
+                        }
+                        //TODO sjekke på andre protokoller og svare med korrekt feilmelding
+                        
+                        Logger.Error("FiksResponseMessageService: mottatt melding var ikke korrekt signert med asice. MeldingId: {MeldingId}", mottattMeldingArgs.Melding?.MeldingId);
+                        mottattMeldingArgs.SvarSender?.Ack();
+                        return;
+                        
+                    }
+
                     using var asice = reader.Read(inputStream);
                     foreach (var asiceReadEntry in asice.Entries)
                     {
