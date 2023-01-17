@@ -15,6 +15,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Models
 
         [Required]
         public string Type { get; set; }
+        
+        [Required]
+        public bool IsAsiceVerified { get; set; }
+        
+        [Required]
+        public string PayloadErrors { get; set; }
 
         public List<FiksPayload> FiksPayloads { get; set; }
     }

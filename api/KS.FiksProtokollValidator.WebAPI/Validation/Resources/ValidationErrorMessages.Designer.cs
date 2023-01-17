@@ -164,5 +164,17 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
                 return ResourceManager.GetString("SokeresultatIsNull", resourceCulture);
             }
         }
+        
+        public static string MissingAsiceSigning {
+            get {
+                return ResourceManager.GetString("MissingAsiceSigning", resourceCulture);
+            }
+        }
+        
+        public static string PayloadError {
+            get {
+                return ResourceManager.GetString("PayloadError", resourceCulture);
+            }
+        }
     }
 }
