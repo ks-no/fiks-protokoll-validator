@@ -1,6 +1,5 @@
 using KS.FiksProtokollValidator.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
 
 namespace KS.FiksProtokollValidator.WebAPI.Data
 {
@@ -21,17 +20,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TestCase>().HasIndex(t => t.TestId).IsUnique();
-        }
-    }
-    
-    public class FiksIOMessageDBContextFactory : IDesignTimeDbContextFactory<FiksIOMessageDBContext>
-    {
-        public FiksIOMessageDBContext CreateDbContext(string[] args)
-        {
-            var optionsBuilder = new DbContextOptionsBuilder<FiksIOMessageDBContext>();
-            optionsBuilder.UseSqlServer("your connection string");
-
-            return new FiksIOMessageDBContext(optionsBuilder.Options);
         }
     }
 }
