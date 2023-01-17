@@ -71,9 +71,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             {
                 try
                 {
-                    await using var verifyStream2 = mottattMeldingArgs.Melding.DecryptedStream.Result;
+                    using var verifyStream2 = mottattMeldingArgs.Melding.DecryptedStream;
                     IAsicReader asiceReader = new AsiceReader();
-                    using var asiceReadModel = asiceReader.Read(verifyStream2);
+                    using var asiceReadModel = asiceReader.Read(await verifyStream2);
                   
                     // Verify asice and read payload
                     foreach (var asiceVerifyReadEntry in asiceReadModel.Entries)
