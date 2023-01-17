@@ -7,6 +7,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.ASiC_E;
+using KS.Fiks.ASiC_E.Crypto;
+using KS.Fiks.ASiC_E.Xsd;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
@@ -52,11 +54,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             await Task.CompletedTask;
         }
 
-        private bool AsiceIsVerified(Stream inputStream)
+        private bool AsiceIsVerified(asicManifest asicManifest)
         {
-            var asiceVerifier = new AsiceVerifier();
-            var asicManifest = asiceVerifier.Verify(inputStream);
-            return asicManifest != null && asicManifest.certificate != null && asicManifest.certificate.Length == 1 && asicManifest.file != null && asicManifest.file.Length == 2 && asicManifest.rootfile == null;
+            return asicManifest != null && asicManifest.certificate != null && asicManifest.certificate.Length == 1 && asicManifest.file != null && asicManifest.rootfile == null;
         }
 
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
@@ -64,50 +64,56 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             Logger.Information("FiksResponseMessageService: Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new List<FiksPayload>();
 
+            var isAsiceVerified = false;
+            var payloadErrors = "";
+
             if (mottattMeldingArgs.Melding.HasPayload)
             {
                 try
                 {
-                    // Verify that message has payload
-                    IAsicReader reader = new AsiceReader();
-                    await using var inputStream = mottattMeldingArgs.Melding.DecryptedStream.Result;
+                    await using var verifyStream2 = mottattMeldingArgs.Melding.DecryptedStream.Result;
+                    IAsicReader asiceReader = new AsiceReader();
+                    using var asiceReadModel = asiceReader.Read(verifyStream2);
                   
-                    if (!AsiceIsVerified(inputStream))
+                    // Verify asice and read payload
+                    foreach (var asiceVerifyReadEntry in asiceReadModel.Entries)
                     {
-                        if (FiksArkivMeldingtype.IsGyldigProtokollType(mottattMeldingArgs.Melding.MeldingType))
+                        await using (var entryStream = asiceVerifyReadEntry.OpenStream())
                         {
-                            mottattMeldingArgs.SvarSender.Svar(FiksArkivMeldingtype.Ugyldigforespørsel,
-                                "Message payload was not signed correctly according to asice standard",
-                                "feilmeldingstype.xml");
+                            byte[] fileAsBytes;
+                            await using (MemoryStream ms = new MemoryStream())
+                            {
+                                await entryStream.CopyToAsync(ms);
+                                fileAsBytes = ms.ToArray();
+                            }
+                            payloads.Add(new FiksPayload() { Filename = asiceVerifyReadEntry.FileName, Payload = fileAsBytes });
                         }
-                        //TODO sjekke på andre protokoller og svare med korrekt feilmelding
-                        
-                        Logger.Error("FiksResponseMessageService: mottatt melding var ikke korrekt signert med asice. MeldingId: {MeldingId}", mottattMeldingArgs.Melding?.MeldingId);
-                        mottattMeldingArgs.SvarSender?.Ack();
-                        return;
-                        
                     }
-
-                    using var asice = reader.Read(inputStream);
-                    foreach (var asiceReadEntry in asice.Entries)
+                    try
                     {
-                        await using var entryStream = asiceReadEntry.OpenStream();
-
-                        byte[] fileAsBytes; 
-                        using (MemoryStream ms = new MemoryStream())
+                        var verificationResult = asiceReadModel.DigestVerifier.Verification();
+                        if (verificationResult != null)
                         {
-                            entryStream.CopyTo(ms);
-                            fileAsBytes = ms.ToArray();
-                        }
+                            if (!verificationResult.AllValid)
+                            {
+                                var invalidFileList = verificationResult.InvalidElements.Aggregate((aggregate, element) =>
+                                    aggregate + "," + element);
+                                payloadErrors = $"Asice validering: klarte ikke validere digest for følgende filer {invalidFileList}";
+                            }
 
-                        payloads.Add(new FiksPayload() { Filename = asiceReadEntry.FileName, Payload = fileAsBytes });
+                            isAsiceVerified = AsiceIsVerified(asiceReadModel.VerifiedManifest());
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        payloadErrors = $"Asice validering: klarte ikke validere digest for payload";
                     }
                 }
                 catch (Exception e)
                 {
                     Logger.Error("FiksResponseMessageService: Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                    payloadErrors += $"Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {mottattMeldingArgs.Melding?.MeldingId}, Error: {e.Message}";
                     mottattMeldingArgs.SvarSender?.Ack();
-                    return;
                 }
             }
 
@@ -128,7 +134,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     timesTried++;
                 }
 
-
                 if (testSession != null)
                 {
                     var fiksRequest =
@@ -138,7 +143,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     {
                         ReceivedAt = DateTime.Now,
                         Type = mottattMeldingArgs.Melding.MeldingType,
-                        FiksPayloads = payloads
+                        FiksPayloads = payloads,
+                        IsAsiceVerified = isAsiceVerified,
+                        PayloadErrors = payloadErrors
                     };
 
                     if (fiksRequest == null)
@@ -149,7 +156,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     }
 
                     fiksRequest.FiksResponses ??= new List<FiksResponse>();
-
                     fiksRequest.FiksResponses.Add(responseMessage);
 
                     context.Entry(testSession).State = EntityState.Modified;

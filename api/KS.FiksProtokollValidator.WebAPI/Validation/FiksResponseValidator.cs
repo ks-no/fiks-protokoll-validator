@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
+using KS.Fiks.ASiC_E;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
@@ -108,11 +110,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             var receivedPayloadFileName = fiksPayload != null ? fiksPayload.Filename : null;
             var messageType = fiksResponse.Type;
 
-            // Ingen payload forventet og heller ingen payload mottatt. Alt ok.
+            // Ingen payload forventet og heller ingen payload mottatt. Trenger ikke videre validering. Alt ok.
             if (!ShouldHavePayload(messageType) && receivedPayloadFileName == null)
                 return;
-
-            // Forventet payload men ingen mottatt. Feil!
+            
+            // Forventet payload men ingen mottatt. Stopp videre validering. Feil!
             if (ShouldHavePayload(messageType) && receivedPayloadFileName == null)
             {
                 validationErrors.Add(string.Format(
@@ -121,13 +123,29 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
-            // Ingen paylod forventet men det er mottatt fil. Feil!
+            // Ingen paylod forventet men det er mottatt fil. Stopp videre validering. Feil!
             if (!ShouldHavePayload(messageType) && receivedPayloadFileName != null) 
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.UnexpectedPayloadFileMessage, messageType
                 ));
                 return;
+            }
+
+            // Skulle vært asice signed, men gå videre til resten av valideringen. Rapporter feil!
+            if (ShouldHavePayload(messageType) && !fiksResponse.IsAsiceVerified)
+            {
+                validationErrors.Add(string.Format(
+                    ValidationErrorMessages.MissingAsiceSigning
+                ));
+            }
+            
+            // Har en feil i payload. Rapporter feil!
+            if (ShouldHavePayload(messageType) && !string.IsNullOrEmpty(fiksResponse.PayloadErrors))
+            {
+                validationErrors.Add(string.Format(
+                    ValidationErrorMessages.PayloadError, fiksResponse.PayloadErrors
+                ));
             }
 
             // Payload mottat som forventet men feil filformat. Feil!
@@ -149,6 +167,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 return;
             }
 
+            // Validering av innhold, xml og json 
             if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".xml"))
             {
                 var xmlContent = Encoding.Default.GetString(fiksPayload.Payload);
