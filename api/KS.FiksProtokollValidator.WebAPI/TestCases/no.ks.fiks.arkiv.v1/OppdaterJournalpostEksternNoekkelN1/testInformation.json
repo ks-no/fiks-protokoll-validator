@@ -2,7 +2,7 @@
     "testName": "Oppdater journalpost referanseEksternNoekkel - med systemID som identifikator", 
     "description": "Sender en arkivmelding.oppdater melding for å oppdatere en journalpost referanseEksternNoekkel med SystemID som identifikator. OBS: bytt ut systemID i arkivmelding.xml med noe som eksisterer i ditt arkiv",
     "testStep": "Normalsituasjon 1 oppdater referanseEksterNoekkel basert på SystemID",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater",
     "operation": "OppdaterJournalpostEksternNoekkel",
     "situation": "N1",
     "expectedResult": "",
