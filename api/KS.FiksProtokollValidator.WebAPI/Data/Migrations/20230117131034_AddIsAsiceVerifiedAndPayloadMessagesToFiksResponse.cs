@@ -8,10 +8,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "IsAsiceSigned",
+            migrationBuilder.AddColumn<bool>(
+                name: "IsAsiceVerified",
                 table: "FiksResponse",
-                newName: "IsAsiceVerified");
+                type: "bit",
+                nullable: false,
+                defaultValue: false);
 
             migrationBuilder.AddColumn<string>(
                 name: "PayloadErrors",
@@ -24,13 +26,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "PayloadErrors",
+                name: "IsAsiceVerified",
                 table: "FiksResponse");
 
-            migrationBuilder.RenameColumn(
-                name: "IsAsiceVerified",
-                table: "FiksResponse",
-                newName: "IsAsiceSigned");
+            migrationBuilder.DropColumn(
+                name: "PayloadErrors",
+                table: "FiksResponse");
         }
     }
 }

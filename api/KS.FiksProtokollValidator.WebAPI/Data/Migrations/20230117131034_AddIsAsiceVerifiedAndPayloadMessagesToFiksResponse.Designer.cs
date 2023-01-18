@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KS.FiksProtokollValidator.WebAPI.Data.Migrations
 {
     [DbContext(typeof(FiksIOMessageDBContext))]
-    [Migration("20230116074819_AddIsAsiceVerifiedAndPayloadMessagesToFiksResponse")]
+    [Migration("20230117131034_AddIsAsiceVerifiedAndPayloadMessagesToFiksResponse")]
     partial class AddIsAsiceVerifiedAndPayloadMessagesToFiksResponse
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
