@@ -7,9 +7,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Health;
 
 public class FiksIOHealthCheck : IHealthCheck
 {
-    private readonly IFiksIOClientConsumerService _fiksIoClientService;
+    private readonly IFiksProtokolleConnectionService _fiksIoClientService;
     
-    public FiksIOHealthCheck(IFiksIOClientConsumerService fiksIoClientService)
+    public FiksIOHealthCheck(IFiksProtokolleConnectionService fiksIoClientService)
     {
         _fiksIoClientService = fiksIoClientService;
     }

@@ -28,29 +28,33 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
     public class FiksResponseMessageService : BackgroundService
     {
         
-        private readonly IFiksIOClientConsumerService _fiksIoClientConsumerService;
+        private readonly FiksProtokollConnectionManager _fiksProtokollConnectionManager;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private const int HealthCheckInterval = 5 * 60 * 1000;
         
         private Timer _ensureFiksIOConnectionIsOpenTimer { get; set; }
 
-        public FiksResponseMessageService(IServiceScopeFactory scopeFactory, IFiksIOClientConsumerService fiksIoFiksIoClientConsumerService)
+        public FiksResponseMessageService(IServiceScopeFactory scopeFactory, FiksProtokollConnectionManager manager)
         {
             _scopeFactory = scopeFactory;
-            _fiksIoClientConsumerService = fiksIoFiksIoClientConsumerService;
+            _fiksProtokollConnectionManager = manager;
             // Self-healing check
             _ensureFiksIOConnectionIsOpenTimer = new Timer(Callback, null, HealthCheckInterval, HealthCheckInterval);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Information("Starter subscription - ExectueAsync");
-            
-            await _fiksIoClientConsumerService.Initialization;
+            Logger.Information("FiksResponseMessageService ExectueAsync start");
+
+            foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.FiksProtokollConnectionServices)
+            {
+                Logger.Information($"Starter subscription for {fiksIoClientConsumerService.Key}");
+                await fiksIoClientConsumerService.Value.Initialization;
+                fiksIoClientConsumerService.Value.FiksIOClient.NewSubscription(OnMottattMelding);
+            }
 
             stoppingToken.ThrowIfCancellationRequested();
-            _fiksIoClientConsumerService.FiksIOConsumerClient.NewSubscription(OnMottattMelding);   
             await Task.CompletedTask;
         }
 
@@ -174,19 +178,22 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         
         private async void Callback(object o)
         {
-            await EnsureFiksIOConnectionIsOpen().ConfigureAwait(false);
+            await EnsureFiksIOConnectionsAreOpen().ConfigureAwait(false);
         }
         
         
-        private async Task EnsureFiksIOConnectionIsOpen()
+        private async Task EnsureFiksIOConnectionsAreOpen()
         {
             // await FiksIOClient initialization
-            await _fiksIoClientConsumerService.Initialization;
-            
-            if (!_fiksIoClientConsumerService.IsHealthy())
+            foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.FiksProtokollConnectionServices)
+            {
+                await fiksIoClientConsumerService.Value.Initialization;    
+            }
+
+            if (!_fiksProtokollConnectionManager.IsHealthy())
             {
                 Logger.Error("FiksResponseMessageService: self-check detects FiksIOClient connection is down! Restarting background service");
-                await _fiksIoClientConsumerService.Reconnect();
+                await _fiksProtokollConnectionManager.Reconnect();
                 await StopAsync(default);
                 await StartAsync(default);
             }

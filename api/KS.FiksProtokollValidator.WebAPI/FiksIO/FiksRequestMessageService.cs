@@ -17,39 +17,37 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
      * The FiksIOClient is only used for sending and we are not using the Fiks-IO connection for receiving messages
      * That means we are not interested in any health check or keepAlive for this Fiks-IO connection
      */
+    
+    //TODO We should try using only the Fiks-IO-Send client as an example of how this could play out
     public class FiksRequestMessageService : IFiksRequestMessageService
     {
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
-        private readonly Guid _senderId;
-        private AppSettings _appSettings;
         private const int TTLMinutes = 60;
         private readonly FiksIOConfiguration _config;
-        private FiksIOClient Client { get; set; }
+        private FiksProtokollConnectionManager _fiksProtokollConnectionManager;
 
-
-        public FiksRequestMessageService(AppSettings appAppSettings)
+        public FiksRequestMessageService(FiksProtokollConnectionManager fiksProtokollConnectionManager)
         {
-            _appSettings = appAppSettings;
-            _config = FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings);
-            _senderId = _config.KontoConfiguration.KontoId;
-            Initialization = InitializeAsync();
+            _fiksProtokollConnectionManager = fiksProtokollConnectionManager;
         }
 
-        private Task Initialization { get; set; }
-
-        private async Task InitializeAsync()
+        public async Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId, string selectedProtocol)
         {
-            Client = await FiksIOClient.CreateAsync(_config);
-        }
 
-        public async Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId)
-        {
-            await Initialization;
+            var foundProtocol = _fiksProtokollConnectionManager.FiksProtokollConnectionServices.TryGetValue(selectedProtocol, out var connectionService);
+
+            if (foundProtocol)
+            {
+                Log.Error($"Did not find any connection service for the protocol {selectedProtocol}");
+                throw new Exception($"Did not find any connection service for the protocol {selectedProtocol}");
+            }
+
+            await connectionService.Initialization;
             
             var testName = fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation;
             var headere = new Dictionary<string, string>() { { "protokollValidatorTestName", testName } };
             var ttl = new TimeSpan(0, TTLMinutes, 0); 
-            var messageRequest = new MeldingRequest(_senderId, receiverId, fiksRequest.TestCase.MessageType, ttl, headere);
+            var messageRequest = new MeldingRequest(connectionService.FiksIOClient.KontoId, receiverId, fiksRequest.TestCase.MessageType, ttl, headere);
 
             var payloads = new List<IPayload>();
 
@@ -75,15 +73,14 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
 
             fiksRequest.SentAt = DateTime.Now;
-            var result = await Client.Send(messageRequest, payloads).ConfigureAwait(false);
+            var result = await connectionService.FiksIOClient.Send(messageRequest, payloads).ConfigureAwait(false);
 
             return result.MeldingId;
         }
 
         public void Dispose()
         {
-            Logger.Information("FiksRequestMessageService: Dispose");
-            Client?.Dispose();
+            _fiksProtokollConnectionManager.Dispose();
         }
     }
 }

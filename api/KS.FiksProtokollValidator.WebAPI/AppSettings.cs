@@ -14,11 +14,11 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string ApiScheme { get; set; }
         public string AmqpHost { get; set; }
         public int AmqpPort { get; set; }
-        public Guid FiksIoAccountId { get; set; }
+        
+        public FiksProtokollKontoConfig[] ProtokollKontoConfigs { get; set; }
         public Guid FiksIoIntegrationId { get; set; }
         public string FiksIoIntegrationPassword { get; set; }
         public string FiksIoIntegrationScope { get; set; }
-        public string FiksIoPrivateKey { get; set; }
         public string MaskinPortenAudienceUrl { get; set; }
         public string MaskinPortenCompanyCertificateThumbprint { get; set; }
         public string MaskinPortenCompanyCertificatePath { get; set; }
@@ -27,5 +27,12 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string MaskinPortenTokenUrl { get; set; }
         public string AsiceSigningPrivateKey { get; set; }
         public string AsiceSigningPublicKey { get; set; }
+    }
+
+    public class FiksProtokollKontoConfig
+    {
+        public string Protocol { get; set; }
+        public Guid AccountId { get; set; }
+        public string PrivateKey { get; set; }
     }
 }

@@ -188,7 +188,8 @@ export default {
       }
       const params = {
         recipientId: this.recipientId,
-        selectedTestCaseIds: this.selectedTests
+        selectedTestCaseIds: this.selectedTests,
+        protocol: this.selectedProtocol
       };
       
       await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params, {withCredentials: true})

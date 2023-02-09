@@ -55,13 +55,13 @@ namespace KS.FiksProtokollValidator.WebAPI
             // get configuration from appsettings.json - use as singleton
             var appSettings = CreateAppSettings();
             services.AddSingleton(appSettings);
-            var fiksIOClientService = new FiksIOClientConsumerService(appSettings);
-            services.AddSingleton<IFiksIOClientConsumerService>(fiksIOClientService);
+            var fiksProtokollServicesManager = new FiksProtokollConnectionManager(appSettings);
+            services.AddSingleton(fiksProtokollServicesManager);
             services.AddControllers();
             services.AddHostedService<FiksResponseMessageService>();
             services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            var fiksRequestMessageService = new FiksRequestMessageService(appSettings);
-            services.AddSingleton<IFiksRequestMessageService>(fiksRequestMessageService);
+            //var fiksRequestMessageService = new FiksRequestMessageService(appSettings);
+            services.AddSingleton<FiksRequestMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }

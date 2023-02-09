@@ -5,15 +5,15 @@ using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
 
-public class FiksIOClientConsumerService : IFiksIOClientConsumerService
+public class FiksProtokollConnectionService : IFiksProtokolleConnectionService
 {
     private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
-    public IFiksIOClient FiksIOConsumerClient { get; private set; }
-    private readonly AppSettings _appSettings;
+    public IFiksIOClient FiksIOClient { get; private set; }
+    private readonly FiksProtokollConsumerServiceSettings _consumerServiceSettings;
 
-    public FiksIOClientConsumerService(AppSettings appAppSettings)
+    public FiksProtokollConnectionService(FiksProtokollConsumerServiceSettings fiksProtokollKontoConfig)
     {
-        _appSettings = appAppSettings;
+        _consumerServiceSettings = fiksProtokollKontoConfig;
         Initialization = InitializeAsync();
     }
 
@@ -21,14 +21,14 @@ public class FiksIOClientConsumerService : IFiksIOClientConsumerService
 
     private async Task InitializeAsync()
     {
-        FiksIOConsumerClient = await FiksIOClient.CreateAsync(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_appSettings));
+        FiksIOClient = await Fiks.IO.Client.FiksIOClient.CreateAsync(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_consumerServiceSettings));
     }
 
     public bool IsHealthy()
     {
-        if (FiksIOConsumerClient != null)
+        if (FiksIOClient != null)
         {
-            var status = FiksIOConsumerClient.IsOpen();
+            var status = FiksIOClient.IsOpen();
             Logger.Debug($"FiksIOClientConsumerService: FiksIOCClient.IsOpen() returns {status}");
             return status;
         }
@@ -38,8 +38,14 @@ public class FiksIOClientConsumerService : IFiksIOClientConsumerService
 
     public async Task Reconnect()
     {
-        FiksIOConsumerClient.Dispose();
+        FiksIOClient.Dispose();
         Initialization = InitializeAsync();
         await Initialization;
+    }
+
+    public void Dispose()
+    {
+        FiksIOClient?.Dispose();
+        Initialization?.Dispose();
     }
 }
