@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Bestilling av oppstartsmøte",
+    "description": "Bestilling av oppstartsmøte for plan",
+    "testStep": "Normalsituasjon 1 Input BestillingAvOppstartsmøte, retur bekreftelse på mottak",
+    "messageType": "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer",
+    "operation": "BestillingAvOppstartsmøte",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "samplePath": "Samples/BestillingAvOppstartsmøte",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.plan.v2"
+}

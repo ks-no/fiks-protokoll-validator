@@ -18,7 +18,7 @@ public class FiksProtokollConnectionManager
     {
         _appSettings = appAppSettings;
         FiksProtokollConnectionServices = new Dictionary<string, FiksProtokollConnectionService>();
-        foreach (var protokollKontoConfig in _appSettings.FiksIOConfig.ProtokollKontoConfigs)
+        foreach (var protokollKontoConfig in _appSettings.FiksIOConfig.ProtocolAccounts)
         {
             var service = new FiksProtokollConnectionService(MapToSettings(_appSettings, protokollKontoConfig));
             FiksProtokollConnectionServices.Add(protokollKontoConfig.Protocol, service);
@@ -56,11 +56,11 @@ public class FiksProtokollConnectionManager
     }
 
     private FiksProtokollConsumerServiceSettings MapToSettings(AppSettings appSettings,
-        FiksProtokollKontoConfig fiksProtokollKontoConfig)
+        ProtokollKonto protokollKonto)
     {
         return new FiksProtokollConsumerServiceSettings
         {
-            AccountId = fiksProtokollKontoConfig.AccountId,
+            AccountId = protokollKonto.AccountId,
             AmqpHost = appSettings.FiksIOConfig.AmqpHost,
             AmqpPort = appSettings.FiksIOConfig.AmqpPort,
             ApiHost = appSettings.FiksIOConfig.ApiHost,
@@ -78,7 +78,7 @@ public class FiksProtokollConnectionManager
             MaskinPortenIssuer = appSettings.FiksIOConfig.MaskinPortenIssuer,
             MaskinPortenAudienceUrl = appSettings.FiksIOConfig.MaskinPortenAudienceUrl,
             MaskinPortenTokenUrl = appSettings.FiksIOConfig.MaskinPortenTokenUrl,
-            PrivateKey = fiksProtokollKontoConfig.PrivateKey,
+            PrivateKey = protokollKonto.PrivateKey,
         };
     }
 

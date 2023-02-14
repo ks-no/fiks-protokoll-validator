@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using KS.Fiks.IO.Client;
 using KS.FiksProtokollValidator.WebAPI.Data;

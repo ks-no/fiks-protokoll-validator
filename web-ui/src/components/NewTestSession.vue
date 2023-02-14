@@ -137,9 +137,7 @@ export default {
         options: [
           { value: "ingen", text: 'Velg en FIKS-protokoll'},
           { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
-          { value: 'no.ks.fiks.politisk.behandling.klient.v1', text: 'no.ks.fiks.politisk.behandling.v1 (klient)' },
-          { value: 'no.ks.fiks.politisk.behandling.tjener.v1', text: 'no.ks.fiks.politisk.behandling.v1 (tjener)'},
-          { value: 'no.ks.fiks.gi.plan.klient', text: 'no.ks.fiks.gi.plan.klient'}
+          { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2'}
         ]
     };
   },

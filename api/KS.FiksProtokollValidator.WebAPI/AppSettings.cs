@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace KS.FiksProtokollValidator.WebAPI
 {
@@ -15,7 +16,7 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string AmqpHost { get; set; }
         public int AmqpPort { get; set; }
         
-        public FiksProtokollKontoConfig[] ProtokollKontoConfigs { get; set; }
+        public List<ProtokollKonto> ProtocolAccounts { get; set; }
         public Guid FiksIoIntegrationId { get; set; }
         public string FiksIoIntegrationPassword { get; set; }
         public string FiksIoIntegrationScope { get; set; }
@@ -29,7 +30,7 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string AsiceSigningPublicKey { get; set; }
     }
 
-    public class FiksProtokollKontoConfig
+    public class ProtokollKonto
     {
         public string Protocol { get; set; }
         public Guid AccountId { get; set; }

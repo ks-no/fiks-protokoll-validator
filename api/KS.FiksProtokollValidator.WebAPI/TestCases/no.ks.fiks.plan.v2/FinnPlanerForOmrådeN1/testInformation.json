@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Finn planer for område",
+    "description": "Finn planer for område",
+    "testStep": "Normalsituasjon 1 Input FinnPlanerForOmråde, retur plan(er)",
+    "messageType": "no.ks.fiks.plan.v2.innsyn.planerforomraade.finn",
+    "operation": "FinnPlanerForOmråde",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat søk, og retur av plan(er)",
+    "samplePath": "Samples/FinnPlanerForOmraade",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.plan.v2"
+}
