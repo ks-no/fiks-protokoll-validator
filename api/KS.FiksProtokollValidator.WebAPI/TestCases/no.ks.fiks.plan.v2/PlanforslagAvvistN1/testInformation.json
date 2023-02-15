@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Planforslag avvist",
+    "description": "Planforslag avvist",
+    "testStep": "Normalsituasjon 1 Input PlanforslagAvvist, retur bekreftelse på mottak",
+    "messageType": "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer",
+    "operation": "PlanforslagAvvist",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
+    "samplePath": "Samples/PlanforslagAvvist",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.plan.v2"
+}

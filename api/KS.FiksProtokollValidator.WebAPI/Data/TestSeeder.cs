@@ -4,9 +4,7 @@ using System.Linq;
 using System.Reflection;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Resources;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Newtonsoft.Json.Linq;
 using Serilog;
 

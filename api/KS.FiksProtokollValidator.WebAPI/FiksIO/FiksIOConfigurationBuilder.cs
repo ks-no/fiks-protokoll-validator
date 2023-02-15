@@ -10,41 +10,41 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     public static class FiksIOConfigurationBuilder
     {
-        public static FiksIOConfiguration CreateFiksIOConfiguration(AppSettings appSettings)
+        public static FiksIOConfiguration CreateFiksIOConfiguration(FiksProtokollConsumerServiceSettings settings)
         {
             var ignoreSSLError = Environment.GetEnvironmentVariable("AMQP_IGNORE_SSL_ERROR");
             
             var accountConfiguration = new KontoConfiguration(
-                kontoId: appSettings.FiksIOConfig.FiksIoAccountId,
-                privatNokkel: File.ReadAllText(appSettings.FiksIOConfig.FiksIoPrivateKey)
+                kontoId: settings.AccountId,
+                privatNokkel: File.ReadAllText(settings.PrivateKey)
             );
 
             // Id and password for integration associated to the Fiks IO account.
             var integrationConfiguration = new IntegrasjonConfiguration(
-                integrasjonId: appSettings.FiksIOConfig.FiksIoIntegrationId,
-                integrasjonPassord: appSettings.FiksIOConfig.FiksIoIntegrationPassword,
-                scope: appSettings.FiksIOConfig.FiksIoIntegrationScope);
+                integrasjonId: settings.FiksIoIntegrationId,
+                integrasjonPassord: settings.FiksIoIntegrationPassword,
+                scope: settings.FiksIoIntegrationScope);
 
             // ID-porten machine to machine configuration
             var maskinportenClientConfiguration = new MaskinportenClientConfiguration(
-                audience: appSettings.FiksIOConfig.MaskinPortenAudienceUrl,
-                tokenEndpoint: appSettings.FiksIOConfig.MaskinPortenTokenUrl,
-                issuer: appSettings.FiksIOConfig.MaskinPortenIssuer,
+                audience: settings.MaskinPortenAudienceUrl,
+                tokenEndpoint: settings.MaskinPortenTokenUrl,
+                issuer: settings.MaskinPortenIssuer,
                 numberOfSecondsLeftBeforeExpire: 10, // The token will be refreshed 10 seconds before it expires
-                certificate: GetCertificate(appSettings.FiksIOConfig.MaskinPortenCompanyCertificateThumbprint, appSettings.FiksIOConfig.MaskinPortenCompanyCertificatePath, appSettings.FiksIOConfig.MaskinPortenCompanyCertificatePassword));
+                certificate: GetCertificate(settings.MaskinPortenCompanyCertificateThumbprint, settings.MaskinPortenCompanyCertificatePath, settings.MaskinPortenCompanyCertificatePassword));
 
             // Optional: Use custom api host (i.e. for connecting to test api)
             var apiConfiguration = new ApiConfiguration(
-                scheme: appSettings.FiksIOConfig.ApiScheme,
-                host: appSettings.FiksIOConfig.ApiHost,
-                port: appSettings.FiksIOConfig.ApiPort);
+                scheme: settings.ApiScheme,
+                host: settings.ApiHost,
+                port: settings.ApiPort);
 
 
             var sslOption1 = (!string.IsNullOrEmpty(ignoreSSLError) && ignoreSSLError == "true")
                 ? new SslOption()
                 {
                     Enabled = true,
-                    ServerName = appSettings.FiksIOConfig.AmqpHost,
+                    ServerName = settings.AmqpHost,
                     CertificateValidationCallback =
                         (RemoteCertificateValidationCallback) ((sender, certificate, chain, errors) => true)
                 }
@@ -52,13 +52,13 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             
             // Optional: Use custom amqp host (i.e. for connection to test queue)
             var amqpConfiguration = new AmqpConfiguration(
-                host: appSettings.FiksIOConfig.AmqpHost,
-                port: appSettings.FiksIOConfig.AmqpPort, 
+                host: settings.AmqpHost,
+                port: settings.AmqpPort, 
                 sslOption1,
                 "Fiks Protokollvalidator",
                 keepAlive: false);
 
-            var asiceSigningConfiguration = new AsiceSigningConfiguration(appSettings.FiksIOConfig.AsiceSigningPublicKey, appSettings.FiksIOConfig.AsiceSigningPrivateKey);
+            var asiceSigningConfiguration = new AsiceSigningConfiguration(settings.AsiceSigningPublicKey, settings.AsiceSigningPrivateKey);
 
             // Combine all configurations
             return new FiksIOConfiguration(

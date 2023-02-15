@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Hent planfil",
+    "description": "HentPlanfil",
+    "testStep": "Normalsituasjon 1 Input HentPlanfil, retur planfil",
+    "messageType": "no.ks.fiks.plan.v2.innsyn.planfil.hent",
+    "operation": "HentPlanfil",
+    "situation": "N1",
+    "expectedResult": "Retur av planfil",
+    "samplePath": "Samples/HentPlanfil",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": false,
+    "protocol": "no.ks.fiks.plan.v2"
+}

@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Hent Bbox",
+    "description": "Hent Bbox",
+    "testStep": "Normalsituasjon 1 Input HentBbox, retur Bbox",
+    "messageType": "no.ks.fiks.plan.v2.innsyn.bboxforplan.hent",
+    "operation": "HentBbox",
+    "situation": "N1",
+    "expectedResult": "Retur av Bbox",
+    "samplePath": "Samples/HentBbox",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.plan.v2"
+}

@@ -6,6 +6,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     public interface IFiksRequestMessageService : IDisposable
     {
-        Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId);
+        Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId, string selectedProtocol);
     }
 }

@@ -1,0 +1,14 @@
+﻿{
+    "testName": "Hent planområder",
+    "description": "Hent planområder",
+    "testStep": "Normalsituasjon 1 Input HentPlanområder, retur planområde(r)",
+    "messageType": "no.ks.fiks.plan.v2.innsyn.planomraader.hent",
+    "operation": "HentPlanområder",
+    "situation": "N1",
+    "expectedResult": "Bekreftelse på mottat søk, og retur av planområde(r)",
+    "samplePath": "Samples/HentPlanomraader",
+    "queriesWithExpectedValues": [
+    ],
+    "supported": true,
+    "protocol": "no.ks.fiks.plan.v2"
+}

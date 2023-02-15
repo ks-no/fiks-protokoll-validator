@@ -95,6 +95,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             
             //Trim recipient for leading and trailing white-spaces
             testRequest.RecipientId = testRequest.RecipientId.Trim();
+            var selectedProtocol = testRequest.Protocol;
             
             if(!string.IsNullOrEmpty(testSessionId))
             {
@@ -144,7 +145,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
                 try
                 {
-                    fiksRequest.MessageGuid = await _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId);
+                    //TODO trenger å vite hvilken protokoll-konto vi skal sende via? Hente fiks-io klient ved å se hvilken protokoll man kjører tester på
+                    fiksRequest.MessageGuid = await _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId, selectedProtocol);
                 }
                 catch (Exception e)
                 {
