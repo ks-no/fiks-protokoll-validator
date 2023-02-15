@@ -62,7 +62,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             services.AddHostedService<FiksResponseMessageService>();
             services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //var fiksRequestMessageService = new FiksRequestMessageService(appSettings);
-            services.AddSingleton<FiksRequestMessageService>();
+            services.AddSingleton<IFiksRequestMessageService, FiksRequestMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }

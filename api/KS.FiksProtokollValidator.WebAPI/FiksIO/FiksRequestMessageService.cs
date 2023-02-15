@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
-using KS.Fiks.IO.Client;
 using KS.Fiks.IO.Client.Configuration;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Models;
@@ -14,11 +13,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     
     /* This is the producer that sends messages to Fiks-Protokoller/Fiks-IO
-     * The FiksIOClient is only used for sending and we are not using the Fiks-IO connection for receiving messages
-     * That means we are not interested in any health check or keepAlive for this Fiks-IO connection
      */
     
-    //TODO We should try using only the Fiks-IO-Send client as an example of how this could play out
+    //TODO We could try using the Fiks-IO-Send client instead of the shared Fiks-IO-client as an example of how it could be used
     public class FiksRequestMessageService : IFiksRequestMessageService
     {
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
@@ -33,10 +30,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         public async Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId, string selectedProtocol)
         {
-
             var foundProtocol = _fiksProtokollConnectionManager.FiksProtokollConnectionServices.TryGetValue(selectedProtocol, out var connectionService);
 
-            if (foundProtocol)
+            if (!foundProtocol)
             {
                 Log.Error($"Did not find any connection service for the protocol {selectedProtocol}");
                 throw new Exception($"Did not find any connection service for the protocol {selectedProtocol}");
@@ -76,11 +72,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             var result = await connectionService.FiksIOClient.Send(messageRequest, payloads).ConfigureAwait(false);
 
             return result.MeldingId;
-        }
-
-        public void Dispose()
-        {
-            _fiksProtokollConnectionManager.Dispose();
         }
     }
 }

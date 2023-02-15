@@ -4,7 +4,7 @@ using KS.FiksProtokollValidator.WebAPI.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
-    public interface IFiksRequestMessageService : IDisposable
+    public interface IFiksRequestMessageService
     {
         Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId, string selectedProtocol);
     }
