@@ -14,7 +14,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
     
     /* This is the producer that sends messages to Fiks-Protokoller/Fiks-IO
      */
-    
     //TODO We could try using the Fiks-IO-Send client instead of the shared Fiks-IO-client as an example of how it could be used
     public class FiksRequestMessageService : IFiksRequestMessageService
     {
