@@ -43,7 +43,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Information("FiksResponseMessageService ExectueAsync start");
+            Logger.Information($"FiksResponseMessageService ExectueAsync start. Oppretter subscriptions for {_fiksProtokollConnectionManager.FiksProtokollConnectionServices.Count} protokoller");
 
             foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.FiksProtokollConnectionServices)
             {
