@@ -16,7 +16,7 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string AmqpHost { get; set; }
         public int AmqpPort { get; set; }
         
-        public List<ProtokollKonto> ProtocolAccounts { get; set; }
+        public string ProtocolAccountConfigs { get; set; }
         public Guid FiksIoIntegrationId { get; set; }
         public string FiksIoIntegrationPassword { get; set; }
         public string FiksIoIntegrationScope { get; set; }
@@ -30,7 +30,12 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string AsiceSigningPublicKey { get; set; }
     }
 
-    public class ProtokollKonto
+    public class ProtocolAccountConfigurations
+    {
+        public ProtocolAccount[] ProtocolAccounts { get; set; }
+    }
+
+    public class ProtocolAccount
     {
         public string Protocol { get; set; }
         public Guid AccountId { get; set; }
