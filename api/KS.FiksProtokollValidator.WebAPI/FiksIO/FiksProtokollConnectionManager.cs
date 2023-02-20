@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
@@ -16,10 +18,12 @@ public class FiksProtokollConnectionManager
     {
         _appSettings = appAppSettings;
         FiksProtokollConnectionServices = new Dictionary<string, FiksProtokollConnectionService>();
-        foreach (var protokollKontoConfig in _appSettings.FiksIOConfig.ProtocolAccounts)
+
+        var protocolAccounts = JsonConvert.DeserializeObject<ProtocolAccountConfigurations>(_appSettings.FiksIOConfig.ProtocolAccounts);
+        foreach (var protokollKontoConfig in protocolAccounts.ProtocolAccounts)
         {
-            var service = new FiksProtokollConnectionService(MapToSettings(_appSettings, protokollKontoConfig));
-            FiksProtokollConnectionServices.Add(protokollKontoConfig.Protocol, service);
+             var service = new FiksProtokollConnectionService(MapToSettings(_appSettings, protokollKontoConfig));
+             FiksProtokollConnectionServices.Add(protokollKontoConfig.Protocol, service);
         }
     }
 
@@ -54,11 +58,11 @@ public class FiksProtokollConnectionManager
     }
 
     private FiksProtokollConsumerServiceSettings MapToSettings(AppSettings appSettings,
-        ProtokollKonto protokollKonto)
+        ProtocolAccount protocolAccount)
     {
         return new FiksProtokollConsumerServiceSettings
         {
-            AccountId = protokollKonto.AccountId,
+            AccountId = protocolAccount.AccountId,
             AmqpHost = appSettings.FiksIOConfig.AmqpHost,
             AmqpPort = appSettings.FiksIOConfig.AmqpPort,
             ApiHost = appSettings.FiksIOConfig.ApiHost,
@@ -76,7 +80,7 @@ public class FiksProtokollConnectionManager
             MaskinPortenIssuer = appSettings.FiksIOConfig.MaskinPortenIssuer,
             MaskinPortenAudienceUrl = appSettings.FiksIOConfig.MaskinPortenAudienceUrl,
             MaskinPortenTokenUrl = appSettings.FiksIOConfig.MaskinPortenTokenUrl,
-            PrivateKey = protokollKonto.PrivateKey,
+            PrivateKey = protocolAccount.PrivateKey,
         };
     }
 
