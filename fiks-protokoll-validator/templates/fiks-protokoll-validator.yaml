@@ -29,6 +29,11 @@ spec:
       containers:
         - name: fiks-protokoll-validator-api
           image: "{{ .Values.image.repository }}fiks-protokoll-validator-api:{{ .Values.image.tag }}"
+          resources:
+            requests:
+              memory: 512Mi
+            limits:
+              memory: 768Mi
           ports:
             - containerPort: 8080
           env:
