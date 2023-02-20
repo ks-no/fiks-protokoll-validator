@@ -16,7 +16,7 @@ namespace KS.FiksProtokollValidator.WebAPI
         public string AmqpHost { get; set; }
         public int AmqpPort { get; set; }
         
-        public string ProtocolAccounts { get; set; }
+        public string ProtocolAccountConfigs { get; set; }
         public Guid FiksIoIntegrationId { get; set; }
         public string FiksIoIntegrationPassword { get; set; }
         public string FiksIoIntegrationScope { get; set; }

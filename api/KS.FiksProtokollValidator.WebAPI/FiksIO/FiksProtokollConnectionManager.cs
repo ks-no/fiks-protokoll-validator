@@ -19,7 +19,7 @@ public class FiksProtokollConnectionManager
         _appSettings = appAppSettings;
         FiksProtokollConnectionServices = new Dictionary<string, FiksProtokollConnectionService>();
 
-        var protocolAccounts = JsonConvert.DeserializeObject<ProtocolAccountConfigurations>(_appSettings.FiksIOConfig.ProtocolAccounts);
+        var protocolAccounts = JsonConvert.DeserializeObject<ProtocolAccountConfigurations>(_appSettings.FiksIOConfig.ProtocolAccountConfigs);
         foreach (var protokollKontoConfig in protocolAccounts.ProtocolAccounts)
         {
              var service = new FiksProtokollConnectionService(MapToSettings(_appSettings, protokollKontoConfig));
