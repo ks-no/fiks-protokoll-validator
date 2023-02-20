@@ -39,8 +39,11 @@ public class FiksProtokollConnectionManager
                     return false;
                 }
             }
-            Logger.Error("FiksIOClientConsumerService: FiksIOClient is null. Returning not healthy.");
-            return false;
+            else
+            {
+                Logger.Error("FiksIOClientConsumerService: FiksIOClient is null. Returning not healthy.");
+                return false;
+            }
         }
         return true;
     }
