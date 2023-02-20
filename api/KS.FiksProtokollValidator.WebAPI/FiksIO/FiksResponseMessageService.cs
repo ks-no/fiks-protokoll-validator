@@ -197,7 +197,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
             else
             {
-                Logger.Information("FiksResponseMessageService: self-check detects FiksIOClient is ok");
+                Logger.Debug("FiksResponseMessageService: self-check detects FiksIOClient is ok");
             }
         }
     }
