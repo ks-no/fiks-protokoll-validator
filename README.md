@@ -91,7 +91,7 @@ Hvis man ønsker å få nye TestCase ut i test-miljøet kan man forke dette repo
 
 Det kjører applikasjoner som simulerer et system som svarer på meldingene i test. Koden som svarer skal være da valid for hver enkelt validatortest.
 Konto id for simulatorer i test:
-- Arkivsystem: [8752e128-0e2b-494c-8fab-8e3577aca13d](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=8752e128-0e2b-494c-8fab-8e3577aca13d)
+- Arkivsystem: [c8b5ca45-9a76-4d0a-a558-0e2cb19d173f](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=8752e128-0e2b-494c-8fab-8e3577aca13d)
 - Fagsystem arkiv: [91307c59-0ddb-4212-bede-59f98e0edf77](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=91307c59-0ddb-4212-bede-59f98e0edf77)
 - Politisk behandling: [f95f6811-99db-4169-b7df-7090cffa4174](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=f95f6811-99db-4169-b7df-7090cffa4174)
 
