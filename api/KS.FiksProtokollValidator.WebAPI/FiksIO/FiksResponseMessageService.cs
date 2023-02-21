@@ -115,7 +115,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 {
                     Logger.Error("FiksResponseMessageService: Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                     payloadErrors += $"Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {mottattMeldingArgs.Melding?.MeldingId}, Error: {e.Message}";
-                    mottattMeldingArgs.SvarSender?.Ack();
                 }
             }
 
@@ -152,8 +151,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
                     if (fiksRequest == null)
                     {
-                        mottattMeldingArgs.SvarSender?.Ack();
                         Logger.Error("FiksResponseMessageService: Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
+                        mottattMeldingArgs.SvarSender?.Ack();
                         return;
                     }
 
