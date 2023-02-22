@@ -127,7 +127,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
                 // Not optimal? Det er gjort slik fordi man ikke vet om databasen har rukket å skrive før man får svar.
                 var timesTried = 1;
-                while (testSession == null && timesTried <= 5)
+                while (testSession == null && timesTried <= 10)
                 {
                     Thread.Sleep(1000);
                     testSession = context.TestSessions.Include(t => t.FiksRequests).FirstOrDefault(t =>

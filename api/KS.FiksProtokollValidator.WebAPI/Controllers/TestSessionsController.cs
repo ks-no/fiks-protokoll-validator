@@ -145,7 +145,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
                 try
                 {
-                    //TODO trenger å vite hvilken protokoll-konto vi skal sende via? Hente fiks-io klient ved å se hvilken protokoll man kjører tester på
                     fiksRequest.MessageGuid = await _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId, selectedProtocol);
                 }
                 catch (Exception e)
@@ -169,6 +168,9 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 {
                     _context.FiksRequest.Update(fiksRequest);
                 }
+                
+                // Make changes to DB for each sent message. Or else the response may arrive before this whole session is done
+               // await _context.SaveChangesAsync(); 
             }
 
             testSession.SelectedTestCaseIds.Clear();
