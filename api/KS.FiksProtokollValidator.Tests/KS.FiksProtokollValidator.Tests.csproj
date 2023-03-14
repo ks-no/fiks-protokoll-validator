@@ -57,7 +57,7 @@
     <PackageReference Include="FluentAssertions" Version="6.10.0" />
     <PackageReference Include="KS.Fiks.Plan.Client" Version="0.0.13" />
     <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.10" />
-    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.0.1-build.20230124154642460" />
+    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.0.1-build.20230313084543802" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="nunit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
