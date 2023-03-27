@@ -2,7 +2,7 @@
     "testName": "Ny Journalpost - Normalsituasjon 8 - Utgående journalpost",
     "description": "tittel(Tillatelse til ...), journalposttype(U)",
     "testStep": "Normalsituasjon 8 Input Journalpost med retur av Journalpost",
-    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett",
     "operation": "NyJournalpost",
     "situation": "N8",
     "expectedResult": "Journalpost og avskrivning med utfylte standardverdier",

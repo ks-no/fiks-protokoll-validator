@@ -2,7 +2,7 @@
     "testName": "Ny Saksmappe - Normalsituasjon 1",
     "description": "Oppretter ny saksmappe med ReferanseEksternNoekkel. Denne saksmappen skal da kunne hentes igjen vha ReferanseEksternNoekkel ved å kjøre testen HentSaksmappeN1",
     "testStep": "Normalsituasjon 1 ny Saksmappe med retur av Saksmappe",
-    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett",
     "operation": "NySaksmappe",
     "situation": "N1",
     "expectedResult": "Saksmappe med utfylte standardverdier",
