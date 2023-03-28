@@ -198,6 +198,8 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
                 i++;
             }
 
+            deleteIndexes.Reverse();
+
             foreach (var deleteIndex in deleteIndexes)
             {
                 var dbExpMsgRspType = testCase.ExpectedResponseMessageTypes[deleteIndex];
