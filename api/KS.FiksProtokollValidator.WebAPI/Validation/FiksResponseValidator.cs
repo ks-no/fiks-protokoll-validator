@@ -136,7 +136,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             if (ShouldHavePayload(messageType) && !fiksResponse.IsAsiceVerified)
             {
                 validationErrors.Add(string.Format(
-                    ValidationErrorMessages.MissingAsiceSigning
+                    ValidationErrorMessages.MissingAsiceSigning, fiksResponse.PayloadErrors
                 ));
             }
             
