@@ -178,7 +178,7 @@
     <value>Søkeresultat var null</value>
   </data>
   <data name="MissingAsiceSigning" xml:space="preserve">
-    <value>Mangler asice signering.</value>
+    <value>Mangler asice signering. Feilmelding: {0}</value>
   </data>
   <data name="PayloadError" xml:space="preserve">
     <value>Noe var galt med payload. Feilmelding: {0}</value>
