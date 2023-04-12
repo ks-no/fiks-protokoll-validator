@@ -125,7 +125,7 @@ namespace KS.FiksProtokollValidator.Tests
         }
 
         [Test]
-        public void ExistingAttributeIsFound()
+        public void ExistingAttributeIsFoundAndAsiceIsMissing()
         {
             _fiksResponseTest.ExpectedValue = "journalpostKvittering";
             _fiksResponseTest.ValueType = SearchValueType.Attribute;
@@ -146,10 +146,16 @@ namespace KS.FiksProtokollValidator.Tests
             var expectedMessage = string.Format(
                 ValidationErrorMessages.MissingAttributeOnPayloadElement,
                 customTest.ExpectedValue, xmlNodeToLookAt);
+            
+            var expectedMessage2 = string.Format(
+                ValidationErrorMessages.MissingAsiceSigning,
+                customTest.ExpectedValue, xmlNodeToLookAt);
 
             Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
+            Assert.Contains(expectedMessage2, _fiksRequest.FiksResponseValidationErrors);
 
             _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage);
+            _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage2);
 
             Assert.IsEmpty(_fiksRequest.FiksResponseValidationErrors);
         }
