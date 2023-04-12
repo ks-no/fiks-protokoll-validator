@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -33,7 +33,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.13" />
+    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.14" />
     <PackageReference Include="KS.Fiks.ASiC-E" Version="1.0.5" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="3.0.2" />
     <PackageReference Include="KS.Fiks.IO.Politisk.Behandling.Client" Version="0.0.18" />
