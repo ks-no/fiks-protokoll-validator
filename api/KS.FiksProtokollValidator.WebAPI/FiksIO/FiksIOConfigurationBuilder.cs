@@ -55,8 +55,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 host: settings.AmqpHost,
                 port: settings.AmqpPort, 
                 sslOption1,
-                "Fiks Protokollvalidator",
-                keepAlive: false);
+                "Fiks Protokollvalidator");
 
             var asiceSigningConfiguration = new AsiceSigningConfiguration(settings.AsiceSigningPublicKey, settings.AsiceSigningPrivateKey);
 
