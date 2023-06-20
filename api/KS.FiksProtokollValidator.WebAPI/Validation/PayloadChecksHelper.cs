@@ -17,7 +17,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         {
             return new HashSet<string>
             {
-                FiksArkivMeldingtype.ArkivmeldingKvittering,
+                FiksArkivMeldingtype.ArkivmeldingOpprettKvittering,
                 FiksArkivMeldingtype.SokResultatMinimum,
                 FiksArkivMeldingtype.SokResultatNoekler,
                 FiksArkivMeldingtype.SokResultatUtvidet,
@@ -54,12 +54,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
         {
             switch (messageType)
             {
-                case FiksArkivMeldingtype.Arkivmelding:
+                case FiksArkivMeldingtype.ArkivmeldingOpprett:
+                case FiksArkivMeldingtype.ArkivmeldingOppdater:
+                case FiksArkivMeldingtype.AvskrivningOpprett:
+                case FiksArkivMeldingtype.AvskrivningSlett:
                 case FiksArkivMeldingtype.DokumentfilHent:
                 case FiksArkivMeldingtype.MappeHent:
                 case FiksArkivMeldingtype.RegistreringHent:
                     return "arkivmelding.xml";
-                case FiksArkivMeldingtype.ArkivmeldingKvittering:
+                case FiksArkivMeldingtype.ArkivmeldingOpprettKvittering:
                     return "arkivmelding-kvittering.xml";
                 case FiksArkivMeldingtype.Sok:
                     return "sok.xml";
