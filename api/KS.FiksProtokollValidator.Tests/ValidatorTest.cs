@@ -36,18 +36,18 @@ namespace KS.FiksProtokollValidator.Tests
 
             _testCase = new TestCase
             {
-                MessageType = FiksArkivMeldingtype.Arkivmelding,
+                MessageType = FiksArkivMeldingtype.ArkivmeldingOpprett,
                 TestName = "testTestCase",
                 FiksResponseTests = new List<FiksResponseTest>(),
                 PayloadFileName = requestPayloadFilePath,
-                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>() { new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivMeldingtype.ArkivmeldingMottatt }, new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivMeldingtype.ArkivmeldingKvittering } }
+                ExpectedResponseMessageTypes = new List<FiksExpectedResponseMessageType>() { new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivMeldingtype.ArkivmeldingOpprettMottatt }, new FiksExpectedResponseMessageType() { ExpectedResponseMessageType = FiksArkivMeldingtype.ArkivmeldingOpprettKvittering } }
             };
 
             _testCase.FiksResponseTests.Add(_fiksResponseTest);
 
             _fiksResponseMottatt = new FiksResponse
             {
-                Type = FiksArkivMeldingtype.ArkivmeldingMottatt,
+                Type = FiksArkivMeldingtype.ArkivmeldingOpprettMottatt,
             };
 
             var responsePayloadFilePath = "./TestData/Responses/svar_paa_ny_inngaaende.xml";
@@ -62,7 +62,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksResponseKvittering = new FiksResponse
             {
-                Type = FiksArkivMeldingtype.ArkivmeldingKvittering,
+                Type = FiksArkivMeldingtype.ArkivmeldingOpprettKvittering,
                 ReceivedAt = DateTime.Now,
                 FiksPayloads = new List<FiksPayload> { new FiksPayload() { Filename = "arkivmelding-kvittering.xml", Payload = fileAsBytes } },
             };
@@ -149,7 +149,7 @@ namespace KS.FiksProtokollValidator.Tests
             
             var expectedMessage2 = string.Format(
                 ValidationErrorMessages.MissingAsiceSigning,
-                customTest.ExpectedValue, xmlNodeToLookAt);
+                null, xmlNodeToLookAt);
 
             Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
             Assert.Contains(expectedMessage2, _fiksRequest.FiksResponseValidationErrors);

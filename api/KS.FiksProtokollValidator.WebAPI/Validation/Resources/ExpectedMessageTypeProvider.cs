@@ -16,11 +16,43 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources
             return new Dictionary<string, List<string>>
             {
                 {
-                    FiksArkivMeldingtype.Arkivmelding,
+                    FiksArkivMeldingtype.ArkivmeldingOpprett,
                     new List<string>
                     {
-                        FiksArkivMeldingtype.ArkivmeldingMottatt,
-                        FiksArkivMeldingtype.ArkivmeldingKvittering
+                        FiksArkivMeldingtype.ArkivmeldingOpprettMottatt,
+                        FiksArkivMeldingtype.ArkivmeldingOpprettKvittering
+                    }
+                },
+                {
+                    FiksArkivMeldingtype.ArkivmeldingOppdater,
+                    new List<string>
+                    {
+                        FiksArkivMeldingtype.ArkivmeldingOppdaterMottatt,
+                        FiksArkivMeldingtype.ArkivmeldingOppdaterKvittering
+                    }
+                },
+                {
+                    FiksArkivMeldingtype.AvskrivningOpprett,
+                    new List<string>
+                    {
+                        FiksArkivMeldingtype.AvskrivningOpprettMottatt,
+                        FiksArkivMeldingtype.AvskrivningOpprettKvittering
+                    }
+                },
+                {
+                    FiksArkivMeldingtype.AvskrivningSlett,
+                    new List<string>
+                    {
+                        FiksArkivMeldingtype.AvskrivningSlettMottatt,
+                        FiksArkivMeldingtype.AvskrivningSlettKvittering
+                    }
+                },
+                {
+                    FiksArkivMeldingtype.DokumentobjektOpprett,
+                    new List<string>
+                    {
+                        FiksArkivMeldingtype.DokumentobjektOpprettMottatt,
+                        FiksArkivMeldingtype.DokumentobjektOpprettKvittering
                     }
                 },
                 {
