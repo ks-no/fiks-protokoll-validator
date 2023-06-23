@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sok xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/sok/v1">
 	<system>Fiks protokoll validator</system>
-	<tidspunkt>2021-03-23T10:28:33.1952112+01:00</tidspunkt>
 	<take>100</take>
 	<skip>0</skip>
 	<sokdefinisjon xsi:type="mappeSokdefinisjon">
