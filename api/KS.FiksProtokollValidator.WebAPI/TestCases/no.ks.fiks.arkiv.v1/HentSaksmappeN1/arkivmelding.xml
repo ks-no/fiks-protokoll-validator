@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <mappeHent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/mappe/hent/v1">
+	<system>Fiks protokoll validator</system>
 	<referanseTilMappe>
 		<referanseEksternNoekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">
 			<fagsystem>Fiks protokoll validator</fagsystem>

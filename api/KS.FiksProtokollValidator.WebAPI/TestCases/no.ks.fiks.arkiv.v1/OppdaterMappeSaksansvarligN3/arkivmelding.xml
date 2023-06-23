@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <arkivmeldingOppdatering xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivmelding/oppdater/v1">
-  <tidspunkt>2022-05-02T09:48:34.424087+02:00</tidspunkt>
   <mappeOppdateringer xsi:type="saksmappeOppdatering">
     <referanseTilMappe>
       <saksnummer xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1"> <!-- you need to replace this with an existing saksnummer in your arkiv -->
