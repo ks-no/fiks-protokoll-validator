@@ -40,9 +40,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             await connectionService.Initialization;
             
             var testName = fiksRequest.TestCase.Operation + fiksRequest.TestCase.Situation;
-            var headere = new Dictionary<string, string>() { { "protokollValidatorTestName", testName } };
+            var headers = new Dictionary<string, string>() { { "protokollValidatorTestName", testName } };
             var ttl = new TimeSpan(0, TTLMinutes, 0); 
-            var messageRequest = new MeldingRequest(connectionService.FiksIOClient.KontoId, receiverId, fiksRequest.TestCase.MessageType, ttl, headere);
+            var messageRequest = new MeldingRequest(connectionService.FiksIOClient.KontoId, receiverId, fiksRequest.TestCase.MessageType, ttl, headers);
 
             var payloads = new List<IPayload>();
 

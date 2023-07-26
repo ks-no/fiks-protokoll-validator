@@ -48,6 +48,26 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
             }
             
             using (var schemaStream =
+                   arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/avskrivning/opprett/v1",
+                        schemaReader);
+                }
+            }
+            
+            using (var schemaStream =
+                   arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.arkivering.avskrivning.slett.xsd"))
+            {
+                using (var schemaReader = XmlReader.Create(schemaStream))
+                {
+                    _xmlSchemaSet.Add("https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/avskrivning/slett/v1",
+                        schemaReader);
+                }
+            }
+            
+            using (var schemaStream =
                    arkivModelsAssembly.GetManifestResourceStream("KS.Fiks.Arkiv.Models.V1.Schema.V1.no.ks.fiks.arkiv.v1.arkivering.dokumentobjekt.opprett.xsd"))
             {
                 using (var schemaReader = XmlReader.Create(schemaStream))
