@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using KS.Fiks.IO.Client;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
-using KS.FiksProtokollValidator.WebAPI.Health;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

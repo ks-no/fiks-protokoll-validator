@@ -1,13 +1,14 @@
 ﻿{
-    "testName":
-        "Send Avskrivning - Normalsituasjon 1", //Det må velges en journalpost som kan avskrives (en man er mottager av) Hvis journalposten allerede er avskrevet, endres avskrivningen
+    "testName": "Ny Avskrivning - Normalsituasjon 1", //Det må velges en journalpost som kan avskrives (en man er mottager av) Hvis journalposten allerede er avskrevet, endres avskrivningen
     "description":
-        "avskrivningsmaate.kodeverdi(BU), referanseAvskriverEksternNoekkel.fagsystem(FAGSYS).noekkel(123) og journalnoekkel.saksaar(2011).sakssekvensnummer(1).journalpostnummer(1)",
+        "Oppretter ny avskrivning på jounalpost som for dette testcaset har samme referanseEksternNoekkel som testcaset NyJournalpostN1",
     "testStep": "Normalsituasjon 1 Input Avskrivning",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett",
     "operation": "NyAvskrivning",
     "situation": "N1",
-    "expectedResult": "Journalpost oppdatert med ny avskrivning",
+    "expectedResult": "Journalpost blir oppdatert med ny avskrivning i arkivsystem. Validator får mottatt og kvittering meldinger tilbake som begge er tomme",
     "queriesWithExpectedValues": [],
-    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett.mottatt", "no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett.kvittering" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.arkiv.v1"
 }
