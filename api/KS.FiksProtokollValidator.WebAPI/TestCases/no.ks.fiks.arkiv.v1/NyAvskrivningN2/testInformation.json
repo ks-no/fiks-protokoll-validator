@@ -1,13 +1,14 @@
 ﻿{
-    "testName":
-        "Send Avskrivning - Normalsituasjon 2", //Det må velges en journalpost som kan avskrives (en man er mottager av) Hvis journalposten allerede er avskrevet, endres avskrivningen
+    "testName": "Ny Avskrivning - Normalsituasjon 2 - registreringsID som identifikator", //Det må velges en journalpost som kan avskrives (en man er mottager av) Hvis journalposten allerede er avskrevet, endres avskrivningen
     "description":
-        "avskrivningsmaate.kodeverdi(TE) og journalnoekkel.saksaar(2011).sakssekvensnummer(1).journalpostnummer(1)",
-    "testStep": "Normalsituasjon 2 Input Avskrivning",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+        "Oppretter ny avskrivning på jounalpost med registreringsID som identifikator. Verdier i 'avskrevetAv' og 'registreringsID' kan være nødvendig å endre til noe som eksisterer i mottakende arkiv",
+    "testStep": "Normalsituasjon 1 Input Avskrivning",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett",
     "operation": "NyAvskrivning",
     "situation": "N2",
-    "expectedResult": "Journalpost oppdatert med ny avskrivning",
+    "expectedResult": "Journalpost blir oppdatert med ny avskrivning i arkivsystem. Validator får mottatt og kvittering meldinger tilbake som begge er tomme",
     "queriesWithExpectedValues": [],
-    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett.mottatt", "no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett.kvittering" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.arkiv.v1"
 }

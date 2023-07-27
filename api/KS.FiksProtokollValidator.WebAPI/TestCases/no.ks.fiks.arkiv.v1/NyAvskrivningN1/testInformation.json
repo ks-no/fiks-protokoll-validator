@@ -1,7 +1,7 @@
 ﻿{
-    "testName": "Ny Avskrivning - Normalsituasjon 1", //Det må velges en journalpost som kan avskrives (en man er mottager av) Hvis journalposten allerede er avskrevet, endres avskrivningen
+    "testName": "Ny Avskrivning - Normalsituasjon 1 - referanseEksternNoekkel som identifikator", //Det må velges en journalpost som kan avskrives (en man er mottager av) Hvis journalposten allerede er avskrevet, endres avskrivningen
     "description":
-        "Oppretter ny avskrivning på jounalpost som for dette testcaset har samme referanseEksternNoekkel som testcaset NyJournalpostN1",
+        "Oppretter ny avskrivning på jounalpost med 'referanseEksternNoekkel' som identifikator, og for dette testcaset med samme 'referanseEksternNoekkel' som testcaset NyJournalpostN1. Verdier i 'avskrevetAv' og 'referanseEksternNoekkel' kan være nødvendig å endre til noe som eksisterer i mottakende arkiv",
     "testStep": "Normalsituasjon 1 Input Avskrivning",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.avskrivning.opprett",
     "operation": "NyAvskrivning",

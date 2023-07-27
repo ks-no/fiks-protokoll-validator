@@ -1,5 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<arkivmelding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-              xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/arkivmelding/opprett/v1">
-</arkivmelding>
+<nyAvskrivning xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/avskrivning/opprett/v1">
+    <avskrivning>
+        <avskrivningsdato>2023-01-20</avskrivningsdato>
+        <avskrevetAv>protokoll-validator</avskrevetAv>
+        <avskrivningsmaate>
+            <kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Ikke gyldig</kode>
+            <beskrivelse xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Besvart med brev</beskrivelse>
+        </avskrivningsmaate>
+    </avskrivning>
+    <referanseTilJournalpost>
+        <referanseEksternNoekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">
+            <fagsystem xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Fiks protokoll validator</fagsystem>
+            <noekkel xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">e4712424-883c-4068-9cb7-97ac679d7232</noekkel>
+        </referanseEksternNoekkel>
+    </referanseTilJournalpost>
+    <korrespondansepartID>en-korrespondansepart-id</korrespondansepartID>
+</nyAvskrivning>
