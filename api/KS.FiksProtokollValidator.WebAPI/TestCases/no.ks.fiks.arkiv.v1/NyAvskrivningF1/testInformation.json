@@ -1,5 +1,5 @@
 ﻿{
-    "testName": "Send Avskrivning - Feilsituasjon 1 - Ikke gyldig avskrivningsmaate",
+    "testName": "Ny Avskrivning - Feilsituasjon 1 - Ikke gyldig avskrivningsmaate",
     "description":
         "Avskrivning med ikke gyldig avskrivningsmaate. Verdier i 'avskrevetAv' og 'referanseEksternNoekkel' kan være nødvendig å endre til noe som eksisterer i mottakende arkiv",
     "testStep": "Feilsituasjon 1 Ulovlig verdi i avskrivningsmaate",
