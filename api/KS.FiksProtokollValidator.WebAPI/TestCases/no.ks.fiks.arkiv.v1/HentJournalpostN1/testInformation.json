@@ -1,6 +1,6 @@
 {
     "testName": "Hent Registrering - Normalsituasjon 1 - SystemID som nøkkel",
-    "description": "Henter en journalpost basert på SystemID som nøkkel. Testen sjekker ikke at den er lik den som er sendt da man kan laste opp en egen arkivmelding fil i testen med egen SystemID. ",
+    "description": "Henter en journalpost basert på SystemID som nøkkel. Testen sjekker ikke at den er lik den som er sendt da man kan laste opp en egen arkivmelding fil i testen med egen SystemID. Verdi i 'SystemID' kan være nødvendig å endre til noe som eksisterer i mottakende arkiv ",
     "testStep": "Normalsituasjon 1",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.registrering.hent",
     "operation": "HentJournalpost",

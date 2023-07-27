@@ -1,6 +1,6 @@
 {
     "testName": "Hent Saksmappe - Normalsituasjon 1 - ReferanseEksternNoekkel som nøkkel",
-    "description": "Henter en saksmappe basert på ReferanseEksternNoekkel som nøkkel. ReferanseEksternNoekkel tilsvarer den saksmappen som blir opprettet i testen NySaksmappeN1. Hvis man kjører den testen først så skal man få saksmappen som ble opprettet da med denne testen.",
+    "description": "Henter en saksmappe basert på ReferanseEksternNoekkel som nøkkel. ReferanseEksternNoekkel tilsvarer den saksmappen som blir opprettet i testen NySaksmappeN1. Hvis man kjører den testen først så skal man få saksmappen som ble opprettet da med denne testen. Eventuelt må man endre verdier i 'referanseEksternNoekkel' til noe som eksisterer i mottakende arkiv",
     "testStep": "Normalsituasjon 1",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.mappe.hent",
     "operation": "HentSaksmappe",

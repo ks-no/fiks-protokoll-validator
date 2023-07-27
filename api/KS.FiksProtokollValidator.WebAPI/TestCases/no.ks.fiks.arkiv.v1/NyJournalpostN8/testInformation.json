@@ -1,6 +1,6 @@
 ﻿{
     "testName": "Ny Journalpost - Normalsituasjon 8 - Utgående journalpost",
-    "description": "tittel(Tillatelse til ...), journalposttype(U)",
+    "description": "Oppretter ny journalpost med tittel = 'Tillatelse til ...' og journalposttype = 'U'. Verdier i f.eks. 'referanseForelderMappe' og andre identifikator-felter kan være nødvendig å endre til noe som eksisterer i mottakende arkiv",
     "testStep": "Normalsituasjon 8 Input Journalpost med retur av Journalpost",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett",
     "operation": "NyJournalpost",

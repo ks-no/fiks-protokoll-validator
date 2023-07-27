@@ -1,6 +1,6 @@
 {
     "testName": "Ny Journalpost - Normalsituasjon 1 - Nytt internt notat",
-    "description": "tittel(Internt notat) og journalposttype(X)",
+    "description": "Oppretter ny journalpost med tittel = 'Internt notat' og journalposttype = 'X'. Verdier i f.eks. 'referanseForelderMappe' og andre identifikator-felter kan være nødvendig å endre til noe som eksisterer i mottakende arkiv",
     "testStep": "Normalsituasjon 1 Input Journalpost med retur av Journalpost",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett",
     "operation": "NyJournalpost",

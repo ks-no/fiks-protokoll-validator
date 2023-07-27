@@ -1,6 +1,6 @@
 ﻿{
     "testName": "Opprett dokumentobjekt - Normalsituasjon 1", //Et ferdig dokument i PDF/A-format tilknyttes journalposten som hoveddokument. Testes både med BASE64 og med URI.
-    "description": "tilknyttetRegistreringSom.kodeverdi(H), dokumenttype.kodeverdi(VEDTAK), tittel(Tittel), dokumentstatus.kodeverdi(F), variantformat.kodeverdi(A), format.kodeverdi(PDF/A) og referanseJournalpostSystemID(12345)",
+    "description": "Oppretter nytt dokumentobjekt på en dokumentbeskrivelse. Verdi i 'dokumentbeskrivelseID' er nødvendig å endre til noe som eksisterer i mottakende arkiv",
     "testStep": "Normalsituasjon 1 Input Dokument med retur av Dokument opprettet kvittering",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.dokumentobjekt.opprett",
     "operation": "NyttDokumentobjekt",

@@ -1,6 +1,6 @@
 {
     "testName": "Ny Saksmappe - Feilsituasjon 1 - Ugyldigforespørsel - Feil i arkivmelding.xml",
-    "description": "Arkivmeldingen inneholder feil(tittel mangler) som ikke valideres",
+    "description": "Arkivmeldingen inneholder en feil, det vil si at tittel mangler. Den er dermed ikke gyldig i henhold til xsd-skjema og skal føre til en ugyldigforespoersel-melding",
     "testStep": "Feilsituasjon Ugyldigforespørsel Input Saksmappe med retur av feil",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett",
     "operation": "NySaksmappe",

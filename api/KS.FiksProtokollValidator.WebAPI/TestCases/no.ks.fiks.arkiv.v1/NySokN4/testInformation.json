@@ -1,6 +1,6 @@
 ﻿{
     "testName": "Søk på saksmappe (saksmappeSokdefinisjon) og felt='sakSaksdato' mellom 2 datoer med responsType 'minimum'",
-    "description": "Søker på saksmapper som har saksdato mellom 2 datoer. felt='sakSaksdato', sokdefinisjon er saksmappeSokdefinisjon, responsType='minimum'",
+    "description": "Søker på saksmapper som har saksdato mellom 2 datoer. Søket er definert med parameterne: felt = 'sakSaksdato', sokdefinisjon type er 'saksmappeSokdefinisjon', responsType = 'minimum'",
     "testStep": "Normalsituasjon 4",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.sok",
     "operation": "NySok",

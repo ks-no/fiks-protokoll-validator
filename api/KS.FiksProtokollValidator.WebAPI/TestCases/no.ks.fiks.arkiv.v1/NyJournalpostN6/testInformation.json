@@ -1,6 +1,6 @@
 ﻿{
     "testName": "Ny Journalpost - Normalsituasjon 6 - Innkommende journalpost",
-    "description": "tittel(Bestilling av oppmålingsforretning ...), journalposttype(I)", //TODO Hva skaljournalstatus ha for verdi? 
+    "description": "Oppretter ny journalpost med tittel = 'Bestilling av oppmålingsforretning ...' og journalposttype = 'I'. Verdier i f.eks. 'referanseForelderMappe' og andre identifikator-felter kan være nødvendig å endre til noe som eksisterer i mottakende arkiv", //TODO Hva skaljournalstatus ha for verdi? 
     "testStep": "Normalsituasjon 6 Input Journalpost med retur av Journalpost",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett",
     "operation": "NyJournalpost",

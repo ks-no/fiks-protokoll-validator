@@ -1,6 +1,6 @@
 {
     "testName": "Hent Registrering - Normalsituasjon 2 - ReferanseEksternNoekkel som nøkkel",
-    "description": "Henter en journalpost basert på ReferanseEksternNoekkel som nøkkel og med inkluder typene noekkelord og merknad",
+    "description": "Henter en journalpost basert på ReferanseEksternNoekkel som nøkkel og med inkluder-typene noekkelord og merknad. Verdier i 'referanseEksternNoekkel' kan være nødvendig å endre til noe som eksisterer i mottakende arkiv",
     "testStep": "Normalsituasjon 2 Input Journalpost med retur av Journalpost",
     "messageType": "no.ks.fiks.arkiv.v1.innsyn.registrering.hent",
     "operation": "HentJournalpost",

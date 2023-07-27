@@ -1,7 +1,7 @@
 ﻿{
     "testName": "Slett Avskrivning - Normalsituasjon 1",
     "description":
-        "Sletter avskrivning på jounalpost som for dette testcaset har samme referanseEksternNoekkel som testcaset NyJournalpostN1",
+        "Sletter avskrivning på jounalpost som for dette testcaset har samme referanseEksternNoekkel som testcaset NyJournalpostN1, mens 'korrespondansepartID' må settes til noe som eksisterer. Verdi i 'referanseForelderMappe' sammen med 'korrespondansepartID' kan endres til noe annet også som eksisterer i mottakende arkiv",
     "testStep": "Normalsituasjon 1 Slett Avskrivning",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.avskrivning.slett",
     "operation": "SlettAvskrivning",
