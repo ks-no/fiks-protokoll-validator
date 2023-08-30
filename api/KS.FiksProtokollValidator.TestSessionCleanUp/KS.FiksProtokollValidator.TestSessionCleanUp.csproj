@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.16" />
+    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.18" />
     <PackageReference Include="KS.Fiks.Plan.Client" Version="0.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.20" />
