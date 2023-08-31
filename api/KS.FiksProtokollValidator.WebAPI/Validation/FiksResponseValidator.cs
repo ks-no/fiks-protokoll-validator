@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
-using KS.Fiks.ASiC_E;
 using KS.FiksProtokollValidator.WebAPI.Models;
-using KS.FiksProtokollValidator.WebAPI.Validation.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
 using Newtonsoft.Json.Linq;
 using Serilog;

@@ -5,10 +5,10 @@ using System.Reflection;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Models;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.Controllers

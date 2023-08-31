@@ -1,10 +1,4 @@
-﻿using KS.Fiks.IO.Client.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace KS.FiksProtokollValidator.WebAPI.Models
 {

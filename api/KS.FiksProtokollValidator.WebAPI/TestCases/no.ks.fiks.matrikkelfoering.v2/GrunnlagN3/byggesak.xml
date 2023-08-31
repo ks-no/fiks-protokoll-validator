@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Byggesak xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://rep.geointegrasjon.no/Matrikkel/foering/v2">
+  <systemId xsi:nil="true" />
+  <tittel>Gnr. 378, bnr. 416, Oppføring av enebolig, Ekrekneiken 4</tittel>
+  <saksnummer>
+    <saksaar>2023</saksaar>
+    <sakssekvensnummer>327</sakssekvensnummer>
+  </saksnummer>
+  <kategori>
+    <kode>ET</kode>
+    <beskrivelse>Ett-trinns søknad</beskrivelse>
+  </kategori>
+  <vedtak>
+    <beskrivelse>Godkjent Ett-trinns søknad</beskrivelse>
+    <vedtaksdato>2023-06-07T00:00:00</vedtaksdato>
+    <status>
+      <kode>1</kode>
+      <beskrivelse>Godkjent</beskrivelse>
+    </status>
+    <tiltak>
+      <tiltak>
+        <tiltakid>200010</tiltakid>
+        <tiltakstype>
+          <kode>nyttbyggboligformal</kode>
+          <beskrivelse>Nytt bygg - Boligformål</beskrivelse>
+        </tiltakstype>
+      </tiltak>
+    </tiltak>
+    <dispensasjoner />
+  </vedtak>
+  <ansvarligSoeker>
+    <partstype>
+      <kode>Ansvarlig søker</kode>
+      <beskrivelse>Ansvarlig søker</beskrivelse>
+    </partstype>
+    <foedselsnummer />
+    <organisasjonsnummer xsi:nil="true" />
+    <navn>Arve Corneliussen A/S</navn>
+    <adresse>
+      <adresselinje1 />
+      <adresselinje2 xsi:nil="true" />
+      <adresselinje3 xsi:nil="true" />
+      <postnr />
+      <poststed />
+      <landkode xsi:nil="true" />
+    </adresse>
+    <telefonnummer />
+    <mobilnummer />
+    <epost />
+  </ansvarligSoeker>
+  <tiltakshaver>
+    <partstype>
+      <kode>Tiltakshaver</kode>
+      <beskrivelse>Tiltakshaver</beskrivelse>
+    </partstype>
+    <foedselsnummer />
+    <organisasjonsnummer>934161181</organisasjonsnummer>
+    <navn>Norkart AS</navn>
+    <adresse>
+      <adresselinje1 />
+      <adresselinje2 xsi:nil="true" />
+      <adresselinje3 xsi:nil="true" />
+      <postnr />
+      <poststed />
+      <landkode xsi:nil="true" />
+    </adresse>
+    <telefonnummer />
+    <mobilnummer />
+    <epost />
+  </tiltakshaver>
+  <matrikkelopplysninger>
+    <eiendomsidentifikasjon>
+      <matrikkelnummer>
+        <kommunenummer>3411</kommunenummer>
+        <gaardsnummer>378</gaardsnummer>
+        <bruksnummer>416</bruksnummer>
+        <festenummer>0</festenummer>
+        <seksjonsnummer>0</seksjonsnummer>
+      </matrikkelnummer>
+    </eiendomsidentifikasjon>
+    <adresse>
+      <adresse>
+        <adressekode xsi:nil="true" />
+        <adressenavn>Ekrekneiken 4</adressenavn>
+        <adressenummer xsi:nil="true" />
+        <adressebokstav xsi:nil="true" />
+        <undernummer xsi:nil="true" />
+      </adresse>
+    </adresse>
+    <bygning>
+      <bygning>
+        <naeringsgruppe>
+          <kode>X</kode>
+          <beskrivelse>Bolig</beskrivelse>
+        </naeringsgruppe>
+        <bebygdAreal>122</bebygdAreal>
+        <bygningstype>
+          <kode>111</kode>
+          <beskrivelse>Enebolig</beskrivelse>
+        </bygningstype>
+        <bruksenheter>
+          <bruksenhet>
+            <bruksenhetsnummer>
+              <etasjeplan>
+                <kode>H</kode>
+                <beskrivelse>Hovedetasje</beskrivelse>
+              </etasjeplan>
+              <etasjenummer>1</etasjenummer>
+              <loepenummer>1</loepenummer>
+            </bruksenhetsnummer>
+            <bruksenhetstype>
+              <kode>B</kode>
+              <beskrivelse>Bolig</beskrivelse>
+            </bruksenhetstype>
+            <bruksareal>115</bruksareal>
+            <kjoekkentilgang>
+              <kode>1</kode>
+              <beskrivelse>Kjøkken</beskrivelse>
+            </kjoekkentilgang>
+            <antallRom>3</antallRom>
+            <antallBad>2</antallBad>
+            <antallWC>1</antallWC>
+            <adresse>
+              <adressekode />
+              <adressenavn />
+              <adressenummer />
+              <adressebokstav />
+              <undernummer xsi:nil="true" />
+            </adresse>
+            <matrikkelnummer xsi:nil="true" />
+            <endring>Ny</endring>
+          </bruksenhet>
+        </bruksenheter>
+        <etasjer>
+          <etasje>
+            <etasjenummer>1</etasjenummer>
+            <etasjeplan>
+              <kode>H</kode>
+              <beskrivelse>Hovedetasje</beskrivelse>
+            </etasjeplan>
+            <antallBoenheter>1</antallBoenheter>
+            <bruksarealTilAnnet>0</bruksarealTilAnnet>
+            <bruksarealTilBolig>115</bruksarealTilBolig>
+            <bruksarealTotalt>122</bruksarealTotalt>
+            <endring>Ny</endring>
+          </etasje>
+        </etasjer>
+        <avlop>
+          <kode>PrivatKloakk</kode>
+          <beskrivelse>Privat avløpsanlegg</beskrivelse>
+        </avlop>
+        <energiforsyning>
+          <varmefordeling xsi:nil="true" />
+          <energiforsyning>
+            <energiforsyningType>
+              <kode>Elektrisitet</kode>
+              <beskrivelse>Elektrisitet</beskrivelse>
+            </energiforsyningType>
+          </energiforsyning>
+        </energiforsyning>
+        <vannforsyning>
+          <kode>TilknyttetOffVannverk</kode>
+          <beskrivelse>Offentlig vannverk</beskrivelse>
+        </vannforsyning>
+        <endring>Ny</endring>
+        <representasjonsPunkt xsi:nil="true" />
+        <tiltakid>200010</tiltakid>
+        <byggIdent xsi:nil="true" />
+      </bygning>
+    </bygning>
+  </matrikkelopplysninger>
+  <adresse>Ekrekneiken 4</adresse>
+  <referanseAndreSaker />
+  <referanseKlagesaker />
+  <registrertDato>2022-11-28T00:00:00</registrertDato>
+  <saksbehandler>360 Administrator</saksbehandler>
+  <posisjon xsi:nil="true" />
+</Byggesak>

@@ -1,0 +1,13 @@
+{
+    "testName": "Byggesak - Ferdigattest 3 leilighetsbygg",
+    "description": "",
+    "testStep": "Melding og innhold ok",
+    "messageType": "no.ks.fiks.matrikkelfoering.v2.grunnlag",
+    "operation": "Grunnlag",
+    "situation": "N2",
+    "expectedResult": "Meldinger av typen no.ks.fiks.matrikkelfoering.v2.mottatt og no.ks.fiks.matrikkelfoering.v2.kvittering",
+    "queriesWithExpectedValues": [],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.matrikkelfoering.v2.mottatt", "no.ks.fiks.matrikkelfoering.v2.kvittering" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.matrikkelfoering.v2"
+}

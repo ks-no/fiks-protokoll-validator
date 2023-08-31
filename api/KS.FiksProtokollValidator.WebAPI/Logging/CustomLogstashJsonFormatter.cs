@@ -14,7 +14,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Logging
 
     public void Format(LogEvent logEvent, TextWriter output)
     {
-      CustomLogstashJsonFormatter.FormatContent(logEvent, output);
+      FormatContent(logEvent, output);
       output.WriteLine();
     }
 
@@ -25,17 +25,17 @@ namespace KS.FiksProtokollValidator.WebAPI.Logging
       if (output == null)
         throw new ArgumentNullException(nameof (output));
       output.Write('{');
-      CustomLogstashJsonFormatter.WritePropertyAndValue(output, "@timestamp", logEvent.Timestamp.ToString("o"));
+      WritePropertyAndValue(output, "@timestamp", logEvent.Timestamp.ToString("o"));
       output.Write(",");
-      CustomLogstashJsonFormatter.WritePropertyAndValue(output, "level", logEvent.Level.ToString());
+      WritePropertyAndValue(output, "level", logEvent.Level.ToString());
       output.Write(",");
-      CustomLogstashJsonFormatter.WritePropertyAndValue(output, "message", logEvent.MessageTemplate.Render(logEvent.Properties));
+      WritePropertyAndValue(output, "message", logEvent.MessageTemplate.Render(logEvent.Properties));
       if (logEvent.Exception != null)
       {
         output.Write(",");
-        CustomLogstashJsonFormatter.WritePropertyAndValue(output, "exception", logEvent.Exception.ToString());
+        WritePropertyAndValue(output, "exception", logEvent.Exception.ToString());
       }
-      CustomLogstashJsonFormatter.WriteProperties(logEvent.Properties, output);
+      WriteProperties(logEvent.Properties, output);
       output.Write('}');
     }
 
@@ -62,7 +62,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Logging
         str = ",";
         JsonValueFormatter.WriteQuotedJsonString(property.Key[0].ToString().ToLower() + property.Key.Substring(1), output);
         output.Write(':');
-        CustomLogstashJsonFormatter.ValueFormatter.Format(property.Value, output);
+        ValueFormatter.Format(property.Value, output);
       }
     }
   }

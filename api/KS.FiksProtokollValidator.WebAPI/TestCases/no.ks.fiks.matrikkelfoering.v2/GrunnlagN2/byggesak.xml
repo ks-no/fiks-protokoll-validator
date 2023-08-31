@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Byggesak xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://rep.geointegrasjon.no/Matrikkel/foering/v2">
+  <systemId xsi:nil="true" />
+  <tittel>368/6, Kvartsvegen 18A-B, 20A-B og 22A-B - ferdigattest for 3 leilighetsbygg</tittel>
+  <saksnummer>
+    <saksaar>2023</saksaar>
+    <sakssekvensnummer>248</sakssekvensnummer>
+  </saksnummer>
+  <kategori>
+    <kode>FA</kode>
+    <beskrivelse>Søknad om ferdigattest</beskrivelse>
+  </kategori>
+  <vedtak>
+    <beskrivelse>Vedtak om ferdigattest</beskrivelse>
+    <vedtaksdato>2023-04-14T00:00:00</vedtaksdato>
+    <status>
+      <kode>1</kode>
+      <beskrivelse>Innvilget/godkjent</beskrivelse>
+    </status>
+    <tiltak>
+      <tiltak>
+        <tiltakid>981</tiltakid>
+        <tiltakstype>
+          <kode>nyttbyggboligformal</kode>
+          <beskrivelse>Nytt bygg - boligformål</beskrivelse>
+        </tiltakstype>
+      </tiltak>
+    </tiltak>
+  </vedtak>
+  <ansvarligSoeker>
+    <partstype>
+      <kode>Organisasjon</kode>
+    </partstype>
+    <foedselsnummer xsi:nil="true" />
+    <organisasjonsnummer>986276092</organisasjonsnummer>
+    <navn>FIELD GROUP AS</navn>
+    <adresse>
+      <adresselinje1>Postboks 185, Skøyen</adresselinje1>
+      <adresselinje2 xsi:nil="true" />
+      <adresselinje3 xsi:nil="true" />
+      <postnr>0212</postnr>
+      <poststed>OSLO</poststed>
+      <landkode>NO</landkode>
+    </adresse>
+    <telefonnummer xsi:nil="true" />
+    <mobilnummer xsi:nil="true" />
+    <epost xsi:nil="true" />
+  </ansvarligSoeker>
+  <tiltakshaver>
+    <partstype>
+      <kode>Organisasjon</kode>
+    </partstype>
+    <foedselsnummer xsi:nil="true" />
+    <organisasjonsnummer>988415685</organisasjonsnummer>
+    <navn>NATTEN EIENDOM AS</navn>
+    <adresse>
+      <adresselinje1>Telegrafalleen 2</adresselinje1>
+      <adresselinje2 xsi:nil="true" />
+      <adresselinje3 xsi:nil="true" />
+      <postnr>3510</postnr>
+      <poststed>HØNEFOSS</poststed>
+      <landkode>NO</landkode>
+    </adresse>
+    <telefonnummer xsi:nil="true" />
+    <mobilnummer xsi:nil="true" />
+    <epost xsi:nil="true" />
+  </tiltakshaver>
+  <matrikkelopplysninger>
+    <eiendomsidentifikasjon>
+      <matrikkelnummer>
+        <kommunenummer>3411</kommunenummer>
+        <gaardsnummer>368</gaardsnummer>
+        <bruksnummer>6</bruksnummer>
+      </matrikkelnummer>
+    </eiendomsidentifikasjon>
+    <bygning>
+      <bygning>
+        <naeringsgruppe>
+          <kode>Y</kode>
+          <beskrivelse>Annet som ikke er næring</beskrivelse>
+        </naeringsgruppe>
+        <bygningstype>
+          <kode>161</kode>
+          <beskrivelse>Fritidsbygning (hytter, sommerhus o.l.)</beskrivelse>
+        </bygningstype>
+        <avlop xsi:nil="true" />
+        <energiforsyning xsi:nil="true" />
+        <vannforsyning xsi:nil="true" />
+        <endring>Eksisterende</endring>
+        <representasjonsPunkt xsi:nil="true" />
+        <tiltakid xsi:nil="true" />
+        <byggIdent>
+          <bygningsnummer>300641503</bygningsnummer>
+        </byggIdent>
+      </bygning>
+      <bygning>
+        <naeringsgruppe>
+          <kode>Y</kode>
+          <beskrivelse>Annet som ikke er næring</beskrivelse>
+        </naeringsgruppe>
+        <bygningstype>
+          <kode>161</kode>
+          <beskrivelse>Fritidsbygning (hytter, sommerhus o.l.)</beskrivelse>
+        </bygningstype>
+        <avlop xsi:nil="true" />
+        <energiforsyning xsi:nil="true" />
+        <vannforsyning xsi:nil="true" />
+        <endring>Eksisterende</endring>
+        <representasjonsPunkt xsi:nil="true" />
+        <tiltakid xsi:nil="true" />
+        <byggIdent>
+          <bygningsnummer>300641516</bygningsnummer>
+        </byggIdent>
+      </bygning>
+      <bygning>
+        <naeringsgruppe>
+          <kode>Y</kode>
+          <beskrivelse>Annet som ikke er næring</beskrivelse>
+        </naeringsgruppe>
+        <bygningstype>
+          <kode>161</kode>
+          <beskrivelse>Fritidsbygning (hytter, sommerhus o.l.)</beskrivelse>
+        </bygningstype>
+        <avlop xsi:nil="true" />
+        <energiforsyning xsi:nil="true" />
+        <vannforsyning xsi:nil="true" />
+        <endring>Eksisterende</endring>
+        <representasjonsPunkt xsi:nil="true" />
+        <tiltakid xsi:nil="true" />
+        <byggIdent>
+          <bygningsnummer>300641526</bygningsnummer>
+        </byggIdent>
+      </bygning>
+    </bygning>
+  </matrikkelopplysninger>
+  <adresse>Kvartsvegen</adresse>
+  <registrertDato>2023-02-17T00:00:00</registrertDato>
+  <saksbehandler>Erik Tyribakken</saksbehandler>
+  <posisjon xsi:nil="true" />
+</Byggesak>

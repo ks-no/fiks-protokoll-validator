@@ -1,11 +1,9 @@
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Health;
 using KS.FiksProtokollValidator.WebAPI.Logging;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

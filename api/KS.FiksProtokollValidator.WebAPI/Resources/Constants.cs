@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KS.FiksProtokollValidator.WebAPI.Resources
 {
@@ -13,6 +10,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Resources
             { "no.ks.fiks.plan.v2", "payload.json" },
             { "no.ks.fiks.politisk.behandling.klient.v1", "payload.json" },
             { "no.ks.fiks.politisk.behandling.tjener.v1", "payload.json" },
+            { "no.ks.fiks.matrikkelfoering.v2", "byggesak.xml" },
         };
     }
 }
