@@ -1,0 +1,8 @@
+[
+  {
+    "dokumenttype": "Byggesak", // Vedleggstype 
+    "tittel": "Underlag for matrikkelføring",
+    "dokumentnummer": 1, // Dette tilsvarer index for denne filen i payloads for Fiks IO meldingen 
+    "filnavn": "byggesak.xml" // Filnavn i Fiks IO meldingen
+  }
+]

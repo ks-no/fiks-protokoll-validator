@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Mime;
 using System.Reflection;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
@@ -48,7 +49,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     "GetMessagePayloadFile get file for protocol {Protocol}, testCaseName {TestCaseName}, {TestCaseId} with filePath {FilePath}",
                     testCase.Protocol, testCase.TestName, testCaseId, filePath);
                 
-                var contentDispositionHeader = new System.Net.Mime.ContentDisposition()
+                var contentDispositionHeader = new ContentDisposition()
                 {
                     FileName = testCase.PayloadFileName,
                     DispositionType = "attachment"
@@ -86,7 +87,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                     return BadRequest($"Fant ikke testcase med id {testCaseId} for testsession med id {testSessionId}");
                 }
 
-                var contentDispositionHeader = new System.Net.Mime.ContentDisposition()
+                var contentDispositionHeader = new ContentDisposition()
                 {
                     FileName = fiksRequest.CustomPayloadFile != null ? fiksRequest.CustomPayloadFile.Filename : testCase.PayloadFileName,
                     DispositionType = "attachment"

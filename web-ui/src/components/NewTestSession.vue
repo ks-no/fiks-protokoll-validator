@@ -137,7 +137,8 @@ export default {
         options: [
           { value: "ingen", text: 'Velg en FIKS-protokoll'},
           { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
-          { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2'}
+          { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2'},
+          { value: 'no.ks.fiks.matrikkelfoering.v2', text: 'no.ks.fiks.matrikkelfoering.v2'}
         ]
     };
   },
