@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.Fiks.Protokoller.V1.Models.Feilmelding;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
@@ -30,11 +30,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
-                FiksPlanMeldingtypeV2.ResultatFinnPlaner,
+                FiksPlanMeldingtypeV2.ResultatFinnArealplaner,
                 FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
                 FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger,
-                FiksPlanMeldingtypeV2.ResultatOpprettArealplan,
+                FiksPlanMeldingtypeV2.KvitteringOpprettArealplan,
                 FiksPlanMeldingtypeV2.ResultatHentAktoerer,
                 FiksPlanMeldingtypeV2.ResultatHentArealplan,
                 FiksPlanMeldingtypeV2.ResultatHentBboxForPlan,
@@ -91,8 +90,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter:
-                case FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet:
-                case FiksPlanMeldingtypeV2.ResultatFinnPlaner:
+                case FiksPlanMeldingtypeV2.ResultatFinnArealplaner:
                 case FiksPlanMeldingtypeV2.ResultatHentAktoerer:
                 case FiksPlanMeldingtypeV2.ResultatHentArealplan:
                 case FiksPlanMeldingtypeV2.ResultatHentBboxForPlan:
@@ -100,7 +98,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
                 case FiksPlanMeldingtypeV2.ResultatHentKodeliste:
                 case FiksPlanMeldingtypeV2.ResultatHentPlanomraader:
                 case FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner:
-                case FiksPlanMeldingtypeV2.ResultatOpprettArealplan:
+                case FiksPlanMeldingtypeV2.KvitteringOpprettArealplan:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade:
                 case FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud:
                     return "payload.json";
