@@ -4,7 +4,6 @@ using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
-using KS.Fiks.Protokoller.V1.Models.Feilmelding;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -118,32 +117,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation
 
         internal static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
         {
-            switch (messageType)
+            var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+            var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
+            using (TextReader file = File.OpenText(pathToSchema))
             {
-                case FeilmeldingType.Ikkefunnet:
-                case FeilmeldingType.Serverfeil:
-                case FeilmeldingType.Ugyldigforespørsel:
-                    var fiksProtokollerAssembly = Assembly.Load("KS.Fiks.Protokoller.V1");
-                    using (var schemaStream =
-                        fiksProtokollerAssembly.GetManifestResourceStream($"KS.Fiks.Protokoller.V1.Schema.{messageType}.schema.json"))
-                    {
-                        if (schemaStream != null)
-                        {
-                            var reader = new StreamReader(schemaStream);
-                            var schemaString = reader.ReadToEnd();
-                            ValidateJsonWithSchemaString(payload, validationErrors, schemaString);
-                        }
-                    }
-                    break;
-                default:
-                    var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
-                    var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
-                    using (TextReader file = File.OpenText(pathToSchema))
-                    {
-                        var schemaString = file.ReadToEnd();
-                        ValidateJsonWithSchemaString(payload, validationErrors, schemaString);
-                    }
-                    break;
+                var schemaString = file.ReadToEnd();
+                ValidateJsonWithSchemaString(payload, validationErrors, schemaString);
             }
         }
 
