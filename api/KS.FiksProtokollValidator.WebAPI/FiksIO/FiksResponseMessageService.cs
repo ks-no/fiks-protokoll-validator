@@ -101,7 +101,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                                 var invalidFileList = verificationResult.InvalidElements.Aggregate((aggregate, element) =>
                                     aggregate + "," + element);
                                 payloadErrors = $"Asice validering: klarte ikke validere digest for følgende filer {invalidFileList}";
-                                Logger.Error("FiksResponseMessageService: Asice validering klarte ikke validere digest for følgende filer {invalidFileList}. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                                Logger.Error("FiksResponseMessageService: Asice validering klarte ikke validere digest for følgende filer {invalidFileList}. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId);
                             }
 
                             isAsiceVerified = AsiceIsVerified(asiceReadModel.VerifiedManifest());
