@@ -1,6 +1,7 @@
 using System;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,9 +56,10 @@ namespace KS.FiksProtokollValidator.WebAPI
             var fiksProtokollServicesManager = new FiksProtokollConnectionManager(appSettings);
             services.AddSingleton(fiksProtokollServicesManager);
             services.AddControllers();
-            services.AddHostedService<FiksResponseMessageService>();
+            services.AddHostedService<TjenerMessagesConsumer>();
+            services.AddHostedService<KlientMessagesConsumer>();
             services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddSingleton<IFiksRequestMessageService, FiksRequestMessageService>();
+            services.AddSingleton<ISendMessageService, SendMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }
@@ -70,7 +72,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             var maskinportenClientId = Environment.GetEnvironmentVariable("MASKINPORTEN_CLIENT_ID");
             if (!string.IsNullOrEmpty(maskinportenClientId))
             {
-                appSettings.FiksIOConfig.MaskinPortenIssuer = maskinportenClientId;
+                appSettings.TjenerValidatorFiksIOConfig.MaskinPortenIssuer = maskinportenClientId;
             }
             
             return appSettings;

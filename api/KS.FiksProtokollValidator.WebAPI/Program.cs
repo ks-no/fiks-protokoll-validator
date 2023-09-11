@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Health;
-using KS.FiksProtokollValidator.WebAPI.Logging;
+using KS.FiksProtokollValidator.WebAPI.Helpers.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

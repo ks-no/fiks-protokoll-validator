@@ -26,6 +26,10 @@
 	  <Content Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
 	  <EmbeddedResource Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
 	  <None Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
+	  <EmbeddedResource Update="TjenerValidator\Validation\Resources\ValidationErrorMessages.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -72,7 +76,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ResponseMessageTypes.resx</DependentUpon>
     </Compile>
-    <Compile Update="Validation\Resources\ValidationErrorMessages.Designer.cs">
+    <Compile Update="TjenerValidator\Validation\Resources\ValidationErrorMessages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ValidationErrorMessages.resx</DependentUpon>
@@ -88,7 +92,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResponseMessageTypes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Validation\Resources\ValidationErrorMessages.resx">
+    <EmbeddedResource Update="TjenerValidator\Validation\Resources\ValidationErrorMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -105,6 +109,10 @@
     <_ContentIncludedByDefault Remove="TestCases\no.ks.fiks.arkiv.v1\FinnJournalposterUnderArbeidN3\testInformation.json" />
   </ItemGroup>
 
-
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="KlientValidator\Helpers\" />
+    <Folder Include="TjenerValidator\Helpers\" />
+  </ItemGroup>
 
 </Project>

@@ -5,7 +5,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
-using KS.FiksProtokollValidator.WebAPI.Models;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -20,15 +21,15 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
     public class TestSessionsController : ControllerBase
     {
         private readonly FiksIOMessageDBContext _context;
-        private readonly IFiksRequestMessageService _fiksRequestMessageService;
+        private readonly ISendMessageService _sendMessageService;
         private readonly IFiksResponseValidator _fiksResponseValidator;
         
         private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
 
-        public TestSessionsController(FiksIOMessageDBContext context, IFiksRequestMessageService fiksRequestMessageService, IFiksResponseValidator fiksResponseValidator)
+        public TestSessionsController(FiksIOMessageDBContext context, ISendMessageService sendMessageService, IFiksResponseValidator fiksResponseValidator)
         {
             _context = context;
-            _fiksRequestMessageService = fiksRequestMessageService;
+            _sendMessageService = sendMessageService;
             _fiksResponseValidator = fiksResponseValidator;
         }
 
@@ -142,7 +143,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
                 try
                 {
-                    fiksRequest.MessageGuid = await _fiksRequestMessageService.Send(fiksRequest, testSession.RecipientId, selectedProtocol);
+                    fiksRequest.MessageGuid = await _sendMessageService.Send(fiksRequest, testSession.RecipientId, selectedProtocol);
                 }
                 catch (Exception e)
                 {
