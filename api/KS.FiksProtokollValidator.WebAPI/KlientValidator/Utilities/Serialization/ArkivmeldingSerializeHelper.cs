@@ -2,7 +2,7 @@
 using System.Xml.Serialization;
 using KS.Fiks.Arkiv.Models.V1.Arkivering.Arkivmelding;
 
-namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Helpers.Serialization
+namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Serialization
 {
     public class ArkivmeldingSerializeHelper
     {

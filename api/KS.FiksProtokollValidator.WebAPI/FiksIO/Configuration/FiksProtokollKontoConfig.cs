@@ -1,8 +1,8 @@
 using System;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Configuration;
 
-public class FiksProtokollConsumerServiceSettings
+public class FiksProtokollKontoConfig
 {
     public string ApiHost { get; set; } 
     public int ApiPort { get; set; }

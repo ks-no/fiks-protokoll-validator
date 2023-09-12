@@ -4,7 +4,7 @@ using System.Reflection;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 
-namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Helpers.Payload
+namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Utilities.Payload
 {
     public class PayloadHelper
     {

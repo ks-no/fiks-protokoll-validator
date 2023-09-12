@@ -9,10 +9,11 @@ using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.ASiC_E;
 using KS.Fiks.ASiC_E.Xsd;
 using KS.Fiks.IO.Client.Models;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv;
-using KS.FiksProtokollValidator.WebAPI.KlientValidator.Helpers.Serialization;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Serialization;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Serilog;
@@ -20,9 +21,9 @@ using FiksPayload = KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models.Fiks
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
-    public class KlientMessagesConsumer : BackgroundService
+    public class KlientMessagesSubscriber : BackgroundService
     {
-        private readonly FiksProtokollConnectionManager _fiksProtokollConnectionManager;
+        private readonly FiksIOConnectionManager _fiksIOConnectionManager;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly RegistreringHentManager _registreringHentManager;
         private readonly MappeHentManager _mappeHentManager;
@@ -30,9 +31,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private readonly ArkivmeldingManager _arkivmeldingManager;
         private readonly ArkivmeldingOppdaterManager _arkivmeldingOppdaterManager;
 
-        public KlientMessagesConsumer(FiksProtokollConnectionManager manager)
+        public KlientMessagesSubscriber(FiksIOConnectionManager manager)
         {
-            _fiksProtokollConnectionManager = manager;
+            _fiksIOConnectionManager = manager;
             _registreringHentManager = new RegistreringHentManager();
             _mappeHentManager = new MappeHentManager();
             _sokManager = new SokManager();
@@ -42,9 +43,9 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Information($"ExectueAsync start. Oppretter subscriptions for {_fiksProtokollConnectionManager.KlientConnectionServices.Count} protokoller");
+            Logger.Information($"ExectueAsync start. Oppretter subscriptions for {_fiksIOConnectionManager.KlientConnectionServices.Count} protokoller");
 
-            foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.KlientConnectionServices)
+            foreach (var fiksIoClientConsumerService in _fiksIOConnectionManager.KlientConnectionServices)
             {
                 await fiksIoClientConsumerService.Value.Initialization;
                 //TODO her bør det være en OnMottatt for hver protokoll

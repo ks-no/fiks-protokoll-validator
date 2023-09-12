@@ -5,7 +5,7 @@ using System.Xml;
 using System.Xml.Schema;
 using KS.Fiks.ASiC_E;
 using KS.Fiks.IO.Client.Models;
-using KS.FiksProtokollValidator.WebAPI.KlientValidator.Helpers.Validation;
+using KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Validation;
 using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
@@ -141,7 +141,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                     {
                         if (asiceReadEntry.FileName.Contains(".xml"))
                         {
-                            validationResult = new XmlValidationHelper().ValidateXml(
+                            validationResult = new XmlValidator().ValidateXml(
                                 entryStream,
                                 xmlSchemaSet
                             );
@@ -176,7 +176,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                     {
                         if (asiceReadEntry.FileName.Contains(".xml"))
                         {
-                            validationResult = new XmlValidationHelper().ValidateXml(
+                            validationResult = new XmlValidator().ValidateXml(
                                 entryStream,
                                 xmlSchemaSet
                             );

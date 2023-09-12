@@ -110,9 +110,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="KlientValidator\Helpers\" />
-    <Folder Include="TjenerValidator\Helpers\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="KlientValidator\Utilities\" />
+    <Folder Include="TjenerValidator\Utilities\" />
   </ItemGroup>
 
 </Project>

@@ -1,19 +1,20 @@
 using System.Reflection;
 using System.Threading.Tasks;
 using KS.Fiks.IO.Client;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Configuration;
 using Serilog;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 
-public class FiksProtokollConnectionService : IFiksProtokolleConnectionService
+public class FiksIOConnectionService : IFiksIOConnectionService
 {
     private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
     public IFiksIOClient FiksIOClient { get; private set; }
-    private readonly FiksProtokollConsumerServiceSettings _consumerServiceSettings;
+    private readonly FiksProtokollKontoConfig _kontoConfig;
 
-    public FiksProtokollConnectionService(FiksProtokollConsumerServiceSettings fiksProtokollKontoConfig)
+    public FiksIOConnectionService(FiksProtokollKontoConfig fiksProtokollKontoConfig)
     {
-        _consumerServiceSettings = fiksProtokollKontoConfig;
+        _kontoConfig = fiksProtokollKontoConfig;
         Initialization = InitializeAsync();
     }
 
@@ -21,7 +22,7 @@ public class FiksProtokollConnectionService : IFiksProtokolleConnectionService
 
     private async Task InitializeAsync()
     {
-        FiksIOClient = await Fiks.IO.Client.FiksIOClient.CreateAsync(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_consumerServiceSettings));
+        FiksIOClient = await Fiks.IO.Client.FiksIOClient.CreateAsync(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_kontoConfig));
     }
 
     public bool IsHealthy()

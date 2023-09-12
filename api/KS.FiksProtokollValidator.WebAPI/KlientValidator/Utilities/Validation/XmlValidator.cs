@@ -3,9 +3,9 @@ using System.IO;
 using System.Xml;
 using System.Xml.Schema;
 
-namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Helpers.Validation
+namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Validation
 {
-    public class XmlValidationHelper
+    public class XmlValidator
     {
         private readonly List<List<string>>? _xmlValidationMessages = new List<List<string>>() { new List<string>(), new List<string>() };
         private const int XmlValidationErrorLimit = 25;

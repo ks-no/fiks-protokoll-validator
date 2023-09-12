@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection
 {
     public interface ISendMessageService
     {

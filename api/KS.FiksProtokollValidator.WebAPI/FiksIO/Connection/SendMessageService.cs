@@ -5,11 +5,11 @@ using System.Reflection;
 using System.Threading.Tasks;
 using KS.Fiks.IO.Client.Configuration;
 using KS.Fiks.IO.Client.Models;
-using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Helpers.Payload;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Utilities.Payload;
 using Serilog;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection
 {
     
     /* This is the producer that sends messages to Fiks-Protokoller/Fiks-IO
@@ -20,16 +20,16 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private const int TTLMinutes = 60;
         private readonly FiksIOConfiguration _config;
-        private FiksProtokollConnectionManager _fiksProtokollConnectionManager;
+        private FiksIOConnectionManager _fiksIOConnectionManager;
 
-        public SendMessageService(FiksProtokollConnectionManager fiksProtokollConnectionManager)
+        public SendMessageService(FiksIOConnectionManager fiksIOConnectionManager)
         {
-            _fiksProtokollConnectionManager = fiksProtokollConnectionManager;
+            _fiksIOConnectionManager = fiksIOConnectionManager;
         }
 
         public async Task<Guid> Send(FiksRequest fiksRequest, Guid receiverId, string selectedProtocol)
         {
-            var foundProtocol = _fiksProtokollConnectionManager.TjenerConnectionServices.TryGetValue(selectedProtocol, out var connectionService);
+            var foundProtocol = _fiksIOConnectionManager.TjenerConnectionServices.TryGetValue(selectedProtocol, out var connectionService);
 
             if (!foundProtocol)
             {

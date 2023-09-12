@@ -1,6 +1,7 @@
 using System;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Builder;
@@ -53,11 +54,11 @@ namespace KS.FiksProtokollValidator.WebAPI
             // get configuration from appsettings.json - use as singleton
             var appSettings = CreateAppSettings();
             services.AddSingleton(appSettings);
-            var fiksProtokollServicesManager = new FiksProtokollConnectionManager(appSettings);
+            var fiksProtokollServicesManager = new FiksIOConnectionManager(appSettings);
             services.AddSingleton(fiksProtokollServicesManager);
             services.AddControllers();
-            services.AddHostedService<TjenerMessagesConsumer>();
-            services.AddHostedService<KlientMessagesConsumer>();
+            services.AddHostedService<TjenerMessagesSubscriber>();
+            services.AddHostedService<KlientMessagesSubscriber>();
             services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddSingleton<ISendMessageService, SendMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();

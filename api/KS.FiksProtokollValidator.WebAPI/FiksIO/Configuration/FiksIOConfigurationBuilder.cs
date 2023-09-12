@@ -6,45 +6,45 @@ using KS.Fiks.IO.Client.Configuration;
 using Ks.Fiks.Maskinporten.Client;
 using RabbitMQ.Client;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Configuration
 {
     public static class FiksIOConfigurationBuilder
     {
-        public static FiksIOConfiguration CreateFiksIOConfiguration(FiksProtokollConsumerServiceSettings settings)
+        public static FiksIOConfiguration CreateFiksIOConfiguration(FiksProtokollKontoConfig config)
         {
             var ignoreSSLError = Environment.GetEnvironmentVariable("AMQP_IGNORE_SSL_ERROR");
             
             var accountConfiguration = new KontoConfiguration(
-                kontoId: settings.AccountId,
-                privatNokkel: File.ReadAllText(settings.PrivateKey)
+                kontoId: config.AccountId,
+                privatNokkel: File.ReadAllText(config.PrivateKey)
             );
 
             // Id and password for integration associated to the Fiks IO account.
             var integrationConfiguration = new IntegrasjonConfiguration(
-                integrasjonId: settings.FiksIoIntegrationId,
-                integrasjonPassord: settings.FiksIoIntegrationPassword,
-                scope: settings.FiksIoIntegrationScope);
+                integrasjonId: config.FiksIoIntegrationId,
+                integrasjonPassord: config.FiksIoIntegrationPassword,
+                scope: config.FiksIoIntegrationScope);
 
             // ID-porten machine to machine configuration
             var maskinportenClientConfiguration = new MaskinportenClientConfiguration(
-                audience: settings.MaskinPortenAudienceUrl,
-                tokenEndpoint: settings.MaskinPortenTokenUrl,
-                issuer: settings.MaskinPortenIssuer,
+                audience: config.MaskinPortenAudienceUrl,
+                tokenEndpoint: config.MaskinPortenTokenUrl,
+                issuer: config.MaskinPortenIssuer,
                 numberOfSecondsLeftBeforeExpire: 10, // The token will be refreshed 10 seconds before it expires
-                certificate: GetCertificate(settings.MaskinPortenCompanyCertificateThumbprint, settings.MaskinPortenCompanyCertificatePath, settings.MaskinPortenCompanyCertificatePassword));
+                certificate: GetCertificate(config.MaskinPortenCompanyCertificateThumbprint, config.MaskinPortenCompanyCertificatePath, config.MaskinPortenCompanyCertificatePassword));
 
             // Optional: Use custom api host (i.e. for connecting to test api)
             var apiConfiguration = new ApiConfiguration(
-                scheme: settings.ApiScheme,
-                host: settings.ApiHost,
-                port: settings.ApiPort);
+                scheme: config.ApiScheme,
+                host: config.ApiHost,
+                port: config.ApiPort);
 
 
             var sslOption1 = (!string.IsNullOrEmpty(ignoreSSLError) && ignoreSSLError == "true")
                 ? new SslOption()
                 {
                     Enabled = true,
-                    ServerName = settings.AmqpHost,
+                    ServerName = config.AmqpHost,
                     CertificateValidationCallback =
                         (RemoteCertificateValidationCallback) ((sender, certificate, chain, errors) => true)
                 }
@@ -52,12 +52,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             
             // Optional: Use custom amqp host (i.e. for connection to test queue)
             var amqpConfiguration = new AmqpConfiguration(
-                host: settings.AmqpHost,
-                port: settings.AmqpPort, 
+                host: config.AmqpHost,
+                port: config.AmqpPort, 
                 sslOption1,
                 "Fiks Protokollvalidator");
 
-            var asiceSigningConfiguration = new AsiceSigningConfiguration(settings.AsiceSigningPublicKey, settings.AsiceSigningPrivateKey);
+            var asiceSigningConfiguration = new AsiceSigningConfiguration(config.AsiceSigningPublicKey, config.AsiceSigningPrivateKey);
 
             // Combine all configurations
             return new FiksIOConfiguration(

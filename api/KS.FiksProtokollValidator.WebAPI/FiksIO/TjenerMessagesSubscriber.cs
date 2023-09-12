@@ -9,6 +9,7 @@ using KS.Fiks.ASiC_E;
 using KS.Fiks.ASiC_E.Xsd;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,28 +24,28 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
      * We are also exposing the health as a healthz endpoint. That is why the FiksIOClient is kept in a singleton outside this BackgroundService.
      * This way we can use the health status for the healthz endpoint in the running application.
      */
-    public class TjenerMessagesConsumer : BackgroundService
+    public class TjenerMessagesSubscriber : BackgroundService
     {
-        private readonly FiksProtokollConnectionManager _fiksProtokollConnectionManager;
+        private readonly FiksIOConnectionManager _fiksIOConnectionManager;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
         private const int HealthCheckInterval = 5 * 60 * 1000;
         
         private Timer _ensureFiksIOConnectionIsOpenTimer { get; set; }
 
-        public TjenerMessagesConsumer(IServiceScopeFactory scopeFactory, FiksProtokollConnectionManager manager)
+        public TjenerMessagesSubscriber(IServiceScopeFactory scopeFactory, FiksIOConnectionManager manager)
         {
             _scopeFactory = scopeFactory;
-            _fiksProtokollConnectionManager = manager;
+            _fiksIOConnectionManager = manager;
             // Self-healing check
             _ensureFiksIOConnectionIsOpenTimer = new Timer(Callback, null, HealthCheckInterval, HealthCheckInterval);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Information($"ExectueAsync start. Oppretter subscriptions for {_fiksProtokollConnectionManager.TjenerConnectionServices.Count} protokoller");
+            Logger.Information($"ExectueAsync start. Oppretter subscriptions for {_fiksIOConnectionManager.TjenerConnectionServices.Count} protokoller");
 
-            foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.TjenerConnectionServices)
+            foreach (var fiksIoClientConsumerService in _fiksIOConnectionManager.TjenerConnectionServices)
             {
                 await fiksIoClientConsumerService.Value.Initialization;
                 fiksIoClientConsumerService.Value.FiksIOClient.NewSubscription(OnMottattMelding);
@@ -183,15 +184,15 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private async Task EnsureFiksIOConnectionsAreOpen()
         {
             // await FiksIOClient initialization
-            foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.TjenerConnectionServices)
+            foreach (var fiksIoClientConsumerService in _fiksIOConnectionManager.TjenerConnectionServices)
             {
                 await fiksIoClientConsumerService.Value.Initialization;    
             }
 
-            if (!_fiksProtokollConnectionManager.IsHealthy())
+            if (!_fiksIOConnectionManager.IsHealthy())
             {
                 Logger.Error($"Health self-check detects FiksIOClient connection is down! Restarting background service");
-                await _fiksProtokollConnectionManager.Reconnect();
+                await _fiksIOConnectionManager.Reconnect();
                 await StopAsync(default);
                 await StartAsync(default);
             }

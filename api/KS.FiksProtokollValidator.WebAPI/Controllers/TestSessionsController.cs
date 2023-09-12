@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using Microsoft.AspNetCore.Cors;

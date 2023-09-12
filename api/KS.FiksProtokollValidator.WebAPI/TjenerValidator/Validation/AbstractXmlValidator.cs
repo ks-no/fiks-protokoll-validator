@@ -1,6 +1,6 @@
 using System.IO;
-using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Helpers.Payload;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Utilities.Payload;
 
 namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 {

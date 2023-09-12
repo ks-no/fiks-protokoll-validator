@@ -2,36 +2,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Configuration;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 
-public class FiksProtokollConnectionManager
+public class FiksIOConnectionManager
 {
     private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
     private readonly AppSettings _appSettings;
-    public Dictionary<string, FiksProtokollConnectionService> TjenerConnectionServices { get; }
-    public Dictionary<string, FiksProtokollConnectionService> KlientConnectionServices { get; }
+    public Dictionary<string, FiksIOConnectionService> TjenerConnectionServices { get; }
+    public Dictionary<string, FiksIOConnectionService> KlientConnectionServices { get; }
 
 
-    public FiksProtokollConnectionManager(AppSettings appAppSettings)
+    public FiksIOConnectionManager(AppSettings appAppSettings)
     {
         _appSettings = appAppSettings;
-        TjenerConnectionServices = new Dictionary<string, FiksProtokollConnectionService>();
-        KlientConnectionServices = new Dictionary<string, FiksProtokollConnectionService>();
+        TjenerConnectionServices = new Dictionary<string, FiksIOConnectionService>();
+        KlientConnectionServices = new Dictionary<string, FiksIOConnectionService>();
 
         var protocolAccounts = JsonConvert.DeserializeObject<ProtocolAccountConfigurations>(_appSettings.TjenerValidatorFiksIOConfig.ProtocolAccountConfigs);
         foreach (var protokollKontoConfig in protocolAccounts.ProtocolAccounts)
         {
-             var service = new FiksProtokollConnectionService(MapToSettings(_appSettings.TjenerValidatorFiksIOConfig, protokollKontoConfig));
+             var service = new FiksIOConnectionService(MapToSettings(_appSettings.TjenerValidatorFiksIOConfig, protokollKontoConfig));
              TjenerConnectionServices.Add(protokollKontoConfig.Protocol, service);
         }
         
         protocolAccounts = JsonConvert.DeserializeObject<ProtocolAccountConfigurations>(_appSettings.KlientValidatorFiksIOConfig.ProtocolAccountConfigs);
         foreach (var protokollKontoConfig in protocolAccounts.ProtocolAccounts)
         {
-            var service = new FiksProtokollConnectionService(MapToSettings(_appSettings.KlientValidatorFiksIOConfig, protokollKontoConfig));
+            var service = new FiksIOConnectionService(MapToSettings(_appSettings.KlientValidatorFiksIOConfig, protokollKontoConfig));
             KlientConnectionServices.Add(protokollKontoConfig.Protocol, service);
         }
     }
@@ -66,10 +67,10 @@ public class FiksProtokollConnectionManager
         }
     }
 
-    private FiksProtokollConsumerServiceSettings MapToSettings(ValidatorFiksIOConfig validatorFiksIoConfig,
+    private FiksProtokollKontoConfig MapToSettings(ValidatorFiksIOConfig validatorFiksIoConfig,
         ProtocolAccount protocolAccount)
     {
-        return new FiksProtokollConsumerServiceSettings
+        return new FiksProtokollKontoConfig
         {
             AccountId = protocolAccount.AccountId,
             AmqpHost = validatorFiksIoConfig.AmqpHost,

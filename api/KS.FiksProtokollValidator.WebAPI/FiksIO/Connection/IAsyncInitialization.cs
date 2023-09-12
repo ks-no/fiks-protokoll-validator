@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 
 public interface IAsyncInitialization
 {

@@ -6,7 +6,7 @@ using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Json;
 
-namespace KS.FiksProtokollValidator.WebAPI.Helpers.Logging
+namespace KS.FiksProtokollValidator.WebAPI.Utilities.Logging
 {
     public class CustomLogstashJsonFormatter : ITextFormatter
   {

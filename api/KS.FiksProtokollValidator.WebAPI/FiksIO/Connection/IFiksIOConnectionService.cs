@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using KS.Fiks.IO.Client;
 
-namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
+namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 
-public interface IFiksProtokolleConnectionService : IAsyncInitialization, IDisposable
+public interface IFiksIOConnectionService : IAsyncInitialization, IDisposable
 {
     public bool IsHealthy();
     public Task Reconnect();
