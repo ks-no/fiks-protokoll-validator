@@ -50,7 +50,7 @@ public class FiksProtokollConnectionManager
             }
             else
             {
-                Logger.Error("FiksIOClientConsumerService: FiksIOClient is null. Returning not healthy.");
+                Logger.Error("FiksIOClient is null. Returning not healthy.");
                 return false;
             }
         }
@@ -61,7 +61,7 @@ public class FiksProtokollConnectionManager
     {
         foreach (var fiksProtokollConnectionService in TjenerConnectionServices.Where(fiksProtokollConnectionService => !fiksProtokollConnectionService.Value.IsHealthy()))
         {
-            Log.Information($"FiksProtokollConnectionManager reconnect unhealthy {fiksProtokollConnectionService.Key}");
+            Log.Information($"Reconnect unhealthy {fiksProtokollConnectionService.Key}");
             await fiksProtokollConnectionService.Value.Reconnect();
         }
     }

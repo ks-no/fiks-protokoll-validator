@@ -29,10 +29,10 @@ public class FiksProtokollConnectionService : IFiksProtokolleConnectionService
         if (FiksIOClient != null)
         {
             var status = FiksIOClient.IsOpen();
-            Logger.Debug($"FiksIOClientConsumerService: FiksIOCClient.IsOpen() returns {status}");
+            Logger.Debug($"FiksIOCClient.IsOpen() returns {status}");
             return status;
         }
-        Logger.Error("FiksIOClientConsumerService: FiksIOClient is null. Returning not healthy.");
+        Logger.Error("FiksIOClient is null. Returning not healthy.");
         return false;
     }
 

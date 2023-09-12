@@ -42,14 +42,14 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Information($"{GetType().Name} - ExectueAsync start. Oppretter subscriptions for {_fiksProtokollConnectionManager.KlientConnectionServices.Count} protokoller");
+            Logger.Information($"ExectueAsync start. Oppretter subscriptions for {_fiksProtokollConnectionManager.KlientConnectionServices.Count} protokoller");
 
             foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.KlientConnectionServices)
             {
                 await fiksIoClientConsumerService.Value.Initialization;
                 //TODO her bør det være en OnMottatt for hver protokoll
                 fiksIoClientConsumerService.Value.FiksIOClient.NewSubscription(OnMottattFiksArkivMelding);
-                Logger.Information($"{GetType().Name} - Startet subscription for {fiksIoClientConsumerService.Key} med kontoid {fiksIoClientConsumerService.Value.FiksIOClient.KontoId}");
+                Logger.Information($"Startet subscription for {fiksIoClientConsumerService.Key} med kontoid {fiksIoClientConsumerService.Value.FiksIOClient.KontoId}");
             }
 
             stoppingToken.ThrowIfCancellationRequested();
@@ -63,7 +63,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         private async void OnMottattFiksArkivMelding(object sender, MottattMeldingArgs mottatt)
         {
-            Log.Information("{Kilde} - Melding med meldingType {MeldingType} mottatt med meldingId {MeldingId},", GetType().Name, mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
+            Log.Information("Melding med meldingType {MeldingType} mottatt med meldingId {MeldingId},", mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
 
             if (FiksArkivMeldingtype.IsArkiveringType(mottatt.Melding.MeldingType))
             {
@@ -75,18 +75,18 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
             else
             { // Ukjent meldingstype
-                Log.Information("{Kilde} - Ukjent meldingType {MeldingType} og meldingId {MeldingId} mottatt. Sender ugyldigforespørsel",
+                Log.Information("Ukjent meldingType {MeldingType} og meldingId {MeldingId} mottatt. Sender ugyldigforespørsel",
                     GetType().Name, mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
                 mottatt.SvarSender.Ack();
                 var payloads = new List<IPayload>();
                 payloads.Add(
                     new StringPayload(
-                        JsonConvert.SerializeObject(FeilmeldingEngine.CreateUgyldigforespoerselMelding($"{GetType().Name} - Ukjent meldingstype {mottatt.Melding.MeldingType} mottatt")),
+                        JsonConvert.SerializeObject(FeilmeldingEngine.CreateUgyldigforespoerselMelding($"Ukjent meldingstype {mottatt.Melding.MeldingType} mottatt")),
                         "feilmelding.xml"));
                 await mottatt.SvarSender.Svar(FiksArkivMeldingtype.Ugyldigforespørsel, payloads );
             }
         }
-        
+
          private async Task HandleInnsynMelding(MottattMeldingArgs mottatt)
         {
             var payloads = new List<IPayload>();
@@ -107,7 +107,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 {
                     ResultatMelding =
                         FeilmeldingEngine.CreateUgyldigforespoerselMelding(
-                            $"{GetType().Name} - Klarte ikke håndtere innkommende melding. Feilmelding: {e.Message}"),
+                            $"Klarte ikke håndtere innkommende melding. Feilmelding: {e.Message}"),
                     FileName = "feilmelding.xml",
                     MeldingsType = FiksArkivMeldingtype.Ugyldigforespørsel,
                 };
@@ -119,9 +119,8 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             mottatt.SvarSender.Ack(); // Ack message to remove it from the queue
 
             var sendtMelding = await mottatt.SvarSender.Svar(melding.MeldingsType, payloads);
-            Log.Information("{Kilde} - Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt",GetType().Name, sendtMelding.MeldingId,
+            Log.Information("Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt", sendtMelding.MeldingId,
                 sendtMelding.MeldingType);
-            Log.Information($"{GetType().Name} - Melding er ferdig håndtert i arkiv");
         }
 
         private async Task HandleArkiveringMelding(MottattMeldingArgs mottatt)
@@ -161,8 +160,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
 
                 var sendtMelding = await mottatt.SvarSender.Svar(melding.MeldingsType, payloads);
-                Log.Information("{Kilde} - Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt",
-                    GetType().Name, 
+                Log.Information("Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt",
                     sendtMelding.MeldingId,
                     sendtMelding.MeldingType);
                 
@@ -171,7 +169,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
         {
-            Logger.Information("{GetType().Name} - Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
+            Logger.Information("Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new List<FiksPayload>();
 
             var isAsiceVerified = false;
@@ -221,12 +219,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 catch (Exception e)
                 {
-                    Logger.Error("{Klient}: Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}",GetType().Name, mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                    Logger.Error("Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                     payloadErrors += $"Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {mottattMeldingArgs.Melding?.MeldingId}, Error: {e.Message}";
                 }
             }
 
-            Logger.Information("{Klient}: Henter melding med MeldingId: {MeldingId}", GetType().Name, mottattMeldingArgs.Melding.MeldingId);
+            Logger.Information(": Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             mottattMeldingArgs.SvarSender?.Ack();
         }
     }

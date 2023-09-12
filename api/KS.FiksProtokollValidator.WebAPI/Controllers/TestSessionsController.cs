@@ -7,7 +7,6 @@ using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

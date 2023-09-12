@@ -42,13 +42,13 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Logger.Information($"{GetType().Name} - ExectueAsync start. Oppretter subscriptions for {_fiksProtokollConnectionManager.TjenerConnectionServices.Count} protokoller");
+            Logger.Information($"ExectueAsync start. Oppretter subscriptions for {_fiksProtokollConnectionManager.TjenerConnectionServices.Count} protokoller");
 
             foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.TjenerConnectionServices)
             {
                 await fiksIoClientConsumerService.Value.Initialization;
                 fiksIoClientConsumerService.Value.FiksIOClient.NewSubscription(OnMottattMelding);
-                Logger.Information($"{GetType().Name} - Startet subscription for {fiksIoClientConsumerService.Key} med kontoid {fiksIoClientConsumerService.Value.FiksIOClient.KontoId}");
+                Logger.Information($"Startet subscription for {fiksIoClientConsumerService.Key} med kontoid {fiksIoClientConsumerService.Value.FiksIOClient.KontoId}");
             }
 
             stoppingToken.ThrowIfCancellationRequested();
@@ -62,7 +62,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
         {
-            Logger.Information("{GetType().Name}: Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
+            Logger.Information("Mottatt melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new List<FiksPayload>();
 
             var isAsiceVerified = false;
@@ -100,7 +100,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                                 var invalidFileList = verificationResult.InvalidElements.Aggregate((aggregate, element) =>
                                     aggregate + "," + element);
                                 payloadErrors = $"Asice validering: klarte ikke validere digest for følgende filer {invalidFileList}";
-                                Logger.Error("TjenerMessageConsumer: Asice validering klarte ikke validere digest for følgende filer {invalidFileList}. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId);
+                                Logger.Error("Asice validering klarte ikke validere digest for følgende filer {invalidFileList}. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId);
                             }
 
                             isAsiceVerified = AsiceIsVerified(asiceReadModel.VerifiedManifest());
@@ -108,13 +108,13 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     }
                     catch (Exception e)
                     {
-                        Logger.Error("{Kilde}: Asice validering klarte ikke validere digest for payload. MeldingId: {MeldingId}, Error: {Message}", GetType().Name, mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                        Logger.Error("Asice validering klarte ikke validere digest for payload. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                         payloadErrors = $"Asice validering: klarte ikke validere digest for payload";
                     }
                 }
                 catch (Exception e)
                 {
-                    Logger.Error("{Kilde}: Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}",GetType().Name, mottattMeldingArgs.Melding?.MeldingId, e.Message);
+                    Logger.Error("Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                     payloadErrors += $"Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {mottattMeldingArgs.Melding?.MeldingId}, Error: {e.Message}";
                 }
             }
@@ -152,7 +152,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
                     if (fiksRequest == null)
                     {
-                        Logger.Error("{Kilde}: Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", GetType().Name, testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
+                        Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
                         mottattMeldingArgs.SvarSender?.Ack();
                         return;
                     }
@@ -165,7 +165,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 else
                 {
-                    Logger.Error("{Kilde}: Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", GetType().Name, mottattMeldingArgs.Melding.SvarPaMelding);
+                    Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
                 }
             }
             finally
@@ -190,14 +190,14 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
             if (!_fiksProtokollConnectionManager.IsHealthy())
             {
-                Logger.Error($"{GetType().Name}: self-check detects FiksIOClient connection is down! Restarting background service");
+                Logger.Error($"Health self-check detects FiksIOClient connection is down! Restarting background service");
                 await _fiksProtokollConnectionManager.Reconnect();
                 await StopAsync(default);
                 await StartAsync(default);
             }
             else
             {
-                Logger.Debug($"{GetType().Name}: self-check detects FiksIOClient is ok");
+                Logger.Debug($"Health self-check detects FiksIOClient is ok");
             }
         }
     }

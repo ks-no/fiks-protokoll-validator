@@ -34,7 +34,7 @@ namespace KS.FiksProtokollValidator.WebAPI
                 .Enrich.WithProperty("env", environment)
                 .Enrich.WithProperty("logsource", hostname)
                 .Enrich.WithProperty("node", kubernetesNode)
-                .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level}] [{RequestId}] [{requestid}] - {Message} {NewLine} {Exception}");
+                .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level}] [{SourceContext}] - {Message} {NewLine} {Exception}");
 
             if (!string.IsNullOrEmpty(logstashDestination))
             {
