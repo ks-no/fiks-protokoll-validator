@@ -24,7 +24,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         private readonly ISendMessageService _sendMessageService;
         private readonly IFiksResponseValidator _fiksResponseValidator;
         
-        private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILogger Logger = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
 
         public TestSessionsController(FiksIOMessageDBContext context, ISendMessageService sendMessageService, IFiksResponseValidator fiksResponseValidator)
         {
@@ -37,7 +37,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TestSession>> GetTestSession(Guid id)
         {
-            Log.Information("GetTestSession with id: {SessionID}", id);
+            Logger.Information("GetTestSession with id: {SessionID}", id);
             var testSession = await _context.TestSessions
                 .Include(t => t.FiksRequests)
                 .ThenInclude(r => r.FiksResponses).ThenInclude(a => a.FiksPayloads)
@@ -60,7 +60,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             if (testSession == null)
             {
-                Log.Error("Session with id {SessionID} not found", id);
+                Logger.Error("Session with id {SessionID} not found", id);
                 return NotFound();
             }
 
@@ -70,11 +70,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             }
             catch (Exception e)
             {
-                Log.Error(e, "Validering av en eller flere meldinger feilet for session med id {SessionID}", id);
+                Logger.Error(e, "Validering av en eller flere meldinger feilet for session med id {SessionID}", id);
                 return StatusCode(500, $"Validering av en eller flere meldinger feilet: {e.Message}");
             }
 
-            Log.Information("TestSession with id {Id} found", id);
+            Logger.Information("TestSession with id {Id} found", id);
             
             return testSession;
         }
@@ -85,7 +85,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<TestSession>> PostTestSession([FromBody] TestRequest testRequest)
         {
-            Log.Information("PostTestSession start");
+            Logger.Information("PostTestSession start");
             
             TestSession testSession;
             var isNewTestSession = false;
@@ -97,12 +97,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             
             if(!string.IsNullOrEmpty(testSessionId))
             {
-                Log.Debug("Finding session with sessionId {SessionId}", testRequest.SessionId);
+                Logger.Debug("Finding session with sessionId {SessionId}", testRequest.SessionId);
                 testSession = GetAndUpdateTestSession(testRequest, testSessionId);
             }
             else
             {
-                Log.Debug("Create new TestSession from incoming request");
+                Logger.Debug("Create new TestSession from incoming request");
                 try
                 {
                     testSession = JsonSerializer.Deserialize<TestSession>(JsonSerializer.Serialize(testRequest));
@@ -115,7 +115,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                         message = e.InnerException.Message;
                     }
 
-                    Log.Error("Error with deserializing the test request: {}", JsonSerializer.Serialize(testRequest));
+                    Logger.Error("Error with deserializing the test request: {}", JsonSerializer.Serialize(testRequest));
                     return BadRequest(message);
                 }
                 testSession.Id = Guid.NewGuid();
@@ -147,13 +147,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 }
                 catch (Exception e)
                 {
-                    Log.Error(e, "Noe gikk galt ved sending av request til {FiksKonto}", testSession.RecipientId);
+                    Logger.Error(e, "Noe gikk galt ved sending av request til {FiksKonto}", testSession.RecipientId);
                     if (e.InnerException != null && e.InnerException.Message.Contains("Ingen konto med id"))
                     {
-                        Log.Error("TestSession FIKS-account {FiksKonto} is illegal", testSession.RecipientId);
+                        Logger.Error("TestSession FIKS-account {FiksKonto} is illegal", testSession.RecipientId);
                         return BadRequest("Ugyldig konto: " + testSession.RecipientId);
                     }
-                    Log.Error("An Error occured when sending FIKS request with recipient ID {RecipientId}", testSession.RecipientId);
+                    Logger.Error("An Error occured when sending FIKS request with recipient ID {RecipientId}", testSession.RecipientId);
                     return StatusCode(500, e.Message);
                 }
 
@@ -184,7 +184,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
 
             await _context.SaveChangesAsync();
             
-            Log.Debug("Session successfully created with id {Id} and recipientId {RecipientId}", testSession.Id, testSession.RecipientId);
+            Logger.Debug("Session successfully created with id {Id} and recipientId {RecipientId}", testSession.Id, testSession.RecipientId);
 
             return CreatedAtAction("GetTestSession", new {id = testSession.Id}, testSession);
         }

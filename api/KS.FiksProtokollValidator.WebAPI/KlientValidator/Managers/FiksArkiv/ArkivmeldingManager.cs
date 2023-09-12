@@ -50,7 +50,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
 
                 if (xmlValidationErrorOccured) // Ugyldig forespørsel
                 {
-                    Log.Information($"Xml validering feilet {validationResult}");
+                    Log.Information($"Xml validering feilet: {validationResult}");
                     meldinger.Add(new Melding
                     {
                         ResultatMelding = FeilmeldingEngine.CreateUgyldigforespoerselMelding(validationResult),

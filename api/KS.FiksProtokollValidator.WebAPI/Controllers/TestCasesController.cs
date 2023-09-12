@@ -20,7 +20,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
     {
         private readonly FiksIOMessageDBContext _context;
         
-        private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILogger Logger = Serilog.Log.ForContext(MethodBase.GetCurrentMethod().DeclaringType);
 
         public TestCasesController(FiksIOMessageDBContext context)
         {
@@ -31,7 +31,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TestCase>>> GetTestCases()
         {
-            Log.Information("Finding all TestCases");
+            Logger.Information("Finding all TestCases");
             
             //Invalidate old cookie
             Response.Cookies.Delete("_testSessionId", new CookieOptions()
@@ -66,7 +66,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("Protocol/{protocol}")]
         public async Task<ActionResult<IEnumerable<TestCase>>> GetTestCases(string protocol)
         {
-            Log.Information("Finding all TestCase for protocol {Protocol}", protocol);
+            Logger.Information("Finding all TestCase for protocol {Protocol}", protocol);
             
             //Invalidate old cookie
             Response.Cookies.Delete("_testSessionId", new CookieOptions()
@@ -101,16 +101,16 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TestCase>> GetTestCase(int id)
         {
-            Log.Information("Finding testcase with id: {Id}", id);
+            Logger.Information("Finding testcase with id: {Id}", id);
             var testCase = await _context.TestCases.FindAsync(id);
 
             if (testCase == null)
             {
-                Log.Error("Could not find TestCase with id {Id}", id);
+                Logger.Error("Could not find TestCase with id {Id}", id);
                 return NotFound($"Could not find TestCase with id {id}");
             }
             
-            Log.Debug("GetTestCase found TestCase with id {Id}", id);
+            Logger.Debug("GetTestCase found TestCase with id {Id}", id);
 
             return testCase;
         }
@@ -121,10 +121,10 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpPut("{testName}")]
         public async Task<IActionResult> PutTestCase(string testName, TestCase testCase)
         {
-            Log.Information("PutTestCase with {TestName} and {TestCaseName}", testName, testCase.TestName);
+            Logger.Information("PutTestCase with {TestName} and {TestCaseName}", testName, testCase.TestName);
             if (!testName.Equals(testCase.TestName))
             {
-                Log.Error("BadRequest for testName {TestName} and testCase.TestName {TestCaseTestName}", testName, testCase.TestName );
+                Logger.Error("BadRequest for testName {TestName} and testCase.TestName {TestCaseTestName}", testName, testCase.TestName );
                 return BadRequest();
             }
 
@@ -138,17 +138,17 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             {
                 if (!TestCaseExists(testName))
                 {
-                    Log.Error("DbUpdateConcurrencyException occured. TestCase with testName {TestName} doesn't exist", testName);
+                    Logger.Error("DbUpdateConcurrencyException occured. TestCase with testName {TestName} doesn't exist", testName);
                     return NotFound();
                 }
                 else
                 {
-                    Log.Error("DbUpdateConcurrencyException occured for request on testName {TestName}", testName);
+                    Logger.Error("DbUpdateConcurrencyException occured for request on testName {TestName}", testName);
                     throw;
                 }
             }
             
-            Log.Debug("PutTestCase saved successfully to DB");
+            Logger.Debug("PutTestCase saved successfully to DB");
 
             return NoContent();
         }
@@ -159,11 +159,11 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<TestCase>> PostTestCase([FromBody] TestCase testCase)
         {
-            Log.Information("Posting testcases");
+            Logger.Information("Posting testcases");
             await _context.TestCases.AddAsync(testCase);
             await _context.SaveChangesAsync();
 
-            Log.Debug("PostTestCase saved successfully to DB");
+            Logger.Debug("PostTestCase saved successfully to DB");
             
             return CreatedAtAction("GetTestCase", new { testName = testCase.TestName }, testCase);
         }

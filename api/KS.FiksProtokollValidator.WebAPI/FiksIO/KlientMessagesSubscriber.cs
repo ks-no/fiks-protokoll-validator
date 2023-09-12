@@ -64,7 +64,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         private async void OnMottattFiksArkivMelding(object sender, MottattMeldingArgs mottatt)
         {
-            Log.Information("Melding med meldingType {MeldingType} mottatt med meldingId {MeldingId},", mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
+            Logger.Information("Melding med meldingType {MeldingType} mottatt med meldingId {MeldingId},", mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
 
             if (FiksArkivMeldingtype.IsArkiveringType(mottatt.Melding.MeldingType))
             {
@@ -76,7 +76,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
             else
             { // Ukjent meldingstype
-                Log.Information("Ukjent meldingType {MeldingType} og meldingId {MeldingId} mottatt. Sender ugyldigforespørsel",
+                Logger.Information("Ukjent meldingType {MeldingType} og meldingId {MeldingId} mottatt. Sender ugyldigforespørsel",
                     GetType().Name, mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
                 mottatt.SvarSender.Ack();
                 var payloads = new List<IPayload>();
@@ -120,7 +120,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             mottatt.SvarSender.Ack(); // Ack message to remove it from the queue
 
             var sendtMelding = await mottatt.SvarSender.Svar(melding.MeldingsType, payloads);
-            Log.Information("Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt", sendtMelding.MeldingId,
+            Logger.Information("Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt", sendtMelding.MeldingId,
                 sendtMelding.MeldingType);
         }
 
@@ -161,7 +161,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
 
                 var sendtMelding = await mottatt.SvarSender.Svar(melding.MeldingsType, payloads);
-                Log.Information("Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt",
+                Logger.Information("Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt",
                     sendtMelding.MeldingId,
                     sendtMelding.MeldingType);
                 
