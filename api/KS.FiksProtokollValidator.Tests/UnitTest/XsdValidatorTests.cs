@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest

@@ -4,7 +4,6 @@ using System.IO;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 using NUnit.Framework;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest

@@ -5,7 +5,6 @@ using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Resources;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
 

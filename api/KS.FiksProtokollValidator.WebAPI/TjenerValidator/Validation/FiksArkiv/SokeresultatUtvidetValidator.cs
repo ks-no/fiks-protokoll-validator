@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
 using KS.Fiks.Arkiv.Models.V1.Innsyn.Sok;
-using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources;
 
 namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.FiksArkiv
 {

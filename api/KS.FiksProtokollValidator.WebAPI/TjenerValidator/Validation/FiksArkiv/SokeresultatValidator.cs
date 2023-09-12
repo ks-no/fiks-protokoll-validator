@@ -5,7 +5,6 @@ using System.Xml.Serialization;
 using KS.Fiks.Arkiv.Models.V1.Arkivstruktur;
 using KS.Fiks.Arkiv.Models.V1.Innsyn.Sok;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 
 namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.FiksArkiv
 {

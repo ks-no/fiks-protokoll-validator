@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
+namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources {
     using System;
     
     
@@ -28,7 +28,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Validation.Resources {
         public static System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.Equals(null, resourceMan)) {
-                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("KS.FiksProtokollValidator.WebAPI.Validation.Resources.ValidationErrorMessages", typeof(ValidationErrorMessages).Assembly);
+                    System.Resources.ResourceManager temp = new System.Resources.ResourceManager("KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources.ValidationErrorMessages", typeof(ValidationErrorMessages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

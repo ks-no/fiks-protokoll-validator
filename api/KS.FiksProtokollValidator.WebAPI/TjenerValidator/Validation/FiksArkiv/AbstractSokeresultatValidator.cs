@@ -1,5 +1,4 @@
 using KS.Fiks.Arkiv.Models.V1.Innsyn.Sok;
-using KS.FiksProtokollValidator.WebAPI.Validation;
 
 namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.FiksArkiv
 {
