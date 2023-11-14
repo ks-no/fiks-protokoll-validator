@@ -108,12 +108,14 @@ pipeline {
                 gitCheckout("main")
                 gitTag(isRelease, env.FULL_VERSION)
                 prepareDotNetNoBuild(env.NEXT_VERSION)
-                gitPush()
                 script {
                     currentBuild.description = "${env.user} released version ${env.FULL_VERSION}"
                 }
-                withCredentials([usernamePassword(credentialsId: 'Github-token-login', passwordVariable: 'GITHUB_KEY', usernameVariable: 'USERNAME')]) {
-                    sh "~/.local/bin/http --ignore-stdin -a ${USERNAME}:${GITHUB_KEY} POST https://api.github.com/repos/ks-no/${env.REPO_NAME}/releases tag_name=\"${env.FULL_VERSION}\" body=\"Release utført av ${env.user}\n\n## Endringer:\n${params.releaseNotes}\n\n ## Sikkerhetsvurdering: \n${params.securityReview} \n\n ## Review: \n${params.reviewer == 'Endringene krever ikke review' ? params.reviewer : "Review gjort av ${params.reviewer}"}\""
+            }
+            post {
+                success {
+                  gitPush()
+                  createGithubRelease env.REPO_NAME, params.reviewer, params.releaseNotes, env.CURRENT_VERSION, env.user
                 }
             }
         }
@@ -179,17 +181,6 @@ def extractVersion(xml) {
   def version = Project['PropertyGroup']['VersionPrefix'].text().trim()
   echo("Found version ${version}")
   return version
-}
-
-def findVersionSuffix() {
-    println("FindVersionSuffix")
-    def findCommand = $/find api/KS.FiksProtokollValidator.WebAPI -name "KS.FiksProtokollValidator.WebAPI.csproj" -exec xpath '{}' '/Project/PropertyGroup/VersionPrefix/text()' \;/$
-
-    def version = sh(script: findCommand, returnStdout: true, label: 'Lookup current version from csproj files').trim().split('\n').find {
-        return it.trim().matches(versionPattern())
-    }
-    println("Version found: ${version}")
-    return version
 }
 
 def incrementVersion(versionString) {
