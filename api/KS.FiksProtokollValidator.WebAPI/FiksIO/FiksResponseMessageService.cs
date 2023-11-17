@@ -18,27 +18,17 @@ using Serilog;
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 {
     /* This is the consumer that receives messages from Fiks-Protokoller/Fiks-IO
-     * That means we are interested in keeping the connection to Fiks-IO open.
-     * Here we are using the health-check (IsOpen) on the Fiks-IO client and have implemented a self-healing BackgroundService
-     * We are also exposing the health as a healthz endpoint. That is why the FiksIOClient is kept in a singleton outside this BackgroundService.
-     * This way we can use the health status for the healthz endpoint in the running application.
      */
     public class FiksResponseMessageService : BackgroundService
     {
-        
         private readonly FiksProtokollConnectionManager _fiksProtokollConnectionManager;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
-        private const int HealthCheckInterval = 5 * 60 * 1000;
-        
-        private Timer _ensureFiksIOConnectionIsOpenTimer { get; set; }
 
         public FiksResponseMessageService(IServiceScopeFactory scopeFactory, FiksProtokollConnectionManager manager)
         {
             _scopeFactory = scopeFactory;
             _fiksProtokollConnectionManager = manager;
-            // Self-healing check
-            _ensureFiksIOConnectionIsOpenTimer = new Timer(Callback, null, HealthCheckInterval, HealthCheckInterval);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -172,33 +162,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             finally
             {
                 mottattMeldingArgs.SvarSender?.Ack();
-            }
-        }
-        
-        private async void Callback(object o)
-        {
-            await EnsureFiksIOConnectionsAreOpen().ConfigureAwait(false);
-        }
-        
-        
-        private async Task EnsureFiksIOConnectionsAreOpen()
-        {
-            // await FiksIOClient initialization
-            foreach (var fiksIoClientConsumerService in _fiksProtokollConnectionManager.FiksProtokollConnectionServices)
-            {
-                await fiksIoClientConsumerService.Value.Initialization;    
-            }
-
-            if (!_fiksProtokollConnectionManager.IsHealthy())
-            {
-                Logger.Error("FiksResponseMessageService: self-check detects FiksIOClient connection is down! Restarting background service");
-                await _fiksProtokollConnectionManager.Reconnect();
-                await StopAsync(default);
-                await StartAsync(default);
-            }
-            else
-            {
-                Logger.Debug("FiksResponseMessageService: self-check detects FiksIOClient is ok");
             }
         }
     }
