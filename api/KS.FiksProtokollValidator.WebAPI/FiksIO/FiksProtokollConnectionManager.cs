@@ -1,27 +1,27 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO;
 
 public class FiksProtokollConnectionManager
 {
     private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
-    private readonly AppSettings _appSettings;
     public Dictionary<string, FiksProtokollConnectionService> FiksProtokollConnectionServices { get; }
 
 
-    public FiksProtokollConnectionManager(AppSettings appAppSettings)
+    public FiksProtokollConnectionManager(AppSettings appAppSettings, ILoggerFactory loggerFactory)
     {
-        _appSettings = appAppSettings;
         FiksProtokollConnectionServices = new Dictionary<string, FiksProtokollConnectionService>();
 
-        var protocolAccounts = JsonConvert.DeserializeObject<ProtocolAccountConfigurations>(_appSettings.FiksIOConfig.ProtocolAccountConfigs);
+        var protocolAccounts = JsonConvert.DeserializeObject<ProtocolAccountConfigurations>(appAppSettings.FiksIOConfig.ProtocolAccountConfigs);
         foreach (var protokollKontoConfig in protocolAccounts.ProtocolAccounts)
         {
-             var service = new FiksProtokollConnectionService(MapToSettings(_appSettings, protokollKontoConfig));
+             var service = new FiksProtokollConnectionService(MapToSettings(appAppSettings, protokollKontoConfig), loggerFactory);
              FiksProtokollConnectionServices.Add(protokollKontoConfig.Protocol, service);
         }
     }
@@ -54,7 +54,7 @@ public class FiksProtokollConnectionManager
             if (!fiksProtokollConnectionService.Value.IsHealthy())
             {
                 Log.Information($"FiksProtokollConnectionManager reconnect unhealthy {fiksProtokollConnectionService.Key}");
-                fiksProtokollConnectionService.Value.Reconnect();
+                await fiksProtokollConnectionService.Value.Reconnect();
             }
         }
     }

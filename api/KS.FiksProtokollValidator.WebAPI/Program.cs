@@ -17,44 +17,33 @@ namespace KS.FiksProtokollValidator.WebAPI
 {
     public class Program
     {
+        private static string _hostname;
+        private static string _environment;
+        private static string _kubernetesNode;
+        private static string _logstashDestination;
+
         public static void Main(string[] args)
         {
             var aspnetcoreEnvironment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var logstashDestination = Environment.GetEnvironmentVariable("LOGSTASH_DESTINATION");
-            var hostname = Environment.GetEnvironmentVariable("HOSTNAME");
-            var kubernetesNode = Environment.GetEnvironmentVariable("KUBERNETES_NODE");
-            var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
+            _logstashDestination = Environment.GetEnvironmentVariable("LOGSTASH_DESTINATION");
+            _hostname = Environment.GetEnvironmentVariable("HOSTNAME");
+            _kubernetesNode = Environment.GetEnvironmentVariable("KUBERNETES_NODE");
+            _environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
             
-            var loggerConfiguration = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
-                .MinimumLevel.Override("Microsoft.AspNetCore.Localization", LogEventLevel.Error)
-                .Enrich.FromLogContext()
-                .Enrich.WithProperty("app", "protokoll-validator")
-                .Enrich.WithProperty("env", environment)
-                .Enrich.WithProperty("logsource", hostname)
-                .Enrich.WithProperty("node", kubernetesNode)
-                .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level}] [{RequestId}] [{requestid}] - {Message} {NewLine} {Exception}");
-
-            if (!string.IsNullOrEmpty(logstashDestination))
-            {
-                loggerConfiguration.WriteTo.TCPSink($"tcp://{logstashDestination}", new CustomLogstashJsonFormatter()); 
-            }
-            
-            Log.Logger = loggerConfiguration.CreateLogger();
+            var loggerFactory = InitSerilogConfiguration();
             
             Log.Information("Starting host with env variables:");
             Log.Information("ASPNETCORE_ENVIRONMENT: {AspnetcoreEnvironment}", aspnetcoreEnvironment);
-            Log.Information("HOSTNAME: {Hostname}", hostname);
-            Log.Information("KUBERNETES_NODE: {KubernetesNode}", kubernetesNode);
-            Log.Information("ENVIRONMENT: {Environment}",environment);
-            Log.Information("LOGSTASH_DESTINATION: {LogstashDestination}", logstashDestination);
+            Log.Information("HOSTNAME: {Hostname}", _hostname);
+            Log.Information("KUBERNETES_NODE: {KubernetesNode}", _kubernetesNode);
+            Log.Information("ENVIRONMENT: {Environment}",_environment);
+            Log.Information("LOGSTASH_DESTINATION: {LogstashDestination}", _logstashDestination);
             Log.Information("Path.PathSeparator: {PathSeparator}", Path.PathSeparator);
 
             var appBuilder = CreateHostBuilder(args);
             
             var startup = new Startup(appBuilder.Configuration);
-            startup.ConfigureServices(appBuilder.Services);
+            startup.ConfigureServices(appBuilder.Services, loggerFactory);
             
             var app = appBuilder.Build();
 
@@ -99,6 +88,30 @@ namespace KS.FiksProtokollValidator.WebAPI
             builder.Configuration.AddEnvironmentVariables("fiksProtokollValidator_");
             builder.Host.UseSerilog();
             return builder;
+        }
+        
+        private static ILoggerFactory InitSerilogConfiguration()
+        {
+            var loggerConfiguration = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.AspNetCore.Localization", LogEventLevel.Error)
+                .Enrich.FromLogContext()
+                .Enrich.WithProperty("app", "protokoll-validator")
+                .Enrich.WithProperty("env", _environment)
+                .Enrich.WithProperty("logsource", _hostname)
+                .Enrich.WithProperty("node", _kubernetesNode)
+                .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level}] [{RequestId}] [{requestid}] - {Message} {NewLine} {Exception}");
+            
+            if (!string.IsNullOrEmpty(_logstashDestination))
+            {
+                loggerConfiguration.WriteTo.TCPSink($"tcp://{_logstashDestination}", new CustomLogstashJsonFormatter()); 
+            }
+            
+            var logger = loggerConfiguration.CreateLogger();
+            Log.Logger = logger;
+
+            return LoggerFactory.Create(logging => logging.AddSerilog(logger));
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
 using KS.FiksProtokollValidator.WebAPI.Validation;
@@ -9,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace KS.FiksProtokollValidator.WebAPI
 {
@@ -21,9 +23,9 @@ namespace KS.FiksProtokollValidator.WebAPI
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
         
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, ILoggerFactory loggerFactory)
         {
             services.AddCors(options =>
             {
@@ -44,7 +46,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.CheckConsentNeeded = context => false;
+                options.CheckConsentNeeded = _ => false;
                 options.MinimumSameSitePolicy = SameSiteMode.Lax;
                 options.Secure = CookieSecurePolicy.None;
             });
@@ -52,17 +54,17 @@ namespace KS.FiksProtokollValidator.WebAPI
             // get configuration from appsettings.json - use as singleton
             var appSettings = CreateAppSettings();
             services.AddSingleton(appSettings);
-            var fiksProtokollServicesManager = new FiksProtokollConnectionManager(appSettings);
+            var fiksProtokollServicesManager = new FiksProtokollConnectionManager(appSettings, loggerFactory);
             services.AddSingleton(fiksProtokollServicesManager);
             services.AddControllers();
             services.AddHostedService<FiksResponseMessageService>();
-            services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection") ?? throw new ConfigurationErrorsException("Mangler DefaultConnection i configuration")));
             services.AddSingleton<IFiksRequestMessageService, FiksRequestMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }
-        
-        public AppSettings CreateAppSettings()
+
+        private AppSettings CreateAppSettings()
         {
             var appSettings = Configuration.GetSection("AppSettings").Get<AppSettings>();
             
