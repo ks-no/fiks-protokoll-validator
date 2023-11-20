@@ -48,10 +48,36 @@ pipeline {
         }
               
         stage('API: Build and publish docker image') {
-            steps {
-                script {
-                    println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImageApi(params.isRelease);
+            dir('api/KS.FiksProtokollValidator.WebAPI') {
+                steps {
+                  rtDotnetResolver (
+                    id: "NUGET_RESOLVER",
+                    serverId: "KS Artifactory",
+                    repo: "nuget-all"
+                  )
+                  powershell script: 'New-Item -ItemType Directory -Force -Path $env:TMPDIR | Out-Null', label: 'Create tempdir'
+                  rtDotnetRun(
+                    resolverId: "NUGET_RESOLVER",
+                    args: "restore --disable-parallel --verbosity detailed" 
+                  )  
+                  dotnetPublish(
+                    configuration: 'Release',
+                    nologo: true,
+                    noIncremental: true,
+                    noRestore: true,
+                    optionsString: env.BUILD_OPTS,
+                    verbosity: 'detailed',
+                    outputDirectory: 'published-api'
+                  )
+                   script {
+                      println("API: publishing docker image version: ${env.FULL_VERSION}")
+                      buildAndPushDockerImage(params.isRelease);
+                  }
+                }
+                post {
+                  failure {
+                    archiveArtifacts artifacts: "${env.MSBUILDDEBUGPATH}\\MSBuild_*.failure.txt", fingerprint: true, allowEmptyArchive: true
+                  }
                 }
             }
         }
