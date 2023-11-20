@@ -41,8 +41,6 @@ pipeline {
                       env.BUILD_SUFFIX = "--version-suffix ${env.VERSION_SUFFIX}"
                       env.FULL_VERSION = "${CURRENT_VERSION}-${env.VERSION_SUFFIX}"
                     }
-                    print("Listing all environment variables:")
-                    sh 'printenv'
                 }
             }
         }
@@ -53,7 +51,7 @@ pipeline {
                     print("hva er her?")
                     sh pwd
                 }
-                dir("api\\KS.FiksProtokollValidator.WebAPI") {
+                dir("fiks-protokoll-validator\\api\\KS.FiksProtokollValidator.WebAPI") {
                   
                   rtDotnetResolver (
                     id: "NUGET_RESOLVER",
