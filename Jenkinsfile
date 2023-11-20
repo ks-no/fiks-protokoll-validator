@@ -49,7 +49,7 @@ pipeline {
               
         stage('API: Build and publish docker image') {
             steps {
-                dir("api\KS.FiksProtokollValidator.WebAPI") {
+                dir("api\\KS.FiksProtokollValidator.WebAPI") {
 
                   rtDotnetResolver (
                     id: "NUGET_RESOLVER",
