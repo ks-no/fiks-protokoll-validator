@@ -64,10 +64,8 @@ pipeline {
                   dotnetPublish(
                     configuration: 'Release',
                     nologo: true,
-                    noIncremental: true,
                     noRestore: true,
                     optionsString: env.BUILD_OPTS,
-                    verbosity: 'detailed',
                     outputDirectory: 'published-api'
                   )
                    script {
