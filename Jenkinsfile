@@ -49,8 +49,12 @@ pipeline {
               
         stage('API: Build and publish docker image') {
             steps {
+                script {
+                    print("hva er her?")
+                    sh pwd
+                }
                 dir("api\\KS.FiksProtokollValidator.WebAPI") {
-
+                  
                   rtDotnetResolver (
                     id: "NUGET_RESOLVER",
                     serverId: "KS Artifactory",
