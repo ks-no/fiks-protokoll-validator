@@ -49,7 +49,9 @@ pipeline {
             steps {
                 script {
                     print("hva er her?")
-                    sh pwd
+                    sh ls
+                    print("Ferdig?")
+
                 }
                 dir("fiks-protokoll-validator\\api\\KS.FiksProtokollValidator.WebAPI") {
                   
