@@ -1,12 +1,7 @@
 def sdk = resolveDotNetSDKToolVersion(config.dotnetVersion)
 
 pipeline {
-    agent {
-        label 'windows'
-    }
-    tools {
-        dotnetsdk sdk
-    }
+    agent any
     environment {
         PROJECT_WEB_FOLDER = "web-ui"
         PROJECT_API_FOLDER = "api"
@@ -23,8 +18,6 @@ pipeline {
         DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
         TMPDIR = "${env.PWD + '\\tmpdir'}"
-        MSBUILDDEBUGPATH = "${env.TMPDIR}" 
-        BUILD_OPTS = buildOpts(env.VERSION_SUFFIX)
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
@@ -54,49 +47,56 @@ pipeline {
                 }
             }
         }
-              
-        stage('API: Build and publish docker image') {
-            steps {
-                dir("api\\KS.FiksProtokollValidator.WebAPI") {      
-                  rtDotnetResolver (
-                    id: "NUGET_RESOLVER",
-                    serverId: "KS Artifactory",
-                    repo: "nuget-all"
-                  )
-                  powershell script: 'New-Item -ItemType Directory -Force -Path $env:TMPDIR | Out-Null', label: 'Create tempdir'
-                  rtDotnetRun(
-                    resolverId: "NUGET_RESOLVER",
-                    args: "restore --disable-parallel --verbosity detailed" 
-                  )  
-                  dotnetPublish(
-                    configuration: 'Release',
-                    nologo: true,
-                    noRestore: true,
-                    optionsString: env.BUILD_OPTS,
-                    outputDirectory: 'published-api'
-                  )
-                   //script {
-                   //   println("API: publishing docker image version: ${env.FULL_VERSION}")
-                   //   buildAndPushDockerImage(params.isRelease);
-                  //}
+        stage('Build docker images')
+            parallel {      
+                stage('API: Build and publish docker image - windows') {
+                    agent {
+                      label 'windows'
+                    }
+                    tools {
+                      dotnetsdk sdk
+                    }
+                    environment {
+                      TMPDIR = "${env.PWD + '\\tmpdir'}"
+                      MSBUILDDEBUGPATH = "${env.TMPDIR}"            
+                    }
+                    steps {
+                        dir("api\\KS.FiksProtokollValidator.WebAPI") {      
+                          rtDotnetResolver (
+                            id: "NUGET_RESOLVER",
+                            serverId: "KS Artifactory",
+                            repo: "nuget-all"
+                          )
+                          powershell script: 'New-Item -ItemType Directory -Force -Path $env:TMPDIR | Out-Null', label: 'Create tempdir'
+                          rtDotnetRun(
+                            resolverId: "NUGET_RESOLVER",
+                            args: "restore --disable-parallel --verbosity detailed" 
+                          )  
+                          dotnetPublish(
+                            configuration: 'Release',
+                            nologo: true,
+                            noRestore: true,
+                            optionsString: env.BUILD_OPTS,
+                            outputDirectory: 'published-api'
+                          )
+                        }
+                        post {
+                          failure {
+                            archiveArtifacts artifacts: "${env.MSBUILDDEBUGPATH}\\MSBuild_*.failure.txt", fingerprint: true, allowEmptyArchive: true
+                          }
+                        }
+                    }
                 }
-                post {
-                  failure {
-                    archiveArtifacts artifacts: "${env.MSBUILDDEBUGPATH}\\MSBuild_*.failure.txt", fingerprint: true, allowEmptyArchive: true
-                  }
+                stage('WEB: Build and publish docker image') {
+                    steps {
+                        script {
+                            println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
+                            buildAndPushDockerImageWeb(params.isRelease);
+                        }
+                    }
                 }
             }
         }
-        
-        stage('WEB: Build and publish docker image') {
-            steps {
-                script {
-                    println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImageWeb(params.isRelease);
-                }
-            }
-        }
-        
         stage('API and WEB: Push helm chart') {
             steps {
                 println("API and WEB: Building helm chart version: ${env.FULL_VERSION}")
