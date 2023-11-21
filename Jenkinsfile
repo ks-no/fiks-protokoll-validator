@@ -74,7 +74,18 @@ pipeline {
                           rtDotnetRun(
                             resolverId: "NUGET_RESOLVER",
                             args: "restore --disable-parallel --verbosity detailed" 
-                          )  
+                          )
+                          dotnetPublish(
+                            configuration: 'Release',
+                            nologo: true,
+                            noRestore: true,
+                            optionsString: env.BUILD_OPTS,
+                            outputDirectory: 'published-api'
+                          )
+                          script {
+                            println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
+                            buildAndPushDockerImage(params.isRelease);
+                          }  
                         }
                     }
                     post {
