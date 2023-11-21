@@ -84,7 +84,7 @@ pipeline {
                           )
                           script {
                             println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
-                            buildAndPushDockerImage(isRelease: params.isRelease);
+                            buildAndPushDockerImage(API_APP_NAME, [env.CURRENT_VERSION, 'latest'], [], params.isRelease, ".")
                           }  
                         }
                     }
