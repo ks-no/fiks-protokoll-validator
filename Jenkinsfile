@@ -76,10 +76,10 @@ pipeline {
                             args: "restore --disable-parallel --verbosity detailed" 
                           )  
                         }
-                        post {
-                          failure {
+                    }
+                    post {
+                        failure {
                             archiveArtifacts artifacts: "${env.MSBUILDDEBUGPATH}\\MSBuild_*.failure.txt", fingerprint: true, allowEmptyArchive: true
-                          }
                         }
                     }
                 }
