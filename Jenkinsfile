@@ -1,4 +1,4 @@
-def sdk = resolveDotNetSDKToolVersion(config.dotnetVersion)
+def sdk = resolveDotNetSDKToolVersion("6.0")
 
 pipeline {
     agent any
