@@ -57,9 +57,6 @@ pipeline {
               
         stage('API: Build and publish docker image') {
             steps {
-                script {
-                    print("hva er her?")
-                }
                 dir("api\\KS.FiksProtokollValidator.WebAPI") {      
                   rtDotnetResolver (
                     id: "NUGET_RESOLVER",
@@ -78,10 +75,10 @@ pipeline {
                     optionsString: env.BUILD_OPTS,
                     outputDirectory: 'published-api'
                   )
-                   script {
-                      println("API: publishing docker image version: ${env.FULL_VERSION}")
-                      buildAndPushDockerImage(params.isRelease);
-                  }
+                   //script {
+                   //   println("API: publishing docker image version: ${env.FULL_VERSION}")
+                   //   buildAndPushDockerImage(params.isRelease);
+                  //}
                 }
                 post {
                   failure {
