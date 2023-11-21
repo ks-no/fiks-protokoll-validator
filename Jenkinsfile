@@ -46,12 +46,21 @@ pipeline {
         }
               
         stage('API: Build and publish docker image') {
+            agent {
+                label 'windows'
+            }
+            tools {
+                dotnetsdk sdk
+            }
+            environment {
+                TMPDIR = "${env.PWD + '\\tmpdir'}"
+                MSBUILDDEBUGPATH = "${env.TMPDIR}"            
+            }
             steps {
                 script {
                     print("hva er her?")
                 }
-                dir("fiks-protokoll-validator\\api\\KS.FiksProtokollValidator.WebAPI") {
-                  
+                dir("api\\KS.FiksProtokollValidator.WebAPI") {      
                   rtDotnetResolver (
                     id: "NUGET_RESOLVER",
                     serverId: "KS Artifactory",
