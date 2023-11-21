@@ -1,3 +1,5 @@
+def sdk = resolveDotNetSDKToolVersion(config.dotnetVersion)
+
 pipeline {
     agent {
         label 'windows'
@@ -22,6 +24,7 @@ pipeline {
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
         TMPDIR = "${env.PWD + '\\tmpdir'}"
         MSBUILDDEBUGPATH = "${env.TMPDIR}" 
+        BUILD_OPTS = buildOpts(env.VERSION_SUFFIX)
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
@@ -226,6 +229,17 @@ def incrementVersion(versionString) {
     } else {
         return null
     }
+}
+
+def buildOpts(versionSuffix) {
+  if(versionSuffix == null || versionSuffix.trim().isEmpty()) {
+    echo("No build opts will be passed to dotnet build")
+    return ""
+  } else {
+    def opts = "--version-suffix ${versionSuffix}"
+    echo("Will add build opts: ${opts}")
+    return opts
+  }
 }
 
 def getTimestamp() {
