@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        label 'windows'
+    }
+    tools {
+        dotnetsdk sdk
+    }
     environment {
         PROJECT_WEB_FOLDER = "web-ui"
         PROJECT_API_FOLDER = "api"
@@ -15,6 +20,8 @@ pipeline {
         // URL to artifactory Docker Snapshot repo
         DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+        TMPDIR = "${env.PWD + '\\tmpdir'}"
+        MSBUILDDEBUGPATH = "${env.TMPDIR}" 
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
@@ -46,16 +53,6 @@ pipeline {
         }
               
         stage('API: Build and publish docker image') {
-            agent {
-                label 'windows'
-            }
-            tools {
-                dotnetsdk sdk
-            }
-            environment {
-                TMPDIR = "${env.PWD + '\\tmpdir'}"
-                MSBUILDDEBUGPATH = "${env.TMPDIR}"            
-            }
             steps {
                 script {
                     print("hva er her?")
