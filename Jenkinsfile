@@ -1,6 +1,12 @@
 def sdk = resolveDotNetSDKToolVersion("6.0")
 
 pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '50', artifactNumToKeepStr: '50'))
+        disableConcurrentBuilds()
+        timeout(time: 60, unit: 'MINUTES')
+        timestamps ()
+    }
     agent any
     environment {
         PROJECT_WEB_FOLDER = "web-ui"
@@ -10,11 +16,8 @@ pipeline {
         API_APP_NAME = "fiks-protokoll-validator-api"
         WEB_APP_NAME = "fiks-protokoll-validator-web"
         DOCKERFILE_TESTS = "Dockerfile-run-tests"
-        // Artifactory credentials is stored under this key
         ARTIFACTORY_CREDENTIALS = "artifactory-token-based"
-        // URL to artifactory Docker release repo
         DOCKER_REPO_RELEASE = "https://docker-all.artifactory.fiks.ks.no"
-        // URL to artifactory Docker Snapshot repo
         DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
         TMPDIR = "${env.PWD + '\\tmpdir'}"
@@ -58,7 +61,6 @@ pipeline {
                       dotnetsdk sdk
                     }
                     environment {
-                      TMPDIR = "${env.PWD + '\\tmpdir'}"
                       MSBUILDDEBUGPATH = "${env.TMPDIR}"            
                     }
                     steps {
@@ -73,13 +75,6 @@ pipeline {
                             resolverId: "NUGET_RESOLVER",
                             args: "restore --disable-parallel --verbosity detailed" 
                           )  
-                          dotnetPublish(
-                            configuration: 'Release',
-                            nologo: true,
-                            noRestore: true,
-                            optionsString: env.BUILD_OPTS,
-                            outputDirectory: 'published-api'
-                          )
                         }
                         post {
                           failure {
@@ -165,6 +160,10 @@ pipeline {
             dir("${PROJECT_TEST}\\bin") {
                 deleteDir()
             }
+            dir("${env.TMPDIR}") {
+              deleteDir()
+            }
+            deleteDir()
         }
     }
 }
