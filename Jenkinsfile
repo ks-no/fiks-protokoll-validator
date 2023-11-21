@@ -53,44 +53,47 @@ pipeline {
         }
         stage('Build docker images') {
             parallel {      
-                stage('API: Build and publish docker image - windows') {
+                stage('API: Build and publish docker image') {
                     agent {
-                      label 'windows'
+                      label 'linux || linux-large'
                     }
                     tools {
                       dotnetsdk sdk
                     }
                     environment {
-                      MSBUILDDEBUGPATH = "${env.TMPDIR}"            
+                      NUGET_HTTP_CACHE_PATH = "${env.WORKSPACE + '@tmp/cache'}"
+                      TMPDIR = "${env.PWD}/tmpdir"
+                      MSBUILDDEBUGPATH = "${env.TMPDIR}"
+                      NUGET_CONF = credentials('nuget-config')
+                      DOTNET_CLI_TELEMETRY_OPTOUT = 1
+                      COMPlus_EnableDiagnostics = 0
+                      DOTNET_GCHeapHardLimit=20000000
                     }
                     steps {
-                        dir("api\\KS.FiksProtokollValidator.WebAPI") {      
-                          rtDotnetResolver (
-                            id: "NUGET_RESOLVER",
-                            serverId: "KS Artifactory",
-                            repo: "nuget-all"
-                          )
-                          powershell script: 'New-Item -ItemType Directory -Force -Path $env:TMPDIR | Out-Null', label: 'Create tempdir'
-                          rtDotnetRun(
-                            resolverId: "NUGET_RESOLVER",
-                            args: "restore --disable-parallel --verbosity detailed" 
-                          )
-                          dotnetPublish(
-                            configuration: 'Release',
-                            nologo: true,
-                            noRestore: true,
-                            optionsString: env.BUILD_OPTS,
-                            outputDirectory: 'published-api'
-                          )
-                          script {
-                            println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
-                            buildAndPushDockerImage(API_APP_NAME, [env.CURRENT_VERSION, 'latest'], [], params.isRelease, ".")
-                          }  
+                        withDotNet(sdk: sdk) {
+                            dir("api\\KS.FiksProtokollValidator.WebAPI") {      
+                              dotnetRestore(
+                                configfile: NUGET_CONF,
+                                showSdkInfo: true,
+                                verbosity: 'normal'
+                              )
+                              dotnetPublish(
+                                configuration: 'Release',
+                                nologo: true,
+                                noRestore: true,
+                                optionsString: env.BUILD_OPTS,
+                                outputDirectory: 'published-api'
+                              )
+                              script {
+                                println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
+                                buildAndPushDockerImage(API_APP_NAME, [env.CURRENT_VERSION, 'latest'], [], params.isRelease, ".")
+                              }  
+                            }
                         }
                     }
                     post {
-                        failure {
-                            archiveArtifacts artifacts: "${env.MSBUILDDEBUGPATH}\\MSBuild_*.failure.txt", fingerprint: true, allowEmptyArchive: true
+                        success {
+                            recordIssues enabledForFailure: true, tools: [msBuild()]
                         }
                     }
                 }
