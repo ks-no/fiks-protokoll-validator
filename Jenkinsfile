@@ -47,7 +47,7 @@ pipeline {
                 }
             }
         }
-        stage('Build docker images')
+        stage('Build docker images') {
             parallel {      
                 stage('API: Build and publish docker image - windows') {
                     agent {
