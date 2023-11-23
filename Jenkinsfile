@@ -1,4 +1,12 @@
+def sdk = resolveDotNetSDKToolVersion("6.0")
+
 pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '50', artifactNumToKeepStr: '50'))
+        disableConcurrentBuilds()
+        timeout(time: 60, unit: 'MINUTES')
+        timestamps ()
+    }
     agent any
     environment {
         PROJECT_WEB_FOLDER = "web-ui"
@@ -8,13 +16,12 @@ pipeline {
         API_APP_NAME = "fiks-protokoll-validator-api"
         WEB_APP_NAME = "fiks-protokoll-validator-web"
         DOCKERFILE_TESTS = "Dockerfile-run-tests"
-        // Artifactory credentials is stored under this key
         ARTIFACTORY_CREDENTIALS = "artifactory-token-based"
-        // URL to artifactory Docker release repo
         DOCKER_REPO_RELEASE = "https://docker-all.artifactory.fiks.ks.no"
-        // URL to artifactory Docker Snapshot repo
         DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+        TMPDIR = "${env.PWD + '\\tmpdir'}"
+        BUILD_OPTS = buildOpts(env.VERSION_SUFFIX)
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
@@ -41,30 +48,65 @@ pipeline {
                       env.BUILD_SUFFIX = "--version-suffix ${env.VERSION_SUFFIX}"
                       env.FULL_VERSION = "${CURRENT_VERSION}-${env.VERSION_SUFFIX}"
                     }
-                    print("Listing all environment variables:")
-                    sh 'printenv'
                 }
             }
         }
-              
-        stage('API: Build and publish docker image') {
-            steps {
-                script {
-                    println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImageApi(params.isRelease);
+        stage('Build docker images') {
+            parallel {      
+                stage('API: Build and publish docker image') {
+                    agent {
+                      label 'linux || linux-large'
+                    }
+                    tools {
+                      dotnetsdk sdk
+                    }
+                    environment {
+                      NUGET_HTTP_CACHE_PATH = "${env.WORKSPACE + '@tmp/cache'}"
+                      TMPDIR = "${env.PWD}/tmpdir"
+                      MSBUILDDEBUGPATH = "${env.TMPDIR}"
+                      NUGET_CONF = credentials('nuget-config')
+                      DOTNET_CLI_TELEMETRY_OPTOUT = 1
+                      COMPlus_EnableDiagnostics = 0
+                      DOTNET_GCHeapHardLimit=20000000
+                    }
+                    steps {
+                        withDotNet(sdk: sdk) {
+                            dir("api\\KS.FiksProtokollValidator.WebAPI") {      
+                              dotnetRestore(
+                                configfile: NUGET_CONF,
+                                showSdkInfo: true,
+                                verbosity: 'normal'
+                              )
+                              dotnetPublish(
+                                configuration: 'Release',
+                                nologo: true,
+                                noRestore: true,
+                                optionsString: env.BUILD_OPTS,
+                                outputDirectory: 'published-api'
+                              )
+                              script {
+                                println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
+                                buildAndPushDockerImage(API_APP_NAME, [env.FULL_VERSION, 'latest'], [], params.isRelease, ".")
+                              }  
+                            }
+                        }
+                    }
+                    post {
+                        success {
+                            recordIssues enabledForFailure: true, tools: [msBuild()]
+                        }
+                    }
+                }
+                stage('WEB: Build and publish docker image') {
+                    steps {
+                        script {
+                            println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
+                            buildAndPushDockerImageWeb(params.isRelease);
+                        }
+                    }
                 }
             }
         }
-        
-        stage('WEB: Build and publish docker image') {
-            steps {
-                script {
-                    println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImageWeb(params.isRelease);
-                }
-            }
-        }
-        
         stage('API and WEB: Push helm chart') {
             steps {
                 println("API and WEB: Building helm chart version: ${env.FULL_VERSION}")
@@ -132,6 +174,10 @@ pipeline {
             dir("${PROJECT_TEST}\\bin") {
                 deleteDir()
             }
+            dir("${env.TMPDIR}") {
+              deleteDir()
+            }
+            deleteDir()
         }
     }
 }
@@ -194,6 +240,17 @@ def incrementVersion(versionString) {
     } else {
         return null
     }
+}
+
+def buildOpts(versionSuffix) {
+  if(versionSuffix == null || versionSuffix.trim().isEmpty()) {
+    echo("No build opts will be passed to dotnet build")
+    return ""
+  } else {
+    def opts = "--version-suffix ${versionSuffix}"
+    echo("Will add build opts: ${opts}")
+    return opts
+  }
 }
 
 def getTimestamp() {
