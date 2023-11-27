@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics.Tracing;
 using System.IO;
+using KS.Fiks.IO.Client.Amqp.RabbitMQ;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Health;
 using KS.FiksProtokollValidator.WebAPI.Logging;
@@ -52,6 +54,8 @@ namespace KS.FiksProtokollValidator.WebAPI
             MigrateAndSeedDatabase(app);
             
             startup.Configure(app, appBuilder.Environment);
+
+            var rabbitMqLogger = new RabbitMQEventLogger(loggerFactory, EventLevel.Informational);
 
             Log.Information("WebApplication api started running with urls: ");
             foreach (var appUrl in app.Urls)
