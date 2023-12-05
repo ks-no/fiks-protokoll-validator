@@ -3,17 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using KS.FiksProtokollValidator.WebAPI.Validation;
-using NUnit.Framework;
+using Xunit;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {
     public class XsdValidatorTests
     {
-        public XsdValidatorTests()
-        {
-        }
-        
-        [Test]
+        [Fact]
         public void ValidateSokeresultatNoekler()
         {
             var xsdValidator = new XsdValidator();
@@ -27,7 +23,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             Assert.True(validationErrors.Count == 0);
         }
         
-        [Test]
+        [Fact]
         public void ValidateSokeresultatMinimum()
         {
             var xsdValidator = new XsdValidator();
@@ -41,7 +37,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             Assert.True(validationErrors.Count == 0);
         }
         
-        [Test]
+        [Fact]
         public void ValidateSokeresultatUtvidet()
         {
             var xsdValidator = new XsdValidator();

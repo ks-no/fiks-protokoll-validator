@@ -6,22 +6,19 @@ using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
-using NUnit.Framework;
+using Xunit;
 
 namespace KS.FiksProtokollValidator.Tests
 {
-    public class Tests
+    public class ValidatorTests
     {
-        private IFiksResponseValidator _validator;
-        private FiksResponseTest _fiksResponseTest;
-        private TestCase _testCase;
-        private FiksResponse _fiksResponseMottatt;
-        private FiksResponse _fiksResponseKvittering;
-        private FiksRequest _fiksRequest;
-        private TestSession _testSession;
+        private readonly IFiksResponseValidator _validator;
+        private readonly FiksResponseTest _fiksResponseTest;
+        private readonly TestCase _testCase;
+        private readonly FiksRequest _fiksRequest;
+        private readonly TestSession _testSession;
 
-        [SetUp]
-        public void Setup()
+        public ValidatorTests()
         {
             _validator = new FiksResponseValidator();
 
@@ -45,7 +42,7 @@ namespace KS.FiksProtokollValidator.Tests
 
             _testCase.FiksResponseTests.Add(_fiksResponseTest);
 
-            _fiksResponseMottatt = new FiksResponse
+            var fiksResponseMottatt = new FiksResponse
             {
                 Type = FiksArkivMeldingtype.ArkivmeldingOpprettMottatt,
             };
@@ -60,7 +57,7 @@ namespace KS.FiksProtokollValidator.Tests
                 fileAsBytes = ms.ToArray();
             }
 
-            _fiksResponseKvittering = new FiksResponse
+            var fiksResponseKvittering = new FiksResponse
             {
                 Type = FiksArkivMeldingtype.ArkivmeldingOpprettKvittering,
                 ReceivedAt = DateTime.Now,
@@ -77,8 +74,8 @@ namespace KS.FiksProtokollValidator.Tests
                 TestCase = _testCase,
             };
 
-            _fiksRequest.FiksResponses.Add(_fiksResponseMottatt);
-            _fiksRequest.FiksResponses.Add(_fiksResponseKvittering);
+            _fiksRequest.FiksResponses.Add(fiksResponseMottatt);
+            _fiksRequest.FiksResponses.Add(fiksResponseKvittering);
 
             _testSession = new TestSession
             {
@@ -90,7 +87,7 @@ namespace KS.FiksProtokollValidator.Tests
             _testSession.FiksRequests.Add(_fiksRequest);
         }
 
-        [Test]
+        [Fact]
         public void NonExistingNodeIsReported()
         {
             _fiksResponseTest.PayloadQuery = "/denne/noden/eksisterer/ikke";
@@ -107,7 +104,7 @@ namespace KS.FiksProtokollValidator.Tests
             Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
         }
 
-        [Test]
+        [Fact]
         public void NotFoundAttributeIsReported()
         {
             _fiksResponseTest.ExpectedValue = "indianer";
@@ -124,7 +121,7 @@ namespace KS.FiksProtokollValidator.Tests
             Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
         }
 
-        [Test]
+        [Fact]
         public void ExistingAttributeIsFoundAndAsiceIsMissing()
         {
             _fiksResponseTest.ExpectedValue = "journalpostKvittering";
@@ -157,7 +154,7 @@ namespace KS.FiksProtokollValidator.Tests
             _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage);
             _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage2);
 
-            Assert.IsEmpty(_fiksRequest.FiksResponseValidationErrors);
+            Assert.True(_fiksRequest.FiksResponseValidationErrors.Count == 0);
         }
     }
 }

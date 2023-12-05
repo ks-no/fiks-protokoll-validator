@@ -4,13 +4,13 @@ using System.IO;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Models;
 using KS.FiksProtokollValidator.WebAPI.Validation;
-using NUnit.Framework;
+using Xunit;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {
     public class FiksArkivResponseValidatorTests
     {
-        [Test]
+        [Fact]
         public void TestValidateSokOnMappeTittelXmlWithCorrectResult()
         {
             var responseXml = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/ValidatorTests/NySokN1/sokeresultatMinimum.xml");
@@ -34,7 +34,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             Assert.True(validationErrors.Count == 0);
         }
 
-        [Test]
+        [Fact]
         public void TestValidateSokBetweenDatesXmlWithCorrectResult()
         {
             var responseXml = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/ValidatorTests/NySokN4/sokeresultatMinimum.xml");
