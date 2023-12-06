@@ -1,0 +1,49 @@
+{
+    "testName": "Ny Mappe med Journalpost - Normalsituasjon 1 - Nytt internt notat",
+    "description": "Oppretter ny journalpost med tittel = 'Internt notat' og journalposttype = 'X' på mappe som også er med i arkivmeldingen. Mappe kan eksistere fra før.",
+    "testStep": "Normalsituasjon 1 Input Journalpost samt Mappe med retur av Journalpost",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett",
+    "operation": "NyMappeMedJournalpost",
+    "situation": "N1",
+    "expectedResult": "Journalpost og evt Mappe med utfylte standardverdier",
+    "queriesWithExpectedValues": [
+        {
+            "payloadQuery": "/arkivmeldingKvittering/registreringKvittering",
+            "expectedValue": "journalpostKvittering",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmeldingKvittering/registreringKvittering/systemID",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmeldingKvittering/registreringKvittering/journalaar",
+            "expectedValue": "2023",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmeldingKvittering/registreringKvittering/journalsekvensnummer",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmeldingKvittering/registreringKvittering/journalpostnummer",
+            "expectedValue": "*", // * = en hvilken som helst verdi som ikke er tom, null eller whitespace
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmeldingKvittering/mappeKvittering",
+            "expectedValue": "saksmappeKvittering",
+            "valueType": 1 // 0 = Verdi, 1 = Attributt
+        },
+        {
+            "payloadQuery": "/arkivmeldingKvittering/mappeKvittering/opprettetEllerEksisterende",
+            "expectedValue": "*",
+            "valueType": 0 // 0 = Verdi, 1 = Attributt
+        }
+    ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.opprett.kvittering" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.arkiv.v1"
+}

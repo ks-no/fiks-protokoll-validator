@@ -6,11 +6,18 @@ using System.Linq;
 using KS.FiksProtokollValidator.WebAPI.Validation;
 using Newtonsoft.Json.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {
     public class TestCasesTests
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+        public TestCasesTests(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+        
         [Fact]
         public void FiksArkiv_TestCases_Are_Valid()
         {
@@ -30,13 +37,13 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 
                 if (!supported)
                 {
-                    Console.Out.WriteLine($"Skipping unsupported testcase {testCaseName}");
+                    _testOutputHelper.WriteLine($"Skipping unsupported testcase {testCaseName}");
                     continue;
                 }
 
                 if (testCasesShouldBeInvalid.Contains(testCaseName))
                 {
-                    Console.Out.WriteLine($"Skipping validating testcase that should be invalid {testCaseName}");
+                    _testOutputHelper.WriteLine($"Skipping validating testcase that should be invalid {testCaseName}");
                     continue;
                 }
                 
@@ -50,12 +57,12 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                     xml = File.ReadAllText($"{testCaseDir}/sok.xml");
                 }
 
-                Console.Out.WriteLine($"Validating testcase {testCaseName}");
+                _testOutputHelper.WriteLine($"Validating testcase {testCaseName}");
                 
                 xsdValidator.Validate(xml, validationErrors);
                 foreach (var validationError in validationErrors)
                 {
-                    Console.Out.WriteLine(validationError);
+                    _testOutputHelper.WriteLine(validationError);
                 }
                 Assert.True(validationErrors.Count == 0);
             }
