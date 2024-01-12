@@ -14,12 +14,12 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv
             if (arkivmelding?.Mappe != null)
             {
                 
-                kvittering.MappeKvittering.Add(CreateSaksmappeKvittering(arkivmelding.Mappe));
+                kvittering.MappeKvittering = CreateSaksmappeKvittering(arkivmelding.Mappe);
                 
             }
             else
             {
-                kvittering.RegistreringKvittering.Add(CreateJournalpostKvittering(arkivmelding.Registrering));    
+                kvittering.RegistreringKvittering = CreateJournalpostKvittering(arkivmelding.Registrering);    
             }
 
             return kvittering;

@@ -45,6 +45,11 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Validation
                 _xmlValidationMessages?[0].Add("XSD Validation Error: linje " + args.Exception.LineNumber +
                                                ", posisjon " + args.Exception.LinePosition + " " + args.Message);
             }
+            else
+            {
+                _xmlValidationMessages?[0].Add("XSD Validation who knows?: linje " + args.Exception.LineNumber +
+                                               ", posisjon " + args.Exception.LinePosition + " " + args.Message);
+            }
         }
     }
 }

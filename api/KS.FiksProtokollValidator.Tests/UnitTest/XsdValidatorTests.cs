@@ -24,7 +24,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.True(validationErrors.Count == 0);
+            Assert.That(validationErrors.Count == 0);
         }
         
         [Test]
@@ -38,7 +38,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.True(validationErrors.Count == 0);
+            Assert.That(validationErrors.Count == 0);
         }
         
         [Test]
@@ -52,7 +52,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.True(validationErrors.Count == 0);
+            Assert.That(validationErrors.Count == 0);
         }
     }
 }

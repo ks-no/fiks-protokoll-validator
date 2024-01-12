@@ -220,7 +220,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv
                                 },
                                 Format = new Format()
                                 {
-                                    KodeProperty = FormatKoder.PDFA.Verdi
+                                    KodeProperty = "pdf"
                                 },
                                 Filnavn = "Test.pdf",
                                 OpprettetDato = DateTime.Now,

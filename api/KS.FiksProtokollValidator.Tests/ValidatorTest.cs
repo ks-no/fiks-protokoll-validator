@@ -104,7 +104,7 @@ namespace KS.FiksProtokollValidator.Tests
                 _fiksResponseTest.PayloadQuery
             );
 
-            Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
+            Assert.That(_fiksRequest.FiksResponseValidationErrors.Contains(expectedMessage));
         }
 
         [Test]
@@ -121,7 +121,7 @@ namespace KS.FiksProtokollValidator.Tests
                 ValidationErrorMessages.MissingAttributeOnPayloadElement,
                 _fiksResponseTest.ExpectedValue, xmlNodeToLookAt);
 
-            Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
+            Assert.That(_fiksRequest.FiksResponseValidationErrors.Contains(expectedMessage));
         }
 
         [Test]
@@ -151,13 +151,13 @@ namespace KS.FiksProtokollValidator.Tests
                 ValidationErrorMessages.MissingAsiceSigning,
                 null, xmlNodeToLookAt);
 
-            Assert.Contains(expectedMessage, _fiksRequest.FiksResponseValidationErrors);
-            Assert.Contains(expectedMessage2, _fiksRequest.FiksResponseValidationErrors);
+            Assert.That(_fiksRequest.FiksResponseValidationErrors.Contains(expectedMessage));
+            Assert.That(_fiksRequest.FiksResponseValidationErrors.Contains(expectedMessage2));
 
             _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage);
             _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage2);
 
-            Assert.IsEmpty(_fiksRequest.FiksResponseValidationErrors);
+            Assert.That(_fiksRequest.FiksResponseValidationErrors.Count == 0);
         }
     }
 }

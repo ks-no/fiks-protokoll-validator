@@ -31,11 +31,11 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
 
             var validationResult = ValidatePayload(mottatt, XmlSchemaSet);
 
-            if (validationResult.Count > 0) // Ugyldig forespørsel pga valideringsfeil
+            if (validationResult.XmlValidationErrorOccured) // Ugyldig forespørsel pga valideringsfeil
             {
                 meldinger.Add(new Melding
                 {
-                    ResultatMelding = FeilmeldingEngine.CreateUgyldigforespoerselMelding(validationResult),
+                    ResultatMelding = FeilmeldingEngine.CreateUgyldigforespoerselMelding(validationResult.validationMessages),
                     FileName = "feilmelding.xml",
                     MeldingsType = FiksArkivMeldingtype.Ugyldigforespørsel,
                 });

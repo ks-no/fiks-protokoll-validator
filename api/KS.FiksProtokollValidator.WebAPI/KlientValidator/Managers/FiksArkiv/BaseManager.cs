@@ -1,10 +1,10 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
 using KS.Fiks.ASiC_E;
 using KS.Fiks.IO.Client.Models;
+using KS.FiksProtokollValidator.WebAPI.KlientValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Validation;
 using Serilog;
 
@@ -126,11 +126,10 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
             }
         }
 
-        protected string GetPayloadAsString(MottattMeldingArgs mottatt, XmlSchemaSet xmlSchemaSet,
-            out bool xmlValidationErrorOccured, out List<List<string>>? validationResult)
+        protected XmlReaderResult ValidateAndGetPayloadAsString(MottattMeldingArgs mottatt, XmlSchemaSet xmlSchemaSet)
         {
-            xmlValidationErrorOccured = false;
-
+            var xmlReaderResult = new XmlReaderResult();
+            
             IAsicReader reader = new AsiceReader();
             using (var inputStream = mottatt.Melding.DecryptedStream.Result)
             using (var asice = reader.Read(inputStream))
@@ -141,32 +140,34 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                     {
                         if (asiceReadEntry.FileName.Contains(".xml"))
                         {
-                            validationResult = new XmlValidator().ValidateXml(
+                            xmlReaderResult.validationMessages = new XmlValidator().ValidateXml(
                                 entryStream,
                                 xmlSchemaSet
                             );
-                            if (validationResult != null && validationResult[0].Count > 0)
+                            if (xmlReaderResult.validationMessages != null && xmlReaderResult.validationMessages[0].Count > 0)
                             {
-                                xmlValidationErrorOccured = true;
+                                xmlReaderResult.XmlValidationErrorOccured = true;
                             }
 
                             var newEntryStream = asiceReadEntry.OpenStream();
                             var reader1 = new StreamReader(newEntryStream);
-                            return reader1.ReadToEnd();
+                            xmlReaderResult.Xml = reader1.ReadToEnd();
                         }
                     }
 
                     Log.Information("Mottatt vedlegg: {Filename}", asiceReadEntry.FileName);
                 }
             }
-            validationResult = null;
-            return string.Empty;
+
+            return xmlReaderResult;
         }
         
-        protected List<List<string>> ValidatePayload(MottattMeldingArgs mottatt, XmlSchemaSet xmlSchemaSet)
+        
+        protected XmlReaderResult ValidatePayload(MottattMeldingArgs mottatt, XmlSchemaSet xmlSchemaSet)
         {
+            var xmlReaderResult = new XmlReaderResult();
             IAsicReader reader = new AsiceReader();
-            List<List<string>>? validationResult = new List<List<string>>();
+          
             using (var inputStream = mottatt.Melding.DecryptedStream.Result)
             using (var asice = reader.Read(inputStream))
             {
@@ -176,17 +177,21 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                     {
                         if (asiceReadEntry.FileName.Contains(".xml"))
                         {
-                            validationResult = new XmlValidator().ValidateXml(
+                            xmlReaderResult.validationMessages = new XmlValidator().ValidateXml(
                                 entryStream,
                                 xmlSchemaSet
                             );
+                            if (xmlReaderResult.validationMessages != null && xmlReaderResult.validationMessages[0].Count > 0)
+                            {
+                                xmlReaderResult.XmlValidationErrorOccured = true;
+                            }
                         }
                     }
                     Log.Information("Mottatt vedlegg: {Filename}", asiceReadEntry.FileName);
                 }
             }
 
-            return validationResult;
+            return xmlReaderResult;
         }
     }
 }

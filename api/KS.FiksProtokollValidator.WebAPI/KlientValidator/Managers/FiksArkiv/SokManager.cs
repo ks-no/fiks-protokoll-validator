@@ -15,48 +15,39 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
     public class SokManager : BaseManager
     {
         private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
-        
-        public SokManager()
-        {
-        }
 
-        private Sok GetPayload(MottattMeldingArgs mottatt, XmlSchemaSet xmlSchemaSet,
-            out bool xmlValidationErrorOccured, out List<List<string>>? validationResult)
-        {
-            if (mottatt.Melding.HasPayload)
-            {
-                // Verify that message has payload
-                var text = GetPayloadAsString(mottatt, xmlSchemaSet, out xmlValidationErrorOccured, out validationResult);
-                Log.Debug("{Kilde} - Parsing sok: {SokText}", GetType().Name, text);
-                if (string.IsNullOrEmpty(text))
-                {
-                    Log.Error("Tom sok? Text: {Sok}", text);
-                }
-
-                using var textReader = (TextReader)new StringReader(text);
-                return (Sok)new XmlSerializer(typeof(Sok)).Deserialize(textReader);
-            }
-
-            xmlValidationErrorOccured = false;
-            validationResult = null;
-            return null;
-        }
-        
         public Melding HandleMelding(MottattMeldingArgs mottatt)
         {
-            var sok = GetPayload(mottatt, XmlSchemaSet, out var xmlValidationErrorOccured,
-                out var validationResult);
-
-            if (xmlValidationErrorOccured)
+            if (!mottatt.Melding.HasPayload)
             {
                 return new Melding
                 {
-                    ResultatMelding = FeilmeldingEngine.CreateUgyldigforespoerselMelding(validationResult),
+                    ResultatMelding =
+                        FeilmeldingEngine.CreateUgyldigforespoerselMelding("Hent mappe meldingen mangler innhold"),
                     FileName = "feilmelding.xml",
                     MeldingsType = FiksArkivMeldingtype.Ugyldigforespørsel,
                 };
             }
 
+            var xmlReaderResult = ValidateAndGetPayloadAsString(mottatt, XmlSchemaSet);
+
+            if (xmlReaderResult.XmlValidationErrorOccured) // Ugyldig forespørsel
+            {
+                Log.Information($"Xml validering feilet: {xmlReaderResult.validationMessages}");
+                return new Melding
+                {
+                    ResultatMelding = FeilmeldingEngine.CreateUgyldigforespoerselMelding(xmlReaderResult.validationMessages),
+                    FileName = "feilmelding.xml",
+                    MeldingsType = FiksArkivMeldingtype.Ugyldigforespørsel,
+                };
+            }
+            Log.Debug("{Kilde} - Parsing sok: {Xml}", GetType().Name, xmlReaderResult.Xml);
+            if (string.IsNullOrEmpty(xmlReaderResult.Xml))
+            {
+                Log.Error("Tom arkivmelding");
+            }
+            using var textReader = (TextReader)new StringReader(xmlReaderResult.Xml);
+            var sok = (Sok)new XmlSerializer(typeof(Sok)).Deserialize(textReader);
             return SokGenerator.CreateSokResponseMelding(sok);
         }
     }

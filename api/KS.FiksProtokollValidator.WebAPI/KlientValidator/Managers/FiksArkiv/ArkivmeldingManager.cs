@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Xml.Schema;
 using System.Xml.Serialization;
 using KS.Fiks.Arkiv.Models.V1.Arkivering.Arkivmelding;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
@@ -15,29 +14,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
     public class ArkivmeldingManager : BaseManager
     {
         private static readonly ILogger Log = Serilog.Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
-        
-        private Arkivmelding GetPayload(MottattMeldingArgs mottatt, XmlSchemaSet xmlSchemaSet,
-            out bool xmlValidationErrorOccured, out List<List<string>>? validationResult)
-        {
-            if (mottatt.Melding.HasPayload)
-            {
-                var text = GetPayloadAsString(mottatt, xmlSchemaSet, out xmlValidationErrorOccured,
-                    out validationResult);
-                Log.Debug("{Kilde} - Parsing arkivmelding: {Xml}", GetType().Name, text);
-                if (string.IsNullOrEmpty(text))
-                {
-                    Log.Error("Tom arkivmelding? Xml: {Xml}", text);
-                }
-
-                using var textReader = (TextReader)new StringReader(text);
-                return (Arkivmelding) new XmlSerializer(typeof(Arkivmelding)).Deserialize(textReader);
-            }
-
-            xmlValidationErrorOccured = false;
-            validationResult = null;
-            return null;
-        }
-        
+ 
         public List<Melding> HandleMelding(MottattMeldingArgs mottatt)
         {
             var meldinger = new List<Melding>();
@@ -45,20 +22,25 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
             Arkivmelding arkivmelding;
             if (mottatt.Melding.HasPayload)
             {
-                arkivmelding = GetPayload(mottatt, XmlSchemaSet,
-                    out var xmlValidationErrorOccured, out var validationResult);
-
-                if (xmlValidationErrorOccured) // Ugyldig forespørsel
+                var xmlReaderResult = ValidateAndGetPayloadAsString(mottatt, XmlSchemaSet);
+                if (xmlReaderResult.XmlValidationErrorOccured) // Ugyldig forespørsel
                 {
-                    Log.Information($"Xml validering feilet: {validationResult}");
+                    Log.Information($"Xml validering feilet: {xmlReaderResult.validationMessages}");
                     meldinger.Add(new Melding
                     {
-                        ResultatMelding = FeilmeldingEngine.CreateUgyldigforespoerselMelding(validationResult),
+                        ResultatMelding = FeilmeldingEngine.CreateUgyldigforespoerselMelding(xmlReaderResult.validationMessages),
                         FileName = "feilmelding.xml",
                         MeldingsType = FiksArkivMeldingtype.Ugyldigforespørsel,
                     });
                     return meldinger;
                 }
+                Log.Debug("{Kilde} - Parsing arkivmelding: {Xml}", GetType().Name, xmlReaderResult.Xml);
+                if (string.IsNullOrEmpty(xmlReaderResult.Xml))
+                {
+                    Log.Error("Tom arkivmelding");
+                }
+                using var textReader = (TextReader) new StringReader(xmlReaderResult.Xml);
+                arkivmelding = (Arkivmelding) new XmlSerializer(typeof(Arkivmelding)).Deserialize(textReader);
             }
             else // Missing payload
             {
