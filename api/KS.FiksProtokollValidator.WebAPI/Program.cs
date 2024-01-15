@@ -4,7 +4,7 @@ using System.IO;
 using KS.Fiks.IO.Client.Amqp.RabbitMQ;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Health;
-using KS.FiksProtokollValidator.WebAPI.Logging;
+using KS.FiksProtokollValidator.WebAPI.Utilities.Logging;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,8 +32,25 @@ namespace KS.FiksProtokollValidator.WebAPI
             _kubernetesNode = Environment.GetEnvironmentVariable("KUBERNETES_NODE");
             _environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
             
-            var loggerFactory = InitSerilogConfiguration();
+            var loggerConfiguration = new LoggerConfiguration()
+                .MinimumLevel.Information()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft.AspNetCore.Localization", LogEventLevel.Error)
+                .Enrich.FromLogContext()
+                .Enrich.WithProperty("app", "protokoll-validator")
+                .Enrich.WithProperty("env", _environment)
+                .Enrich.WithProperty("logsource", _hostname)
+                .Enrich.WithProperty("node", _kubernetesNode)
+                .WriteTo.Console(outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level}] [{SourceContext}] - {Message} {NewLine} {Exception}");
+
+            if (!string.IsNullOrEmpty(_logstashDestination))
+            {
+                loggerConfiguration.WriteTo.TCPSink($"tcp://{_logstashDestination}", new CustomLogstashJsonFormatter()); 
+            }
             
+            Log.Logger = loggerConfiguration.CreateLogger();
+            var loggerFactory = InitSerilogConfiguration();
+
             Log.Information("Starting host with env variables:");
             Log.Information("ASPNETCORE_ENVIRONMENT: {AspnetcoreEnvironment}", aspnetcoreEnvironment);
             Log.Information("HOSTNAME: {Hostname}", _hostname);

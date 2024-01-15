@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using KS.FiksProtokollValidator.WebAPI.Validation;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -64,11 +64,8 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
                 {
                     _testOutputHelper.WriteLine(validationError);
                 }
-                Assert.True(validationErrors.Count == 0);
+                Assert.Empty(validationErrors);
             }
-            
         }
-        
-        
     }
 }

@@ -1,15 +1,16 @@
 using System.Threading;
 using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 namespace KS.FiksProtokollValidator.WebAPI.Health;
 
 public class FiksIOHealthCheck : IHealthCheck
 {
-    private readonly IFiksProtokolleConnectionService _fiksIoClientService;
+    private readonly IFiksIOConnectionService _fiksIoClientService;
     
-    public FiksIOHealthCheck(IFiksProtokolleConnectionService fiksIoClientService)
+    public FiksIOHealthCheck(IFiksIOConnectionService fiksIoClientService)
     {
         _fiksIoClientService = fiksIoClientService;
     }

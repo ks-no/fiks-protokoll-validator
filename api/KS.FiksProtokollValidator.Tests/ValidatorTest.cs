@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
-using KS.FiksProtokollValidator.WebAPI.Models;
-using KS.FiksProtokollValidator.WebAPI.Validation;
-using KS.FiksProtokollValidator.WebAPI.Validation.Resources;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources;
 using Xunit;
 
 namespace KS.FiksProtokollValidator.Tests
@@ -153,8 +153,8 @@ namespace KS.FiksProtokollValidator.Tests
 
             _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage);
             _fiksRequest.FiksResponseValidationErrors.Remove(expectedMessage2);
-
-            Assert.True(_fiksRequest.FiksResponseValidationErrors.Count == 0);
+            
+            Assert.Empty(_fiksRequest.FiksResponseValidationErrors);
         }
     }
 }

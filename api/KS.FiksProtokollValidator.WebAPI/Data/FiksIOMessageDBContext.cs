@@ -1,5 +1,5 @@
 using System.IO;
-using KS.FiksProtokollValidator.WebAPI.Models;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;

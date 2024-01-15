@@ -19,6 +19,9 @@
 		<Content Include="TestCases\**\*.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+		<Content Update="appsettings.Development.json">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -26,6 +29,10 @@
 	  <Content Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
 	  <EmbeddedResource Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
 	  <None Remove="TestCases\no.ks.fiks.politisk.behandling.tjener.v1\SendVedtakFraUtvalgN1\Attachment\**" />
+	  <EmbeddedResource Update="TjenerValidator\Validation\Resources\ValidationErrorMessages.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,7 +40,7 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.20" />
+    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.21" />
     <PackageReference Include="KS.Fiks.ASiC-E" Version="2.0.1" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="4.0.1" />
     <PackageReference Include="KS.Fiks.IO.Politisk.Behandling.Client" Version="0.0.18" />
@@ -72,7 +79,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>ResponseMessageTypes.resx</DependentUpon>
     </Compile>
-    <Compile Update="Validation\Resources\ValidationErrorMessages.Designer.cs">
+    <Compile Update="TjenerValidator\Validation\Resources\ValidationErrorMessages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>ValidationErrorMessages.resx</DependentUpon>
@@ -88,7 +95,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResponseMessageTypes.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Validation\Resources\ValidationErrorMessages.resx">
+    <EmbeddedResource Update="TjenerValidator\Validation\Resources\ValidationErrorMessages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ValidationErrorMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -105,6 +112,10 @@
     <_ContentIncludedByDefault Remove="TestCases\no.ks.fiks.arkiv.v1\FinnJournalposterUnderArbeidN3\testInformation.json" />
   </ItemGroup>
 
-
+  <ItemGroup>
+    <Folder Include="Utilities\" />
+    <Folder Include="KlientValidator\Utilities\" />
+    <Folder Include="TjenerValidator\Utilities\" />
+  </ItemGroup>
 
 </Project>

@@ -2,7 +2,8 @@ using System;
 using System.Configuration;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO;
-using KS.FiksProtokollValidator.WebAPI.Validation;
+using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -54,12 +55,14 @@ namespace KS.FiksProtokollValidator.WebAPI
             // get configuration from appsettings.json - use as singleton
             var appSettings = CreateAppSettings();
             services.AddSingleton(appSettings);
-            var fiksProtokollServicesManager = new FiksProtokollConnectionManager(appSettings, loggerFactory);
+
+            var fiksProtokollServicesManager = new FiksIOConnectionManager(appSettings, loggerFactory);
             services.AddSingleton(fiksProtokollServicesManager);
             services.AddControllers();
-            services.AddHostedService<FiksResponseMessageService>();
-            services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection") ?? throw new ConfigurationErrorsException("Mangler DefaultConnection i configuration")));
-            services.AddSingleton<IFiksRequestMessageService, FiksRequestMessageService>();
+            services.AddHostedService<TjenerMessagesSubscriber>();
+            services.AddHostedService<KlientMessagesSubscriber>();
+            services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSingleton<ISendMessageService, SendMessageService>();
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }
@@ -72,7 +75,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             var maskinportenClientId = Environment.GetEnvironmentVariable("MASKINPORTEN_CLIENT_ID");
             if (!string.IsNullOrEmpty(maskinportenClientId))
             {
-                appSettings.FiksIOConfig.MaskinPortenIssuer = maskinportenClientId;
+                appSettings.TjenerValidatorFiksIOConfig.MaskinPortenIssuer = maskinportenClientId;
             }
             
             return appSettings;

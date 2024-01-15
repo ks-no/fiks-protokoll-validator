@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
-using KS.FiksProtokollValidator.WebAPI.Models;
-using KS.FiksProtokollValidator.WebAPI.Validation;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using Xunit;
+using Assert = NUnit.Framework.Assert;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {
@@ -31,7 +32,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.True(validationErrors.Count == 0);
+            Assert.That(validationErrors.Count == 0);
         }
 
         [Fact]
@@ -55,7 +56,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.True(validationErrors.Count == 0);
+            Assert.That(validationErrors.Count == 0);
         }
     }
 }
