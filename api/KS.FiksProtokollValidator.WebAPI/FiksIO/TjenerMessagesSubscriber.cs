@@ -29,16 +29,11 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         private readonly FiksIOConnectionManager _fiksIOConnectionManager;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IServiceScopeFactory _scopeFactory;
-        private const int HealthCheckInterval = 5 * 60 * 1000;
-        
-        private Timer _ensureFiksIOConnectionIsOpenTimer { get; set; }
 
         public TjenerMessagesSubscriber(IServiceScopeFactory scopeFactory, FiksIOConnectionManager manager)
         {
             _scopeFactory = scopeFactory;
             _fiksIOConnectionManager = manager;
-            // Self-healing check
-            _ensureFiksIOConnectionIsOpenTimer = new Timer(Callback, null, HealthCheckInterval, HealthCheckInterval);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -172,33 +167,6 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             finally
             {
                 mottattMeldingArgs.SvarSender?.Ack();
-            }
-        }
-        
-        private async void Callback(object o)
-        {
-            await EnsureFiksIOConnectionsAreOpen().ConfigureAwait(false);
-        }
-        
-        
-        private async Task EnsureFiksIOConnectionsAreOpen()
-        {
-            // await FiksIOClient initialization
-            foreach (var fiksIoClientConsumerService in _fiksIOConnectionManager.TjenerConnectionServices)
-            {
-                await fiksIoClientConsumerService.Value.Initialization;    
-            }
-
-            if (!_fiksIOConnectionManager.IsHealthy())
-            {
-                Logger.Error($"Health self-check detects FiksIOClient connection is down! Restarting background service");
-                await _fiksIOConnectionManager.Reconnect();
-                await StopAsync(default);
-                await StartAsync(default);
-            }
-            else
-            {
-                Logger.Debug($"Health self-check detects FiksIOClient is ok");
             }
         }
     }

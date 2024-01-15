@@ -3,56 +3,52 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
-using NUnit.Framework;
+using Xunit;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {
     public class XsdValidatorTests
     {
-        public XsdValidatorTests()
-        {
-        }
-        
-        [Test]
+        [Fact]
         public void ValidateSokeresultatNoekler()
         {
             var xsdValidator = new XsdValidator();
-            List<string> validationErrors = new List<string>();
-            string sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatNoekler.xml");
+            var validationErrors = new List<string>();
+            var sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatNoekler.xml");
             xsdValidator.Validate(sokeresultat, validationErrors);
             foreach (var validationError in validationErrors)
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.That(validationErrors.Count == 0);
+            Assert.Empty(validationErrors);
         }
         
-        [Test]
+        [Fact]
         public void ValidateSokeresultatMinimum()
         {
             var xsdValidator = new XsdValidator();
-            List<string> validationErrors = new List<string>();
-            string sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatMinimum.xml");
+            var validationErrors = new List<string>();
+            var sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatMinimum.xml");
             xsdValidator.Validate(sokeresultat, validationErrors);
             foreach (var validationError in validationErrors)
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.That(validationErrors.Count == 0);
+            Assert.Empty(validationErrors);
         }
         
-        [Test]
+        [Fact]
         public void ValidateSokeresultatUtvidet()
         {
             var xsdValidator = new XsdValidator();
-            List<string> validationErrors = new List<string>();
-            string sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatUtvidet.xml");
+            var validationErrors = new List<string>();
+            var sokeresultat = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/Responses/sokeresultatUtvidet.xml");
             xsdValidator.Validate(sokeresultat, validationErrors);
             foreach (var validationError in validationErrors)
             {
                 Console.Out.WriteLine(validationError);
             }
-            Assert.That(validationErrors.Count == 0);
+            Assert.Empty(validationErrors);
         }
     }
 }

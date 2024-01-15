@@ -4,13 +4,14 @@ using System.IO;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
-using NUnit.Framework;
+using Xunit;
+using Assert = NUnit.Framework.Assert;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest
 {
     public class FiksArkivResponseValidatorTests
     {
-        [Test]
+        [Fact]
         public void TestValidateSokOnMappeTittelXmlWithCorrectResult()
         {
             var responseXml = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/ValidatorTests/NySokN1/sokeresultatMinimum.xml");
@@ -34,7 +35,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest
             Assert.That(validationErrors.Count == 0);
         }
 
-        [Test]
+        [Fact]
         public void TestValidateSokBetweenDatesXmlWithCorrectResult()
         {
             var responseXml = File.ReadAllText(Directory.GetCurrentDirectory() + "/TestData/ValidatorTests/NySokN4/sokeresultatMinimum.xml");

@@ -1,4 +1,12 @@
+def sdk = resolveDotNetSDKToolVersion("6.0")
+
 pipeline {
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '50', artifactNumToKeepStr: '50'))
+        disableConcurrentBuilds()
+        timeout(time: 60, unit: 'MINUTES')
+        timestamps ()
+    }
     agent any
     environment {
         PROJECT_WEB_FOLDER = "web-ui"
@@ -8,13 +16,12 @@ pipeline {
         API_APP_NAME = "fiks-protokoll-validator-api"
         WEB_APP_NAME = "fiks-protokoll-validator-web"
         DOCKERFILE_TESTS = "Dockerfile-run-tests"
-        // Artifactory credentials is stored under this key
         ARTIFACTORY_CREDENTIALS = "artifactory-token-based"
-        // URL to artifactory Docker release repo
         DOCKER_REPO_RELEASE = "https://docker-all.artifactory.fiks.ks.no"
-        // URL to artifactory Docker Snapshot repo
         DOCKER_REPO = "https://docker-local-snapshots.artifactory.fiks.ks.no"
         DOTNET_CLI_HOME = "/tmp/DOTNET_CLI_HOME"
+        TMPDIR = "${env.PWD + '\\tmpdir'}"
+        BUILD_OPTS = buildOpts(env.VERSION_SUFFIX)
     }
     parameters {
         booleanParam(defaultValue: false, description: 'Skal prosjektet releases?', name: 'isRelease')
@@ -29,7 +36,7 @@ pipeline {
                 script {
                     env.GIT_SHA = sh(returnStdout: true, script: 'git rev-parse HEAD').substring(0, 7)
                     env.REPO_NAME = scm.getUserRemoteConfigs()[0].getUrl().tokenize('/').last().split("\\.")[0]
-                    env.CURRENT_VERSION = findVersionSuffix()
+                    env.CURRENT_VERSION = findVersionPrefix()
                     env.NEXT_VERSION = params.specifiedVersion == "" ? incrementVersion(env.CURRENT_VERSION) : params.specifiedVersion
                     if(params.isRelease) {
                       env.VERSION_SUFFIX = ""
@@ -41,30 +48,65 @@ pipeline {
                       env.BUILD_SUFFIX = "--version-suffix ${env.VERSION_SUFFIX}"
                       env.FULL_VERSION = "${CURRENT_VERSION}-${env.VERSION_SUFFIX}"
                     }
-                    print("Listing all environment variables:")
-                    sh 'printenv'
                 }
             }
         }
-              
-        stage('API: Build and publish docker image') {
-            steps {
-                script {
-                    println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImageApi(params.isRelease);
+        stage('Build docker images') {
+            parallel {      
+                stage('API: Build and publish docker image') {
+                    agent {
+                      label 'linux || linux-large'
+                    }
+                    tools {
+                      dotnetsdk sdk
+                    }
+                    environment {
+                      NUGET_HTTP_CACHE_PATH = "${env.WORKSPACE + '@tmp/cache'}"
+                      TMPDIR = "${env.PWD}/tmpdir"
+                      MSBUILDDEBUGPATH = "${env.TMPDIR}"
+                      NUGET_CONF = credentials('nuget-config')
+                      DOTNET_CLI_TELEMETRY_OPTOUT = 1
+                      COMPlus_EnableDiagnostics = 0
+                      DOTNET_GCHeapHardLimit=20000000
+                    }
+                    steps {
+                        withDotNet(sdk: sdk) {
+                            dir("api\\KS.FiksProtokollValidator.WebAPI") {      
+                              dotnetRestore(
+                                configfile: NUGET_CONF,
+                                showSdkInfo: true,
+                                verbosity: 'normal'
+                              )
+                              dotnetPublish(
+                                configuration: 'Release',
+                                nologo: true,
+                                noRestore: true,
+                                optionsString: env.BUILD_OPTS,
+                                outputDirectory: 'published-api'
+                              )
+                              script {
+                                println("API: Building and publishing docker image version: ${env.FULL_VERSION}")
+                                buildAndPushDockerImage(API_APP_NAME, [env.FULL_VERSION, 'latest'], [], params.isRelease, ".")
+                              }  
+                            }
+                        }
+                    }
+                    post {
+                        success {
+                            recordIssues enabledForFailure: true, tools: [msBuild()]
+                        }
+                    }
+                }
+                stage('WEB: Build and publish docker image') {
+                    steps {
+                        script {
+                            println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
+                            buildAndPushDockerImageWeb(params.isRelease);
+                        }
+                    }
                 }
             }
         }
-        
-        stage('WEB: Build and publish docker image') {
-            steps {
-                script {
-                    println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                    buildAndPushDockerImageWeb(params.isRelease);
-                }
-            }
-        }
-        
         stage('API and WEB: Push helm chart') {
             steps {
                 println("API and WEB: Building helm chart version: ${env.FULL_VERSION}")
@@ -108,12 +150,14 @@ pipeline {
                 gitCheckout("main")
                 gitTag(isRelease, env.FULL_VERSION)
                 prepareDotNetNoBuild(env.NEXT_VERSION)
-                gitPush()
                 script {
                     currentBuild.description = "${env.user} released version ${env.FULL_VERSION}"
                 }
-                withCredentials([usernamePassword(credentialsId: 'Github-token-login', passwordVariable: 'GITHUB_KEY', usernameVariable: 'USERNAME')]) {
-                    sh "~/.local/bin/http --ignore-stdin -a ${USERNAME}:${GITHUB_KEY} POST https://api.github.com/repos/ks-no/${env.REPO_NAME}/releases tag_name=\"${env.FULL_VERSION}\" body=\"Release utført av ${env.user}\n\n## Endringer:\n${params.releaseNotes}\n\n ## Sikkerhetsvurdering: \n${params.securityReview} \n\n ## Review: \n${params.reviewer == 'Endringene krever ikke review' ? params.reviewer : "Review gjort av ${params.reviewer}"}\""
+            }
+            post {
+                success {
+                  gitPush()
+                  createGithubRelease env.REPO_NAME, params.reviewer, params.releaseNotes, env.CURRENT_VERSION, env.user
                 }
             }
         }
@@ -130,6 +174,10 @@ pipeline {
             dir("${PROJECT_TEST}\\bin") {
                 deleteDir()
             }
+            dir("${env.TMPDIR}") {
+              deleteDir()
+            }
+            deleteDir()
         }
     }
 }
@@ -138,15 +186,47 @@ def versionPattern() {
   return java.util.regex.Pattern.compile("^(\\d+)\\.(\\d+)\\.(\\d+)(.*)?")
 }
 
-def findVersionSuffix() {
-    println("FindVersionSuffix")
-    def findCommand = $/find api/KS.FiksProtokollValidator.WebAPI -name "KS.FiksProtokollValidator.WebAPI.csproj" -exec xpath '{}' '/Project/PropertyGroup/VersionPrefix/text()' \;/$
-
-    def version = sh(script: findCommand, returnStdout: true, label: 'Lookup current version from csproj files').trim().split('\n').find {
-        return it.trim().matches(versionPattern())
+def findVersionPrefix() {
+  
+    def files = findCsprojFiles()
+    
+    def versions = files.collect {
+      echo("Checking ${it}")
+      return extractVersion(readFile(file: it.getPath().trim(), encoding: 'UTF-8'))
+    }.findAll {
+      return it != null && ! it.trim().isEmpty()
     }
-    println("Version found: ${version}")
-    return version
+    echo "Found ${versions.size()} versions"
+    if(versions.size() > 0 && versions[0] != "") {
+      def currentVersion = versions[0]
+      echo "Version: ${currentVersion}"
+      return currentVersion
+    } else {
+      throw new Exception("No versionPrefix fond in csproj files")
+    }
+}
+
+def findCsprojFiles() {
+  def files = findFiles(glob: '**/*.csproj').findAll {
+    return it.getName().toUpperCase().contains("TEST") == false && it.getName().toUpperCase().contains("EXAMPLE") == false
+  }
+  if(files.size() == 0) {
+    throw new Exception("No csproj files found")
+  }
+  echo("Found ${files.size()} csproj files")
+  return files
+}
+
+@NonCPS
+def extractVersion(xml) {
+  def debom = { data ->
+    if(data?.length() > 0 && data[0] == '\uFEFF') return data.drop(1) else return data
+  }
+  def xmlData = debom.call(xml)
+  def Project = new XmlSlurper().parseText(xmlData)
+  def version = Project['PropertyGroup']['VersionPrefix'].text().trim()
+  echo("Found version ${version}")
+  return version
 }
 
 def incrementVersion(versionString) {
@@ -160,6 +240,17 @@ def incrementVersion(versionString) {
     } else {
         return null
     }
+}
+
+def buildOpts(versionSuffix) {
+  if(versionSuffix == null || versionSuffix.trim().isEmpty()) {
+    echo("No build opts will be passed to dotnet build")
+    return ""
+  } else {
+    def opts = "--version-suffix ${versionSuffix}"
+    echo("Will add build opts: ${opts}")
+    return opts
+  }
 }
 
 def getTimestamp() {

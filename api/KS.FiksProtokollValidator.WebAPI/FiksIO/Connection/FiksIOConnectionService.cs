@@ -2,25 +2,29 @@ using System.Reflection;
 using System.Threading.Tasks;
 using KS.Fiks.IO.Client;
 using KS.FiksProtokollValidator.WebAPI.FiksIO.Configuration;
+using Microsoft.Extensions.Logging;
 using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 
 public class FiksIOConnectionService : IFiksIOConnectionService
 {
     private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
+    private static ILoggerFactory _loggerFactory;
     public IFiksIOClient FiksIOClient { get; private set; }
     private readonly FiksProtokollKontoConfig _kontoConfig;
-
-    public FiksIOConnectionService(FiksProtokollKontoConfig fiksProtokollKontoConfig)
+    
+    public FiksIOConnectionService(FiksProtokollKontoConfig fiksProtokollKontoConfig, ILoggerFactory loggerFactory)
     {
         _kontoConfig = fiksProtokollKontoConfig;
-        Initialization = InitializeAsync();
+        _loggerFactory = loggerFactory;
+        Initialization = InitializeAsync(loggerFactory);
     }
 
     public Task Initialization { get; private set; }
 
-    private async Task InitializeAsync()
+    private async Task InitializeAsync(ILoggerFactory loggerFactory)
     {
         FiksIOClient = await Fiks.IO.Client.FiksIOClient.CreateAsync(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_kontoConfig));
     }
@@ -40,7 +44,7 @@ public class FiksIOConnectionService : IFiksIOConnectionService
     public async Task Reconnect()
     {
         FiksIOClient.Dispose();
-        Initialization = InitializeAsync();
+        Initialization = InitializeAsync(_loggerFactory);
         await Initialization;
     }
 
