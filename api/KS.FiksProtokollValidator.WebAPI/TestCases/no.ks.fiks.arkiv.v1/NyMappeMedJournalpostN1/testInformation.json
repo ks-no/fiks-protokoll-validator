@@ -19,7 +19,7 @@
         },
         {
             "payloadQuery": "/arkivmeldingKvittering/registreringKvittering/journalaar",
-            "expectedValue": "2023",
+            "expectedValue": "2024",
             "valueType": 0 // 0 = Verdi, 1 = Attributt
         },
         {
