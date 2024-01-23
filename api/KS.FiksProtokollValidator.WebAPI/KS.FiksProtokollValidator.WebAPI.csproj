@@ -44,7 +44,7 @@
     <PackageReference Include="KS.Fiks.ASiC-E" Version="2.0.1" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="4.0.2" />
     <PackageReference Include="KS.Fiks.IO.Politisk.Behandling.Client" Version="0.0.18" />
-    <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="0.0.5" />
+    <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="0.0.6" />
     <PackageReference Include="KS.Fiks.Plan.Client" Version="0.0.13" />
     <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.26" />
