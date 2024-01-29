@@ -3,6 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml.Serialization;
 using KS.Fiks.Arkiv.Models.V1.Arkivering.Arkivmelding;
+using KS.Fiks.Arkiv.Models.V1.Arkivering.Arkivmeldingkvittering;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv;
@@ -54,9 +55,17 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                 return meldinger;
             }
 
-            var kvittering = ArkivmeldingKvitteringEngine.CreateArkivmeldingKvittering(arkivmelding);
-            
-            
+            ArkivmeldingKvittering kvittering;
+            if (arkivmelding?.Mappe != null)
+            {
+                kvittering = ArkivmeldingKvitteringBuilder.Init().WithSaksmappe(arkivmelding.Mappe).Build();
+
+            }
+            else
+            {
+                kvittering = ArkivmeldingKvitteringBuilder.Init().WithJournalpost(arkivmelding?.Registrering).Build();    
+            }
+
             // Det skal først sendes en tom mottatt-melding
             meldinger.Add(new Melding
             {

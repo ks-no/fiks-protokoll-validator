@@ -5,31 +5,29 @@ using KS.Fiks.Arkiv.Models.V1.Metadatakatalog;
 
 namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv
 {
-    public class ArkivmeldingKvitteringEngine
+    public class ArkivmeldingKvitteringBuilder
     {
-        public static ArkivmeldingKvittering CreateArkivmeldingKvittering(Arkivmelding arkivmelding)
+        private MappeKvittering _mappeKvittering;
+        private RegistreringKvittering _registreringKvittering;
+        
+        public static ArkivmeldingKvitteringBuilder Init()
+        {
+            return new ArkivmeldingKvitteringBuilder();
+        }
+        
+        public ArkivmeldingKvittering Build()
         {
             var kvittering = new ArkivmeldingKvittering();
-
-            if (arkivmelding?.Mappe != null)
-            {
-                
-                kvittering.MappeKvittering = CreateSaksmappeKvittering(arkivmelding.Mappe);
-                
-            }
-            else
-            {
-                kvittering.RegistreringKvittering = CreateJournalpostKvittering(arkivmelding.Registrering);    
-            }
-
+            kvittering.MappeKvittering = _mappeKvittering;
+            kvittering.RegistreringKvittering = _registreringKvittering;
             return kvittering;
         }
         
-        private static SaksmappeKvittering CreateSaksmappeKvittering(Mappe mappe)
+        public ArkivmeldingKvitteringBuilder WithSaksmappe(Mappe mappe)
         {
-            var mp = new SaksmappeKvittering
+            _mappeKvittering = new SaksmappeKvittering
             {
-                SystemID = mappe.SystemID,
+                SystemID = mappe.SystemID ?? new SystemID() {Label = "", Value = Guid.NewGuid().ToString()},
                 OpprettetDato = DateTime.Now,
                 Saksaar = DateTime.Now.Year,
                 Sakssekvensnummer = new Random().Next(),
@@ -41,20 +39,19 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv
             };
             if (mappe.ReferanseForeldermappe != null)
             {
-                mp.ReferanseForeldermappe = new ReferanseTilMappe()
+                _mappeKvittering.ReferanseForeldermappe = new ReferanseTilMappe()
                 {
                     SystemID = mappe.ReferanseForeldermappe?.SystemID,
                 };
             }
-
-            return mp;
+            return this;
         }
 
-        private static RegistreringKvittering CreateJournalpostKvittering(Registrering journalpost)
+        public ArkivmeldingKvitteringBuilder WithJournalpost(Registrering journalpost)
         {
-            var jp = new JournalpostKvittering
+            _registreringKvittering = new JournalpostKvittering
             {
-                SystemID = journalpost.SystemID,
+                SystemID = journalpost.SystemID ?? new SystemID() {Label = "", Value = Guid.NewGuid().ToString()},
                 Journalaar = DateTime.Now.Year,
                 Journalsekvensnummer = new Random().Next(),
                 Journalpostnummer = new Random().Next(1, 100),
@@ -64,7 +61,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv
                     Noekkel = journalpost.ReferanseEksternNoekkel.Noekkel
                 }
             };
-            return jp;
+            return this;
         }
     }
 }
