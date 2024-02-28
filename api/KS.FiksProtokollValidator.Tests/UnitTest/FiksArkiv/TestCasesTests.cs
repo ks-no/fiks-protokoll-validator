@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace KS.FiksProtokollValidator.Tests.UnitTest
+namespace KS.FiksProtokollValidator.Tests.UnitTest.FiksArkiv
 {
     public class TestCasesTests
     {

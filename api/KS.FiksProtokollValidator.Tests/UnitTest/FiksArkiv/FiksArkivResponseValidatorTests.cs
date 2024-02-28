@@ -7,7 +7,7 @@ using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation;
 using Xunit;
 using Assert = NUnit.Framework.Assert;
 
-namespace KS.FiksProtokollValidator.Tests.UnitTest
+namespace KS.FiksProtokollValidator.Tests.UnitTest.FiksArkiv
 {
     public class FiksArkivResponseValidatorTests
     {

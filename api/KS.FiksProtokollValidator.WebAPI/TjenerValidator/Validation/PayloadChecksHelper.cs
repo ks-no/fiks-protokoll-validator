@@ -23,6 +23,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 FiksArkivMeldingtype.RegistreringHentResultat,
                 FiksArkivMeldingtype.MappeHentResultat,
                 FiksArkivMeldingtype.DokumentfilHentResultat,
+                FiksArkivMeldingtype.DokumentobjektOpprettKvittering,
                 FiksArkivMeldingtype.Ugyldigforespørsel,
                 FiksArkivMeldingtype.Ikkefunnet,
                 FiksArkivMeldingtype.Serverfeil,

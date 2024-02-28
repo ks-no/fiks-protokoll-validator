@@ -40,23 +40,23 @@
 	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.21" />
+    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.23" />
     <PackageReference Include="KS.Fiks.ASiC-E" Version="2.0.1" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="4.0.3" />
     <PackageReference Include="KS.Fiks.IO.Politisk.Behandling.Client" Version="0.0.18" />
     <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="0.0.6" />
     <PackageReference Include="KS.Fiks.Plan.Client" Version="0.0.13" />
-    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.26" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.26" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.26" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.26">
+    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.27" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.27">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.26" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.26" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.26">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.27" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.27">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

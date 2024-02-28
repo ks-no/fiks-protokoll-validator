@@ -55,14 +55,14 @@
 
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
-    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.21" />
+    <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.23" />
     <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="0.0.6" />
-    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.5" />
+    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.7" />
     <PackageReference Include="Moq" Version="4.20.70" />
-    <PackageReference Include="nunit" Version="4.0.1" />
+    <PackageReference Include="nunit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="xunit" Version="2.6.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
+    <PackageReference Include="xunit" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -88,6 +88,10 @@
     <None Update="TestData\Responses\svar_paa_soek.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UnitTest\FiksPlan\" />
   </ItemGroup>
 
 </Project>
