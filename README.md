@@ -1,12 +1,42 @@
 # Fiks-Protokollvalidator
 
 ## Formål
-Validatoren brukes for å teste at systemer som svarer på meldingstypene for hver protokoll gir svar som er korrekt i henhold til standarden.
+
+Validatoren består av 2 validatorer, en **_tjener-validator_** som sender klient-meldinger til en tjener (f.eks. et arkiv eller et planregister) og validerer svaret fra tjeneren, og en **_klient-validator_** som tar i mot meldinger fra en klient som om den var en tjener (f.eks. et arkiv) og svarer med standard-meldinger som om den var et tjener for den aktuelle protokollen.
+
+### Klient validator
+Klient-validatoren støtter foreløpig kun `Fiks Arkiv` og vil ikke kunne svare på avanserte meldinger på en korrekt måte, 
+da den bare validerer at innholdet i meldingen som kommer inn er i henhold til skjema og så svarer den med korrekte meldingstyper tilbake. 
+Innholdet i disse meldingene vil ikke være med f.eks. noe id som er noe man kan bruke til noe. Det lagres ikke noe i denne klient-validatoren.
+Klient-validatoren er ment som en enkel måte for klienter å sjekke at man har fått til den asynkrone meldingsutvekslingen samt at innhold man sender er korrekt i henhold til protokollen.
+
+### Tjener validatoren
+Tjener-validatoren brukes for å teste at systemer som svarer på meldingstypene for hver protokoll gir svar som er korrekt i henhold til standarden.
 Det er da ferdige TestCases for meldingene som brukes til dette. 
 Dette gjøres først ved at xml eller json meldingene validerer mot tilhørende skjema (xsd, json-schema) for den meldingstypen i protokollen.
-Deretter har hver TestCase definert tester på innholdet i meldingen som blir validert.
+Deretter har hver TestCase definert tester på innholdet i meldingen som blir validert. 
+Man kjører testene fra et web grensesnitt hvor man legger inn konto-id for den tjeneren man ønsker å kjøre testene mot.
 
-## Applikasjon
+#### [Tjener validator web](https://forvaltning.fiks.test.ks.no/fiks-validator/#/)
+
+### Konto id og godkjenning
+For å kunne bruke klient-validatoren og tjener-validatoren så må man sørge for at man kan sende og motta meldinger til konto-id for disse validatorene.
+Konto-id'er finner man i avsnittet under her, [konto-id for test miljø](#konto-id-for-test-miljø)
+
+## Konto-id for test miljø
+Tjener validatoren sitt web grensesnitt for å kjøre tester finner man [her](https://forvaltning.fiks.test.ks.no/fiks-validator/#/)
+
+Her finner man konto-id for de protokollene som tjener validatoren støtter og som man vil motta meldinger fra i sitt tjener-system hvis man kjører testene i validatoren. 
+### Tjener validator
+Konto id for protokollene som kjører i test:
+- Fiks Arkiv: 76b035a9-2d73-48bf-b758-981195333191
+- Fiks Plan: 6aeccd0f-8a20-4389-a56b-2bcd51dc88b9 
+
+### Klient validator
+Konto id for Fiks Arkiv validatoren. Denne simulerer da et arkivsystem og vil svare med meldingstyper som om den var et arkiv.
+- Fiks Arkiv: b6062766-2a25-4e1c-ae66-f1256b9c449f
+
+## Tjener validator som applikasjon
 
 Applikasjonen kjører front-end for seg selv og ligger i **web-ui** mappen og backend som en enkeltstående applikasjon som ligger i **api** mappen. 
 Backend har en BackgroundService (FiksResponseMessageService.cs) som konsumerer meldinger fra Fiks-IO og har dermed sin egen Fiks-IO klient. 
@@ -14,7 +44,7 @@ Sending av meldinger tar FiksRequestMessageService.cs seg av og har også sin eg
 Merk at denne todelingen gjør at FiksRequestMessageService ikke trenger å bry seg om tilstanden til connection mot Fiks-IO (health/keepAlive) da den bare bruker rest-api for å sende meldinger. 
 
 
-## TestCase
+## Tjener validator testene (TestCase)
 TestCasene ligger i mappen `KS.FiksProtokollValidator.WebAPI/TestCases`. Deretter under mappe for den protokollen TestCase tilhører. F.eks. mappen `no.ks.fiks.arkiv.v1` for Fiks-Arkiv protokollen.
 Et TestCase har sin egen mappe med et kortnavn for testen. Typisk er navnet bestående av den meldingstypen den tester + en suffix. 
 F.eks. HentMoeteplanN1 som da er en test av HentMoeteplan-meldingen og N1 står da for "normalsituasjon 1". En test som skal feile vil da være naturlig å bruke F1 som suffix ("feilsituasjon 1"). 
@@ -85,15 +115,6 @@ I TestCase-mappen skal man putte evt. vedlegg som skal sendes av TestCaset i en 
 #### Pull-request på Github
 Hvis man ønsker å få nye TestCase ut i test-miljøet kan man forke dette repoet på Github, legge til TestCase man ønsker, 
 
-
-## Test miljø
-[Fiks-Protokollvalidator i test er her](https://forvaltning.fiks.test.ks.no/fiks-validator/#/)
-
-Det kjører applikasjoner som simulerer et system som svarer på meldingene i test. Koden som svarer skal være da valid for hver enkelt validatortest.
-Konto id for simulatorer i test:
-- Arkivsystem: [b6062766-2a25-4e1c-ae66-f1256b9c449f](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=b6062766-2a25-4e1c-ae66-f1256b9c449f)
-- Fagsystem arkiv: [91307c59-0ddb-4212-bede-59f98e0edf77](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=91307c59-0ddb-4212-bede-59f98e0edf77)
-- Politisk behandling: [f95f6811-99db-4169-b7df-7090cffa4174](https://forvaltning.fiks.test.ks.no/fiks-validator/#/NewTestSession?fikskonto=f95f6811-99db-4169-b7df-7090cffa4174)
 
 ## (KS) Development miljø 
 OBS: Dette er kun tilgjengelig for KS.
