@@ -2,7 +2,7 @@
     "testName": "Registrer dispensasjon fra plan",
     "description": "Registrer dispensasjon fra plan",
     "testStep": "Normalsituasjon 1 Input, retur bekreftelse på mottak",
-    "messageType": "no.ks.fiks.plan.v2.oppdatering.dispensasjonplan.registrer",
+    "messageType": "no.ks.fiks.plan.v2.oppdatering.dispensasjon.registrer",
     "operation": "RegistrerDispensasjonFraPlan",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering",
