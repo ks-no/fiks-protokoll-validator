@@ -20,6 +20,13 @@
     </div>
       <b-form-select v-model="selectedProtocol" v-on:change="getTestsByProtocol" :options="options" style="width:30%"></b-form-select>
     </div>
+    <b-link
+      :to="{
+        name: newTestSession,
+        query: { fikskonto: recipientId, fiksprotocol: selectedProtocol },
+      }"
+      >Direkte lenke</b-link
+    >
   
     <div style="margin: 40px 0">
       <b-form-group v-if="!hasRun">
@@ -116,6 +123,17 @@ export default {
   },
   
   data() {
+    const protocolOptions = [
+      { value: "ingen", text: 'Velg en FIKS-protokoll'},
+      { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
+      { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2'},
+      { value: 'no.ks.fiks.matrikkelfoering.v2', text: 'no.ks.fiks.matrikkelfoering.v2'}
+    ]
+    const qproto = this.$route.query.fiksprotocol || protocolOptions[0].value;
+    const selectedProtocol = (
+      (qproto && protocolOptions.find((p) => p.value === qproto)) ||
+      protocolOptions[0]
+    ).value;
     return {
       title: "Ny Testsesjon",
       testCases: [],
@@ -133,13 +151,8 @@ export default {
       requestErrorStatusCode: 0,
       requestErrorMessage: "",
       tmpTests: [],
-      selectedProtocol: "ingen",
-        options: [
-          { value: "ingen", text: 'Velg en FIKS-protokoll'},
-          { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
-          { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2'},
-          { value: 'no.ks.fiks.matrikkelfoering.v2', text: 'no.ks.fiks.matrikkelfoering.v2'}
-        ]
+      selectedProtocol,
+        options: protocolOptions 
     };
   },
   
@@ -147,6 +160,9 @@ export default {
     this.recipientId = this.$route.query.fikskonto;
     if(this.$route.query.fikskonto) {
       this.fiksAccountPresent = true;
+      if (this.selectedProtocol && this.selectedProtocol !== 'ingen') {
+        this.getTestsByProtocol();
+      }
     }
   },
   
