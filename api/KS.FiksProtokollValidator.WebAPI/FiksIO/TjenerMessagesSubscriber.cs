@@ -148,7 +148,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
                     if (fiksRequest == null)
                     {
-                        Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
+                        Logger.Error("Klarte ikke å matche svar-melding fra Fiks IO med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. MeldingId: {MeldingId}, SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.SvarPaMelding);
                         mottattMeldingArgs.SvarSender?.Ack();
                         return;
                     }
@@ -161,7 +161,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 else
                 {
-                    Logger.Error("Klarte ikke å matche svar-melding fra FIKS med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
+                    Logger.Error("Klarte ikke å matche svar-melding fra Fiks IO med en eksisterende testsesjon. Testsession ikke funnet. Svarmelding forkastes. MeldingId: {MeldingId}, SvarPaMelding id: {Id}", mottattMeldingArgs.Melding.SvarPaMelding);
                 }
             }
             finally
