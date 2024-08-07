@@ -309,9 +309,7 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
       docker.withRegistry(repo, 'artifactory-token-based') {
         def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
         println("Publishing WEB image")
-        tags.each {
-          customImage.push(it)
-        }
+        customImage.push(it)
       }
     }
   }
