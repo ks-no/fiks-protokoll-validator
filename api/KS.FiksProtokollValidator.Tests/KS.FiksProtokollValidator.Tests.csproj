@@ -57,12 +57,12 @@
     <PackageReference Include="FluentAssertions" Version="6.12.0" />
     <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="0.9.23" />
     <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="1.0.0" />
-    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.8" />
+    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.9" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="nunit" Version="4.1.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.9.0" />
-    <PackageReference Include="xunit" Version="2.7.0" />
+    <PackageReference Include="xunit" Version="2.9.0" />
   </ItemGroup>
 
   <ItemGroup>
