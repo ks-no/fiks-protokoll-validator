@@ -287,24 +287,29 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("web-ui") {
     script {
-      def customImage    
-     
       println("Building WEB code in Docker image")
+      if (isRelease) {
+        repo = 'https://docker-local.artifactory.fiks.ks.no'
+      } else {
+        repo = 'https://docker-local-snapshots.artifactory.fiks.ks.no'
+      }
+      println("WEB: npm install")
+
       docker.image('node:16').inside() {
         sh '''
-           npm install
+          npm install
         '''
         sh '''
           npm run build -- --mode production
         '''
       }
-      println("Building WEB image")
-      customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
-      
-      docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
-      {
+
+      println("WEB: npm install finished")
+
+      docker.withRegistry(repo, 'artifactory-token-based') {
+        def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
         println("Publishing WEB image")
-        customImage.push()
+        customImage.push(it)
       }
     }
   }
