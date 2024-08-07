@@ -305,9 +305,11 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
       }
 
       println("WEB: npm install finished")
+      println("WEB: docker.build")
+      def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
+      println("WEB: docker.build finished")
 
       docker.withRegistry(repo, 'artifactory-token-based') {
-        def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
         println("Publishing WEB image")
         customImage.push(it)
       }
