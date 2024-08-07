@@ -99,20 +99,22 @@ pipeline {
                 }
                 stage('WEB: Build and publish docker image') {
                     steps {
-                        script {
-                            println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                            println("WEB: npm install")
-                            docker.image('node:16').inside() {
-                                sh '''
-                                    npm install
-                                '''
-                                sh '''
-                                    npm run build -- --mode production
-                                '''
+                        dir("web-ui") {
+                            script {
+                                println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
+                                println("WEB: npm install")
+                                docker.image('node:16').inside() {
+                                    sh '''
+                                        npm install
+                                    '''
+                                    sh '''
+                                        npm run build -- --mode production
+                                    '''
+                                }
+                                println("WEB: npm install finished")
+                                
+                                buildAndPushDockerImage(WEB_APP_NAME, [env.FULL_VERSION, 'latest'], [], params.isRelease, ".")
                             }
-                            println("WEB: npm install finished")
-                            
-                            buildAndPushDockerImage(WEB_APP_NAME, [env.FULL_VERSION, 'latest'], [], params.isRelease, ".")
                         }
                     }
                 }
