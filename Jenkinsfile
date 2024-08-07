@@ -294,16 +294,15 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
         repo = 'https://docker-local-snapshots.artifactory.fiks.ks.no'
       }
       
-      docker.image('node:16').inside() {
-        sh '''
-          npm install
-        '''
-        sh '''
-          npm run build -- --mode production
-        '''
-      }
-      
       docker.withRegistry(repo, 'artifactory-token-based') {
+        docker.image('node:16').inside() {
+              sh '''
+                npm install
+              '''
+              sh '''
+                npm run build -- --mode production
+              '''
+            }
         def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
         println("Publishing WEB image")
         tags.each {
