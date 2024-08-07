@@ -25,7 +25,7 @@
     "vue": "^3.2.45",
     "vue-axios": "^3.5.2",
     "vue-moment": "^4.1.0",
-    "vue-router": "^4.3.2",
+    "vue-router": "^4.4.3",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
