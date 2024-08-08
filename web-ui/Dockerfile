@@ -1,4 +1,4 @@
-FROM docker-all.artifactory.fiks.ks.no/fiks-nginx-openshift:latest as production-stage
+FROM ghcr.io/ks-no/openshift-nginx/fiks-nginx-openshift:1.7 as production-stage
 
 COPY dist /usr/share/nginx/html
 
