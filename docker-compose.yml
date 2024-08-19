@@ -1,7 +1,7 @@
 version: '3'
 services:
   fiks-protokoll-validator-sqlexpress:
-    image: mcr.microsoft.com/azure-sql-edge:latest
+    image: docker-all.artifactory.fiks.ks.no/fiks-mssql-2022:latest
     environment:
       MSSQL_SA_PASSWORD: "Dev#FiksProtokollValidator1234"
       MSSQL_PID: "Developer"
