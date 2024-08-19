@@ -21,7 +21,7 @@
     "nginx": "1.0.8",
     "nginx-conf": "^2.1.0",
     "path-browserify": "^1.0.1",
-    "simple-syntax-highlighter": "^3.0.3",
+    "simple-syntax-highlighter": "^3.0.5",
     "vue": "^3.2.45",
     "vue-axios": "^3.5.2",
     "vue-moment": "^4.1.0",
