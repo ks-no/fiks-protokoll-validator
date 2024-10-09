@@ -1,4 +1,4 @@
-def sdk = resolveDotNetSDKToolVersion("6.0")
+def sdk = resolveDotNetSDKToolVersion("8.0")
 
 pipeline {
     options {
@@ -265,7 +265,7 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
     
       println("Building API code in Docker image")
       
-      docker.image('docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0').inside('-e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp') {
+      docker.image('docker-all.artifactory.fiks.ks.no/dotnet/sdk:8.0').inside('-e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp') {
         sh '''
             dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
         '''
