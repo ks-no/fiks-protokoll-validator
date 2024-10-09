@@ -64,7 +64,6 @@ pipeline {
                       NUGET_HTTP_CACHE_PATH = "${env.WORKSPACE + '@tmp/cache'}"
                       TMPDIR = "${env.PWD}/tmpdir"
                       MSBUILDDEBUGPATH = "${env.TMPDIR}"
-                      NUGET_ACCESS_KEY = credentials('artifactory-token-based')
                       NUGET_CONF = credentials('nuget-config')
                       NUGET_ACCESS_KEY = credentials("artifactory-token-based")
                       NUGET_ALL_REPO = 'https://artifactory.fiks.ks.no/artifactory/api/nuget/nuget-all'
@@ -78,7 +77,7 @@ pipeline {
                               dotnetRestore(
                                 sdk: sdk,
                                 showSdkInfo: true,
-                                verbosity: 'normal'
+                                verbosity: 'normal',
                                 force: true
                               )
                               dotnetPublish(
