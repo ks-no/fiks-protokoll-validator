@@ -64,6 +64,8 @@ pipeline {
                       NUGET_HTTP_CACHE_PATH = "${env.WORKSPACE + '@tmp/cache'}"
                       TMPDIR = "${env.PWD}/tmpdir"
                       MSBUILDDEBUGPATH = "${env.TMPDIR}"
+                      NUGET_ACCESS_KEY = credentials('artifactory-token-based')
+                      NUGET_PUSH_REPO = 'https://artifactory.fiks.ks.no/artifactory/api/nuget/nuget-all'
                       NUGET_CONF = credentials('nuget-config')
                       DOTNET_CLI_TELEMETRY_OPTOUT = 1
                       COMPlus_EnableDiagnostics = 0
