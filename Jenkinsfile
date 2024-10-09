@@ -7,7 +7,10 @@ pipeline {
         timeout(time: 60, unit: 'MINUTES')
         timestamps ()
     }
-    agent any
+    agent {
+      label 'linux || linux-large'
+    }
+
     environment {
         PROJECT_WEB_FOLDER = "web-ui"
         PROJECT_API_FOLDER = "api"
