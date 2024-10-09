@@ -55,7 +55,7 @@ pipeline {
             parallel {      
                 stage('API: Build and publish docker image') {
                     agent {
-                        label 'windows'
+                      label 'linux || linux-large'
                     }
                     tools {
                       dotnetsdk sdk
