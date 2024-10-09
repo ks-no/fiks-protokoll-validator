@@ -1,4 +1,4 @@
-def sdk = resolveDotNetSDKToolVersion("6.0")
+def sdk = resolveDotNetSDKToolVersion("8.0")
 
 pipeline {
     options {
@@ -65,6 +65,8 @@ pipeline {
                       TMPDIR = "${env.PWD}/tmpdir"
                       MSBUILDDEBUGPATH = "${env.TMPDIR}"
                       NUGET_CONF = credentials('nuget-config')
+                      NUGET_ACCESS_KEY = credentials("artifactory-token-based")
+                      NUGET_ALL_REPO = 'https://artifactory.fiks.ks.no/artifactory/api/nuget/nuget-all'
                       DOTNET_CLI_TELEMETRY_OPTOUT = 1
                       COMPlus_EnableDiagnostics = 0
                       DOTNET_GCHeapHardLimit=20000000
@@ -73,9 +75,10 @@ pipeline {
                         withDotNet(sdk: sdk) {
                             dir("api\\KS.FiksProtokollValidator.WebAPI") {      
                               dotnetRestore(
-                                configfile: NUGET_CONF,
+                                sdk: sdk,
                                 showSdkInfo: true,
-                                verbosity: 'normal'
+                                verbosity: 'normal',
+                                force: true
                               )
                               dotnetPublish(
                                 configuration: 'Release',
@@ -265,7 +268,7 @@ def buildAndPushDockerImageApi(boolean isRelease = false) {
     
       println("Building API code in Docker image")
       
-      docker.image('docker-all.artifactory.fiks.ks.no/dotnet/sdk:6.0').inside('-e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp') {
+      docker.image('docker-all.artifactory.fiks.ks.no/dotnet/sdk:8.0').inside('-e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp') {
         sh '''
             dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
         '''
