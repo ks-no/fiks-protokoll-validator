@@ -52,6 +52,14 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.FiksArkiv
                 {
                     xml = File.ReadAllText($"{testCaseDir}/arkivmelding.xml");
                 }
+                else if (File.Exists($"{testCaseDir}/mappe-hent.xml"))
+                {
+                    xml = File.ReadAllText($"{testCaseDir}/mappe-hent.xml");
+                }
+                else if (File.Exists($"{testCaseDir}/registrering-hent.xml"))
+                {
+                    xml = File.ReadAllText($"{testCaseDir}/registrering-hent.xml");
+                }
                 else
                 {
                     xml = File.ReadAllText($"{testCaseDir}/sok.xml");
