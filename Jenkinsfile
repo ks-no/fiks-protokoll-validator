@@ -263,7 +263,7 @@ def getTimestamp() {
     return java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
 }
 
-def buildAndPushDockerImageWeb(boolean isRelease = false) {
+def buildAndPushDockerImageWeb(String imageName, List tags = [], List dockerArgs = [], boolean isRelease = false, String path = ".") {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("web-ui") {
     script {
