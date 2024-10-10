@@ -107,7 +107,7 @@ pipeline {
                     steps {
                         script {
                             println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                            buildAndPushDockerImageWeb(API_APP_NAME, [env.FULL_VERSION, 'latest'], [], params.isRelease, ".");
+                            buildAndPushDockerImageWeb(WEB_APP_NAME, [env.FULL_VERSION, 'latest'], [], params.isRelease, ".");
                         }
                     }
                 }
