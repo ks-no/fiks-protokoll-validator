@@ -107,7 +107,7 @@ pipeline {
                     steps {
                         script {
                             println("WEB: Building and publishing docker image version: ${env.FULL_VERSION}")
-                            buildAndPushDockerImageWeb(params.isRelease);
+                            buildAndPushDockerImageWeb(API_APP_NAME, [env.FULL_VERSION, 'latest'], [], params.isRelease, ".");
                         }
                     }
                 }
@@ -263,32 +263,6 @@ def getTimestamp() {
     return java.time.OffsetDateTime.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"))
 }
 
-def buildAndPushDockerImageApi(boolean isRelease = false) {
-  def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
-  dir("api") {
-    script {
-      def customImage
-    
-      println("Building API code in Docker image")
-      
-      docker.image('docker-all.artifactory.fiks.ks.no/dotnet/sdk:8.0').inside('-e DOTNET_CLI_HOME=/tmp -e XDG_DATA_HOME=/tmp') {
-        sh '''
-            dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api
-        '''
-      }
-      
-      println("Building API image")
-      customImage = docker.build("${API_APP_NAME}:${FULL_VERSION}", ".")
-      
-      docker.withRegistry(repo, ARTIFACTORY_CREDENTIALS)
-      {
-        println("Publishing API image")
-        customImage.push()
-      }
-    }
-  }
-}
-
 def buildAndPushDockerImageWeb(boolean isRelease = false) {
   def repo = isRelease ? DOCKER_REPO_RELEASE : DOCKER_REPO
   dir("web-ui") {
@@ -313,9 +287,11 @@ def buildAndPushDockerImageWeb(boolean isRelease = false) {
       println("WEB: npm install finished")
 
       docker.withRegistry(repo, 'artifactory-token-based') {
-        def customImage = docker.build("${WEB_APP_NAME}:${FULL_VERSION}", ".")
-        println("Publishing WEB image")
-        customImage.push(it)
+          def customImage = docker.build("${imageName}", dockerArgs.collect { "--build-arg $it" }.join(' ') + " " + path)
+          println("Publishing WEB image")
+          tags.each {
+              customImage.push(it)
+          }
       }
     }
   }
