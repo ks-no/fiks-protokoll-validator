@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using KS.Fiks.IO.Client.Configuration;
 using KS.Fiks.IO.Client.Models;
+using KS.Fiks.IO.Crypto.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Utilities.Payload;
 using Serilog;

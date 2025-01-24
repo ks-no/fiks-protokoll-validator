@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using KS.Fiks.IO.Client.Models;
+using KS.Fiks.IO.Crypto.Models;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 
 namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Utilities.Payload

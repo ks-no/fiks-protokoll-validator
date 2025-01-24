@@ -9,6 +9,7 @@ using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.ASiC_E;
 using KS.Fiks.ASiC_E.Xsd;
 using KS.Fiks.IO.Client.Models;
+using KS.Fiks.IO.Crypto.Models;
 using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv;
