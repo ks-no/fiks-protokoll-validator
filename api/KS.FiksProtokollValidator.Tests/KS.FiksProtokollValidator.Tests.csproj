@@ -56,7 +56,7 @@
   <ItemGroup>
     <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="1.0.4" />
     <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="1.0.0" />
-    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="0.9.11" />
+    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="1.0.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="nunit" Version="4.3.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
