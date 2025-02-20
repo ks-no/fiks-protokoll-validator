@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <StartupObject>KS.FiksProtokollValidator.WebAPI.Program</StartupObject>
-    <VersionPrefix>1.0.85</VersionPrefix>
+    <VersionPrefix>1.0.86</VersionPrefix>
   </PropertyGroup>
 
 	<ItemGroup>
