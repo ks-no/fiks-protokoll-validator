@@ -1,4 +1,4 @@
-FROM ghcr.io/ks-no/openshift-nginx/fiks-nginx-openshift:1.8.4 as production-stage
+FROM ghcr.io/ks-no/openshift-nginx/fiks-nginx-openshift:1.9.0 as production-stage
 
 COPY dist /usr/share/nginx/html
 
