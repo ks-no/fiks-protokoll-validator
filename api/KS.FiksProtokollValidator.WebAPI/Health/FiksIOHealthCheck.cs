@@ -14,17 +14,17 @@ public class FiksIOHealthCheck : IHealthCheck
     {
         _fiksIoClientService = fiksIoClientService;
     }
-    
-    public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = new CancellationToken())
-    {
-        if (!_fiksIoClientService.IsHealthy())
-        {
-            return Task.FromResult(
-                new HealthCheckResult(
-                    context.Registration.FailureStatus, "Validator API health er ikke ok. FiksIOClient for consumer er ikke healthy."));
-        }
 
-        return Task.FromResult(
-            HealthCheckResult.Healthy("Validator API health er ok."));
+    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context,
+        CancellationToken cancellationToken = new CancellationToken())
+    {
+        if (!await _fiksIoClientService.IsHealthy())
+        {
+            return new HealthCheckResult(
+                context.Registration.FailureStatus,
+                "Validator API health er ikke ok. FiksIOClient for consumer er ikke healthy.");
+        }
+        
+        return HealthCheckResult.Healthy("Validator API health er ok.");
     }
 }
