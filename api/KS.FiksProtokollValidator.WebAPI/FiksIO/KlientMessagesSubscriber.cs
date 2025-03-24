@@ -50,7 +50,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             {
                 await fiksIoClientConsumerService.Value.Initialization;
                 //TODO her bør det være en OnMottatt for hver protokoll
-                fiksIoClientConsumerService.Value.FiksIOClient.NewSubscription(OnMottattFiksArkivMelding);
+              await fiksIoClientConsumerService.Value.FiksIOClient.NewSubscriptionAsync(OnMottattFiksArkivMelding);
                 Logger.Information($"Startet subscription for {fiksIoClientConsumerService.Key} med kontoid {fiksIoClientConsumerService.Value.FiksIOClient.KontoId}");
             }
 
@@ -63,7 +63,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             return asicManifest != null && asicManifest.certificate != null && asicManifest.certificate.Length == 1 && asicManifest.file != null && asicManifest.rootfile == null;
         }
 
-        private async void OnMottattFiksArkivMelding(object sender, MottattMeldingArgs mottatt)
+        private async Task OnMottattFiksArkivMelding(MottattMeldingArgs mottatt)
         {
             Logger.Information("Melding med meldingType {MeldingType} mottatt med meldingId {MeldingId},", mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
 
@@ -79,7 +79,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             { // Ukjent meldingstype
                 Logger.Information("Ukjent meldingType {MeldingType} og meldingId {MeldingId} mottatt. Sender ugyldigforespørsel",
                     GetType().Name, mottatt.Melding.MeldingType, mottatt.Melding.MeldingId);
-                mottatt.SvarSender.Ack();
+                await mottatt.SvarSender.AckAsync();
                 var payloads = new List<IPayload>();
                 payloads.Add(
                     new StringPayload(
@@ -118,7 +118,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             payloads.Add(new StringPayload(ArkivmeldingSerializeHelper.Serialize(melding.ResultatMelding),
                     melding.FileName));
 
-            mottatt.SvarSender.Ack(); // Ack message to remove it from the queue
+           await mottatt.SvarSender.AckAsync(); // Ack message to remove it from the queue
 
             var sendtMelding = await mottatt.SvarSender.Svar(melding.MeldingsType, payloads);
             Logger.Information("Svarmelding meldingId {MeldingId}, meldingType {MeldingType} sendt", sendtMelding.MeldingId,
@@ -129,7 +129,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
         {
             var meldinger = new List<Melding>();
 
-            mottatt.SvarSender.Ack(); // Ack message to remove it from the queue
+            await mottatt.SvarSender.AckAsync(); // Ack message to remove it from the queue
 
             try
             {
@@ -169,7 +169,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
         }
 
-        private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
+        private async void OnMottattMelding(MottattMeldingArgs mottattMeldingArgs)
         {
             Logger.Information("Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new List<FiksPayload>();
@@ -227,7 +227,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
 
             Logger.Information(": Henter melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
-            mottattMeldingArgs.SvarSender?.Ack();
+            await mottattMeldingArgs.SvarSender?.AckAsync();
         }
     }
 }

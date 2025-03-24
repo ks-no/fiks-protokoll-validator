@@ -29,12 +29,12 @@ public class FiksIOConnectionService : IFiksIOConnectionService
         FiksIOClient = await Fiks.IO.Client.FiksIOClient.CreateAsync(FiksIOConfigurationBuilder.CreateFiksIOConfiguration(_kontoConfig));
     }
 
-    public bool IsHealthy()
+    public async Task<bool> IsHealthy()
     {
         if (FiksIOClient != null)
         {
-            var status = FiksIOClient.IsOpen();
-            Logger.Debug($"FiksIOCClient.IsOpen() returns {status}");
+            var status = await FiksIOClient.IsOpenAsync();
+            Logger.Debug($"FiksIOCClient.IsOpenAsync() returns {status}");
             return status;
         }
         Logger.Error("FiksIOClient is null. Returning not healthy.");
@@ -43,14 +43,15 @@ public class FiksIOConnectionService : IFiksIOConnectionService
 
     public async Task Reconnect()
     {
-        FiksIOClient.Dispose();
+       await FiksIOClient.DisposeAsync();
         Initialization = InitializeAsync(_loggerFactory);
         await Initialization;
     }
+    
 
-    public void Dispose()
+    public async ValueTask DisposeAsync()
     {
-        FiksIOClient?.Dispose();
+        await FiksIOClient.DisposeAsync();
         Initialization?.Dispose();
     }
 }
