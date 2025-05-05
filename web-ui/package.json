@@ -13,11 +13,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@vue/compat": "^3.5.13",
-    "axios": "^1.7.9",
+    "axios": "^1.8.4",
     "bootstrap": "^4.6.2",    
     "bootstrap-vue": "^2.23.1",
-    "core-js": "^3.40.0",
-    "mime-types": "^2.1.35",
+    "core-js": "^3.41.0",
+    "mime-types": "^3.0.1",
     "nginx": "1.0.8",
     "nginx-conf": "^2.1.0",
     "path-browserify": "^1.0.1",
@@ -37,9 +37,9 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "babel-eslint": "^10.1.0",
     "dotenv": "^16.4.7",
-    "eslint": "^9.21.0",
-    "eslint-plugin-prettier": "^5.2.3",
-    "eslint-plugin-vue": "^9.32.0",
-    "prettier": "^3.5.2"
+    "eslint": "^9.23.0",
+    "eslint-plugin-prettier": "^5.2.5",
+    "eslint-plugin-vue": "^9.33.0",
+    "prettier": "^3.5.3"
   }
 }
