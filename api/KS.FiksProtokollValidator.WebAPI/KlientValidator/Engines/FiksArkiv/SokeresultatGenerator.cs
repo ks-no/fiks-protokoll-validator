@@ -6,7 +6,6 @@ using KS.Fiks.Arkiv.Models.V1.Innsyn.Sok;
 using KS.Fiks.Arkiv.Models.V1.Metadatakatalog;
 using EksternNoekkel = KS.Fiks.Arkiv.Models.V1.Metadatakatalog.EksternNoekkel;
 
-
 namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv
 {
     public class SokeresultatGenerator
