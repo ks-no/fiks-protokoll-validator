@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Hent saksfase",
+    "description": "Hent enkelt saksfase med faseid som parameter",
+    "testStep": "Normalsituasjon 1 Input saksfase.hent, retur saksfase.hent.resultat",
+    "messageType": "no.ks.fiks.saksfaser.v1.saksfase.hent",
+    "operation": "HentSaksfase",
+    "situation": "N1",
+    "expectedResult": "Resultat i henhold til sakfase.hent.resultat",
+    "queriesWithExpectedValues": [],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.saksfaser.v1.sakfase.hent.resultat" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.sakfaser.v1"
+}
