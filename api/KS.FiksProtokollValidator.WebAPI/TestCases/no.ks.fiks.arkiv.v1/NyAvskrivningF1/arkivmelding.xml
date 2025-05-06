@@ -4,7 +4,9 @@
                xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/avskrivning/opprett/v1">
     <avskrivning>
         <avskrivningsdato>2023-01-20</avskrivningsdato>
-        <avskrevetAv>protokoll-validator</avskrevetAv>
+        <avskrevetAv>
+            <epostadresse xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">protokoll-validator@test.no</epostadresse>
+        </avskrevetAv>
         <avskrivningsmaate>
             <kode xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Ikke gyldig</kode>
             <beskrivelse xmlns="https://ks-no.github.io/standarder/fiks-protokoll/fiks-arkiv/metadatakatalog/v1">Besvart med brev</beskrivelse>

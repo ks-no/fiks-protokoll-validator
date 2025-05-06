@@ -43,7 +43,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             foreach (var fiksIoClientConsumerService in _fiksIOConnectionManager.TjenerConnectionServices)
             {
                 await fiksIoClientConsumerService.Value.Initialization;
-                fiksIoClientConsumerService.Value.FiksIOClient.NewSubscription(OnMottattMelding);
+                await fiksIoClientConsumerService.Value.FiksIOClient.NewSubscriptionAsync(OnMottattMelding);
                 Logger.Information($"Startet subscription for {fiksIoClientConsumerService.Key} med kontoid {fiksIoClientConsumerService.Value.FiksIOClient.KontoId}");
             }
 
@@ -56,7 +56,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             return asicManifest != null && asicManifest.certificate != null && asicManifest.certificate.Length == 1 && asicManifest.file != null && asicManifest.rootfile == null;
         }
 
-        private async void OnMottattMelding(object sender, MottattMeldingArgs mottattMeldingArgs)
+        private async Task OnMottattMelding(MottattMeldingArgs mottattMeldingArgs)
         {
             Logger.Information("Mottatt melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
             var payloads = new List<FiksPayload>();
@@ -149,7 +149,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     if (fiksRequest == null)
                     {
                         Logger.Error("Klarte ikke å matche svar-melding fra Fiks IO med en eksisterende forespørsel. Testsession med id {TestSessionId} funnet. Svarmelding forkastes. MeldingId: {MeldingId}, SvarPaMelding id: {Id}", testSession.Id, mottattMeldingArgs.Melding.MeldingId, mottattMeldingArgs.Melding.SvarPaMelding);
-                        mottattMeldingArgs.SvarSender?.Ack();
+                        await mottattMeldingArgs.SvarSender?.AckAsync();
                         return;
                     }
 
@@ -166,7 +166,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
             }
             finally
             {
-                mottattMeldingArgs.SvarSender?.Ack();
+               await mottattMeldingArgs.SvarSender?.AckAsync();
             }
         }
     }

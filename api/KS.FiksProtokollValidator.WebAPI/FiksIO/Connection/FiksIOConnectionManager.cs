@@ -41,13 +41,13 @@ public class FiksIOConnectionManager
         }
     }
 
-    public bool IsHealthy()
+    public async Task<bool> IsHealthy()
     {
         foreach (var fiksIoClientConsumerService in TjenerConnectionServices)
         {
             if (fiksIoClientConsumerService.Value != null)
             {
-                var isHealthy = fiksIoClientConsumerService.Value.IsHealthy();
+                var isHealthy = await fiksIoClientConsumerService.Value.IsHealthy();
                 if (!isHealthy)
                 {
                     return false;
@@ -64,11 +64,13 @@ public class FiksIOConnectionManager
 
     public async Task Reconnect()
     {
-        foreach (var fiksProtokollConnectionService in TjenerConnectionServices.Where(fiksProtokollConnectionService => !fiksProtokollConnectionService.Value.IsHealthy()))
+        foreach (var fiksProtokollConnectionService in TjenerConnectionServices)
         {
+            if (await fiksProtokollConnectionService.Value.IsHealthy()) continue;
             Log.Information($"Reconnect unhealthy {fiksProtokollConnectionService.Key}");
             await fiksProtokollConnectionService.Value.Reconnect();
         }
+        
     }
 
     private FiksProtokollKontoConfig MapToSettings(ValidatorFiksIOConfig validatorFiksIoConfig,

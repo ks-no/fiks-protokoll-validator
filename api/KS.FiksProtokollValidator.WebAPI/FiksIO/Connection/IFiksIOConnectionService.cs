@@ -4,9 +4,9 @@ using KS.Fiks.IO.Client;
 
 namespace KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 
-public interface IFiksIOConnectionService : IAsyncInitialization, IDisposable
+public interface IFiksIOConnectionService : IAsyncInitialization, IAsyncDisposable
 {
-    public bool IsHealthy();
+    public Task<bool> IsHealthy();
     public Task Reconnect();
     IFiksIOClient FiksIOClient { get; }
 }
