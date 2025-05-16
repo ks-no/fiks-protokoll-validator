@@ -4,6 +4,7 @@ using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Saksfaser.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -46,6 +47,10 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 FiksPlanMeldingtypeV2.ResultatHentPlanomraader,
                 FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade,
                 FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud,
+                FiksSaksfaserMeldingtyperV1.HentSaksfase,
+                FiksSaksfaserMeldingtyperV1.HentSaksfaser,
+                FiksSaksfaserMeldingtyperV1.ResultatHentSaksfaser,
+                FiksSaksfaserMeldingtyperV1.ResultatHentSaksfaser
             };
             //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
         }
@@ -103,6 +108,10 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 case FiksPlanMeldingtypeV2.ResultatOpprettArealplan:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade:
                 case FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud:
+                case FiksSaksfaserMeldingtyperV1.HentSaksfaser:
+                case FiksSaksfaserMeldingtyperV1.HentSaksfase:
+                case FiksSaksfaserMeldingtyperV1.ResultatHentSaksfaser:
+                case FiksSaksfaserMeldingtyperV1.ResultatHentSaksfase:
                     return "payload.json";
                 default:
                     return string.Empty;
@@ -116,7 +125,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                    receivedPayloadFileName.EndsWith(".txt");
         }
 
-        internal static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
+        public static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
         {
             var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
             var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
@@ -127,7 +136,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             }
         }
 
-        private static void ValidateJsonWithSchemaString(string payload, List<string> validationErrors, string schemaString)
+        public static void ValidateJsonWithSchemaString(string payload, List<string> validationErrors, string schemaString)
         {
             var jObject = JObject.Parse(payload);
             var schema = JSchema.Parse(schemaString);
