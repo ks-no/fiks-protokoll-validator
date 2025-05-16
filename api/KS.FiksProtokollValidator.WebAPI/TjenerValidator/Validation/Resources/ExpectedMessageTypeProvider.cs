@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
 
@@ -107,31 +107,31 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                     }
                 },
                 {
-                        FiksPlanMeldingtypeV2.FinnPlanerForMatrikkelenhet,
+                        FiksPlanMeldingtypeV2.FinnArealplanerForMatrikkelenhet,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet
+                        FiksPlanMeldingtypeV2.ResultatFinnArealplaner
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.RegistrerDispensasjonFraPlan,
+                    FiksPlanMeldingtypeV2.RegistrerDispensasjon,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatMottat
+                        FiksPlanMeldingtypeV2.KvitteringRegistrerDispensasjon
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.RegistrertPlanavgrensning,
+                    FiksPlanMeldingtypeV2.RegistrerPlanavgrensning,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatMottat
+                        FiksPlanMeldingtypeV2.KvitteringRegistrerPlanavgrensning
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.FinnPlaner,
+                    FiksPlanMeldingtypeV2.FinnArealplaner,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatFinnPlaner
+                        FiksPlanMeldingtypeV2.ResultatFinnArealplaner
                     }
                 },
                 {
@@ -145,21 +145,21 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                     FiksPlanMeldingtypeV2.OpprettArealplan,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatOpprettArealplan
+                        FiksPlanMeldingtypeV2.KvitteringOpprettArealplan
                     }
                 },
                 {
                     FiksPlanMeldingtypeV2.RegistrerPlanbehandling,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatMottat
+                        FiksPlanMeldingtypeV2.KvitteringRegistrerPlanbehandling
                     }
                 },
                 {
                     FiksPlanMeldingtypeV2.OppdaterArealplan,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatMottat
+                        FiksPlanMeldingtypeV2.KvitteringOppdaterArealplan
                     }
                 },
                 {
@@ -170,13 +170,6 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.HentBboxForPlan,
-                    new List<string>
-                    {
-                        FiksPlanMeldingtypeV2.ResultatHentBboxForPlan
-                    }
-                },
-                {
                     FiksPlanMeldingtypeV2.HentKodeliste,
                     new List<string>
                     {
@@ -184,10 +177,10 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.HentPlanfil,
+                    FiksPlanMeldingtypeV2.HentDokumentfil,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatHentPlanfil
+                        FiksPlanMeldingtypeV2.ResultatHentDokumentfil
                     }
                 },
                 {
@@ -205,31 +198,31 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.HentGjeldendePlanbestemmelser,
+                    FiksPlanMeldingtypeV2.HentGjeldendePlandokumenter,
                     new List<string>
                     {
-                        FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser
+                        FiksPlanMeldingtypeV2.ResultatHentGjeldendePlandokumenter
                     }
                 },
                 {
                     FiksPlanMeldingtypeV2.OppdaterDispensasjon,
                     new List<string>()
                     {
-                        FiksPlanMeldingtypeV2.ResultatMottat
+                        FiksPlanMeldingtypeV2.KvitteringOppdaterDispensasjon
                     }
                 },
                 {
                     RequestMessageTypes.RegistrerMidlertidigForbudMotTiltakV2,
                     new List<string>()
                     {
-                        FiksPlanMeldingtypeV2.ResultatMottat
+                        FiksPlanMeldingtypeV2.KvitteringRegistrerMidlertidigForbudMotTiltak
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.FinnPlandokumenter,
+                    FiksPlanMeldingtypeV2.FinnArealplaner,
                     new List<string>()
                     {
-                        FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter
+                        FiksPlanMeldingtypeV2.ResultatFinnArealplaner
                     }
                 },
                 {
@@ -240,10 +233,10 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.FinnPlanerForOmraade,
+                    FiksPlanMeldingtypeV2.FinnArealplanerForFlate,
                     new List<string>()
                     {
-                        FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade
+                        FiksPlanMeldingtypeV2.ResultatFinnArealplaner
                     }
                 },
                 {
@@ -254,17 +247,17 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                     }
                 },
                 {
-                    FiksPlanMeldingtypeV2.SjekkMidlertidigForbud,
+                    FiksPlanMeldingtypeV2.FinnMidlertidigForbudMotTiltak,
                     new List<string>()
                     {
-                        FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud
+                        FiksPlanMeldingtypeV2.ResultatFinnMidlertidigForbud
                     }
                 },
                 {
                     FiksPlanMeldingtypeV2.RegistrerMidlertidigForbudMotTiltak,
                     new List<string>()
                     {
-                        FiksPlanMeldingtypeV2.ResultatMottat
+                        FiksPlanMeldingtypeV2.KvitteringRegistrerMidlertidigForbudMotTiltak
                     }
                 }
             };

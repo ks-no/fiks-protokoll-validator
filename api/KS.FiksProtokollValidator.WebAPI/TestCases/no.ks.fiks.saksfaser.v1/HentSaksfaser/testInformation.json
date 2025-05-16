@@ -1,0 +1,13 @@
+﻿{
+    "testName": "Hent saksfaser",
+    "description": "Hent saksfaser med søk parametere",
+    "testStep": "Normalsituasjon 1 Input saksfaser.hent, retur saksfaser.hent.resultat",
+    "messageType": "no.ks.fiks.saksfaser.v1.saksfaser.hent",
+    "operation": "HentSaksfaser",
+    "situation": "N1",
+    "expectedResult": "Resultat i henhold til sakfaser.hent.resultat",
+    "queriesWithExpectedValues": [],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.saksfaser.v1.sakfaser.hent.resultat" ],
+    "supported": true,
+    "protocol": "no.ks.fiks.sakfaser.v1"
+}

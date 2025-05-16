@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "no.ks.fiks.saksfaser.v1.saksfase.hent.schema.json",
+    "title": "HentSaksfase",
+    "definitions": {},
+    "type": "object",
+    "properties": {
+        "faseid": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "faseid"
+    ]
+}
