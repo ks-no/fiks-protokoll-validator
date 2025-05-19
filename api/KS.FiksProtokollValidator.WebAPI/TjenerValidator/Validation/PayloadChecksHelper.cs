@@ -3,7 +3,8 @@ using System.IO;
 using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.IO.Politiskbehandling.Client.Models;
-using KS.Fiks.Plan.Client.Models;
+using KS.Fiks.Plan.Models.V2.Meldingstyper;
+using KS.Fiks.Saksfaser.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
@@ -30,22 +31,22 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
                 PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
                 PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet,
-                FiksPlanMeldingtypeV2.ResultatFinnPlaner,
+                FiksPlanMeldingtypeV2.ResultatFinnArealplaner,
                 FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
                 FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger,
-                FiksPlanMeldingtypeV2.ResultatOpprettArealplan,
+                FiksPlanMeldingtypeV2.KvitteringOpprettArealplan,
                 FiksPlanMeldingtypeV2.ResultatHentAktoerer,
                 FiksPlanMeldingtypeV2.ResultatHentArealplan,
-                FiksPlanMeldingtypeV2.ResultatHentBboxForPlan,
                 FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner,
-                FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser,
+                FiksPlanMeldingtypeV2.ResultatHentGjeldendePlandokumenter,
                 FiksPlanMeldingtypeV2.ResultatHentKodeliste,
-                FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter,
                 FiksPlanMeldingtypeV2.OpprettArealplan,
                 FiksPlanMeldingtypeV2.ResultatHentPlanomraader,
-                FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade,
-                FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud,
+                FiksPlanMeldingtypeV2.ResultatFinnMidlertidigForbud,
+                FiksSaksfaserMeldingtyperV1.HentSaksfase,
+                FiksSaksfaserMeldingtyperV1.HentSaksfaser,
+                FiksSaksfaserMeldingtyperV1.ResultatHentSaksfaser,
+                FiksSaksfaserMeldingtyperV1.ResultatHentSaksfaser
             };
             //NB Husk at man må fylle på i denne listen med de meldingstyper som har resultat.
         }
@@ -90,19 +91,19 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
                 case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger:
-                case FiksPlanMeldingtypeV2.ResultatFinnPlandokumenter:
-                case FiksPlanMeldingtypeV2.ResultatFinnPlanerForMatrikkelenhet:
-                case FiksPlanMeldingtypeV2.ResultatFinnPlaner:
+                case FiksPlanMeldingtypeV2.ResultatFinnArealplaner:
                 case FiksPlanMeldingtypeV2.ResultatHentAktoerer:
                 case FiksPlanMeldingtypeV2.ResultatHentArealplan:
-                case FiksPlanMeldingtypeV2.ResultatHentBboxForPlan:
-                case FiksPlanMeldingtypeV2.ResultatHentGjeldendePlanbestemmelser:
+                case FiksPlanMeldingtypeV2.ResultatHentGjeldendePlandokumenter:
                 case FiksPlanMeldingtypeV2.ResultatHentKodeliste:
                 case FiksPlanMeldingtypeV2.ResultatHentPlanomraader:
                 case FiksPlanMeldingtypeV2.ResultatHentRelatertePlaner:
-                case FiksPlanMeldingtypeV2.ResultatOpprettArealplan:
-                case FiksPlanMeldingtypeV2.ResultatFinnPlanerForOmraade:
-                case FiksPlanMeldingtypeV2.ResultatSjekkMidlertidigForbud:
+                case FiksPlanMeldingtypeV2.KvitteringOpprettArealplan:
+                case FiksPlanMeldingtypeV2.ResultatFinnMidlertidigForbud:
+                case FiksSaksfaserMeldingtyperV1.HentSaksfaser:
+                case FiksSaksfaserMeldingtyperV1.HentSaksfase:
+                case FiksSaksfaserMeldingtyperV1.ResultatHentSaksfaser:
+                case FiksSaksfaserMeldingtyperV1.ResultatHentSaksfase:
                     return "payload.json";
                 default:
                     return string.Empty;
@@ -116,7 +117,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                    receivedPayloadFileName.EndsWith(".txt");
         }
 
-        internal static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
+        public static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
         {
             var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
             var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
@@ -127,7 +128,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             }
         }
 
-        private static void ValidateJsonWithSchemaString(string payload, List<string> validationErrors, string schemaString)
+        public static void ValidateJsonWithSchemaString(string payload, List<string> validationErrors, string schemaString)
         {
             var jObject = JObject.Parse(payload);
             var schema = JSchema.Parse(schemaString);
