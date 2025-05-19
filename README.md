@@ -126,6 +126,7 @@ Konto id for simulatorer i develop:
 - Arkivsystem: [760fd7d6-435f-4c1b-97d5-92fbe2f603b0](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/NewTestSession?fikskonto=760fd7d6-435f-4c1b-97d5-92fbe2f603b0)
 - Fagsystem arkiv: [4a416cde-2aca-4eef-bec4-efddcee0fcea](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/NewTestSession?fikskonto=4a416cde-2aca-4eef-bec4-efddcee0fcea)
 - Politisk behandling: [33f6baa8-6645-4dca-9ffb-f95f43333f6c](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/NewTestSession?fikskonto=33f6baa8-6645-4dca-9ffb-f95f43333f6c)
+- Saksfaser: [0c90be39-2a75-47a9-a46a-2a23746a9b44](https://forvaltning.fiks.dev.ks.no/fiks-validator/#/NewTestSession?fikskonto=0c90be39-2a75-47a9-a46a-2a23746a9b44)
 
 ## Oppsett
 
