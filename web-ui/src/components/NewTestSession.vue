@@ -128,6 +128,7 @@ export default {
       { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
       { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2'},
       { value: 'no.ks.fiks.matrikkelfoering.v2', text: 'no.ks.fiks.matrikkelfoering.v2'}
+      { value: 'no.ks.fiks.saksfaser.v1', text: 'no.ks.fiks.matrikkelfoering.v1'}
     ]
     const qproto = this.$route.query.fiksprotocol || protocolOptions[0].value;
     const selectedProtocol = (
