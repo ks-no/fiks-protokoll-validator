@@ -7,7 +7,7 @@
     "situation": "N1",
     "expectedResult": "Resultat i henhold til sakfaser.hent.resultat",
     "queriesWithExpectedValues": [],
-    "expectedResponseMessageTypes": [ "no.ks.fiks.saksfaser.v1.sakfaser.hent.resultat" ],
+    "expectedResponseMessageTypes": [ "no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat" ],
     "supported": true,
-    "protocol": "no.ks.fiks.sakfaser.v1"
+    "protocol": "no.ks.fiks.saksfaser.v1"
 }

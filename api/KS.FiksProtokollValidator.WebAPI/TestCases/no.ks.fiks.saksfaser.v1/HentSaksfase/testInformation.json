@@ -9,5 +9,5 @@
     "queriesWithExpectedValues": [],
     "expectedResponseMessageTypes": [ "no.ks.fiks.saksfaser.v1.sakfase.hent.resultat" ],
     "supported": true,
-    "protocol": "no.ks.fiks.sakfaser.v1"
+    "protocol": "no.ks.fiks.saksfaser.v1"
 }
