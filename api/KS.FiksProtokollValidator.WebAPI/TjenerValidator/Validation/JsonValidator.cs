@@ -118,5 +118,10 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 AddAdditionalPropertiesFalseToSchemaProperties(item.Value.Properties);
             }
         }
+
+        public void Cleanup()
+        {
+            Directory.Delete("./../../../Schemas/", true);
+        }
     }
 }

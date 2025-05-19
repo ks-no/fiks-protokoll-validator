@@ -9,12 +9,15 @@ using Xunit.Abstractions;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest.FiksSaksfaser
 {
-    public class TestCasesTests
+    public class TestCasesTests : IDisposable
     {
         private readonly ITestOutputHelper _testOutputHelper;
+        private readonly JsonValidator _jsonValidator;
         public TestCasesTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
+            _jsonValidator = JsonValidator.Init().WithFiksSaksfaser();
+
         }
         
         [Fact]
@@ -41,14 +44,19 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.FiksSaksfaser
 
                 _testOutputHelper.WriteLine($"Validating testcase {testCaseName}");
 
-                var jsonValidator = JsonValidator.Init().WithFiksSaksfaser();
-                jsonValidator.Validate(json, validationErrors, messageType);
+                _jsonValidator.Validate(json, validationErrors, messageType);
                 foreach (var validationError in validationErrors)
                 {
                     _testOutputHelper.WriteLine(validationError);
                 }
                 Assert.Empty(validationErrors);
             }
+        }
+
+
+        public void Dispose()
+        {
+            _jsonValidator.Cleanup();
         }
     }
 }
