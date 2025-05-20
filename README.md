@@ -31,6 +31,7 @@ Her finner man konto-id for de protokollene som tjener validatoren støtter og s
 Konto id for protokollene som kjører i test:
 - Fiks Arkiv: 76b035a9-2d73-48bf-b758-981195333191
 - Fiks Plan: 6aeccd0f-8a20-4389-a56b-2bcd51dc88b9 
+- Fiks Saksfaser: 2067a059-80a0-47f9-93a9-ef6bfbeb014d
 
 ### Klient validator
 Konto id for Fiks Arkiv validatoren. Denne simulerer da et arkivsystem og vil svare med meldingstyper som om den var et arkiv.
