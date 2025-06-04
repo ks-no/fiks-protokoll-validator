@@ -6,7 +6,7 @@
     "operation": "FinnPlandokumenter",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av plandokument(er)",
-    "samplePath": "Samples/FinnPlandokumenter",
+    "samplePath": "Samples/Fiks.Plan.V2/FinnPlandokumenter",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

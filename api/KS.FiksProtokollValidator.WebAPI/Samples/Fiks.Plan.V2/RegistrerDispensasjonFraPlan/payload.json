@@ -1,0 +1,41 @@
+﻿{
+    "dispensasjon": {
+        "dispensasjon": {
+            "kodeverdi": "170",
+            "kodebeskrivelse": "Hensynssone"
+        },
+        "nasjonalArealplanId": {
+            "administrativEnhet": {
+                "kommunenummer": "0821"
+            },
+            "planidentifikasjon": "planidentifikasjon"
+        },
+        "vedtaksdato": "2020-01-01",
+        "posisjon": {
+            "type": "Point",
+            "coordinates": [
+                1.02345,
+                2.33333
+            ],
+            "crs": {
+                "type": "name",
+                "properties": {
+                    "name": "EPSG:3857"
+                }
+            }
+        },
+        "innvilgetDispensasjon": true,
+        "varigDispensasjon": true
+    },
+    "plandokument": [
+        {
+            "tittel": "Vedtak",
+            "dokumenttype": {
+                "kodebeskrivelse": "Vedtak",
+                "kodeverdi": "VEDTAK"
+            },
+            "referanseDokumentfil": "vedtak.pdf",
+            "arkivnavn": "Vedtak"
+        }
+    ]
+}

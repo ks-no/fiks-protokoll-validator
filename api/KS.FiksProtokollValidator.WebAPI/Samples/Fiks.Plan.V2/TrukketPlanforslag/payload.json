@@ -1,0 +1,29 @@
+﻿{
+    "arealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "4203",
+            "fylkesnummer": "38",
+            "landskode": "NO"
+        },
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "10",
+        "kodebeskrivelse": "Trukket/Uaktuell"
+    },
+    "lovreferanse": {
+        "kodeverdi": "6",
+        "kodebeskrivelse": "PBL 2008"
+    },
+    "plandokument": [
+        {
+            "tittel": "Underlag",
+            "dokumenttype": {
+                "kodeverdi": "KORR",
+                "kodebeskrivelse": "Korrespondanse"
+            },
+            "referanseDokumentfil": "Underlag.pdf",
+            "arkivnavn": "Underlag"
+        }
+    ]
+}

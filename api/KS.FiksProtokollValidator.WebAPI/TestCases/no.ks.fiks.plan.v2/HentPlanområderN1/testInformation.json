@@ -6,7 +6,7 @@
     "operation": "HentPlanområder",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av planområde(r)",
-    "samplePath": "Samples/HentPlanomraader",
+    "samplePath": "Samples/Fiks.Plan.V2/HentPlanomraader",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

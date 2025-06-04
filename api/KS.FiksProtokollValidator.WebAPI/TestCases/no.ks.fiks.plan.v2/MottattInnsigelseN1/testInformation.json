@@ -6,7 +6,7 @@
     "operation": "MottattInnsigelse",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/MottattInnsigelse",
+    "samplePath": "Samples/Fiks.Plan.V2/MottattInnsigelse",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

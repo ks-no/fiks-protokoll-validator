@@ -1,0 +1,28 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "0821"
+        },
+        "planidentifikasjon": "01_27_1988"
+    },
+    "vedlegg": [
+        {
+            "tittel": "Planomraade_pdf",
+            "dokumenttype": {
+                "kodebeskrivelse": "Kart",
+                "kodeverdi": "KART"
+            },
+            "referanseDokumentfil": "Planomraade.pdf",
+            "arkivnavn": "Planområde i PDF-format"
+        },
+        {
+            "tittel": "Planomraade_gml",
+            "dokumenttype": {
+                "kodebeskrivelse": "Kart",
+                "kodeverdi": "KART"
+            },
+            "referanseDokumentfil": "Planomraade.gml",
+            "arkivnavn": "Planområde i GML-format"
+        }
+    ]
+}

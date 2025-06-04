@@ -6,7 +6,7 @@
     "operation": "HentBbox",
     "situation": "N1",
     "expectedResult": "Retur av Bbox",
-    "samplePath": "Samples/HentBbox",
+    "samplePath": "Samples/Fiks.Plan.V2/HentBbox",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

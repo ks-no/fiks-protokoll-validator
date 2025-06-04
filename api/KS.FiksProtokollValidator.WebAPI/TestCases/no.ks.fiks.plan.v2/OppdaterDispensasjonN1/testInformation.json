@@ -6,7 +6,7 @@
     "operation": "OppdaterDispensasjon",
     "situation": "N1",
     "expectedResult": "Bekreftet mottak",
-    "samplePath": "Samples/OppdaterDispensasjon",
+    "samplePath": "Samples/Fiks.Plan.V2/OppdaterDispensasjon",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

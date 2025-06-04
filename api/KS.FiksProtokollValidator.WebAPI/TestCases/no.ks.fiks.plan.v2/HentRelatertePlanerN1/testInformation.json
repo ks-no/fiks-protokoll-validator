@@ -6,7 +6,7 @@
     "operation": "HentRelatertePlaner",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur relaterte planer",
-    "samplePath": "Samples/HentRelatertePlaner",
+    "samplePath": "Samples/Fiks.Plan.V2/HentRelatertePlaner",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

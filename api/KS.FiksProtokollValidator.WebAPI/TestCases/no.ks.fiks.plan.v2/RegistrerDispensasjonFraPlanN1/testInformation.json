@@ -6,7 +6,7 @@
     "operation": "RegistrerDispensasjonFraPlan",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering",
-    "samplePath": "Samples/RegistrerDispensasjonFraPlan",
+    "samplePath": "Samples/Fiks.Plan.V2/RegistrerDispensasjonFraPlan",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

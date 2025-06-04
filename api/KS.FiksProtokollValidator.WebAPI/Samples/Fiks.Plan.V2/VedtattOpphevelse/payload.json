@@ -1,0 +1,29 @@
+﻿{
+    "arealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "4203",
+            "fylkesnummer": "38",
+            "landskode": "NO"
+        },
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "4",
+        "kodebeskrivelse": "Opphevet"
+    },
+    "lovreferanse": {
+        "kodeverdi": "6",
+        "kodebeskrivelse": "PBL 2008"
+    },
+    "plandokument": [
+        {
+            "tittel": "Vedtak",
+            "dokumenttype": {
+                "kodeverdi": "VEDTAK",
+                "kodebeskrivelse": "Vedtak"
+            },
+            "referanseDokumentfil": "Vedtak.pdf",
+            "arkivnavn": "Vedtak"
+        }
+    ]
+}

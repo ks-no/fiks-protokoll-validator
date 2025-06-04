@@ -51,13 +51,21 @@
     </Content>
     <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum2.xml" />
     <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum.xml" />
+    <None Remove="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat.json" />
+    <Content Include="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat-not-valid.json" />
+    <Content Include="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat-not-valid.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="KS.Fiks.Arkiv.Models.V1" Version="1.0.6" />
     <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="1.0.0" />
-    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="1.0.2" />
-    <PackageReference Include="KS.Fiks.Saksfaser.Models.V1" Version="1.0.5" />
+    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="1.0.3-rc.build.20250604102632489" />
+    <PackageReference Include="KS.Fiks.Saksfaser.Models.V1" Version="1.0.6-rc.build.20250411140904433" />
     <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="nunit" Version="4.3.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="5.0.0" />
@@ -88,11 +96,6 @@
     <None Update="TestData\Responses\svar_paa_soek.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Schemas\" />
-    <Folder Include="UnitTest\FiksPlan\" />
   </ItemGroup>
 
 </Project>

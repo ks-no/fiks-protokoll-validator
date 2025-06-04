@@ -6,7 +6,7 @@
     "operation": "RegistrerPlanavgrensing",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering",
-    "samplePath": "Samples/RegistrerPlanavgrensing",
+    "samplePath": "Samples/Fiks.Plan.V2/RegistrerPlanavgrensing",
     "queriesWithExpectedValues": [
 
     ],

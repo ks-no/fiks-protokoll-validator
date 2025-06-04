@@ -1,0 +1,201 @@
+{
+  "saksnummer": {
+    "saksaar": 2025,
+    "sakssekvensnummer": 73
+  },
+  "sakstittel": "PLAN-C",
+  "saksansvarlig": "Arve Corneliussen",
+  "faser": [
+    {
+      "faseid": "8603303f-42bf-45d0-b1cf-d55260517388",
+      "fasenavn": "Idefasen",
+      "kategori": {
+        "kodeverdi": "IF",
+        "kodebeskrivelse": "Idéfasen"
+      },
+      "status": "UnderArbeid",
+      "milepeler": [
+        {
+          "milepelId": "3146e459-5268-4e00-9e1f-2bddea39c963",
+          "beskrivelse": "Veiledningsmøte bestilt",
+          "kategori": {
+            "kodeverdi": "VB",
+            "kodebeskrivelse": "Veiledningsmøte bestilt"
+          },
+          "utfoert": "2025-05-01",
+          "intern": false,
+          "status": "Nådd"
+        },
+        {
+          "milepelId": "937ab84b-1f5d-463c-bf75-da89b34401f2",
+          "beskrivelse": "Veiledningsmøte avholdt",
+          "kategori": {
+            "kodeverdi": "VA",
+            "kodebeskrivelse": "Veiledningsmøte avholdt"
+          },
+          "utfoert": "2025-05-02",
+          "intern": false,
+          "status": "Nådd"
+        }
+      ],
+      "referanseJournalpost": []
+    },
+    {
+      "faseid": "fc339b19-2c21-406b-8a5a-e02d1a09a465",
+      "fasenavn": "Oppstartsfasen",
+      "kategori": {
+        "kodeverdi": "OF",
+        "kodebeskrivelse": "Oppstartsfasen"
+      },
+      "status": "UnderArbeid",
+      "milepeler": [
+        {
+          "milepelId": "584eaab7-e120-475e-b2fd-7ce893d86855",
+          "beskrivelse": "Anmodning om oppstartsmøte",
+          "kategori": {
+            "kodeverdi": "BO",
+            "kodebeskrivelse": "Anmodning om oppstartsmøte"
+          },
+          "utfoert": "2025-05-03",
+          "intern": false,
+          "status": "Nådd"
+        },
+        {
+          "milepelId": "e439704e-62d1-4a46-a869-5c0f0aaa0e41",
+          "beskrivelse": "Innkalling til oppstartsmøte",
+          "kategori": {
+            "kodeverdi": "IOM",
+            "kodebeskrivelse": "Innkalling til oppstartsmøte"
+          },
+          "utfoert": "2025-05-04",
+          "intern": false,
+          "status": "Nådd"
+        },
+        {
+          "milepelId": "eabd4038-fc60-4458-9ce3-50a7a9904b73",
+          "beskrivelse": "Oppstartsmøte avholdt",
+          "kategori": {
+            "kodeverdi": "OM",
+            "kodebeskrivelse": "Oppstartsmøte avholdt"
+          },
+          "utfoert": "2025-05-05",
+          "intern": false,
+          "status": "Nådd"
+        },
+        {
+          "milepelId": "8dab3929-d0af-4955-910a-cc3c98a6e831",
+          "beskrivelse": "Beslutning om planoppstart",
+          "kategori": {
+            "kodeverdi": "BPO",
+            "kodebeskrivelse": "Beslutning om planoppstart"
+          },
+          "utfoert": "2025-05-06",
+          "intern": false,
+          "status": "Nådd"
+        }
+      ],
+      "referanseJournalpost": []
+    },
+    {
+      "faseid": "c2317a2e-dd7f-435c-9e38-9ca05f337554",
+      "fasenavn": "Utarbeidingsfasen",
+      "kategori": {
+        "kodeverdi": "UF",
+        "kodebeskrivelse": "Utarbeidingsfasen"
+      },
+      "status": "UnderArbeid",
+      "milepeler": [
+        {
+          "milepelId": "bb2d2f6e-b619-4fd3-9ddc-96d3ed04cf15",
+          "beskrivelse": "Arbeidsmøte avholdt",
+          "kategori": {
+            "kodeverdi": "AH",
+            "kodebeskrivelse": "Arbeidsmøte avholdt"
+          },
+          "utfoert": "2025-05-07",
+          "intern": false,
+          "status": "Nådd"
+        }
+      ],
+      "referanseJournalpost": []
+    },
+    {
+      "faseid": "87aaa3fe-62a4-4b5d-87c6-5a90d608c5e2",
+      "fasenavn": "Førstegangsbehandling",
+      "kategori": {
+        "kodeverdi": "FBP",
+        "kodebeskrivelse": "Førstegangsbehandling privat"
+      },
+      "status": "UnderArbeid",
+      "milepeler": [
+        {
+          "milepelId": "790d19a9-1c65-44d6-b0bc-d19a5b86cc0e",
+          "beskrivelse": "Mottatt planforslag",
+          "kategori": {
+            "kodeverdi": "MP",
+            "kodebeskrivelse": "Mottatt planforslag"
+          },
+          "utfoert": "2025-05-08",
+          "intern": false,
+          "status": "Nådd"
+        },
+        {
+          "milepelId": "6fbe80c4-5843-4351-8262-39800150e23a",
+          "beskrivelse": "Planforslaget er komplett",
+          "kategori": {
+            "kodeverdi": "KP",
+            "kodebeskrivelse": "Planforslaget er komplett"
+          },
+          "utfoert": "2025-05-09",
+          "intern": false,
+          "status": "Nådd"
+        }
+      ],
+      "referanseJournalpost": []
+    },
+    {
+      "faseid": "83aa6b96-9c8d-4ee8-b3bf-102eccf35236",
+      "fasenavn": "Høring og offentlig ettersyn",
+      "kategori": {
+        "kodeverdi": "HO",
+        "kodebeskrivelse": "Høring og offentlig ettersyn"
+      },
+      "status": "Planlagt",
+      "milepeler": [],
+      "referanseJournalpost": []
+    },
+    {
+      "faseid": "82758f84-cf7e-4038-88d8-69cf3d964b36",
+      "fasenavn": "Bearbeidingsfasen",
+      "kategori": {
+        "kodeverdi": "BF",
+        "kodebeskrivelse": "Bearbeidingsfase"
+      },
+      "status": "Planlagt",
+      "milepeler": [],
+      "referanseJournalpost": []
+    },
+    {
+      "faseid": "40cb9f9c-4b1f-4b06-a8a2-94b1a766fc12",
+      "fasenavn": "Sluttbehandling",
+      "kategori": {
+        "kodeverdi": "SBP",
+        "kodebeskrivelse": "Sluttbehandling privat"
+      },
+      "status": "Planlagt",
+      "milepeler": [],
+      "referanseJournalpost": []
+    },
+    {
+      "faseid": "2517774c-092c-4f04-bd07-01402b5ac465",
+      "fasenavn": "Oppfølging av planvedtak",
+      "kategori": {
+        "kodeverdi": "OP",
+        "kodebeskrivelse": "Oppfølging av planvedtak"
+      },
+      "status": "Planlagt",
+      "milepeler": [],
+      "referanseJournalpost": []
+    }
+  ]
+}

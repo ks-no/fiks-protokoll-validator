@@ -6,7 +6,7 @@
     "operation": "HentAktører",
     "situation": "N1",
     "expectedResult": "Retur av aktører",
-    "samplePath": "Samples/HentAktoerer",
+    "samplePath": "Samples/Fiks.Plan.V2/HentAktoerer",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

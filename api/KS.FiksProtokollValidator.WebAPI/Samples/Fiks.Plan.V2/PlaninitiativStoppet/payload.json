@@ -1,0 +1,35 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "4203"
+        },
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "9",
+        "kodebeskrivelse": "Avvist"
+    },
+    "planbehandling": {
+        "dato": "2020-01-01",
+        "saksnummer": {
+            "saksaar": 2020,
+            "sakssekvensnummer": 12345
+        },
+        "planbehandlingtype": {
+            "kodeverdi": "2",
+            "kodebeskrivelse": "Stoppet planinitiativ"
+        },
+        "navn": "navn på registrering"
+    },
+    "plandokument": [
+        {
+            "tittel": "Vedtak",
+            "dokumenttype": {
+                "kodeverdi": "VEDTAK",
+                "kodebeskrivelse": "Vedtak"
+            },
+            "referanseDokumentfil": "Vedtak.pdf",
+            "arkivnavn": "Vedtak"
+        }
+    ]
+}

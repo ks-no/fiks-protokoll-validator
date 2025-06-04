@@ -6,7 +6,7 @@
     "operation": "FinnPlanerForMatrikkelenhet",
     "situation": "N1",
     "expectedResult": "Planer for matrikkelenhet",
-    "samplePath": "Samples/FinnPlanerForMatrikkelenhet",
+    "samplePath": "Samples/Fiks.Plan.V2/FinnPlanerForMatrikkelenhet",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$.matrikkelnummer.kommunenummer",

@@ -6,7 +6,7 @@
     "operation": "OppdaterArealplan",
     "situation": "N1",
     "expectedResult": "Bekreftet mottak",
-    "samplePath": "Samples/OppdaterArealplan",
+    "samplePath": "Samples/Fiks.Plan.V2/OppdaterArealplan",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

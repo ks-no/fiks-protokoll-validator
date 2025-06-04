@@ -6,7 +6,7 @@
     "operation": "HentGjeldendePlanbestemmelser",
     "situation": "N1",
     "expectedResult": "Retur av planbestemmelser",
-    "samplePath": "Samples/HentGjeldendePlanbestemmelser",
+    "samplePath": "Samples/Fiks.Plan.V2/HentGjeldendePlanbestemmelser",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

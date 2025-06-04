@@ -6,7 +6,7 @@
     "operation": "BestillingAvOppstartsmøte",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/BestillingAvOppstartsmøte",
+    "samplePath": "Samples/Fiks.Plan.V2/BestillingAvOppstartsmøte",
     "queriesWithExpectedValues": [
     ],
     "supported": true,
