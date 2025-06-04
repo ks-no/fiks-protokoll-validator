@@ -47,8 +47,8 @@
     <PackageReference Include="KS.Fiks.ASiC-E" Version="3.0.4" />
     <PackageReference Include="KS.Fiks.IO.Client" Version="6.0.2" />
     <PackageReference Include="KS.Fiks.Matrikkelfoering.Models.V2" Version="1.0.0" />
-    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="1.0.3-rc.build.20250604102632489" />
-    <PackageReference Include="KS.Fiks.Saksfaser.Models.V1" Version="1.0.6-rc.build.20250411140904433" />
+    <PackageReference Include="KS.Fiks.Plan.Models.V2" Version="1.0.2" />
+    <PackageReference Include="KS.Fiks.Saksfaser.Models.V1" Version="1.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
