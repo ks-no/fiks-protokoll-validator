@@ -1,0 +1,18 @@
+﻿{
+    "arealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "4203",
+            "fylkesnummer": "38",
+            "landskode": "NO"
+        },
+        "planidentifikasjon": "09062018-2"
+    },
+    "planstatus": {
+        "kodeverdi": "8",
+        "kodebeskrivelse": "Overstyrt"
+    },
+    "lovreferanse": {
+        "kodeverdi": "6",
+        "kodebeskrivelse": "PBL 2008"
+    }
+}

@@ -6,7 +6,7 @@
     "operation": "HøringsfristUtgått",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/HoeringsfristUtgaatt",
+    "samplePath": "Samples/Fiks.Plan.V2/HoeringsfristUtgaatt",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

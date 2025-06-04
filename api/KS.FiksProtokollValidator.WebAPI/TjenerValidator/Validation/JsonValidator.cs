@@ -11,15 +11,16 @@ using Newtonsoft.Json.Schema;
 
 namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 {
-    public class JsonValidator
+    public class JsonValidator : IDisposable
     {
         private const string SaksfaserAssemblyBaseFilename = "KS.Fiks.Saksfaser.Models.V1.Schema.V1"; 
         private const string FiksPlanAssemblyBaseFilename = "KS.Fiks.Plan.Models.V2.Schema.V2"; 
-        private static string assemblyName;
-        private static string assemblyBaseFilename;
+        private string assemblyName;
+        private string assemblyBaseFilename;
 
         public static JsonValidator Init()
         {
+            Directory.CreateDirectory("./../../../Schemas/");
             return new JsonValidator();
         }
         
@@ -28,7 +29,20 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             var foo = new HentSaksfase(); // Må gjøres for at assembly blir lastet inn?
             assemblyName = "KS.Fiks.Saksfaser.Models.V1";
             assemblyBaseFilename = SaksfaserAssemblyBaseFilename;
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.dokument");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.dokumentbeskrivelse");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.eksternnoekkel");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.fase");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.gradering");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.journalnummer");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.journalpost");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.korrespondansepart");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.milepel");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.referansedokumentfil");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.referansejournalpost");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.saksjournalpostnummer");
             writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.saksnummer");
+            writeSchemaToDisk("no.ks.fiks.saksfaser.v1.felles.skjerming");
             //TODO last inn og skriv til disk resten av felles schemas
             return this;
         }
@@ -39,16 +53,24 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             assemblyName = "KS.Fiks.Plan.Models.V2";
             assemblyBaseFilename = FiksPlanAssemblyBaseFilename;
             writeSchemaToDisk("no.ks.fiks.plan.v2.felles.arealplan");
-            //TODO last inn og skriv til disk resten av felles schemas
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.dispensasjon");
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.dokument");
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.flate");
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.midlertidigforbud");
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.nasjonalarealplanid");
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.planbehandling");
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.posisjon");
+            writeSchemaToDisk("no.ks.fiks.plan.v2.felles.saksnummer");
             return this;
         }
 
-        private static void writeSchemaToDisk(string messageType)
+        private void writeSchemaToDisk(string messageType)
         {
-            File.WriteAllText($"./../../../Schemas/{messageType}.schema.json", GetSchemaFromAssembly(messageType));
+            var content = GetSchemaFromAssembly(messageType);
+            File.WriteAllText($"./../../../Schemas/{messageType}.schema.json", content);
         }
 
-        private static string GetSchemaFromAssembly(string messagename)
+        private string GetSchemaFromAssembly(string messagename)
         {
             var arkivModelsAssembly = Assembly
                 .GetExecutingAssembly()
@@ -94,7 +116,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 {
                     Resolver = resolver,
                     BaseUri = new Uri($"{baseUri}/Schemas/{messageType}.schema.json") // Hoved schema
-                } //TODO Uri må bruke full path vha Directory
+                }
             );
             schema.ExtensionData.Remove("definitions");
             AddAdditionalPropertiesFalseToSchemaProperties(schema.Properties);
@@ -119,7 +141,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             }
         }
 
-        public void Cleanup()
+        public void Dispose()
         {
             Directory.Delete("./../../../Schemas/", true);
         }

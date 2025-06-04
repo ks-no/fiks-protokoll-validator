@@ -6,7 +6,7 @@
     "operation": "HentKodeliste",
     "situation": "N1",
     "expectedResult": "Retur av kodeliste",
-    "samplePath": "Samples/HentKodeliste",
+    "samplePath": "Samples/Fiks.Plan.V2/HentKodeliste",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

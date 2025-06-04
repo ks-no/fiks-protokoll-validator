@@ -6,7 +6,7 @@
     "operation": "KunngjøringAvPlanvedtak",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/KunngjoeringAvPlanvedtak",
+    "samplePath": "Samples/Fiks.Plan.V2/KunngjoeringAvPlanvedtak",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

@@ -6,7 +6,7 @@
     "operation": "HentPlanfil",
     "situation": "N1",
     "expectedResult": "Retur av planfil",
-    "samplePath": "Samples/HentPlanfil",
+    "samplePath": "Samples/Fiks.Plan.V2/HentPlanfil",
     "queriesWithExpectedValues": [
     ],
     "supported": false,

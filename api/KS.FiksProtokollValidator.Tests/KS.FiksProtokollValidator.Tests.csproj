@@ -51,6 +51,14 @@
     </Content>
     <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum2.xml" />
     <None Remove="TestData\Requests\NySokN1\sokeresultatMinimum.xml" />
+    <None Remove="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat.json" />
+    <Content Include="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Remove="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat-not-valid.json" />
+    <Content Include="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat-not-valid.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -88,11 +96,6 @@
     <None Update="TestData\Responses\svar_paa_soek.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Schemas\" />
-    <Folder Include="UnitTest\FiksPlan\" />
   </ItemGroup>
 
 </Project>

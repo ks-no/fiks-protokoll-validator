@@ -7,7 +7,7 @@ using Newtonsoft.Json.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace KS.FiksProtokollValidator.Tests.UnitTest.FiksSaksfaser
+namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksSaksfaser.TestCases
 {
     public class TestCasesTests : IDisposable
     {
@@ -53,10 +53,9 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.FiksSaksfaser
             }
         }
 
-
         public void Dispose()
         {
-            _jsonValidator.Cleanup();
+            _jsonValidator.Dispose();
         }
     }
 }

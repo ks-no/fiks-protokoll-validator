@@ -6,7 +6,7 @@
     "operation": "HentArealplan",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og arealplan(er)",
-    "samplePath": "Samples/HentArealplan",
+    "samplePath": "Samples/Fiks.Plan.V2/HentArealplan",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

@@ -1,18 +1,17 @@
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
-using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.Fiks.Saksfaser.Models.V1.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Resources;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json.Schema;
 
 namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 {
-    public static class PayloadChecksHelper
+    public class PayloadValidator : IDisposable
     {
+        private readonly JsonValidator _jsonValidatorForSaksfaser = JsonValidator.Init().WithFiksSaksfaser();
+        private readonly JsonValidator _jsonValidatorForPlan = JsonValidator.Init().WithFiksPlan();
+
         public static HashSet<string> GetMessageTypesWithPayload()
         {
             return new HashSet<string>
@@ -29,8 +28,6 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 FiksArkivMeldingtype.Ikkefunnet,
                 FiksArkivMeldingtype.Serverfeil,
                 ResponseMessageTypes.FeilV1, //TODO er denne i bruk?
-                PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan,
-                PolitiskBehandlingMeldingTypeV1.ResultatUtvalg,
                 FiksPlanMeldingtypeV2.ResultatFinnArealplaner,
                 FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner,
                 FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger,
@@ -78,17 +75,6 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
                 case FiksArkivMeldingtype.Serverfeil:
                 case FiksArkivMeldingtype.Ikkefunnet:
                     return "feilmelding.xml";
-                case PolitiskBehandlingMeldingTypeV1.HentMoeteplan:
-                case PolitiskBehandlingMeldingTypeV1.HentUtvalg:
-                case PolitiskBehandlingMeldingTypeV1.SendOrienteringssak:
-                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssak:
-                case PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak:
-                case PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg:
-                case PolitiskBehandlingMeldingTypeV1.SendMoeteplanTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.SendUtvalgssakerTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.SendVedtakTilEInnsyn:
-                case PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan:
-                case PolitiskBehandlingMeldingTypeV1.ResultatUtvalg:
                 case FiksPlanMeldingtypeV2.ResultatFinnDispensasjoner:
                 case FiksPlanMeldingtypeV2.ResultatFinnPlanbehandlinger:
                 case FiksPlanMeldingtypeV2.ResultatFinnArealplaner:
@@ -110,55 +96,34 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             }
         }
 
-        public static bool HasValidFileFormat(string receivedPayloadFileName)
+        public bool HasValidFileFormat(string receivedPayloadFileName)
         {
             return receivedPayloadFileName.EndsWith(".xml") ||
                    receivedPayloadFileName.EndsWith(".json") ||
                    receivedPayloadFileName.EndsWith(".txt");
         }
 
-        public static void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
+        public void ValidateJsonWithSchema(string payload, List<string> validationErrors, string messageType)
         {
-            var baseDirectory = Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
-            var pathToSchema = Path.Combine(baseDirectory, "Schema", messageType + ".schema.json");
-            using (TextReader file = File.OpenText(pathToSchema))
+            if (messageType.StartsWith("no.ks.fiks.saksfaser"))
             {
-                var schemaString = file.ReadToEnd();
-                ValidateJsonWithSchemaString(payload, validationErrors, schemaString);
+                _jsonValidatorForSaksfaser.Validate(payload, validationErrors, messageType);
+            } else if (messageType.StartsWith("no.ks.fiks.plan"))
+            {
+                _jsonValidatorForPlan.Validate(payload, validationErrors, messageType);
             }
         }
 
-        public static void ValidateJsonWithSchemaString(string payload, List<string> validationErrors, string schemaString)
-        {
-            var jObject = JObject.Parse(payload);
-            var schema = JSchema.Parse(schemaString);
-
-            schema.ExtensionData.Remove("definitions");
-            AddAdditionalPropertiesFalseToSchemaProperties(schema.Properties);
-            schema.AllowAdditionalProperties = false;
-
-            //TODO:Skille mellom errors og warnings hvis det er 
-            jObject.Validate(schema, (o, a) => { validationErrors.Add(a.Message); });
-        }
-
-        private static void AddAdditionalPropertiesFalseToSchemaProperties(IDictionary<string, JSchema> properties)
-        {
-            foreach (var item in properties)
-            {
-                item.Value.AllowAdditionalProperties = false;
-                foreach (var itemItem in item.Value.Items)
-                {
-                    AddAdditionalPropertiesFalseToSchemaProperties(itemItem.Properties);
-
-                }
-                AddAdditionalPropertiesFalseToSchemaProperties(item.Value.Properties);
-            }
-        }
-
-        internal static void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors)
+        internal void ValidateXmlWithSchema(string xmlPayloadContent, List<string> validationErrors)
         {
             var xsdValidator = new XsdValidator();
             xsdValidator.Validate(xmlPayloadContent, validationErrors);
+        }
+
+        public void Dispose()
+        {
+            _jsonValidatorForSaksfaser.Dispose();
+            _jsonValidatorForPlan.Dispose();
         }
     }
 }

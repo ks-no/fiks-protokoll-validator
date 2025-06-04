@@ -6,7 +6,7 @@
     "operation": "KunngjøringOgVarslingAvPlanoppstart",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/KunngjoeringOgVarslingAvPlanoppstart",
+    "samplePath": "Samples/Fiks.Plan.V2/KunngjoeringOgVarslingAvPlanoppstart",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

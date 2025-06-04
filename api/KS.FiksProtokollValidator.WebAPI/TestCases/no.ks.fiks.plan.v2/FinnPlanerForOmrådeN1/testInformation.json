@@ -6,7 +6,7 @@
     "operation": "FinnPlanerForOmråde",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av plan(er)",
-    "samplePath": "Samples/FinnPlanerForOmraade",
+    "samplePath": "Samples/Fiks.Plan.V2/FinnPlanerForOmraade",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

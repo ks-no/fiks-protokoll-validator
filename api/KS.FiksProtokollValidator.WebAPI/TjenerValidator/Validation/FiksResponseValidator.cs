@@ -18,6 +18,12 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
     {
         private static HashSet<string> _messageTypesWithPayloads;
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
+        private static PayloadValidator _payloadValidator;
+
+        public FiksResponseValidator()
+        {
+            _payloadValidator = new PayloadValidator();
+        }
 
         public void Validate(TestSession testSession)
         {
@@ -146,7 +152,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             }
 
             // Payload mottat som forventet men feil filformat. Feil!
-            if (receivedPayloadFileName != null && !PayloadChecksHelper.HasValidFileFormat(receivedPayloadFileName))
+            if (receivedPayloadFileName != null && !_payloadValidator.HasValidFileFormat(receivedPayloadFileName))
             {
                 validationErrors.Add(string.Format(
                     ValidationErrorMessages.InvalidPayloadFileFormatMessage, receivedPayloadFileName.Split('.').Last()
@@ -159,7 +165,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             {
 
                 validationErrors.Add(string.Format(
-                    ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName, PayloadChecksHelper.GetExpectedFileName(messageType)
+                    ValidationErrorMessages.InvalidPayloadFilename, receivedPayloadFileName, PayloadValidator.GetExpectedFileName(messageType)
                 ));
                 return;
             }
@@ -169,14 +175,14 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             {
                 var xmlContent = Encoding.Default.GetString(fiksPayload.Payload);
 
-                PayloadChecksHelper.ValidateXmlWithSchema(xmlContent, validationErrors);
+                _payloadValidator.ValidateXmlWithSchema(xmlContent, validationErrors);
                 ValidateXmlPayloadContent(xmlContent, fiksRequest, validationErrors);
             }
             else
             {
                 if (receivedPayloadFileName != null && receivedPayloadFileName.EndsWith(".json"))
                 {
-                    PayloadChecksHelper.ValidateJsonWithSchema(Encoding.Default.GetString(fiksPayload.Payload), validationErrors, messageType);
+                    _payloadValidator.ValidateJsonWithSchema(Encoding.Default.GetString(fiksPayload.Payload), validationErrors, messageType);
                     ValidateJsonPayloadContent(Encoding.Default.GetString(fiksPayload.Payload), fiksRequest.TestCase.FiksResponseTests, validationErrors);
                 }
             }
@@ -189,13 +195,13 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 
         private static bool ShouldHavePayload(string responseMessageType)
         {
-            _messageTypesWithPayloads ??= PayloadChecksHelper.GetMessageTypesWithPayload();
+            _messageTypesWithPayloads ??= PayloadValidator.GetMessageTypesWithPayload();
             return _messageTypesWithPayloads.Contains(responseMessageType);
         }
 
         private static bool HasCorrectFilename(string messageType, string filename)
         {
-            return PayloadChecksHelper.GetExpectedFileName(messageType).Equals(filename);
+            return PayloadValidator.GetExpectedFileName(messageType).Equals(filename);
         }
 
        public static void ValidateXmlPayloadContent(string xmlPayloadContent, FiksRequest fiksRequest,

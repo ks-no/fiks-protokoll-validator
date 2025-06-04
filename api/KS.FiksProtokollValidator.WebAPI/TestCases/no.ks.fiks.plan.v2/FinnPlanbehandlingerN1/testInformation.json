@@ -6,7 +6,7 @@
     "operation": "FinnPlanbehandlinger",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og planbehandling(er)",
-    "samplePath": "Samples/FinnPlanbehandlinger",
+    "samplePath": "Samples/Fiks.Plan.V2/FinnPlanbehandlinger",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

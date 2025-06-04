@@ -1,0 +1,67 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "0821"
+        },
+        "planidentifikasjon": "01_27_1988"
+    },
+    "planbehandling": {
+        "dato": "2020-01-01",
+        "saksnummer": {
+            "saksaar": 2020,
+            "sakssekvensnummer": 12345
+        },
+        "planbehandlingtype": {
+            "kodeverdi": "11.1",
+            "kodebeskrivelse": "Kunngjøring av offentlig ettersyn"
+        },
+        "navn": "navn på registrering"
+    },
+    "plandokument": [
+        {
+            "tittel": "Vedtak",
+            "dokumenttype": {
+                "kodeverdi": "VEDTAK",
+                "kodebeskrivelse": "Vedtak"
+            },
+            "referanseDokumentfil": "reguleringsplan_brev_hoering_offentlig_ettersyn_bokm_mal.doc",
+            "arkivnavn": "vedtak reguleringsplan"
+        },
+        {
+            "tittel": "Kunngjøring",
+            "dokumenttype": {
+                "kodeverdi": "KUNNGJ",
+                "kodebeskrivelse": "Kunngjøring"
+            },
+            "referanseDokumentfil": "Kunngjøring.pdf",
+            "arkivnavn": "kunngjøring reguleringsplan"
+        },
+        {
+            "tittel": "Planbeskrivelse",
+            "dokumenttype": {
+                "kodeverdi": "PLANBESKR",
+                "kodebeskrivelse": "Planbeskrivelse"
+            },
+            "referanseDokumentfil": "Planbeskrivelse.pdf",
+            "arkivnavn": "Planbeskrivelse reguleringsplan"
+        },
+        {
+            "tittel": "PlanKart",
+            "dokumenttype": {
+                "kodeverdi": "PLANKART",
+                "kodebeskrivelse": "Arealplankart"
+            },
+            "referanseDokumentfil": "PlanKart.pdf",
+            "arkivnavn": "Plankart reguleringsplan"
+        },
+        {
+            "tittel": "Planbestemmelse",
+            "dokumenttype": {
+                "kodeverdi": "PLANBEST",
+                "kodebeskrivelse": "Bestemmelser"
+            },
+            "referanseDokumentfil": "Planbestemmelse.pdf",
+            "arkivnavn": "Planbestemmelse reguleringsplan"
+        }
+    ]
+}

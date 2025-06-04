@@ -6,7 +6,7 @@
     "operation": "TildelePlanident",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat Opprettelse av arealplan, retur ny planident",
-    "samplePath": "Samples/TildelePlanident",
+    "samplePath": "Samples/Fiks.Plan.V2/TildelePlanident",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

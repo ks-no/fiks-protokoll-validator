@@ -6,7 +6,7 @@
     "operation": "FinnPlaner",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering, og planer",
-    "samplePath": "Samples/FinnPlaner",
+    "samplePath": "Samples/Fiks.Plan.V2/FinnPlaner",
     "queriesWithExpectedValues": [
         {
             "payloadQuery": "$",

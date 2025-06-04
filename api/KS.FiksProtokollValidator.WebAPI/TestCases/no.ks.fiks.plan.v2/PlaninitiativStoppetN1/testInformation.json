@@ -6,7 +6,7 @@
     "operation": "PlaninitiativStoppet",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/PlaninitiativStoppet",
+    "samplePath": "Samples/Fiks.Plan.V2/PlaninitiativStoppet",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
-using KS.Fiks.IO.Politiskbehandling.Client.Models;
 using KS.Fiks.Plan.Models.V2.Meldingstyper;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
@@ -62,48 +61,6 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation.Resources
                         FiksArkivMeldingtype.SokResultatMinimum,
                         FiksArkivMeldingtype.SokResultatNoekler,
                         FiksArkivMeldingtype.SokResultatUtvidet
-                    }
-                },
-                {
-                    PolitiskBehandlingMeldingTypeV1.HentMoeteplan,
-                    new List<string>
-                    {
-                        PolitiskBehandlingMeldingTypeV1.ResultatMoeteplan
-                    }
-                },
-                {
-                    PolitiskBehandlingMeldingTypeV1.HentUtvalg,
-                    new List<string>
-                    {
-                        PolitiskBehandlingMeldingTypeV1.ResultatUtvalg
-                    }
-                },
-                {
-                    PolitiskBehandlingMeldingTypeV1.SendUtvalgssak,
-                    new List<string>
-                    {
-                        PolitiskBehandlingMeldingTypeV1.SendUtvalgssakKvittering
-                    }
-                },
-                {
-                    PolitiskBehandlingMeldingTypeV1.SendOrienteringssak,
-                    new List<string>
-                    {
-                        PolitiskBehandlingMeldingTypeV1.SendOrienteringssakKvittering
-                    }
-                },
-                {
-                    PolitiskBehandlingMeldingTypeV1.SendDelegertVedtak,
-                    new List<string>
-                    {
-                        PolitiskBehandlingMeldingTypeV1.SendDelegertVedtakKvittering
-                    }
-                },
-                {
-                    PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalg,
-                    new List<string>
-                    {
-                        PolitiskBehandlingMeldingTypeV1.SendVedtakFraUtvalgKvittering
                     }
                 },
                 {

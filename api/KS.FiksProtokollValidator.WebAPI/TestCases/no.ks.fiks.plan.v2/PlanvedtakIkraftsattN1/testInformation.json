@@ -6,7 +6,7 @@
     "operation": "PlanvedtakIkraftsatt",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat Planvedtak ikraftsatt",
-    "samplePath": "Samples/PlanvedtakIkraftsatt",
+    "samplePath": "Samples/Fiks.Plan.V2/PlanvedtakIkraftsatt",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

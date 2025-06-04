@@ -6,7 +6,7 @@
     "operation": "PlanforslagTattTilBehandling",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/PlanforslagTattTilBehandling",
+    "samplePath": "Samples/Fiks.Plan.V2/PlanforslagTattTilBehandling",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

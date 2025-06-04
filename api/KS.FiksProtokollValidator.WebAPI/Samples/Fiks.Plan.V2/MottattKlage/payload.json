@@ -1,0 +1,31 @@
+﻿{
+    "nasjonalArealplanId": {
+        "administrativEnhet": {
+            "kommunenummer": "0821"
+        },
+        "planidentifikasjon": "01_27_1988"
+    },
+    "planbehandling": {
+        "dato": "2020-01-01",
+        "saksnummer": {
+            "saksaar": 2020,
+            "sakssekvensnummer": 12345
+        },
+        "planbehandlingtype": {
+            "kodeverdi": "17",
+            "kodebeskrivelse": "Mottatt klage"
+        },
+        "navn": "navn på registrering"
+    },
+    "plandokument": [
+        {
+            "tittel": "Klage",
+            "dokumenttype": {
+                "kodeverdi": "KLAGE",
+                "kodebeskrivelse": "Klage"
+            },
+            "referanseDokumentfil": "Klage.pdf",
+            "arkivnavn": "Klage"
+        }
+    ]
+}

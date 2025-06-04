@@ -6,7 +6,7 @@
     "operation": "KunngjøringAvOffentligEttersyn",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/KunngjoeringAvOffentligEttersyn",
+    "samplePath": "Samples/Fiks.Plan.V2/KunngjoeringAvOffentligEttersyn",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

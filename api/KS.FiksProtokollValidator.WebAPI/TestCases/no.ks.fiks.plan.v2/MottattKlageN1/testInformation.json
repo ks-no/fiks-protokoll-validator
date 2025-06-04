@@ -6,7 +6,7 @@
     "operation": "MottattKlage",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/MottattKlage",
+    "samplePath": "Samples/Fiks.Plan.V2/MottattKlage",
     "queriesWithExpectedValues": [
     ],
     "supported": true,
