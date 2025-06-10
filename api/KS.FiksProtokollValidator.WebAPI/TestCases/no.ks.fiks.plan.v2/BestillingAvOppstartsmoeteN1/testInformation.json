@@ -3,10 +3,10 @@
     "description": "Bestilling av oppstartsmøte for plan",
     "testStep": "Normalsituasjon 1 Input BestillingAvOppstartsmøte, retur bekreftelse på mottak",
     "messageType": "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer",
-    "operation": "BestillingAvOppstartsmøte",
+    "operation": "BestillingAvOppstartsmoete",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
-    "samplePath": "Samples/Fiks.Plan.V2/BestillingAvOppstartsmøte",
+    "samplePath": "Samples/Fiks.Plan.V2/BestillingAvOppstartsmoete",
     "queriesWithExpectedValues": [
     ],
     "supported": true,

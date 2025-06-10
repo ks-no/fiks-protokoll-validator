@@ -386,6 +386,7 @@ MigrationBackup/
 fiks-io-config.json
 appsettings.development.json
 appsettings.Test.json
+appsettings.Local.json
 
 # App build folders
 published-app

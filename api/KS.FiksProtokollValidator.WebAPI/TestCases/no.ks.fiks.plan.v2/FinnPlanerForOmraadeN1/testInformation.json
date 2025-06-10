@@ -3,7 +3,7 @@
     "description": "Finn planer for område",
     "testStep": "Normalsituasjon 1 Input FinnPlanerForOmråde, retur plan(er)",
     "messageType": "no.ks.fiks.plan.v2.innsyn.planerforomraade.finn",
-    "operation": "FinnPlanerForOmråde",
+    "operation": "FinnPlanerForOmraade",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av plan(er)",
     "samplePath": "Samples/Fiks.Plan.V2/FinnPlanerForOmraade",

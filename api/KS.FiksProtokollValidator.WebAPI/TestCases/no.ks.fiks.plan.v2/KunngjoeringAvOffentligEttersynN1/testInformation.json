@@ -3,7 +3,7 @@
     "description": "Kunngjøring av offentlig ettersyn",
     "testStep": "Normalsituasjon 1 Input KunngjøringAvOffentligEttersyn, retur bekreftelse på mottak",
     "messageType": "no.ks.fiks.plan.v2.oppdatering.planbehandling.registrer",
-    "operation": "KunngjøringAvOffentligEttersyn",
+    "operation": "KunngjoeringAvOffentligEttersyn",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat planbehandlingsregistrering",
     "samplePath": "Samples/Fiks.Plan.V2/KunngjoeringAvOffentligEttersyn",
