@@ -19,7 +19,7 @@ services:
       ASPNETCORE_ENVIRONMENT: "DockerCompose"
       ENVIRONMENT: "DockerCompose"
       AMQP_IGNORE_SSL_ERROR: "true"
-      fiksProtokollValidator_ConnectionStrings__DefaultConnection: "Data Source=fiks-protokoll-validator-sqlexpress;Initial Catalog=fiks-protokoll-validator;database=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234"
+      fiksProtokollValidator_ConnectionStrings__DefaultConnection: "Data Source=fiks-protokoll-validator-sqlexpress;Initial Catalog=fiks-protokoll-validator;database=fiks-protokoll-validator;User Id=SA;Password=Dev#FiksProtokollValidator1234;TrustServerCertificate=True"
       fiksProtokollValidator_AppSettings__FiksIOConfig__MaskinPortenTokenUrl: "http://oidc-mock:8080/oidc-provider-mock/token"
     ports:
       - "127.0.0.1:64558:64558"
