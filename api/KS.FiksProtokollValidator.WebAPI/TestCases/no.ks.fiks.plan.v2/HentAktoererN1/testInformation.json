@@ -3,7 +3,7 @@
     "description": "Hent aktører",
     "testStep": "Normalsituasjon 1 Input HentAktører, retur aktører",
     "messageType": "no.ks.fiks.plan.v2.innsyn.aktoerer.hent",
-    "operation": "HentAktoerer",
+    "operation": "HentAktører",
     "situation": "N1",
     "expectedResult": "Retur av aktører",
     "samplePath": "Samples/Fiks.Plan.V2/HentAktoerer",

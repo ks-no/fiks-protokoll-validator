@@ -3,7 +3,7 @@
     "description": "Hent planområder",
     "testStep": "Normalsituasjon 1 Input HentPlanområder, retur planområde(r)",
     "messageType": "no.ks.fiks.plan.v2.innsyn.planomraader.hent",
-    "operation": "HentPlanomraader",
+    "operation": "HentPlanområder",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat søk, og retur av planområde(r)",
     "samplePath": "Samples/Fiks.Plan.V2/HentPlanomraader",
