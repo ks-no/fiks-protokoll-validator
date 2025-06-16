@@ -275,7 +275,7 @@ def buildAndPushDockerImageWeb(String imageName, List tags = [], List dockerArgs
       }
       println("WEB: npm install")
 
-      docker.image('node:16').inside() {
+      docker.image('node:18').inside() {
         sh '''
           npm install
         '''
