@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "4203"
+            "type": "kommunenummer",
+            "nummer": "4203"
         },
         "planidentifikasjon": "09062018-2"
     },

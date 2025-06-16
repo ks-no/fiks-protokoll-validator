@@ -1,6 +1,6 @@
 ﻿{
     "testName": "Oppdater dispensasjon",
-    "description": "Oppdater dispensasjon",
+    "description": "Oppdater dispensasjon - TODO 16.06.2025. Sample var så langt unna skjemadefinisjon. La ligge til dispensasjon er spikret.",
     "testStep": "Normalsituasjon 1 Input OppdaterDispensasjon, retur bekreftelse på mottak",
     "messageType": "no.ks.fiks.plan.v2.oppdatering.dispensasjon.oppdater",
     "operation": "OppdaterDispensasjon",
@@ -9,6 +9,6 @@
     "samplePath": "Samples/Fiks.Plan.V2/OppdaterDispensasjon",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.plan.v2"
 }

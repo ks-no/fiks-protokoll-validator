@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821"
+            "type": "kommunenummer",
+            "nummer": "0821"
         },
         "planidentifikasjon": "01_27_1988"
     },
@@ -15,17 +16,17 @@
             "kodeverdi": "16",
             "kodebeskrivelse": "Kunngjøring endelig vedtatt plan"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "Kunngjøring",
-            "dokumenttype": {
-                "kodeverdi": "KUNNGJ",
-                "kodebeskrivelse": "Kunnkjøring"
-            },
-            "referanseDokumentfil": "reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc",
-            "arkivnavn": "kunngjøring av reguleringsplan"
-        }
-    ]
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "Kunngjøring",
+                "dokumenttype": {
+                    "kodeverdi": "KUNNGJ",
+                    "kodebeskrivelse": "Kunnkjøring"
+                },
+                "referanseDokumentfil": "reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc",
+                "arkivnavn": "kunngjøring av reguleringsplan"
+            }
+        ]
+    }
 }

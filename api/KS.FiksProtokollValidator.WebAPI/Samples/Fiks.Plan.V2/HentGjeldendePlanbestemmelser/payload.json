@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821"
+            "type": "kommunenummer",
+            "nummer": "0821"
         },
         "planidentifikasjon": "01_27_1988"
     }

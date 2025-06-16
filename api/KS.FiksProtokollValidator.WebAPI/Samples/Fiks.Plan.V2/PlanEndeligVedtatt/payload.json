@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "4203"
+            "type": "kommunenummer",
+            "nummer": "4203"
         },
         "planidentifikasjon": "09062018-2"
     },
@@ -19,17 +20,17 @@
             "kodeverdi": "14",
             "kodebeskrivelse": "Plan endelig vedtatt"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "planbestemmelser",
-            "dokumenttype": {
-                "kodeverdi": "PLANBEST",
-                "kodebeskrivelse": "Bestemmelser"
-            }, 
-            "referanseDokumentfil": "nasjonal_mal_reguleringsplanbestemmelserbokmaal.docx",
-            "arkivnavn": "navn"
-        }
-    ]
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "planbestemmelser",
+                "dokumenttype": {
+                    "kodeverdi": "PLANBEST",
+                    "kodebeskrivelse": "Bestemmelser"
+                },
+                "referanseDokumentfil": "nasjonal_mal_reguleringsplanbestemmelserbokmaal.docx",
+                "arkivnavn": "navn"
+            }
+        ]
+    }
 }

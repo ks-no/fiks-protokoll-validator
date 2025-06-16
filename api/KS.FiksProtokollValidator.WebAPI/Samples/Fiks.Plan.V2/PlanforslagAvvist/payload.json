@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "4203"
+            "type": "kommunenummer",
+            "nummer": "4203"
         },
         "planidentifikasjon": "09062018-2"
     },
@@ -19,17 +20,17 @@
             "kodeverdi": "22",
             "kodebeskrivelse": "Ikke fremmet"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "Vedtak",
-            "dokumenttype": {
-                "kodeverdi": "VEDTAK",
-                "kodebeskrivelse": "Vedtak"
-            },
-            "referanseDokumentfil": "Vedtak.pdf",
-            "arkivnavn": "Vedtak"
-        }
-    ]
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "Vedtak",
+                "dokumenttype": {
+                    "kodeverdi": "VEDTAK",
+                    "kodebeskrivelse": "Vedtak"
+                },
+                "referanseDokumentfil": "Vedtak.pdf",
+                "arkivnavn": "Vedtak"
+            }
+        ]
+    }
 }
