@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821"
+            "type": "kommunenummer",
+            "nummer": "0821"
         },
         "planidentifikasjon": "01_27_1988"
     },
@@ -15,26 +16,26 @@
             "kodeverdi": "9",
             "kodebeskrivelse": "Kunngjøring og varsling av planoppstart"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "Kunngjøring om oppstart av planarbeid for ...",
-            "dokumenttype": {
-                "kodeverdi": "KORR",
-                "kodebeskrivelse": "Korrespondanse"
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "Kunngjøring om oppstart av planarbeid for ...",
+                "dokumenttype": {
+                    "kodeverdi": "KORR",
+                    "kodebeskrivelse": "Korrespondanse"
+                },
+                "referanseDokumentfil": "reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc",
+                "arkivnavn": "kunngjøring av reguleringsplan"
             },
-            "referanseDokumentfil": "reguleringsplan_brev_melding_endelig_vedtak_med_informasjon_klagerett_bokm_mal.doc",
-            "arkivnavn": "kunngjøring av reguleringsplan"
-        },
-        {
-            "tittel": "Varsel om oppstart av reguleringsplanarbeid",
-            "dokumenttype": {
-                "kodeverdi": "KORR",
-                "kodebeskrivelse": "Korrespondanse"
-            },
-            "referanseDokumentfil": "Varsel.pdf",
-            "arkivnavn": "Varsel om oppstart av reguleringsplan"
-        }
-    ]
+            {
+                "tittel": "Varsel om oppstart av reguleringsplanarbeid",
+                "dokumenttype": {
+                    "kodeverdi": "KORR",
+                    "kodebeskrivelse": "Korrespondanse"
+                },
+                "referanseDokumentfil": "Varsel.pdf",
+                "arkivnavn": "Varsel om oppstart av reguleringsplan"
+            }
+        ]
+    }
 }

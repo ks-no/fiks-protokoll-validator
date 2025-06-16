@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "4203"
+            "type": "kommunenummer",
+            "nummer": "4203"
         },
         "planidentifikasjon": "09062018-2"
     },
@@ -19,26 +20,26 @@
             "kodeverdi": "8",
             "kodebeskrivelse": "Planlegging igangsatt/Oppstartsmøte avholdt"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "Planinitiativ",
-            "dokumenttype": {
-                "kodeverdi": "KORR",
-                "kodebeskrivelse": "Korrespondanse"
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "Planinitiativ",
+                "dokumenttype": {
+                    "kodeverdi": "KORR",
+                    "kodebeskrivelse": "Korrespondanse"
+                },
+                "referanseDokumentfil": "Planinitiativ.pdf",
+                "arkivnavn": "Planinitiativ"
             },
-            "referanseDokumentfil": "Planinitiativ.pdf",
-            "arkivnavn": "Planinitiativ"
-        },
-        {
-            "tittel": "Planprogram",
-            "dokumenttype": {
-                "kodeverdi": "PLANPROG",
-                "kodebeskrivelse": "Planprogram"
-            },
-            "referanseDokumentfil": "Planprogram.pdf",
-            "arkivnavn": "Planprogram"
-        }
-    ]
+            {
+                "tittel": "Planprogram",
+                "dokumenttype": {
+                    "kodeverdi": "PLANPROG",
+                    "kodebeskrivelse": "Planprogram"
+                },
+                "referanseDokumentfil": "Planprogram.pdf",
+                "arkivnavn": "Planprogram"
+            }
+        ]
+    }
 }

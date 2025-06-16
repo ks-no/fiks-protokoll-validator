@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "4203"
+            "type": "kommunenummer",
+            "nummer": "4203"
         },
         "planidentifikasjon": "09062018-2"
     },
@@ -19,35 +20,35 @@
             "kodeverdi": "10",
             "kodebeskrivelse": "Planforslag tatt til behandling"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "Planbeskrivelse",
-            "dokumenttype": {
-                "kodeverdi": "PLANBESKR",
-                "kodebeskrivelse": "Planbeskrivelse"
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "Planbeskrivelse",
+                "dokumenttype": {
+                    "kodeverdi": "PLANBESKR",
+                    "kodebeskrivelse": "Planbeskrivelse"
+                },
+                "referanseDokumentfil": "Planbeskrivelse.pdf",
+                "arkivnavn": "Planbeskrivelse"
             },
-            "referanseDokumentfil": "Planbeskrivelse.pdf",
-            "arkivnavn": "Planbeskrivelse"
-        },
-        {
-            "tittel": "PlanKart",
-            "dokumenttype": {
-                "kodeverdi": "PLANKART",
-                "kodebeskrivelse": "Arealplankart"
+            {
+                "tittel": "PlanKart",
+                "dokumenttype": {
+                    "kodeverdi": "PLANKART",
+                    "kodebeskrivelse": "Arealplankart"
+                },
+                "referanseDokumentfil": "PlanKart.pdf",
+                "arkivnavn": "PlanKart"
             },
-            "referanseDokumentfil": "PlanKart.pdf",
-            "arkivnavn": "PlanKart"
-        },
-        {
-            "tittel": "Planbestemmelse",
-            "dokumenttype": {
-                "kodeverdi": "PLANBEST",
-                "kodebeskrivelse": "Bestemmelser"
-            },
-            "referanseDokumentfil": "Planbestemmelse.pdf",
-            "arkivnavn": "Planbestemmelse"
-        }
-    ]
+            {
+                "tittel": "Planbestemmelse",
+                "dokumenttype": {
+                    "kodeverdi": "PLANBEST",
+                    "kodebeskrivelse": "Bestemmelser"
+                },
+                "referanseDokumentfil": "Planbestemmelse.pdf",
+                "arkivnavn": "Planbestemmelse"
+            }
+        ]
+    }
 }

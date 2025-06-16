@@ -1,5 +1,5 @@
 ﻿{
-    "soekskriterie": [
+    "soekekriterier": [
         {
             "felt": "nasjonalArealplanId.planidentifikasjon",
             "operator": "equal",

@@ -1,9 +1,10 @@
 ﻿{
-    "soekskriterie": [
+    "soekekriterier": [
         {
             "felt": "nasjonalArealplanId.planidentifikasjon",
             "operator": "equal",
             "parameterverdier": "09062018-2"
         }
-    ]
+    ],
+    "inkluderPlandokumenter": false
 }

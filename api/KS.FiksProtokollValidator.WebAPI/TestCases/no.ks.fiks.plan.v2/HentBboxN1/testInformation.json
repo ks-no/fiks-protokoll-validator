@@ -9,6 +9,6 @@
     "samplePath": "Samples/Fiks.Plan.V2/HentBbox",
     "queriesWithExpectedValues": [
     ],
-    "supported": true,
+    "supported": false,
     "protocol": "no.ks.fiks.plan.v2"
 }
