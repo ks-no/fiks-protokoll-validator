@@ -22,7 +22,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
         {
             try
             {
-                Directory.CreateDirectory("./../../../Schemas/");
+                Directory.CreateDirectory("Schemas");
             }
             catch(Exception e)
             {
@@ -75,7 +75,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
         private void writeSchemaToDisk(string messageType)
         {
             var content = GetSchemaFromAssembly(messageType);
-            File.WriteAllText($"./../../../Schemas/{messageType}.schema.json", content);
+            File.WriteAllText($"./Schemas/{messageType}.schema.json", content);
         }
 
         private string GetSchemaFromAssembly(string messagename)
@@ -118,7 +118,8 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 
             using var reader = new JsonTextReader(schemaStreamReader);
             var resolver = new JSchemaUrlResolver();
-            var baseUri = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            //var baseUri = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+            var baseUri = Directory.GetCurrentDirectory();
 
             var schema = JSchema.Load(reader, new JSchemaReaderSettings()
                 {
@@ -153,7 +154,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
         {
             try
             {
-                Directory.Delete("./../../../Schemas/", true);
+                //Directory.Delete("Schemas/", true);
             }
             catch (Exception e)
             {

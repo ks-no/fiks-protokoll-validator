@@ -59,6 +59,9 @@
     <Content Include="TestData\Saksfaser\no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat-not-valid.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Update="Schemas\README.md">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
