@@ -20,7 +20,15 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 
         public static JsonValidator Init()
         {
-            Directory.CreateDirectory("./../../../Schemas/");
+            try
+            {
+                Directory.CreateDirectory("./../../../Schemas/");
+            }
+            catch(Exception e)
+            {
+                // do nothing
+            }
+
             return new JsonValidator();
         }
         
@@ -143,7 +151,14 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 
         public void Dispose()
         {
-            Directory.Delete("./../../../Schemas/", true);
+            try
+            {
+                Directory.Delete("./../../../Schemas/", true);
+            }
+            catch (Exception e)
+            {
+                // Do nothing
+            }
         }
     }
 }
