@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821"
+            "type": "kommunenummer",
+            "nummer": "0821"
         },
         "planidentifikasjon": "01_27_1988"
     },
@@ -15,17 +16,17 @@
             "kodeverdi": "12",
             "kodebeskrivelse": "Mottatt innsigelse"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "Innsigelse",
-            "dokumenttype": {
-                "kodeverdi": "INNSIGELSE",
-                "kodebeskrivelse": "Innsigelse"
-            },
-            "referanseDokumentfil": "Innsigelse.pdf",
-            "arkivnavn": "Innsigelse"
-        }
-    ]
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "Innsigelse",
+                "dokumenttype": {
+                    "kodeverdi": "INNSIGELSE",
+                    "kodebeskrivelse": "Innsigelse"
+                },
+                "referanseDokumentfil": "Innsigelse.pdf",
+                "arkivnavn": "Innsigelse"
+            }
+        ]
+    }
 }

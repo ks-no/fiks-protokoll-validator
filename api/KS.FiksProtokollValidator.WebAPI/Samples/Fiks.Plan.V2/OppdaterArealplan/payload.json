@@ -1,9 +1,8 @@
 ﻿{
-    "arealplanId": {
+    "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "4203",
-            "fylkesnummer": "38",
-            "landskode": "NO"
+            "type": "kommunenummer",
+            "nummer": "4203"
         },
         "planidentifikasjon": "09062018-2"
     },

@@ -1,8 +1,8 @@
 ﻿{
     "testName": "Hent gjeldende planbestemmelser",
-    "description": "HentGjeldendePlanbestemmelser",
+    "description": "HentGjeldendePlanbestemmelser (hent gjeldende plandokumenter",
     "testStep": "Normalsituasjon 1 Input HentGjeldendePlanbestemmelser, retur gjeldende planbestemmelser",
-    "messageType": "no.ks.fiks.plan.v2.innsyn.gjeldendeplanbestemmelser.hent",
+    "messageType": "no.ks.fiks.plan.v2.innsyn.gjeldendeplandokumenter.hent",
     "operation": "HentGjeldendePlanbestemmelser",
     "situation": "N1",
     "expectedResult": "Retur av planbestemmelser",

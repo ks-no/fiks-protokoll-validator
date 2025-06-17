@@ -1,7 +1,8 @@
 ﻿{
     "nasjonalArealplanId": {
         "administrativEnhet": {
-            "kommunenummer": "0821"
+            "type": "kommunenummer",
+            "nummer": "0821"
         },
         "planidentifikasjon": "01_27_1988"
     },
@@ -15,17 +16,17 @@
             "kodeverdi": "17",
             "kodebeskrivelse": "Mottatt klage"
         },
-        "navn": "navn på registrering"
-    },
-    "plandokument": [
-        {
-            "tittel": "Klage",
-            "dokumenttype": {
-                "kodeverdi": "KLAGE",
-                "kodebeskrivelse": "Klage"
-            },
-            "referanseDokumentfil": "Klage.pdf",
-            "arkivnavn": "Klage"
-        }
-    ]
+        "navn": "navn på registrering",
+        "plandokumenter": [
+            {
+                "tittel": "Klage",
+                "dokumenttype": {
+                    "kodeverdi": "KLAGE",
+                    "kodebeskrivelse": "Klage"
+                },
+                "referanseDokumentfil": "Klage.pdf",
+                "arkivnavn": "Klage"
+            }
+        ]
+    }
 }

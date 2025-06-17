@@ -2,7 +2,7 @@
     "testName": "Finn planer for matrikkelenhet",
     "description": "Send finn plan for matrikkelenhet, motta plan for matrikkelenhet",
     "testStep": "Normalsituasjon 1 Input Finn plan for matrikkelenhet, retur plan for matrikkelenhet",
-    "messageType": "no.ks.fiks.plan.v2.innsyn.planerformatrikkelenhet.finn",
+    "messageType": "no.ks.fiks.plan.v2.innsyn.arealplaner.finn.for.matrikkelenhet",
     "operation": "FinnPlanerForMatrikkelenhet",
     "situation": "N1",
     "expectedResult": "Planer for matrikkelenhet",

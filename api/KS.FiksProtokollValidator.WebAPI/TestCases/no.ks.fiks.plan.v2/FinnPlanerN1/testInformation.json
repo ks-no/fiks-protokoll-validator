@@ -2,7 +2,7 @@
     "testName": "Finn planer",
     "description": "Finn planer",
     "testStep": "Normalsituasjon 1 Input FinnPlan, retur plan",
-    "messageType": "no.ks.fiks.plan.v2.innsyn.planer.finn",
+    "messageType": "no.ks.fiks.plan.v2.innsyn.arealplaner.finn",
     "operation": "FinnPlaner",
     "situation": "N1",
     "expectedResult": "Bekreftelse på mottat registrering, og planer",

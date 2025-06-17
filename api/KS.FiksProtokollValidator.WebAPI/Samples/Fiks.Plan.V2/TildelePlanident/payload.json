@@ -16,5 +16,8 @@
         "saksaar": 2019,
         "sakssekvensnummer": 1
     },
-    "forslagsstillerType": "offentlig"
+    "forslagsstillerType": {
+        "kodeverdi": "offentlig",
+        "kodebeskrivelse": ""
+    }
 }
