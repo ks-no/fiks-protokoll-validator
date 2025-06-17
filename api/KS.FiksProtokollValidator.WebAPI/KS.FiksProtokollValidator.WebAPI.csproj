@@ -28,6 +28,10 @@
 		<Content Update="appsettings.Local.json">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<None Remove="Schemas\README.md" />
+		<Content Include="Schemas\README.md">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
