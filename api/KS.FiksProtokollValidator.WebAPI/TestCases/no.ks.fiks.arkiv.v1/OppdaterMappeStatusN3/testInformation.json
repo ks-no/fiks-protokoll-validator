@@ -1,12 +1,13 @@
 {
-    "testName":
-        "Send OppdaterMappeStatus - Normalsituasjon 3", //Forutsetter at det er registrert en status B. Store bokstaver forutsettes.
-    "description": "sakstatus.kodeverdi(B) og saksnoekkel.saksaar(2011).sakssekvensnummer(1)",
+    "testName": "Oppdater Saksmappe Status - sett status til avsluttet og sett ny saksbehandler - Normalsituasjon 3",
+    "description": "Oppdaterer saksmappe til avsluttet ved å sette status = A og sett ny saksbehandler. Eksempel fra motorferdsel.no",
     "testStep": "Normalsituasjon 3 Input Saksstatus med retur av Saksmappe",
-    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater",
     "operation": "OppdaterMappeStatus",
     "situation": "N3",
     "expectedResult": "Saksmappe med oppdatert status",
     "queriesWithExpectedValues": [],
-    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+    "supported": true,
+    "protocol": "no.ks.fiks.arkiv.v1",
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.kvittering" ]
 }

@@ -1,6 +1,6 @@
 {
-    "testName": "Oppdater Saksmappe Status - sett status til avsluttet - Normalsituasjon 1",
-    "description": "Oppdaterer saksmappe status og setter mappen til avsluttet = A. Eksempel fra motorferdsel.no",
+    "testName": "Oppdater Saksmappe Status - sett til avsluttet - Normalsituasjon 1",
+    "description": "Oppdaterer saksmappe til avsluttet ved å sette status = A. Eksempel fra motorferdsel.no",
     "testStep": "Normalsituasjon 1 Input Saksstatus med retur av Saksmappe",
     "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater",
     "operation": "OppdaterMappeStatus",
