@@ -1,0 +1,12 @@
+{
+    "testName":
+        "Send OppdaterMappeStatus - Normalsituasjon 4", //Forutsetter at det er registrert en status F. Store bokstaver forutsettes.
+    "description": "sakstatus.kodeverdi(F) og saksnoekkel.saksaar(2011).sakssekvensnummer(1)",
+    "testStep": "Normalsituasjon 2 Input Saksstatus med retur av Saksmappe",
+    "messageType": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1",
+    "operation": "OppdaterMappeStatus",
+    "situation": "N4",
+    "expectedResult": "Saksmappe med oppdatert status",
+    "queriesWithExpectedValues": [],
+    "supported": false, "protocol": "no.ks.fiks.gi.arkivintegrasjon.oppdatering.basis.arkivmelding.v1"
+}
