@@ -1,17 +1,19 @@
 #nullable enable
+using System.Text.Json;
 using KS.Fiks.Plan.Models.V2.felles.NasjonalarealplanidTyper;
 using KS.Fiks.Plan.Models.V2.oppdatering.ArealplanOpprettKvitteringTyper;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+using KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum.TestObjects;
+// using Newtonsoft.Json;
 using Xunit;
 using Xunit.Abstractions;
 
+
 namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum
 {
-    public class EnumTests
+    public class EnumSerializationWithJsonSerializer
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        public EnumTests(ITestOutputHelper testOutputHelper)
+        public EnumSerializationWithJsonSerializer(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
 
@@ -31,13 +33,17 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum
                     Planidentifikasjon = "id"
                 }
             };
-            var jsonString1 = JsonConvert.SerializeObject(kvittering);
-            _testOutputHelper.WriteLine($"JSON1: {jsonString1}");
+            
+            var jsonString1 = JsonSerializer.Serialize(kvittering);
+            _testOutputHelper.WriteLine($"JSON from Fiks Plan kvittering: {jsonString1}");
 
-            var jsonString2 =
-                JsonConvert.SerializeObject(kvittering, new StringEnumConverter());
-            _testOutputHelper.WriteLine($"JSON2: {jsonString2}");
+            var testObjekt = new TestObjekt()
+            {
+                testEnum = TestEnum.KNR
+            };
 
+            var jsonString2 = JsonSerializer.Serialize(testObjekt);
+            _testOutputHelper.WriteLine($"JSON from testobjekt: {jsonString2}");
         }
     }
 }
