@@ -1,0 +1,13 @@
+{
+    "testName": "Oppdater Saksmappe med sletting av Skjerming - Normalsituasjon 2",
+    "description": "Oppdaterer en eksisterende saksmappe ved å slette skjerming. Eksempel fra motorferdsel.no",
+    "testStep": "Normalsituasjon 2 Input Oppdater Skjerming",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater",
+    "operation": "OppdaterMappeSkjerming",
+    "situation": "N2",
+    "expectedResult": "Saksmappe med slettet skjerming",
+    "queriesWithExpectedValues": [],
+    "supported": true, 
+    "protocol": "no.ks.fiks.arkiv.v1",
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.kvittering" ]
+}

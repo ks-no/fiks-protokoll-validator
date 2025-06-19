@@ -1,0 +1,13 @@
+{
+    "testName": "Oppdater Saksmappe Klassifikasjon - sletter og lager ny Klassifikasjon - Normalsituasjon 1",
+    "description": "Oppdaterer saksmappe med ny klassifikasjon. Sletter først eksisterende og legger så til nye. Eksempel fra motorferdsel.no",
+    "testStep": "Normalsituasjon 1 Input Klassifikasjon med retur av Saksmappe",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater",
+    "operation": "OppdaterMappeKlassifikasjon",
+    "situation": "N1",
+    "expectedResult": "Saksmappe med oppdatert klassifikasjon",
+    "queriesWithExpectedValues": [],
+    "supported": true,
+    "protocol": "no.ks.fiks.arkiv.v1",
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.kvittering" ]
+}

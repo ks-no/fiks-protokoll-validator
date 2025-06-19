@@ -1,0 +1,13 @@
+{
+    "testName": "Oppdater Saksmappe med Skjerming - Normalsituasjon 1",
+    "description": "Oppdaterer en eksisterende saksmappe med skjerming. Eksempel fra motorferdsel.no",
+    "testStep": "Normalsituasjon 1 Input Oppdater Skjerming",
+    "messageType": "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater",
+    "operation": "OppdaterMappeSkjerming",
+    "situation": "N1",
+    "expectedResult": "Saksmappe med oppdatert skjerming",
+    "queriesWithExpectedValues": [],
+    "supported": true, 
+    "protocol": "no.ks.fiks.arkiv.v1",
+    "expectedResponseMessageTypes": [ "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.mottatt", "no.ks.fiks.arkiv.v1.arkivering.arkivmelding.oppdater.kvittering" ]
+}
