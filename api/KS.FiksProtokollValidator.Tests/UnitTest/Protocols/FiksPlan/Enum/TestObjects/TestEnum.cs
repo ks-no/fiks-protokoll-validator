@@ -2,7 +2,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum.TestO
 
 public enum TestEnum
 {
-        KNR,
-        FYNR,
-        LNKD,
+        KOMMUNENUMMER,
+        FYLKESNUMMER,
+        LANDKODE
 }

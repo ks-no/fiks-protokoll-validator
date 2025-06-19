@@ -4,7 +4,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum.TestO
 
 public enum TestEnumMedEnumMember
 {
-        [EnumMember(Value = "tjohei")]KNR,
-        [EnumMember(Value = "tjobing")]FYNR,
-        [EnumMember(Value = "blabla")]LNKD,
+        [EnumMember(Value = "kommunenummer")]KOMMUNENUMMER,
+        [EnumMember(Value = "fylkesnummer")]FYLKESNUMMER,
+        [EnumMember(Value = "landkode")]LANDKODE,
 }

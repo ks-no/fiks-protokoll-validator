@@ -39,7 +39,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum
 
             var testObjekt = new TestObjekt()
             {
-                testEnum = TestEnum.KNR
+                testEnum = TestEnum.KOMMUNENUMMER
             };
 
             var jsonString2 = JsonSerializer.Serialize(testObjekt);

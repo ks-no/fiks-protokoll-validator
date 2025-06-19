@@ -1,6 +1,6 @@
 namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum.TestObjects;
 
-public class TestObjekt2
+public class TestObjektMedEnumMember
 {
     public TestEnumMedEnumMember testEnum { get; set; }
 }

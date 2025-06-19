@@ -42,7 +42,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum
             
             var testObjekt = new TestObjekt()
             {
-                testEnum = TestEnum.KNR
+                testEnum = TestEnum.KOMMUNENUMMER
             };
 
             var jsonString3 = JsonConvert.SerializeObject(testObjekt);
@@ -51,9 +51,9 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.Protocols.FiksPlan.Enum
             var jsonString4 = JsonConvert.SerializeObject(testObjekt, new StringEnumConverter());
             _testOutputHelper.WriteLine($"JSON fra testobjekt, med Enum som ikke har annotations, MED StringEnumConverter: {jsonString4}");
             
-            var testObjekt2 = new TestObjekt2()
+            var testObjekt2 = new TestObjektMedEnumMember()
             {
-                testEnum = TestEnumMedEnumMember.KNR
+                testEnum = TestEnumMedEnumMember.KOMMUNENUMMER
             };
             
             var jsonString5 = JsonConvert.SerializeObject(testObjekt2);
