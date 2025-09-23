@@ -39,7 +39,7 @@
     "dotenv": "^17.2.2",
     "eslint": "^9.35.0",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-vue": "^10.4.0",
+    "eslint-plugin-vue": "^10.5.0",
     "prettier": "^3.6.2"
   }
 }
