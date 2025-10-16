@@ -159,7 +159,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                         }
                     }
 
-                    Log.Information("Mottatt vedlegg: {Filename}", asiceReadEntry.FileName);
+                    Log.Information("Mottatt fil {Filename} for melding med meldingid {MeldingID} og meldingstype {MeldingType}", asiceReadEntry.FileName, mottatt.Melding.MeldingId, mottatt.Melding.MeldingType);
                 }
 
                 if (!xmlFound)
@@ -168,7 +168,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                     [
                         new List<string>
                         {
-                            $"Missing xml file {FiksArkivPayloadHelper.GetPayloadFilnavn(mottatt.Melding.MeldingType)}"
+                            $"Missing xml file {FiksArkivPayloadHelper.GetPayloadFilnavn(mottatt.Melding.MeldingType)} for messagetype {mottatt.Melding.MeldingType}"
                         }
                     ];
                     xmlReaderResult.XmlValidationErrorOccured = true;
