@@ -10,13 +10,13 @@
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^7.0.1",
     "@fortawesome/free-regular-svg-icons": "^7.0.1",
-    "@fortawesome/free-solid-svg-icons": "^7.0.1",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/vue-fontawesome": "^3.1.2",
     "@vue/compat": "^3.5.22",
     "axios": "^1.12.2",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
-    "core-js": "^3.45.1",
+    "core-js": "^3.46.0",
     "mime-types": "^3.0.1",
     "nginx": "^1.1.0",
     "nginx-conf": "^2.1.0",
@@ -25,7 +25,7 @@
     "vue": "^3.5.17",
     "vue-axios": "^3.5.2",
     "vue-moment": "^4.1.0",
-    "vue-router": "^4.5.1",
+    "vue-router": "^4.6.2",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
@@ -36,8 +36,8 @@
     "@vue/compiler-sfc": "^3.5.21",
     "@vue/eslint-config-prettier": "^10.2.0",
     "babel-eslint": "^10.1.0",
-    "dotenv": "^17.2.2",
-    "eslint": "^9.36.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.37.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-vue": "^10.5.0",
     "prettier": "^3.6.2"

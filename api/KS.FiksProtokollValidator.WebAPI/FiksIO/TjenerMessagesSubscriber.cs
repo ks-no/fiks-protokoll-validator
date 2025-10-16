@@ -58,7 +58,7 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
 
         private async Task OnMottattMelding(MottattMeldingArgs mottattMeldingArgs)
         {
-            Logger.Information("Mottatt melding med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingId);
+            Logger.Information("Mottatt melding med MeldingType: {MeldingType} og med MeldingId: {MeldingId}", mottattMeldingArgs.Melding.MeldingType, mottattMeldingArgs.Melding.MeldingId );
             var payloads = new List<FiksPayload>();
 
             var isAsiceVerified = false;

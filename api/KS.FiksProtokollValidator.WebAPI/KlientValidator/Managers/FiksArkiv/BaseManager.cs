@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Xml;
 using System.Xml.Schema;
+using KS.Fiks.Arkiv.Models.V1.Meldingstyper;
 using KS.Fiks.ASiC_E;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Models;
@@ -129,6 +131,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
         protected XmlReaderResult ValidateAndGetPayloadAsString(MottattMeldingArgs mottatt, XmlSchemaSet xmlSchemaSet)
         {
             var xmlReaderResult = new XmlReaderResult();
+            var xmlFound = false;
             
             IAsicReader reader = new AsiceReader();
             using (var inputStream = mottatt.Melding.DecryptedStream.Result)
@@ -138,8 +141,9 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                 {
                     using (var entryStream = asiceReadEntry.OpenStream())
                     {
-                        if (asiceReadEntry.FileName.Contains(".xml"))
+                        if (asiceReadEntry.FileName.Equals(FiksArkivPayloadHelper.GetPayloadFilnavn(mottatt.Melding.MeldingType)))
                         {
+                            xmlFound = true;
                             xmlReaderResult.validationMessages = new XmlValidator().ValidateXml(
                                 entryStream,
                                 xmlSchemaSet
@@ -155,7 +159,31 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                         }
                     }
 
-                    Log.Information("Mottatt vedlegg: {Filename}", asiceReadEntry.FileName);
+                    Log.Information("Mottatt fil {Filename} for melding med meldingid {MeldingID} og meldingstype {MeldingType}", asiceReadEntry.FileName, mottatt.Melding.MeldingId, mottatt.Melding.MeldingType);
+                }
+
+                if (!xmlFound)
+                {
+                    xmlReaderResult.validationMessages =
+                    [
+                        new List<string>
+                        {
+                            $"Missing xml file {FiksArkivPayloadHelper.GetPayloadFilnavn(mottatt.Melding.MeldingType)} for messagetype {mottatt.Melding.MeldingType}"
+                        }
+                    ];
+                    xmlReaderResult.XmlValidationErrorOccured = true;
+                }
+
+                if (!xmlFound)
+                {
+                    xmlReaderResult.validationMessages =
+                    [
+                        new List<string>
+                        {
+                            $"Missing xml file {FiksArkivPayloadHelper.GetPayloadFilnavn(mottatt.Melding.MeldingType)}"
+                        }
+                    ];
+                    xmlReaderResult.XmlValidationErrorOccured = true;
                 }
             }
 
