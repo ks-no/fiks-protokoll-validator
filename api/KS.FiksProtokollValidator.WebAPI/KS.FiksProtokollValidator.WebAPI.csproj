@@ -10,6 +10,7 @@
 	<ItemGroup>
 		<Content Remove="FiksIO\fiks-io-config.json" />
 		<Content Remove="FiksIO\fiks-io-config.template.json" />
+		<Content Include="Schemas\README.md" />
 	    <Content Include="TestCases\**\*.docx">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
@@ -29,9 +30,6 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<None Remove="Schemas\README.md" />
-		<Content Include="Schemas\README.md">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
