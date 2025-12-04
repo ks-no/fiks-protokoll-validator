@@ -17,7 +17,7 @@
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
     "core-js": "^3.46.0",
-    "mime-types": "^3.0.1",
+    "mime-types": "^3.0.2",
     "nginx": "^1.1.0",
     "nginx-conf": "^2.1.0",
     "path-browserify": "^1.0.1",
