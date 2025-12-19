@@ -12,7 +12,7 @@
     "@fortawesome/free-regular-svg-icons": "^7.1.0",
     "@fortawesome/free-solid-svg-icons": "^7.1.0",
     "@fortawesome/vue-fontawesome": "^3.1.2",
-    "@vue/compat": "^3.5.25",
+    "@vue/compat": "^3.5.26",
     "axios": "^1.13.2",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
