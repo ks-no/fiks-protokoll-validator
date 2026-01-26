@@ -392,3 +392,7 @@ appsettings.Local.json
 published-app
 api/published-api
 web-ui/dist
+
+# Development logs
+backend.log
+frontend.log
