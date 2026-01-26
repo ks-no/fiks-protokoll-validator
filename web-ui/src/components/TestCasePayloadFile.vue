@@ -23,7 +23,7 @@
 <script>
 import PayloadFile from "./PayloadFile.vue";
 import axios from "axios";
-import PayloadFileUpload from "@/components/PayloadFileUpload";
+import PayloadFileUpload from "@/components/PayloadFileUpload.vue";
 
 export default {
   name: "testCasePayloadFile",

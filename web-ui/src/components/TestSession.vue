@@ -83,7 +83,7 @@
 
 <script>
 import axios from "axios";
-import Request from "./Request";
+import Request from "./Request.vue";
 
 export default {
   name: "TestSession",

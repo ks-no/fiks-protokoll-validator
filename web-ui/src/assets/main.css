@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom global styles */
+html {
+  overflow-y: scroll;
+}
+
+body {
+  font-size: 14px;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  margin-bottom: 15px;
+}
+
+th,
+td {
+  border: 1px solid gray;
+  padding: 5px 10px;
+}
+
+.result {
+  margin-bottom: 35px;
+}
+
+/* Validation states */
+.validState.invalid {
+  color: #dc3545;
+}
+
+.validState.notValidated {
+  color: #ffc107;
+}
+
+.validState.valid {
+  color: #28a745;
+}
+

@@ -41,7 +41,32 @@
 <script>
 import SshPre from "simple-syntax-highlighter";
 import "simple-syntax-highlighter/dist/sshpre.css";
-const MimeTypes = require('mime-types')
+
+// Simple MIME type lookup for browser (replacing mime-types package)
+const mimeTypes = {
+  'pdf': 'application/pdf',
+  'xml': 'application/xml',
+  'json': 'application/json',
+  'txt': 'text/plain',
+  'html': 'text/html',
+  'htm': 'text/html',
+  'csv': 'text/csv',
+  'md': 'text/markdown',
+  'jpg': 'image/jpeg',
+  'jpeg': 'image/jpeg',
+  'png': 'image/png',
+  'gif': 'image/gif',
+  'svg': 'image/svg+xml',
+  'zip': 'application/zip',
+  'doc': 'application/msword',
+  'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'xls': 'application/vnd.ms-excel',
+  'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+};
+
+const getMimeType = (extension) => {
+  return mimeTypes[extension?.toLowerCase()] || 'application/octet-stream';
+};
 
 export default {
   name: "PayloadFile",
@@ -133,7 +158,7 @@ export default {
             bytes[i] = ascii;
         }
         
-        const mimeType = MimeTypes.lookup(this.fileExtension);
+        const mimeType = getMimeType(this.fileExtension);
         const contentType = { type: mimeType };
         return new Blob([bytes], contentType);
       }

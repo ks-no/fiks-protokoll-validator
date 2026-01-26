@@ -1,16 +1,20 @@
 <template>
-  <div id="app">
-    <b-navbar toggleable="lg" type="light" variant="light" :fixed="'top'">
-      <img style="margin-left:150px" src="./assets/logo.png" fluid alt="stam" />
-      <b-navbar-brand style="padding:10px 25px 10px 4px" to="/">
-        Fiks-protokollvalidator
-      </b-navbar-brand>
-      <b-navbar-nav>
-        <b-nav-item to="/NewTestSession">Ny testsesjon</b-nav-item>
-      </b-navbar-nav>
-    </b-navbar>
+  <div id="app" class="min-h-screen bg-gray-50">
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
+      <div class="flex items-center h-16 px-4">
+        <img src="./assets/logo.png" alt="logo" class="h-12 ml-32" />
+        <router-link to="/" class="px-6 py-2 font-semibold text-gray-900 hover:text-gray-700">
+          Fiks-protokollvalidator
+        </router-link>
+        <router-link to="/NewTestSession" class="px-4 py-2 text-gray-700 hover:text-gray-900">
+          Ny testsesjon
+        </router-link>
+      </div>
+    </nav>
 
-    <router-view />
+    <div class="container mx-auto mt-16 pt-12 px-8 bg-white max-w-[75%]">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -21,28 +25,6 @@ export default {
 </script>
 
 <style>
-html {
-  overflow-y: scroll;
-}
-
-body {
-  background-color: #fbfbfb;
-  font-size: 14px;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: left;
-  color: #2c3e50;
-  margin-top: 60px;
-  margin: 60px auto;
-  width: 75%;
-  background-color: white;
-  padding: 35px;
-}
-
 h1 {
   margin-bottom: 15px;
 }

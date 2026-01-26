@@ -22,7 +22,7 @@
     </div>
     <b-link
       :to="{
-        name: newTestSession,
+        name: 'newTestSession',
         query: { fikskonto: recipientId, fiksprotocol: selectedProtocol },
       }"
       >Direkte lenke</b-link
@@ -113,7 +113,7 @@
 
 <script>
 import axios from "axios";
-import TestCase from "./TestCase";
+import TestCase from "./TestCase.vue";
 
 export default {
   name: "newTestSession",

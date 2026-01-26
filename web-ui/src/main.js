@@ -1,18 +1,16 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import { createApp } from "vue";
 import App from "@/App.vue";
-// TODO: Remove Bootstrap-Vue after migrating to Tailwind
-import { BootstrapVue, IconsPlugin } from "bootstrap-vue";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import StartPage from "@/components/StartPage";
-import TestSession from "@/components/TestSession";
-import NewTestSession from "@/components/NewTestSession";
+import StartPage from "@/components/StartPage.vue";
+import TestSession from "@/components/TestSession.vue";
+import NewTestSession from "@/components/NewTestSession.vue";
 import {createRouter, createWebHistory} from "vue-router";
+import '@/assets/main.css'
+
+// Import UI components
+import UIComponents from '@/components/ui/index.js'
 
 library.add(faCheck)
 
@@ -40,7 +38,6 @@ const router = createRouter({
 
 const vueApp = createApp(App);
 vueApp.use(router);
-vueApp.use(BootstrapVue);
-vueApp.use(IconsPlugin);
+vueApp.use(UIComponents);
 vueApp.component('font-awesome-icon', FontAwesomeIcon);
 vueApp.mount("#app");

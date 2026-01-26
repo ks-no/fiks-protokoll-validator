@@ -1,29 +1,27 @@
 <template>
   <div id="app2">
-    <div style="margin: 40px 0">
-        <span
-          style="width: 100%; display: flex; flex-direction: column; vertical-align: middle;"
-        >
-          <div style="float: left; width: 70%">
-            <h3>
-              Sist utførte testsesjon:
-            </h3>
-          </div>
-          <div>
-            <a v-bind:href="lastTestUrl" style="margin-top: 10px;">
-              <span>
-                <b-icon-cloud-arrow-down/>
-                 Din testsesjon utført - {{ lastTestDateTime }} ({{ (lastTestUrl || "").split("TestSession/")[1]}})
-        </span>
-        </a>
-          </div>
-        </span>
+    <div class="my-10">
+      <div class="w-full flex flex-col">
+        <div class="float-left w-[70%]">
+          <h3 class="text-xl font-semibold">
+            Sist utførte testsesjon:
+          </h3>
+        </div>
+        <div>
+          <a :href="lastTestUrl" class="mt-2 inline-flex items-center text-blue-600 hover:text-blue-800">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10"/>
+            </svg>
+            Din testsesjon utført - {{ lastTestDateTime }} ({{ (lastTestUrl || "").split("TestSession/")[1]}})
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import * as moment from "moment/moment";
+import moment from "moment";
 export default {
   name: "App",
 
@@ -36,55 +34,3 @@ export default {
 };
 </script>
 
-<style>
-html {
-  overflow-y: scroll;
-}
-
-body {
-  background-color: #fbfbfb;
-  font-size: 14px;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: left;
-  color: #2c3e50;
-  margin-top: 60px;
-  margin: 60px auto;
-  width: 75%;
-  background-color: white;
-  padding: 35px;
-}
-
-h1 {
-  margin-bottom: 15px;
-}
-
-.card-body {
-  text-align: left;
-}
-
-.spinner-border {
-  vertical-align: 8px;
-  width: 25px;
-  height: 25px;
-  margin-left: 10px;
-}
-
-th,
-td {
-  border: 1px solid gray;
-  padding: 5px 10px;
-}
-
-.result {
-  margin-bottom: 35px;
-}
-
-.btn {
-  margin-bottom: 35px;
-}
-</style>
