@@ -107,7 +107,7 @@ export default {
       this.testSessionId = testSessionId;
       this.testSession = null;
       this.loading = true;
-      await axios.get(process.env.VUE_APP_API_URL + "/api/TestSessions/" + testSessionId)
+      await axios.get(import.meta.env.VITE_API_URL + "/api/TestSessions/" + testSessionId)
       .then(response => {
         if (response.status == 200) {
           this.testSession = {

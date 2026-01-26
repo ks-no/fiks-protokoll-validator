@@ -183,14 +183,14 @@ export default {
   methods: {
     getTests: async function() {
       this.loading = true;
-      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases", {withCredentials: true});
+      const response = await axios.get(import.meta.env.VITE_API_URL + "/api/TestCases", {withCredentials: true});
       this.testCases = response.data;
       this.loading = false;
       this.hasLoaded = true;
     },
     getTestsByProtocol: async function() {
       this.loading = true;
-      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases/Protocol/" + this.selectedProtocol, {withCredentials: true});
+      const response = await axios.get(import.meta.env.VITE_API_URL + "/api/TestCases/Protocol/" + this.selectedProtocol, {withCredentials: true});
       this.testCases = response.data;
       this.loading = false;
       this.hasLoaded = true;
@@ -208,7 +208,7 @@ export default {
         protocol: this.selectedProtocol
       };
       
-      await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params, {withCredentials: true})
+      await axios.post(import.meta.env.VITE_API_URL + "/api/TestSessions", params, {withCredentials: true})
       .then(response => {
          if (response.status === 201) {
                 this.resultData = response.data;

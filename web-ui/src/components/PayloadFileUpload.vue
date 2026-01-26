@@ -29,7 +29,7 @@ export default {
     return {
       file: '',
       fileUploadText: 'Velg egendefinert melding',
-      apiBaseUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles",
+      apiBaseUrl: import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles",
       fileUploadSuccess: false
     };
   },

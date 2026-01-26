@@ -37,8 +37,8 @@ export default {
     return {
       payloadFileContent: null,
       fileExtension: null,
-      payloadUrl: this.hasRun ? process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
-      attachmentUrl: process.env.VUE_APP_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/Attachment/"+ this.fileName
+      payloadUrl: this.hasRun ? import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
+      attachmentUrl: import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/Attachment/"+ this.fileName
     };
   },
   
