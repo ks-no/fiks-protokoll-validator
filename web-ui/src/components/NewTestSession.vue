@@ -1,83 +1,107 @@
 <template>
-  <div class="newTestSession">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon3">FIKS-konto</span>
-      </div>
+  <div class="newTestSession max-w-7xl mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Ny Test Sesjon</h1>
+
+    <div class="mb-6">
+      <label for="account-id" class="block text-sm font-semibold text-gray-700 mb-2">
+        FIKS-konto (UUID)
+      </label>
       <input
         id="account-id"
         v-model="recipientId"
         type="text"
-        class="form-control"
-        placeholder="UUID"
-        aria-label="UUID"
-        aria-describedby="basic-addon1"
+        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
+        placeholder="f.eks. 76b035a9-2d73-48bf-b758-981195333191"
+        aria-label="FIKS-konto UUID"
+      />
+      <p class="mt-2 text-sm text-gray-600">
+        Angi UUID for FIKS-kontoen du vil kjøre tester mot
+      </p>
+    </div>
+
+    <div class="mb-6">
+      <label for="protocol-select" class="block text-sm font-semibold text-gray-700 mb-2">
+        FIKS-protokoll
+      </label>
+      <b-form-select 
+        id="protocol-select"
+        v-model="selectedProtocol" 
+        v-on:change="getTestsByProtocol" 
+        :options="options" 
+        class="w-full md:w-1/2"
       />
     </div>
-    <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon3">FIKS-protokoll</span>
+
+    <div class="mb-6">
+      <b-link
+        :to="{
+          name: 'newTestSession',
+          query: { fikskonto: recipientId, fiksprotocol: selectedProtocol },
+        }"
+        class="text-blue-600 hover:text-blue-800 underline"
+      >
+        Direkte lenke
+      </b-link>
     </div>
-      <b-form-select v-model="selectedProtocol" v-on:change="getTestsByProtocol" :options="options" style="width:30%"></b-form-select>
-    </div>
-    <b-link
-      :to="{
-        name: 'newTestSession',
-        query: { fikskonto: recipientId, fiksprotocol: selectedProtocol },
-      }"
-      >Direkte lenke</b-link
-    >
   
-    <div style="margin: 40px 0">
+    <div class="mb-8">
       <b-form-group v-if="!hasRun">
-        <span
-          style="width: 100%; display: inline-block; vertical-align: middle;"
-        >
-          <div style="float: left; width: 70%">
-            <h3>
-              Tester
-            </h3>
-            <b-form-checkbox
-              v-show="!hasRun"
-              id="switch_supported"
-              v-model="showNotSupportedTests"
-              size="sm"
-              aria-describedby="testCases"
-              aria-controls="testCases"
-              @change="toggleAllSupportedTests"
-            >
-              {{ "Vis tester som ikke er implementert" }}
-            </b-form-checkbox>
+        <div class="bg-white border border-gray-200 rounded-lg p-6 mb-4">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">
+                Tester
+              </h3>
+              <b-form-checkbox
+                v-show="!hasRun"
+                id="switch_supported"
+                v-model="showNotSupportedTests"
+                aria-describedby="testCases"
+                aria-controls="testCases"
+                @change="toggleAllSupportedTests"
+              >
+                Vis tester som ikke er implementert
+              </b-form-checkbox>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+              <b-form-checkbox
+                v-show="!hasRun"
+                id="switch_selectAllTests"
+                switch
+                v-model="allTestsSelected"
+                aria-describedby="testCases"
+                aria-controls="testCases"
+                @change="toggleAll"
+                class="text-base"
+              >
+                {{ allTestsSelected ? "Velg ingen" : "Velg alle" }}
+              </b-form-checkbox>
+              
+              <b-button
+                variant="primary"
+                v-on:click="runSelectedTests"
+                v-if="!hasRun || running"
+                :disabled="running || !fiksAccountPresent || selectedTests.length==0"
+                class="px-6 py-2.5 text-base font-medium"
+              >
+                <b-spinner v-if="running" small class="mr-2"></b-spinner>
+                {{ running ? 'Kjører...' : `Kjør valgte tester (${selectedTests.length})` }}
+              </b-button>
+            </div>
           </div>
-          <div class="radioAndButton" style="float: left; width: 30%">
-            <b-button
-              variant="primary"
-              v-on:click="runSelectedTests"
-              v-if="!hasRun || running"
-              :disabled="running || !fiksAccountPresent || selectedTests.length==0"
-              class="runAllButton"
-            >
-              Kjør valgte tester
-            </b-button>
-            <b-form-checkbox
-              v-show="!hasRun"
-              id="switch_selectAllTests"
-              switch
-              v-model="allTestsSelected"
-              size="lg"
-              aria-describedby="testCases"
-              aria-controls="testCases"
-              @change="toggleAll"
-            >
-              {{ allTestsSelected ? "Velg ingen" : "Velg alle" }}
-            </b-form-checkbox>
-          </div>
-        </span>
-        <b-alert v-model="showRequestError" variant="danger" dismissible>
-          <p>Testing feilet med statuskode {{requestErrorStatusCode}}. Melding: {{requestErrorMessage}}</p>
+        </div>
+        
+        <b-alert v-model="showRequestError" variant="danger" dismissible class="mb-4">
+          <p class="font-semibold">Testing feilet med statuskode {{requestErrorStatusCode}}</p>
+          <p class="text-sm mt-1">{{requestErrorMessage}}</p>
         </b-alert>
-        <b-spinner label="Loading..." v-if="running || loading"></b-spinner>
-        &nbsp;
+        
+        <div v-if="loading && !running" class="flex items-center justify-center py-8">
+          <b-spinner label="Laster tester..."></b-spinner>
+          <span class="ml-3 text-gray-600">Laster tester...</span>
+        </div>
+
 
         <b-form-checkbox-group
           switches
@@ -114,11 +138,27 @@
 <script>
 import axios from "axios";
 import TestCase from "./TestCase.vue";
+import BFormSelect from "@/components/ui/BFormSelect.vue";
+import BLink from "@/components/ui/BLink.vue";
+import BFormGroup from "@/components/ui/BFormGroup.vue";
+import BFormCheckbox from "@/components/ui/BFormCheckbox.vue";
+import BButton from "@/components/ui/BButton.vue";
+import BSpinner from "@/components/ui/BSpinner.vue";
+import BAlert from "@/components/ui/BAlert.vue";
+import BFormCheckboxGroup from "@/components/ui/BFormCheckboxGroup.vue";
 
 export default {
   name: "newTestSession",
   
   components: {
+    BFormCheckboxGroup,
+    BAlert,
+    BSpinner,
+    BButton,
+    BFormCheckbox,
+    BFormGroup,
+    BLink,
+    BFormSelect,
     TestCase
   },
   
@@ -271,18 +311,3 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.input-group {
-  max-width: 430px;
-}
-.radioAndButton {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-bottom: 8px;
-}
-.runAllButton {
-  margin-bottom: 8px;
-}
-</style>

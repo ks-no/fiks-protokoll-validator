@@ -23,34 +23,3 @@ export default {
   name: "App"
 };
 </script>
-
-<style>
-h1 {
-  margin-bottom: 15px;
-}
-
-.card-body {
-  text-align: left;
-}
-
-.spinner-border {
-  vertical-align: 8px;
-  width: 25px;
-  height: 25px;
-  margin-left: 10px;
-}
-
-th,
-td {
-  border: 1px solid gray;
-  padding: 5px 10px;
-}
-
-.result {
-  margin-bottom: 35px;
-}
-
-.btn {
-  margin-bottom: 35px;
-}
-</style>

@@ -4,7 +4,7 @@
 export const mockTestCases = {
   'no.ks.fiks.arkiv.v1': [
     {
-      id: 'HentSaksmappeN1',
+      testId: 'HentSaksmappeN1',
       testName: 'Hent Saksmappe - Normalsituasjon 1',
       description: 'Henter en saksmappe basert på ReferanseEksternNoekkel som nøkkel',
       testStep: 'Normalsituasjon 1',
@@ -16,7 +16,7 @@ export const mockTestCases = {
       protocol: 'no.ks.fiks.arkiv.v1'
     },
     {
-      id: 'HentJournalpostN1',
+      testId: 'HentJournalpostN1',
       testName: 'Hent Journalpost - Normalsituasjon 1',
       description: 'Henter en journalpost basert på journalnøkkel',
       testStep: 'Normalsituasjon 1',
@@ -28,7 +28,7 @@ export const mockTestCases = {
       protocol: 'no.ks.fiks.arkiv.v1'
     },
     {
-      id: 'NyJournalpostF7',
+      testId: 'NyJournalpostF7',
       testName: 'Send ny Journalpost - Feilsituasjon 7',
       description: 'Tester at arkivet håndterer feil når journalpost ikke finnes',
       testStep: 'Feilsituasjon 7',
@@ -42,7 +42,7 @@ export const mockTestCases = {
   ],
   'no.ks.fiks.plan.v2': [
     {
-      id: 'HentPlanN1',
+      testId: 'HentPlanN1',
       testName: 'Hent Plan - Normalsituasjon 1',
       description: 'Henter en plan basert på plannøkkel',
       testStep: 'Normalsituasjon 1',
@@ -56,7 +56,7 @@ export const mockTestCases = {
   ],
   'no.ks.fiks.matrikkelfoering.v2': [
     {
-      id: 'OppdaterMatrikkelN1',
+      testId: 'OppdaterMatrikkelN1',
       testName: 'Oppdater Matrikkel - Normalsituasjon 1',
       description: 'Oppdaterer matrikkelinformasjon',
       testStep: 'Normalsituasjon 1',
@@ -81,7 +81,6 @@ export function createMockApiPlugin() {
 
         console.log('[Mock API]', req.method, req.url)
 
-        // Mock TestCases list (all protocols)
         if (req.url === '/api/TestCases') {
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify([
@@ -92,7 +91,6 @@ export function createMockApiPlugin() {
           return
         }
 
-        // Mock TestCases by Protocol
         if (req.url.startsWith('/api/TestCases/Protocol/')) {
           const protocol = decodeURIComponent(req.url.split('/').pop())
           const testCases = mockTestCases[protocol] || []
@@ -101,7 +99,6 @@ export function createMockApiPlugin() {
           return
         }
 
-        // Mock TestSessions POST - create new test session
         if (req.url === '/api/TestSessions' && req.method === 'POST') {
           let body = ''
           req.on('data', chunk => { body += chunk })
@@ -128,7 +125,6 @@ export function createMockApiPlugin() {
           return
         }
 
-        // Mock TestSession GET - get test session results
         if (req.url.startsWith('/api/TestSessions/')) {
           const sessionId = req.url.split('/').pop()
           res.setHeader('Content-Type', 'application/json')
@@ -152,7 +148,6 @@ export function createMockApiPlugin() {
           return
         }
 
-        // Default 404
         res.statusCode = 404
         res.end(JSON.stringify({ error: 'Not Found' }))
       })
