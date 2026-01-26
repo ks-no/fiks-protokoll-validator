@@ -1,64 +1,85 @@
-﻿<template>
-  <div v-if="fileName !== null">
+<template>
+  <div v-if="fileName !== null" class="mt-2">
     <form enctype="multipart/form-data">
-      <div class="input-group">
-        <div class="custom-file">
-          <input type="file" ref="file" v-on:change="handleFileUpload()" class="custom-file-input" id="payloadUpload"/>
-          <label class="custom-file-label" for="payloadUpload">{{fileUploadText}}</label>
+      <div class="flex items-center gap-2">
+        <div class="flex-1">
+          <label
+            class="flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50"
+          >
+            <span class="text-gray-600 text-sm truncate">{{ fileUploadText }}</span>
+            <input
+              type="file"
+              ref="fileInput"
+              @change="handleFileUpload"
+              class="hidden"
+              id="payloadUpload"
+            />
+          </label>
         </div>
-        <div class="input-group-append">
-          <button type="button" :disabled="file === ''" v-on:click="submitFile()" class="btn btn-primary" title="Last opp egen melding"><span class="fas fa-upload fa-lg"></span><span>Last opp</span></button><div style="width: 30px"><span v-show="fileUploadSuccess === true" style="color:Green; font-size: 30px; margin-left: 10px;"><font-awesome-icon icon="check"></font-awesome-icon></span></div>
+        <button
+          type="button"
+          :disabled="!file"
+          @click="submitFile"
+          class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium flex items-center gap-2"
+          title="Last opp egen melding"
+        >
+          <span>Last opp</span>
+        </button>
+        <div class="w-8">
+          <span v-if="fileUploadSuccess" class="text-green-600 text-2xl">
+            <font-awesome-icon icon="check" />
+          </span>
         </div>
       </div>
     </form>
   </div>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref } from 'vue'
+import axios from 'axios'
 
-import axios from 'axios';
+interface Props {
+  testId?: string
+  fileName?: string
+  protocol?: string
+}
 
-export default {
-  name: 'PayloadFileUpload',
-  props: {
-    testId: String,
-    fileName: String,
-    protocol: String, 
-  },
-  data() {
-    return {
-      file: '',
-      fileUploadText: 'Velg egendefinert melding',
-      apiBaseUrl: import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles",
-      fileUploadSuccess: false
-    };
-  },
-  methods: {
-    handleFileUpload() {
-      this.file = this.$refs.file.files[0];
-      this.fileUploadText = this.$refs.file.files[0].name;
-    },
-    submitFile() {
-      let formData = new FormData();
-      formData.append('file', this.file);
+const props = defineProps<Props>()
 
-      axios.post(`${this.apiBaseUrl}/${this.testId}/payload`,
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-            withCredentials: true,
-          }
-      ).then(value => this.uploadSuccess()
-      ).catch(function() {
-        console.log("Uploading file failed!")
-      })
-    },
-    uploadSuccess() {
-      this.fileUploadSuccess = true;
-      console.log("Success uploading file.");
-    }
+const fileInput = ref<HTMLInputElement | null>(null)
+const file = ref<File | null>(null)
+const fileUploadText = ref('Velg egendefinert melding')
+const fileUploadSuccess = ref(false)
+const apiBaseUrl = import.meta.env.VITE_API_URL + '/api/TestCasePayloadFiles'
+
+function handleFileUpload() {
+  if (fileInput.value?.files?.[0]) {
+    file.value = fileInput.value.files[0]
+    fileUploadText.value = fileInput.value.files[0].name
   }
-};
+}
+
+async function submitFile() {
+  if (!file.value) return
+
+  const formData = new FormData()
+  formData.append('file', file.value)
+
+  try {
+    await axios.post(
+      `${apiBaseUrl}/${props.testId}/payload`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        withCredentials: true
+      }
+    )
+    fileUploadSuccess.value = true
+  } catch {
+    // Upload failed - could add error handling here
+  }
+}
 </script>

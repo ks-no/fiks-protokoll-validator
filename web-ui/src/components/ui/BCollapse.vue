@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     v-show="visible"
     :id="id"
     class="overflow-hidden transition-all duration-300"
@@ -8,12 +8,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BCollapse',
-  props: {
-    id: String,
-    visible: Boolean
-  }
-};
+<script setup lang="ts">
+interface Props {
+  id?: string
+  visible?: boolean
+}
+
+withDefaults(defineProps<Props>(), {
+  visible: false
+})
 </script>

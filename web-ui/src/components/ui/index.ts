@@ -1,4 +1,6 @@
-// Auto-register all UI components globally
+import type { App, Plugin } from 'vue'
+
+// UI components
 import BButton from './BButton.vue'
 import BAlert from './BAlert.vue'
 import BSpinner from './BSpinner.vue'
@@ -22,8 +24,8 @@ import BIconChevronRight from './icons/BIconChevronRight.vue'
 import BIconFilePlus from './icons/BIconFilePlus.vue'
 import BIconFileMinus from './icons/BIconFileMinus.vue'
 
-export default {
-  install(app) {
+const UIComponents: Plugin = {
+  install(app: App) {
     app.component('BButton', BButton)
     app.component('BAlert', BAlert)
     app.component('BSpinner', BSpinner)
@@ -38,7 +40,7 @@ export default {
     app.component('BFormSelect', BFormSelect)
     app.component('BLink', BLink)
     app.component('BModal', BModal)
-    
+
     // Icons
     app.component('BIconExclamationCircleFill', BIconExclamationCircleFill)
     app.component('BIconCheckCircleFill', BIconCheckCircleFill)
@@ -47,4 +49,30 @@ export default {
     app.component('BIconFilePlus', BIconFilePlus)
     app.component('BIconFileMinus', BIconFileMinus)
   }
+}
+
+export default UIComponents
+
+// Named exports for direct imports
+export {
+  BButton,
+  BAlert,
+  BSpinner,
+  BCard,
+  BRow,
+  BCol,
+  BCollapse,
+  BContainer,
+  BFormGroup,
+  BFormCheckbox,
+  BFormCheckboxGroup,
+  BFormSelect,
+  BLink,
+  BModal,
+  BIconExclamationCircleFill,
+  BIconCheckCircleFill,
+  BIconChevronDown,
+  BIconChevronRight,
+  BIconFilePlus,
+  BIconFileMinus
 }

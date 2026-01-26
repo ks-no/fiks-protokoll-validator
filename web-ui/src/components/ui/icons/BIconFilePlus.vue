@@ -5,8 +5,5 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'BIconFilePlus'
-};
+<script setup lang="ts">
 </script>

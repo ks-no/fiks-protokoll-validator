@@ -1,7 +1,26 @@
-// Mock API data for development
-// This file is only used in development mode and not included in production builds
+import type { Plugin, ViteDevServer, Connect } from 'vite'
+import type { IncomingMessage, ServerResponse } from 'node:http'
 
-export const mockTestCases = {
+interface TestCaseData {
+  testId: string
+  testName: string
+  description: string
+  testStep: string
+  messageType: string
+  operation: string
+  situation: string
+  expectedResult: string
+  supported: boolean
+  protocol: string
+}
+
+interface CreateSessionRequest {
+  recipientId: string
+  protocol: string
+  selectedTestCaseIds: string[]
+}
+
+const mockTestCases: Record<string, TestCaseData[]> = {
   'no.ks.fiks.arkiv.v1': [
     {
       testId: 'HentSaksmappeN1',
@@ -68,20 +87,20 @@ export const mockTestCases = {
       protocol: 'no.ks.fiks.matrikkelfoering.v2'
     }
   ]
-};
+}
 
-export function createMockApiPlugin() {
+export function createMockApiPlugin(): Plugin {
   return {
     name: 'mock-api',
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
-        if (!req.url.startsWith('/api')) {
+    configureServer(server: ViteDevServer) {
+      server.middlewares.use((req: Connect.IncomingMessage, res: ServerResponse, next: Connect.NextFunction) => {
+        const url = req.url ?? ''
+
+        if (!url.startsWith('/api')) {
           return next()
         }
 
-        console.log('[Mock API]', req.method, req.url)
-
-        if (req.url === '/api/TestCases') {
+        if (url === '/api/TestCases') {
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify([
             { protocol: 'no.ks.fiks.arkiv.v1', name: 'Fiks Arkiv', count: 3 },
@@ -91,22 +110,22 @@ export function createMockApiPlugin() {
           return
         }
 
-        if (req.url.startsWith('/api/TestCases/Protocol/')) {
-          const protocol = decodeURIComponent(req.url.split('/').pop())
-          const testCases = mockTestCases[protocol] || []
+        if (url.startsWith('/api/TestCases/Protocol/')) {
+          const protocol = decodeURIComponent(url.split('/').pop() ?? '')
+          const testCases = mockTestCases[protocol] ?? []
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify(testCases))
           return
         }
 
-        if (req.url === '/api/TestSessions' && req.method === 'POST') {
+        if (url === '/api/TestSessions' && req.method === 'POST') {
           let body = ''
-          req.on('data', chunk => { body += chunk })
+          req.on('data', (chunk: Buffer) => { body += chunk.toString() })
           req.on('end', () => {
             try {
-              const data = JSON.parse(body)
+              const data = JSON.parse(body) as CreateSessionRequest
               const sessionId = 'mock-session-' + Date.now()
-              
+
               res.statusCode = 201
               res.setHeader('Content-Type', 'application/json')
               res.end(JSON.stringify({
@@ -117,7 +136,7 @@ export function createMockApiPlugin() {
                 testCaseIds: data.selectedTestCaseIds,
                 createdAt: new Date().toISOString()
               }))
-            } catch (e) {
+            } catch {
               res.statusCode = 400
               res.end(JSON.stringify({ error: 'Invalid request' }))
             }
@@ -125,8 +144,8 @@ export function createMockApiPlugin() {
           return
         }
 
-        if (req.url.startsWith('/api/TestSessions/')) {
-          const sessionId = req.url.split('/').pop()
+        if (url.startsWith('/api/TestSessions/')) {
+          const sessionId = url.split('/').pop()
           res.setHeader('Content-Type', 'application/json')
           res.end(JSON.stringify({
             id: sessionId,

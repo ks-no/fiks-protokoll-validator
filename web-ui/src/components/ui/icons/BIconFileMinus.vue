@@ -5,8 +5,5 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'BIconFileMinus'
-};
+<script setup lang="ts">
 </script>

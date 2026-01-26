@@ -4,11 +4,12 @@
   </router-link>
 </template>
 
-<script>
-export default {
-  name: 'BLink',
-  props: {
-    to: [String, Object]
-  }
-};
+<script setup lang="ts">
+import type { RouteLocationRaw } from 'vue-router'
+
+interface Props {
+  to: RouteLocationRaw
+}
+
+defineProps<Props>()
 </script>

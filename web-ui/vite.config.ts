@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { fileURLToPath, URL } from 'node:url'
-import { createMockApiPlugin } from './mock-api.js'
+import { createMockApiPlugin } from './mock-api'
 
 export default defineConfig({
   plugins: [

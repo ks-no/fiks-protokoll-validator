@@ -4,8 +4,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BFormGroup'
-};
+<script setup lang="ts">
 </script>

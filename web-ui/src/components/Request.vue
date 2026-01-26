@@ -1,10 +1,10 @@
 <template>
-  <li class="list-group-item">
+  <li class="border-b border-gray-200 py-4">
     <TestCase
       :testId="testCase.testId"
       :testName="testCase.testName"
       :messageType="testCase.messageType"
-      :payloadFileName="customPayloadFilename != null ? customPayloadFilename : testCase.payloadFileName"
+      :payloadFileName="customPayloadFilename ?? testCase.payloadFileName"
       :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
       :description="testCase.description"
       :expectedResult="testCase.expectedResult"
@@ -17,48 +17,43 @@
       :isCollapsed="isCollapsed"
       :testSessionId="testSessionId"
     />
-    <b-collapse :visible="!isCollapsed" :id="'collapse-' + testCase.operation+ '' + testCase.situation">
-      <b-container fluid>
-        <b-row style="margin-bottom: 25px">
-          <b-col cols="2"> <strong class="header">Sendt: </strong> </b-col>
-          <b-col> {{ formatDate(sentAt) }} </b-col>
-        </b-row>
-        <div v-if="testCase.fiksResponseTests != null && testCase.fiksResponseTests.length > 0">
-          <b-row style="margin-bottom: 5px">
-            <b-col cols="2">
-              <strong class="header">Testspørringer:</strong>
-            </b-col>
-            <b-col>
+    <BCollapse :visible="!isCollapsed" :id="'collapse-' + testCase.operation + testCase.situation">
+      <BContainer fluid>
+        <BRow class="mb-6">
+          <BCol cols="2"><strong class="float-right">Sendt: </strong></BCol>
+          <BCol>{{ formatDateTime(sentAt) }}</BCol>
+        </BRow>
+        <div v-if="testCase.fiksResponseTests && testCase.fiksResponseTests.length > 0">
+          <BRow class="mb-1.5">
+            <BCol cols="2">
+              <strong class="float-right">Testspørringer:</strong>
+            </BCol>
+            <BCol>
               <a
                 v-for="fiksResponseTest in testCase.fiksResponseTests"
                 :key="fiksResponseTest.id"
+                class="block"
               >
                 {{
-                  testCase.protocol != "no.ks.fiks.politisk.behandling.klient.v1" ? 
-                   fiksResponseTest.payloadQuery +
-                    (fiksResponseTest.valueType === 0
-                      ? "/text(" + fiksResponseTest.expectedValue + ")"
-                      : "[@xsi:type='" + fiksResponseTest.expectedValue + "']")
-                  :
-                  fiksResponseTest.payloadQuery +
-                    (fiksResponseTest.valueType === 0
-                      ? "/forventet verdi(" + fiksResponseTest.expectedValue + ")"
-                      : "[key='" + fiksResponseTest.expectedValue + "']")
+                  testCase.protocol !== 'no.ks.fiks.politisk.behandling.klient.v1'
+                    ? fiksResponseTest.payloadQuery +
+                      (fiksResponseTest.valueType === 0
+                        ? '/text(' + fiksResponseTest.expectedValue + ')'
+                        : "[@xsi:type='" + fiksResponseTest.expectedValue + "']")
+                    : fiksResponseTest.payloadQuery +
+                      (fiksResponseTest.valueType === 0
+                        ? '/forventet verdi(' + fiksResponseTest.expectedValue + ')'
+                        : "[key='" + fiksResponseTest.expectedValue + "']")
                 }}
-                <br />
               </a>
-            </b-col>
-          </b-row>
+            </BCol>
+          </BRow>
         </div>
-      </b-container>
-      <b-card>
-        <ul class="list-group">
-          <h6>
-            <strong>Svarmeldinger</strong>
-          </h6>
-          {{
-            validState !== "notValidated" ? "" : "Ingen svarmeldinger funnet.."
-          }}
+      </BContainer>
+      <BCard>
+        <ul class="space-y-2">
+          <h6 class="font-semibold">Svarmeldinger</h6>
+          <span v-if="validState === 'notValidated'">Ingen svarmeldinger funnet..</span>
           <Response
             v-for="response in responses"
             :key="response.id"
@@ -69,120 +64,120 @@
             :payloadContent="response.payloadContent"
           />
         </ul>
-      </b-card>
-      <b-card>
-        <h6><strong>Testresultat</strong></h6>
-        <div v-if="validState === 'notValidated'" class="flex-result-item">
-          <b-icon-exclamation-circle-fill
+      </BCard>
+      <BCard>
+        <h6 class="font-semibold">Testresultat</h6>
+        <div v-if="validState === 'notValidated'" class="flex items-center gap-2">
+          <BIconExclamationCircleFill
             :class="'validState ' + validState"
             title="Ikke validert"
           />
-          <label> Validering er ikke utført </label>
+          <label>Validering er ikke utført</label>
         </div>
         <div v-else-if="validState === 'valid'">
-          <label> Validering utført uten feil! </label>
+          <label>Validering utført uten feil!</label>
         </div>
         <div v-else-if="validState === 'invalid'">
           <label
-            class="flex-result-item"
             v-for="error in validationErrors"
             :key="error"
+            class="flex items-center gap-2"
           >
-            <b-icon-exclamation-circle-fill
+            <BIconExclamationCircleFill
               :class="'validState ' + validState"
               title="Ugyldig"
             />
-            {{error}}
+            {{ error }}
           </label>
         </div>
-      </b-card>
-    </b-collapse>
+      </BCard>
+    </BCollapse>
   </li>
 </template>
 
-<script>
-import moment from "moment";
-import TestCase from "./TestCase.vue";
-import Response from "./Response.vue";
+<script setup lang="ts">
+import { ref, onBeforeMount } from 'vue'
+import { useDateFormat } from '@/composables/useDateFormat'
+import TestCase from './TestCase.vue'
+import Response from './Response.vue'
+import BContainer from '@/components/ui/BContainer.vue'
+import BRow from '@/components/ui/BRow.vue'
+import BCol from '@/components/ui/BCol.vue'
+import BCollapse from '@/components/ui/BCollapse.vue'
+import BCard from '@/components/ui/BCard.vue'
+import BIconExclamationCircleFill from '@/components/ui/icons/BIconExclamationCircleFill.vue'
 
-export default {
-  name: "Request",
+type ValidationState = 'valid' | 'invalid' | 'notValidated'
 
-  components: {
-    TestCase,
-    Response
-  },
-
-  data() {
-    return {
-      isCollapsed: true,
-      validState: null
-    };
-  },
-
-  props: {
-    collapseId: {
-      required: true
-    },
-    hasRun: {
-      required: true,
-      type: Boolean
-    },
-    sentAt: {
-      required: true,
-      type: String
-    },
-    testCase: {
-      required: true,
-      type: Object
-    },
-    responses: {
-      type: Array,
-      required: true
-    },
-    isValidated: {
-      type: Boolean
-    },
-    validationErrors: {
-      type: Array
-    },
-    testSessionId: {
-      type: String
-    },
-    customPayloadFilename: {
-      type: String
-    }
-  },
-
-  methods: {
-    formatDate: date => {
-      return moment(date).format("DD.MM.YYYY [kl.]HH:mm:ss.SSS");
-    }
-  },
-
-  beforeMount() {
-    if (!this.isValidated) {
-      this.validState = "notValidated";
-    } else {
-      this.validState =
-        typeof this.validationErrors !== "undefined" &&
-        this.validationErrors.length > 0
-          ? "invalid"
-          : "valid";
-    }
-  }
-};
-</script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.flex-result-item {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  vertical-align: -webkit-baseline-middle;
+interface FiksResponseTest {
+  id: string
+  payloadQuery: string
+  valueType: number
+  expectedValue: string
 }
 
+interface FiksPayload {
+  id: string
+  filename: string
+  payload?: string
+}
+
+interface FiksResponse {
+  id: string
+  receivedAt: string
+  type: string
+  fiksPayloads: FiksPayload[]
+  payloadContent?: string
+}
+
+interface TestCaseData {
+  testId: string
+  testName: string
+  messageType: string
+  description: string
+  testStep: string
+  operation: string
+  situation: string
+  expectedResult: string
+  payloadFileName?: string
+  payloadAttachmentFileNames?: string
+  protocol: string
+  fiksResponseTests?: FiksResponseTest[]
+}
+
+interface Props {
+  collapseId: string
+  hasRun: boolean
+  sentAt: string
+  testCase: TestCaseData
+  responses: FiksResponse[]
+  isValidated?: boolean
+  validationErrors?: string[]
+  testSessionId?: string
+  customPayloadFilename?: string
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  isValidated: false
+})
+
+const isCollapsed = ref(true)
+const validState = ref<ValidationState>('notValidated')
+const { formatDateTime } = useDateFormat()
+
+onBeforeMount(() => {
+  if (!props.isValidated) {
+    validState.value = 'notValidated'
+  } else {
+    validState.value =
+      props.validationErrors && props.validationErrors.length > 0
+        ? 'invalid'
+        : 'valid'
+  }
+})
+</script>
+
+<style scoped>
 svg.validState {
   font-size: 24px;
   margin-right: 6px;
@@ -194,32 +189,5 @@ svg.notValidated {
 
 svg.invalid {
   color: #cc3333;
-}
-
-.ext-left {
-  float: left;
-  width: 85%;
-}
-
-.ext-right {
-  float: right;
-}
-
-.grow-right {
-  width: 100%;
-}
-
-li span {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-b-form-checkbox {
-  float: right;
-  widows: 15%;
-}
-
-strong.header {
-  float: right;
 }
 </style>

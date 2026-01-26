@@ -1,17 +1,17 @@
 <template>
   <div>
     <span>
-    <PayloadFile
-      :fileName="fileName"
-      :testId="testId"
-      :protocol="protocol"
-      :content="payloadFileContent"
-      :fileUrl="isAttachment ? attachmentUrl : payloadUrl"
-      v-on:get-content="isTextContent => getContent(isTextContent)"
-    />
+      <PayloadFile
+        :fileName="fileName"
+        :testId="testId"
+        :protocol="protocol"
+        :content="payloadFileContent"
+        :fileUrl="isAttachment ? attachmentUrl : payloadUrl"
+        @get-content="(isText: boolean) => getContent(isText)"
+      />
     </span>
     <span v-if="!hasRun && !isAttachment">
-      <PayloadFileUpload 
+      <PayloadFileUpload
         :fileName="fileName"
         :testId="testId"
         :protocol="protocol"
@@ -20,79 +20,55 @@
   </div>
 </template>
 
-<script>
-import PayloadFile from "./PayloadFile.vue";
-import axios from "axios";
-import PayloadFileUpload from "@/components/PayloadFileUpload.vue";
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import axios from 'axios'
+import PayloadFile from './PayloadFile.vue'
+import PayloadFileUpload from '@/components/PayloadFileUpload.vue'
 
-export default {
-  name: "testCasePayloadFile",
-  
-  components: {
-    PayloadFileUpload,
-    PayloadFile
-  },
-  
-  data() {
-    return {
-      payloadFileContent: null,
-      fileExtension: null,
-      payloadUrl: this.hasRun ? import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testSessionId + "/" + this.testId + "/payload" : import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/payload",
-      attachmentUrl: import.meta.env.VITE_API_URL + "/api/TestCasePayloadFiles" + "/" + this.testId + "/Attachment/"+ this.fileName
-    };
-  },
-  
-  props: {
-    fileName: {
-      type: String
-    },
-    isAttachment: {
-      required: false,
-      type: Boolean
-    },
-    operation: {
-      required: false,
-      type: String
-    },
-    situation: {
-      required: false,
-      type: String
-    },
-    protocol: {
-      required: false,
-      type: String
-    },
-    testName: {
-      required: true,
-      type: String
-    },
-    testId: {
-      required: true,
-      type: String
-    },
-    hasRun: {
-      type: Boolean
-    },
-    testSessionId: {
-      type: String,
-    }
-  },
-  
-  methods: {
-    getContent: function(isTextContent) {
-      let resourceUrl = this.isAttachment
-          ? this.attachmentUrl
-          : this.payloadUrl;
+interface Props {
+  fileName?: string
+  isAttachment?: boolean
+  operation?: string
+  situation?: string
+  protocol?: string
+  testName: string
+  testId: string
+  hasRun?: boolean
+  testSessionId?: string
+}
 
-      let settings = {
-        responseType: isTextContent ? "text" : "blob",
-        responseEncoding: isTextContent ? "utf-16" : "base64"
-      };
+const props = withDefaults(defineProps<Props>(), {
+  isAttachment: false,
+  hasRun: false
+})
 
-      axios.get(resourceUrl, settings).then(response => {
-        this.payloadFileContent = response.data;
-      });
-    }
+const payloadFileContent = ref<string | undefined>(undefined)
+const apiBaseUrl = import.meta.env.VITE_API_URL + '/api/TestCasePayloadFiles'
+
+const payloadUrl = computed(() => {
+  return props.hasRun
+    ? `${apiBaseUrl}/${props.testSessionId}/${props.testId}/payload`
+    : `${apiBaseUrl}/${props.testId}/payload`
+})
+
+const attachmentUrl = computed(() => {
+  return `${apiBaseUrl}/${props.testId}/Attachment/${props.fileName}`
+})
+
+async function getContent(isTextContent: boolean) {
+  const resourceUrl = props.isAttachment ? attachmentUrl.value : payloadUrl.value
+
+  const settings = {
+    responseType: isTextContent ? 'text' : 'blob',
+    responseEncoding: isTextContent ? 'utf-16' : 'base64'
+  } as const
+
+  try {
+    const response = await axios.get(resourceUrl, settings)
+    payloadFileContent.value = response.data
+  } catch {
+    // Could add error handling here
   }
-};
+}
 </script>

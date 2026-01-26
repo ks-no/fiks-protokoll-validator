@@ -1,75 +1,58 @@
 <template>
-  <li class="list-group-item">
-    <span class="grow-right">
+  <li class="border-b border-gray-200 py-4">
+    <span class="w-full block">
       <div
-        class="ext-left"
-        v-on:click="isCollapsed = !isCollapsed"
-        v-b-toggle="'collapse-' + collapseId"
+        class="cursor-pointer"
+        @click="isCollapsed = !isCollapsed"
       >
-        <strong>
-          <b-icon-file-plus v-if="isCollapsed" shift-h="-5" />
-          <b-icon-file-minus v-if="!isCollapsed" shift-h="-5" />
+        <strong class="flex items-center gap-2">
+          <BIconFilePlus v-if="isCollapsed" />
+          <BIconFileMinus v-if="!isCollapsed" />
           {{ messageType }}
         </strong>
       </div>
     </span>
-    <b-collapse :id="'collapse-' + collapseId" class="mt-2">
-      <b-card>
-        <p><strong>Mottatt: </strong>{{ formatDate(receivedAt) }}</p>
-         <div
-           v-for="payload in payloads"
-           :key="payload.fileName"
-          >
-        <p v-if="payload">
-          <strong>Innhold: </strong>
-          <PayloadFile :fileName="payload.filename" :content="payload.payload" />
-        </p>
+    <BCollapse :visible="!isCollapsed" :id="'collapse-' + collapseId" class="mt-2">
+      <BCard>
+        <p><strong>Mottatt: </strong>{{ formatDateTime(receivedAt) }}</p>
+        <div
+          v-for="payload in payloads"
+          :key="payload.filename"
+        >
+          <p v-if="payload">
+            <strong>Innhold: </strong>
+            <PayloadFile :fileName="payload.filename" :content="payload.payload" />
+          </p>
         </div>
-      </b-card>
-    </b-collapse>
+      </BCard>
+    </BCollapse>
   </li>
 </template>
 
-<script>
-import moment from "moment";
-import PayloadFile from "./PayloadFile.vue";
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useDateFormat } from '@/composables/useDateFormat'
+import PayloadFile from './PayloadFile.vue'
+import BCollapse from '@/components/ui/BCollapse.vue'
+import BCard from '@/components/ui/BCard.vue'
+import BIconFilePlus from '@/components/ui/icons/BIconFilePlus.vue'
+import BIconFileMinus from '@/components/ui/icons/BIconFileMinus.vue'
 
-export default {
-  name: "Response",
+interface FiksPayload {
+  filename: string
+  payload?: string
+}
 
-  components: {
-    PayloadFile
-  },
+interface Props {
+  collapseId: string
+  receivedAt?: string
+  messageType?: string
+  payloads?: FiksPayload[]
+  payloadContent?: string
+}
 
-  data() {
-    return {
-      isCollapsed: true,
-      payloadUrl: null
-    };
-  },
+defineProps<Props>()
 
-  props: {
-    collapseId: {
-      required: true
-    },
-    receivedAt: {
-      type: String
-    },
-    messageType: {
-      type: String
-    },
-    payloads: {
-      type: Array
-    },
-    payloadContent: {
-      type: String
-    }
-  },
-
-  methods: {
-    formatDate: function(date) {
-      return moment(date).format("DD.MM.YYYY HH:mm:ss.SSS");
-    }
-  }
-};
+const isCollapsed = ref(true)
+const { formatDateTime } = useDateFormat()
 </script>

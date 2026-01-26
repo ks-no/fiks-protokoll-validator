@@ -15,50 +15,56 @@
   </label>
 </template>
 
-<script>
-export default {
-  name: 'BFormCheckbox',
-  inject: {
-    checkboxGroup: { default: null }
-  },
-  props: {
-    modelValue: Boolean,
-    value: [String, Boolean, Number],
-    id: String,
-    switch: Boolean
-  },
-  computed: {
-    switchStyle() {
-      return this.switch
-    },
-    isChecked() {
-      if (this.checkboxGroup) {
-        // Part of a group - unwrap computed if needed
-        const group = typeof this.checkboxGroup === 'function' ? this.checkboxGroup() : this.checkboxGroup
-        return group.value && group.value.includes(this.value)
-      }
-      // Standalone checkbox
-      return this.modelValue
-    }
-  },
-  methods: {
-    handleChange(event) {
-      const checked = event.target.checked
-      
-      if (this.checkboxGroup) {
-        // Part of a group - unwrap computed if needed
-        const group = typeof this.checkboxGroup === 'function' ? this.checkboxGroup() : this.checkboxGroup
-        group.updateValue(checked, this.value)
-      } else {
-        // Standalone checkbox
-        this.$emit('update:modelValue', checked)
-      }
-      
-      this.$emit('change', checked)
-    }
-  },
-  emits: ['update:modelValue', 'change']
-};
+<script setup lang="ts">
+import { computed, inject, type ComputedRef } from 'vue'
+
+interface CheckboxGroupContext {
+  value: (string | number | boolean)[]
+  updateValue: (checked: boolean, value: string | number | boolean) => void
+}
+
+interface Props {
+  modelValue?: boolean
+  value?: string | number | boolean
+  id?: string
+  switch?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  modelValue: false,
+  switch: false
+})
+
+const emit = defineEmits<{
+  'update:modelValue': [value: boolean]
+  change: [checked: boolean]
+}>()
+
+const checkboxGroup = inject<ComputedRef<CheckboxGroupContext> | null>('checkboxGroup', null)
+
+const switchStyle = computed(() => props.switch)
+
+const isChecked = computed(() => {
+  if (checkboxGroup?.value) {
+    const group = checkboxGroup.value
+    return group.value?.includes(props.value as string | number | boolean) ?? false
+  }
+  return props.modelValue
+})
+
+function handleChange(event: Event) {
+  const target = event.target as HTMLInputElement
+  const checked = target.checked
+
+  if (checkboxGroup?.value) {
+    const group = checkboxGroup.value
+    group.updateValue(checked, props.value as string | number | boolean)
+  } else {
+    emit('update:modelValue', checked)
+  }
+
+  emit('change', checked)
+}
 </script>
 
 <style scoped>

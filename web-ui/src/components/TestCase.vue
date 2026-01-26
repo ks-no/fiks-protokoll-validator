@@ -1,99 +1,96 @@
 <template>
   <div>
-    <b-container>
-      <b-row>
-        <span class="grow-right" :class="!hasRun ? 'notHasrun' : ''">
-          <b-col sm="10">
+    <BContainer>
+      <BRow>
+        <span class="w-full" :class="!hasRun ? 'flex items-center' : ''">
+          <BCol sm="10">
             <span
-              v-on:click="isNotCollapsed = !isNotCollapsed"
-              v-on:keyup.enter="isNotCollapsed = !isNotCollapsed"
-              v-on:keyup.space="isNotCollapsed = !isNotCollapsed"
-              v-b-toggle="'collapse-' + operation+ '' + situation"
+              class="cursor-pointer"
+              @click="isNotCollapsed = !isNotCollapsed"
+              @keyup.enter="isNotCollapsed = !isNotCollapsed"
+              @keyup.space="isNotCollapsed = !isNotCollapsed"
             >
               <div>
-                <h5 class="flex-title">
-                  <b-icon-chevron-right
+                <h5 class="flex items-center justify-between w-full text-base">
+                  <BIconChevronRight
                     v-show="!isNotCollapsed"
-                    class="expand-icon"
+                    class="mr-1.5"
                   />
-                  <b-icon-chevron-down
+                  <BIconChevronDown
                     v-show="isNotCollapsed"
-                    class="expand-icon"
+                    class="mr-1.5"
                   />
-                  <span> {{ testName }}</span>
+                  <span class="flex-1">{{ testName }}</span>
                   <div
                     v-if="validState === 'invalid'"
-                    class="text-center">
-                    <b-icon-exclamation-circle-fill
-                    :class="'validState ' + validState"
-                    title="Ugyldig"
-                  />
+                    class="text-center"
+                  >
+                    <BIconExclamationCircleFill
+                      :class="'validState ' + validState"
+                      title="Ugyldig"
+                    />
                   </div>
                   <div
                     v-else-if="validState === 'valid'"
-                    class="text-center">
-                  <b-icon-check-circle-fill
-                    :class="'validState ' + validState"
-                    title="Gyldig"
-                  />
+                    class="text-center"
+                  >
+                    <BIconCheckCircleFill
+                      :class="'validState ' + validState"
+                      title="Gyldig"
+                    />
                   </div>
                   <div
                     v-else-if="validState === 'notValidated'"
                     class="text-center"
-                    >
-                  <b-icon-exclamation-circle-fill
-                    :class="'validState ' + validState"
-                    title="Ikke validert"
-                  />
-                 </div>
+                  >
+                    <BIconExclamationCircleFill
+                      :class="'validState ' + validState"
+                      title="Ikke validert"
+                    />
+                  </div>
                 </h5>
               </div>
             </span>
-          </b-col>
-          <b-col sm="2" style="margin-left: auto">
-            <b-form-checkbox
+          </BCol>
+          <BCol sm="2" class="ml-auto">
+            <BFormCheckbox
               v-if="!hasRun && supported"
-              class="ext-left"
+              class="float-left"
               switch
-              size="lg"
               :value="testId"
             />
-          </b-col>
+          </BCol>
         </span>
-        <b-collapse
+        <BCollapse
           class="ml-4"
-          :visible="!isCollapsed"
-          :id="'collapse-' + operation+ '' + situation"
+          :visible="isNotCollapsed"
+          :id="'collapse-' + operation + situation"
           style="width: 90%"
         >
-          <b-container fluid class="collapsecolor">
-            <b-row style="margin-bottom: 5px">
-              <b-col cols="4">
-                <strong class="header" style="float: left">Beskrivelse:</strong>
-              </b-col>
-              <b-col> {{ description }} </b-col>
-            </b-row>
-            <b-row style="margin-bottom: 5px">
-              <b-col cols="4">
-                <strong class="header" style="float: left">ID:</strong>
-              </b-col>
-              <b-col> {{ operation + "" + situation }} </b-col>
-            </b-row>
-            <b-row style="margin-bottom: 5px">
-              <b-col cols="4">
-                <strong class="header" style="float: left"
-                  >Meldingstype:</strong
-                >
-              </b-col>
-              <b-col> {{ messageType }} </b-col>
-            </b-row>
-            <b-row style="margin-bottom: 5px">
-              <b-col cols="4">
-                <strong class="header" style="float: left">
-                  Meldingsinnhold:
-                </strong>
-              </b-col>
-              <b-col>
+          <BContainer fluid class="bg-gray-100 p-4 rounded">
+            <BRow class="mb-1.5">
+              <BCol cols="4">
+                <strong class="float-left">Beskrivelse:</strong>
+              </BCol>
+              <BCol>{{ description }}</BCol>
+            </BRow>
+            <BRow class="mb-1.5">
+              <BCol cols="4">
+                <strong class="float-left">ID:</strong>
+              </BCol>
+              <BCol>{{ operation + situation }}</BCol>
+            </BRow>
+            <BRow class="mb-1.5">
+              <BCol cols="4">
+                <strong class="float-left">Meldingstype:</strong>
+              </BCol>
+              <BCol>{{ messageType }}</BCol>
+            </BRow>
+            <BRow class="mb-1.5">
+              <BCol cols="4">
+                <strong class="float-left">Meldingsinnhold:</strong>
+              </BCol>
+              <BCol>
                 <TestCasePayloadFile
                   :testId="testId"
                   :testName="testName"
@@ -104,18 +101,16 @@
                   :testSessionId="testSessionId"
                   :hasRun="hasRun"
                 />
-              </b-col>
-            </b-row>
+              </BCol>
+            </BRow>
             <div v-if="payloadAttachmentFileNames">
-              <b-row style="margin-bottom: 5px">
-                <b-col cols="4">
-                  <strong class="header" style="float: left">Vedlegg:</strong>
-                </b-col>
-                <b-col>
+              <BRow class="mb-1.5">
+                <BCol cols="4">
+                  <strong class="float-left">Vedlegg:</strong>
+                </BCol>
+                <BCol>
                   <div
-                    v-for="attachmentFileName in payloadAttachmentFileNames.split(
-                      ';'
-                    )"
+                    v-for="attachmentFileName in payloadAttachmentFileNames.split(';')"
                     :key="attachmentFileName"
                   >
                     <TestCasePayloadFile
@@ -130,127 +125,62 @@
                       :hasRun="hasRun"
                     />
                   </div>
-                </b-col>
-              </b-row>
+                </BCol>
+              </BRow>
             </div>
-          </b-container>
-        </b-collapse>
-        <hr />
-      </b-row>
-    </b-container>
-    <hr />
+          </BContainer>
+        </BCollapse>
+        <hr class="my-0 mx-[5%] border-0 border-t border-gray-200" />
+      </BRow>
+    </BContainer>
+    <hr class="my-0 mx-[5%] border-0 border-t border-gray-200" />
   </div>
 </template>
 
-<script>
-import TestCasePayloadFile from "./TestCasePayloadFile.vue";
+<script setup lang="ts">
+import { ref } from 'vue'
+import TestCasePayloadFile from './TestCasePayloadFile.vue'
+import BContainer from '@/components/ui/BContainer.vue'
+import BRow from '@/components/ui/BRow.vue'
+import BCol from '@/components/ui/BCol.vue'
+import BCollapse from '@/components/ui/BCollapse.vue'
+import BFormCheckbox from '@/components/ui/BFormCheckbox.vue'
+import BIconChevronRight from '@/components/ui/icons/BIconChevronRight.vue'
+import BIconChevronDown from '@/components/ui/icons/BIconChevronDown.vue'
+import BIconCheckCircleFill from '@/components/ui/icons/BIconCheckCircleFill.vue'
+import BIconExclamationCircleFill from '@/components/ui/icons/BIconExclamationCircleFill.vue'
 
-export default {
-  name: "testCase",
+type ValidationState = 'valid' | 'invalid' | 'notValidated'
 
-  components: {
-    TestCasePayloadFile,
-  },
+interface Props {
+  testName: string
+  testId: string
+  messageType: string
+  description: string
+  testStep: string
+  operation: string
+  expectedResult: string
+  situation: string
+  payloadFileName?: string
+  payloadAttachmentFileNames?: string
+  supported?: boolean
+  hasRun?: boolean
+  validState?: ValidationState
+  isCollapsed: boolean
+  protocol: string
+  testSessionId?: string
+}
 
-  data() {
-    return {
-      isNotCollapsed: !this.isCollapsed,
-      payloadFileContent: null,
-      payloadFileContentIsLoaded: false,
-    };
-  },
+const props = withDefaults(defineProps<Props>(), {
+  supported: false,
+  hasRun: false,
+  isCollapsed: true
+})
 
-  props: {
-    testName: {
-      required: true,
-      type: String,
-    },
-    testId: {
-      required: true,
-      type: String,
-    },
-    messageType: {
-      required: true,
-      type: String,
-    },
-    description: {
-      required: true,
-      type: String,
-    },
-    testStep: {
-      required: true,
-      type: String,
-    },
-    operation: {
-      required: true,
-      type: String,
-    },
-    expectedResult: {
-      required: true,
-      type: String,
-    },
-    situation: {
-      required: true,
-      type: String,
-    },
-    payloadFileName: {
-      type: String,
-    },
-    payloadAttachmentFileNames: {
-      type: String,
-    },
-    supported: {
-      type: Boolean,
-    },
-    hasRun: {
-      type: Boolean,
-    },
-    validState: {
-      type: String,
-    },
-    isCollapsed: {
-      required: true,
-      type: Boolean,
-    },
-    protocol: {
-      required:true,
-      type: String,
-    },
-    testSessionId: {
-      type: String
-    } 
-  },
-};
+const isNotCollapsed = ref(!props.isCollapsed)
 </script>
 
 <style scoped>
-strong.header {
-  float: right;
-}
-
-.flex-title {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-  font-size: 16px;
-}
-.test-case-id {
-  font-size: 14px;
-}
-
-.flex-title > * {
-  display: block;
-}
-
-.flex-title span {
-  flex: 1;
-}
-
-.expand-icon {
-  margin-right: 6px;
-}
-
 svg.validState {
   font-size: 24px;
 }
@@ -265,41 +195,5 @@ svg.invalid {
 
 svg.notValidated {
   color: rgb(231, 181, 42);
-}
-
-.collapsecolor {
-  background-color: rgb(241, 241, 241);
-}
-
-.ext-right {
-  float: right;
-}
-
-.grow-right {
-  width: 100%;
-}
-
-.grow-right.notHasrun > span,
-.grow-right.notHasrun > div {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-hr {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  margin-left: 5%;
-  margin-right: 10%;
-  border: 0;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-div span {
-  display: block;
-  line-height: 36px;
-}
-
-b-form-checkbox.ext-left {
-  float: left;
 }
 </style>

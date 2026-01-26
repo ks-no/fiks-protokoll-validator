@@ -4,8 +4,5 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'BCard'
-};
+<script setup lang="ts">
 </script>

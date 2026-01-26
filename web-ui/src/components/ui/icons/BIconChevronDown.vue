@@ -4,8 +4,5 @@
   </svg>
 </template>
 
-<script>
-export default {
-  name: 'BIconChevronDown'
-};
+<script setup lang="ts">
 </script>

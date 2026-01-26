@@ -2,42 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom global styles */
-html {
-  overflow-y: scroll;
+@layer base {
+  html {
+    overflow-y: scroll;
+  }
+
+  body {
+    @apply font-sans antialiased text-gray-900 text-sm;
+  }
+
+  h1 {
+    @apply mb-4;
+  }
+
+  th,
+  td {
+    @apply border border-gray-400 px-2.5 py-1.5;
+  }
 }
 
-body {
-  font-size: 14px;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer components {
+  /* Validation badges */
+  .validation-badge {
+    @apply px-2 py-1 rounded-full text-sm font-medium;
+  }
+
+  .validation-badge-valid {
+    @apply bg-green-100 text-green-800;
+  }
+
+  .validation-badge-invalid {
+    @apply bg-red-100 text-red-800;
+  }
+
+  .validation-badge-pending {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+
+  /* Result container */
+  .result {
+    @apply mb-8;
+  }
+
+  /* Validation state icons */
+  .validState.invalid {
+    @apply text-red-600;
+  }
+
+  .validState.notValidated {
+    @apply text-yellow-500;
+  }
+
+  .validState.valid {
+    @apply text-green-600;
+  }
+
+  /* Screen reader only */
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
 }
 
-h1 {
-  margin-bottom: 15px;
-}
+@layer utilities {
+  /* Custom scrollbar styles */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
 
-th,
-td {
-  border: 1px solid gray;
-  padding: 5px 10px;
-}
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
 
-.result {
-  margin-bottom: 35px;
-}
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded;
+  }
 
-/* Validation states */
-.validState.invalid {
-  color: #dc3545;
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-gray-100;
+  }
 }
-
-.validState.notValidated {
-  color: #ffc107;
-}
-
-.validState.valid {
-  color: #28a745;
-}
-
