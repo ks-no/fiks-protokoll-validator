@@ -23,17 +23,24 @@
       <label for="protocol-select" class="block text-sm font-semibold text-gray-700 mb-2">
         FIKS-protokoll
       </label>
-      <BFormSelect
+      <select
         id="protocol-select"
         v-model="selectedProtocol"
         @change="getTestsByProtocol"
-        :options="protocolOptions"
-        class="w-full md:w-1/2"
-      />
+        class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      >
+        <option
+          v-for="option in protocolOptions"
+          :key="option.value"
+          :value="option.value"
+        >
+          {{ option.text }}
+        </option>
+      </select>
     </div>
 
     <div class="mb-6">
-      <BLink
+      <router-link
         :to="{
           name: 'newTestSession',
           query: { fikskonto: recipientId, fiksprotocol: selectedProtocol },
@@ -41,11 +48,11 @@
         class="text-blue-600 hover:text-blue-800 underline"
       >
         Direkte lenke
-      </BLink>
+      </router-link>
     </div>
 
     <div class="mb-8">
-      <BFormGroup v-if="!hasRun">
+      <div v-if="!hasRun">
         <div class="bg-white border border-gray-200 rounded-lg p-6 mb-4">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="flex-1">
@@ -127,7 +134,7 @@
             :isCollapsed="true"
           />
         </BFormCheckboxGroup>
-      </BFormGroup>
+      </div>
     </div>
   </div>
 </template>
@@ -135,39 +142,15 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import axios from 'axios'
+import { useApi } from '@/composables/useApi'
 import TestCase from './TestCase.vue'
-import BFormSelect from '@/components/ui/BFormSelect.vue'
-import BLink from '@/components/ui/BLink.vue'
-import BFormGroup from '@/components/ui/BFormGroup.vue'
-import BFormCheckbox from '@/components/ui/BFormCheckbox.vue'
-import BButton from '@/components/ui/BButton.vue'
-import BSpinner from '@/components/ui/BSpinner.vue'
-import BAlert from '@/components/ui/BAlert.vue'
-import BFormCheckboxGroup from '@/components/ui/BFormCheckboxGroup.vue'
-
-interface TestCaseData {
-  testId: string
-  testName: string
-  messageType: string
-  description: string
-  testStep: string
-  operation: string
-  situation: string
-  expectedResult: string
-  payloadFileName?: string
-  payloadAttachmentFileNames?: string
-  supported: boolean
-  protocol: string
-}
-
-interface ProtocolOption {
-  value: string
-  text: string
-}
+import type { TestCase as TestCaseData, ProtocolOption } from '@/types'
+import type { CreateTestSessionResponse } from '@/types/api'
 
 const route = useRoute()
 const router = useRouter()
+const testCaseApi = useApi<TestCaseData[]>()
+const sessionApi = useApi<CreateTestSessionResponse>()
 
 const protocolOptions: ProtocolOption[] = [
   { value: 'ingen', text: 'Velg en FIKS-protokoll' },
@@ -207,11 +190,7 @@ async function getTestsByProtocol() {
 
   loading.value = true
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/TestCases/Protocol/${selectedProtocol.value}`,
-      { withCredentials: true }
-    )
-    testCases.value = response.data
+    testCases.value = await testCaseApi.get(`/api/TestCases/Protocol/${selectedProtocol.value}`)
   } catch {
     // Could add error handling
   } finally {
@@ -226,25 +205,18 @@ async function runSelectedTests() {
   showRequestError.value = false
 
   try {
-    const response = await axios.post(
-      `${import.meta.env.VITE_API_URL}/api/TestSessions`,
-      {
-        recipientId: recipientId.value,
-        selectedTestCaseIds: selectedTests.value,
-        protocol: selectedProtocol.value
-      },
-      { withCredentials: true }
-    )
+    const data = await sessionApi.post('/api/TestSessions', {
+      recipientId: recipientId.value,
+      selectedTestCaseIds: selectedTests.value,
+      protocol: selectedProtocol.value
+    })
 
-    if (response.status === 201) {
-      hasRun.value = true
-      router.push({ path: `/TestSession/${response.data.id}` })
-    }
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      requestErrorStatusCode.value = error.response.status
-      requestErrorMessage.value = error.response.data
-    }
+    hasRun.value = true
+    router.push({ path: `/TestSession/${data.id}` })
+  } catch (err) {
+    const error = err as { status: number; data?: unknown }
+    requestErrorStatusCode.value = error.status
+    requestErrorMessage.value = error.data as string
     showRequestError.value = true
   } finally {
     running.value = false

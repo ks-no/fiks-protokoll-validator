@@ -1,28 +1,14 @@
 import { ref, type Ref } from 'vue'
 import { useApi } from './useApi'
 import type { TestSession, TestCase, FiksRequest } from '@/types'
-
-interface CreateTestSessionParams {
-  recipientId: string
-  selectedTestCaseIds: string[]
-  protocol: string
-}
-
-interface CreateTestSessionResponse {
-  id: string
-  recipientId: string
-  protocol: string
-  status: string
-  testCaseIds: string[]
-  createdAt: string
-}
+import type { CreateTestSessionRequest, CreateTestSessionResponse } from '@/types/api'
 
 interface UseTestSessionReturn {
   testSession: Ref<TestSession | null>
   loading: Ref<boolean>
   error: Ref<{ status: number; message: string; data?: unknown } | null>
   fetchTestSession: (sessionId: string) => Promise<TestSession>
-  createTestSession: (params: CreateTestSessionParams) => Promise<CreateTestSessionResponse>
+  createTestSession: (params: CreateTestSessionRequest) => Promise<CreateTestSessionResponse>
   sortRequests: (requests: FiksRequest[]) => FiksRequest[]
 }
 
@@ -39,7 +25,7 @@ export function useTestSession(): UseTestSessionReturn {
     return testSession.value
   }
 
-  async function createTestSession(params: CreateTestSessionParams): Promise<CreateTestSessionResponse> {
+  async function createTestSession(params: CreateTestSessionRequest): Promise<CreateTestSessionResponse> {
     const createApi = useApi<CreateTestSessionResponse>()
     return createApi.post('/api/TestSessions', params)
   }

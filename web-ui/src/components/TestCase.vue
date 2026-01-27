@@ -1,9 +1,9 @@
 <template>
   <div>
-    <BContainer>
-      <BRow>
+    <div class="w-full px-4">
+      <div class="flex flex-wrap">
         <span class="w-full" :class="!hasRun ? 'flex items-center' : ''">
-          <BCol sm="10">
+          <div class="flex-1 sm:w-10/12">
             <span
               class="cursor-pointer"
               @click="isNotCollapsed = !isNotCollapsed"
@@ -12,12 +12,14 @@
             >
               <div>
                 <h5 class="flex items-center justify-between w-full text-base">
-                  <BIconChevronRight
+                  <font-awesome-icon
                     v-show="!isNotCollapsed"
+                    icon="fa-solid fa-chevron-right"
                     class="mr-1.5"
                   />
-                  <BIconChevronDown
+                  <font-awesome-icon
                     v-show="isNotCollapsed"
+                    icon="fa-solid fa-chevron-down"
                     class="mr-1.5"
                   />
                   <span class="flex-1">{{ testName }}</span>
@@ -25,7 +27,8 @@
                     v-if="validState === 'invalid'"
                     class="text-center"
                   >
-                    <BIconExclamationCircleFill
+                    <font-awesome-icon
+                      icon="fa-solid fa-circle-exclamation"
                       :class="'validState ' + validState"
                       title="Ugyldig"
                     />
@@ -34,7 +37,8 @@
                     v-else-if="validState === 'valid'"
                     class="text-center"
                   >
-                    <BIconCheckCircleFill
+                    <font-awesome-icon
+                      icon="fa-solid fa-circle-check"
                       :class="'validState ' + validState"
                       title="Gyldig"
                     />
@@ -43,7 +47,8 @@
                     v-else-if="validState === 'notValidated'"
                     class="text-center"
                   >
-                    <BIconExclamationCircleFill
+                    <font-awesome-icon
+                      icon="fa-solid fa-circle-exclamation"
                       :class="'validState ' + validState"
                       title="Ikke validert"
                     />
@@ -51,88 +56,68 @@
                 </h5>
               </div>
             </span>
-          </BCol>
-          <BCol sm="2" class="ml-auto">
+          </div>
+          <div class="sm:w-2/12 ml-auto">
             <BFormCheckbox
               v-if="!hasRun && supported"
               class="float-left"
               switch
               :value="testId"
             />
-          </BCol>
+          </div>
         </span>
-        <BCollapse
+        <div
+          v-show="isNotCollapsed"
           class="ml-4"
-          :visible="isNotCollapsed"
           :id="'collapse-' + operation + situation"
           style="width: 90%"
         >
-          <BContainer fluid class="bg-gray-100 p-4 rounded">
-            <BRow class="mb-1.5">
-              <BCol cols="4">
-                <strong class="float-left">Beskrivelse:</strong>
-              </BCol>
-              <BCol>{{ description }}</BCol>
-            </BRow>
-            <BRow class="mb-1.5">
-              <BCol cols="4">
-                <strong class="float-left">ID:</strong>
-              </BCol>
-              <BCol>{{ operation + situation }}</BCol>
-            </BRow>
-            <BRow class="mb-1.5">
-              <BCol cols="4">
-                <strong class="float-left">Meldingstype:</strong>
-              </BCol>
-              <BCol>{{ messageType }}</BCol>
-            </BRow>
-            <BRow class="mb-1.5">
-              <BCol cols="4">
-                <strong class="float-left">Meldingsinnhold:</strong>
-              </BCol>
-              <BCol>
-                <TestCasePayloadFile
-                  :testId="testId"
-                  :testName="testName"
-                  :fileName="payloadFileName"
-                  :operation="operation"
-                  :situation="situation"
-                  :protocol="protocol"
-                  :testSessionId="testSessionId"
-                  :hasRun="hasRun"
-                />
-              </BCol>
-            </BRow>
-            <div v-if="payloadAttachmentFileNames">
-              <BRow class="mb-1.5">
-                <BCol cols="4">
-                  <strong class="float-left">Vedlegg:</strong>
-                </BCol>
-                <BCol>
-                  <div
-                    v-for="attachmentFileName in payloadAttachmentFileNames.split(';')"
-                    :key="attachmentFileName"
-                  >
-                    <TestCasePayloadFile
-                      :testId="testId"
-                      :testName="testName"
-                      :operation="operation"
-                      :situation="situation"
-                      :protocol="protocol"
-                      :fileName="attachmentFileName"
-                      :isAttachment="true"
-                      :testSessionId="testSessionId"
-                      :hasRun="hasRun"
-                    />
-                  </div>
-                </BCol>
-              </BRow>
-            </div>
-          </BContainer>
-        </BCollapse>
+          <div class="w-full bg-gray-100 p-4 rounded grid grid-cols-[1fr_2fr] gap-y-1.5">
+            <strong class="float-left">Beskrivelse:</strong>
+            <span>{{ description }}</span>
+            <strong class="float-left">ID:</strong>
+            <span>{{ operation + situation }}</span>
+            <strong class="float-left">Meldingstype:</strong>
+            <span>{{ messageType }}</span>
+            <strong class="float-left">Meldingsinnhold:</strong>
+            <span>
+              <TestCasePayloadFile
+                :testId="testId"
+                :testName="testName"
+                :fileName="payloadFileName"
+                :operation="operation"
+                :situation="situation"
+                :protocol="protocol"
+                :testSessionId="testSessionId"
+                :hasRun="hasRun"
+              />
+            </span>
+            <template v-if="payloadAttachmentFileNames">
+              <strong class="float-left">Vedlegg:</strong>
+              <span>
+                <div
+                  v-for="attachmentFileName in payloadAttachmentFileNames.split(';')"
+                  :key="attachmentFileName"
+                >
+                  <TestCasePayloadFile
+                    :testId="testId"
+                    :testName="testName"
+                    :operation="operation"
+                    :situation="situation"
+                    :protocol="protocol"
+                    :fileName="attachmentFileName"
+                    :isAttachment="true"
+                    :testSessionId="testSessionId"
+                    :hasRun="hasRun"
+                  />
+                </div>
+              </span>
+            </template>
+          </div>
+        </div>
         <hr class="my-0 mx-[5%] border-0 border-t border-gray-200" />
-      </BRow>
-    </BContainer>
+      </div>
+    </div>
     <hr class="my-0 mx-[5%] border-0 border-t border-gray-200" />
   </div>
 </template>
@@ -140,17 +125,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import TestCasePayloadFile from './TestCasePayloadFile.vue'
-import BContainer from '@/components/ui/BContainer.vue'
-import BRow from '@/components/ui/BRow.vue'
-import BCol from '@/components/ui/BCol.vue'
-import BCollapse from '@/components/ui/BCollapse.vue'
-import BFormCheckbox from '@/components/ui/BFormCheckbox.vue'
-import BIconChevronRight from '@/components/ui/icons/BIconChevronRight.vue'
-import BIconChevronDown from '@/components/ui/icons/BIconChevronDown.vue'
-import BIconCheckCircleFill from '@/components/ui/icons/BIconCheckCircleFill.vue'
-import BIconExclamationCircleFill from '@/components/ui/icons/BIconExclamationCircleFill.vue'
-
-type ValidationState = 'valid' | 'invalid' | 'notValidated'
+import type { ValidationState } from '@/types'
 
 interface Props {
   testName: string
@@ -179,21 +154,3 @@ const props = withDefaults(defineProps<Props>(), {
 
 const isNotCollapsed = ref(!props.isCollapsed)
 </script>
-
-<style scoped>
-svg.validState {
-  font-size: 24px;
-}
-
-svg.valid {
-  color: green;
-}
-
-svg.invalid {
-  color: #cc3333;
-}
-
-svg.notValidated {
-  color: rgb(231, 181, 42);
-}
-</style>

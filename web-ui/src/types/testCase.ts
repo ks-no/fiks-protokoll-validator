@@ -26,7 +26,7 @@ export interface FiksResponseTest {
 export interface FiksPayload {
   id: string
   filename: string
-  content?: string
+  payload?: string
 }
 
 export interface FiksResponse {

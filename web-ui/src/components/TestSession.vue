@@ -58,11 +58,19 @@
           <h3 class="text-lg font-semibold text-gray-900 mb-3">Statusforklaring</h3>
           <div class="space-y-2 text-sm text-gray-700">
             <p class="flex items-center gap-2">
-              <BIconExclamationCircleFill class="validState invalid" title="Ugyldig" />
+              <font-awesome-icon
+                icon="fa-solid fa-circle-exclamation"
+                class="validState invalid"
+                title="Ugyldig"
+              />
               <span><strong>Ugyldig:</strong> Testen har feil eller mangler</span>
             </p>
             <p class="flex items-center gap-2">
-              <BIconExclamationCircleFill class="validState notValidated" title="Ikke validert" />
+              <font-awesome-icon
+                icon="fa-solid fa-circle-exclamation"
+                class="validState notValidated"
+                title="Ikke validert"
+              />
               <span><strong>Ikke validert:</strong> Har ikke mottatt svar</span>
             </p>
           </div>
@@ -106,70 +114,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import axios from 'axios'
+import { useApi } from '@/composables/useApi'
 import { useClipboard } from '@/composables/useClipboard'
 import Request from './Request.vue'
-import BButton from '@/components/ui/BButton.vue'
-import BAlert from '@/components/ui/BAlert.vue'
-import BSpinner from '@/components/ui/BSpinner.vue'
-import BIconExclamationCircleFill from '@/components/ui/icons/BIconExclamationCircleFill.vue'
-
-interface TestCase {
-  testId: string
-  testName: string
-  messageType: string
-  description: string
-  testStep: string
-  operation: string
-  situation: string
-  expectedResult: string
-  payloadFileName?: string
-  payloadAttachmentFileNames?: string
-  protocol: string
-  fiksResponseTests?: Array<{
-    id: string
-    payloadQuery: string
-    valueType: number
-    expectedValue: string
-  }>
-}
-
-interface FiksPayload {
-  id: string
-  filename: string
-  payload?: string
-}
-
-interface FiksResponse {
-  id: string
-  receivedAt: string
-  type: string
-  fiksPayloads: FiksPayload[]
-  payloadContent?: string
-}
-
-interface FiksRequest {
-  messageGuid: string
-  sentAt: string
-  testCase: TestCase
-  fiksResponses: FiksResponse[]
-  customPayloadFile?: {
-    filename: string
-    content?: string
-  }
-  isFiksResponseValidated: boolean
-  fiksResponseValidationErrors: string[]
-}
-
-interface TestSessionData {
-  id: string
-  recipientId: string
-  protocol: string
-  status: string
-  createdAt: string
-  completedAt?: string
-  fiksRequests: FiksRequest[]
-}
+import type { TestSession as TestSessionData } from '@/types'
 
 interface ErrorMessage {
   title?: string
@@ -177,6 +125,7 @@ interface ErrorMessage {
 
 const route = useRoute()
 const { copy, copied } = useClipboard()
+const api = useApi<TestSessionData>()
 
 const testSession = ref<TestSessionData | null>(null)
 const loading = ref(false)
@@ -204,30 +153,24 @@ async function fetchTestSession() {
   fetchError.value = false
 
   try {
-    const response = await axios.get(
-      `${import.meta.env.VITE_API_URL}/api/TestSessions/${testSessionId}`
-    )
-
-    if (response.status === 200) {
-      testSession.value = {
-        ...response.data,
-        fiksRequests: sortRequests(response.data.fiksRequests)
-      }
-      localStorage.setItem('validatorLastTest', sessionUrl.value)
-      localStorage.setItem('createdAt', response.data.createdAt)
+    const data = await api.get(`/api/TestSessions/${testSessionId}`)
+    testSession.value = {
+      ...data,
+      fiksRequests: sortRequests(data.fiksRequests)
     }
-  } catch (error) {
-    if (axios.isAxiosError(error) && error.response) {
-      requestErrorStatusCode.value = error.response.status
-      requestErrorMessage.value = error.response.data
-    }
+    localStorage.setItem('validatorLastTest', sessionUrl.value)
+    localStorage.setItem('createdAt', data.createdAt)
+  } catch (err) {
+    const error = err as { status: number; data?: unknown }
+    requestErrorStatusCode.value = error.status
+    requestErrorMessage.value = error.data as string | ErrorMessage
     fetchError.value = true
   } finally {
     loading.value = false
   }
 }
 
-function sortRequests(requests: FiksRequest[]): FiksRequest[] {
+function sortRequests(requests: TestSessionData['fiksRequests']): TestSessionData['fiksRequests'] {
   if (!requests) return []
   return [...requests].sort((a, b) =>
     new Date(a.sentAt).getTime() - new Date(b.sentAt).getTime()
@@ -244,22 +187,3 @@ onMounted(() => {
   }
 })
 </script>
-
-<style scoped>
-img {
-  margin-top: 50px;
-}
-
-svg.validState {
-  font-size: 24px;
-  margin-right: 6px;
-}
-
-svg.notValidated {
-  color: rgb(231, 181, 42);
-}
-
-svg.invalid {
-  color: #cc3333;
-}
-</style>

@@ -1,5 +1,4 @@
 import { ref, type Ref } from 'vue'
-import axios, { type AxiosError, type AxiosRequestConfig } from 'axios'
 
 interface ApiError {
   status: number
@@ -7,12 +6,16 @@ interface ApiError {
   data?: unknown
 }
 
+interface RequestOptions {
+  responseType?: 'json' | 'text' | 'blob'
+}
+
 interface UseApiReturn<T> {
   data: Ref<T | null>
   loading: Ref<boolean>
   error: Ref<ApiError | null>
-  get: (endpoint: string, config?: AxiosRequestConfig) => Promise<T>
-  post: <R = T>(endpoint: string, payload: unknown, config?: AxiosRequestConfig) => Promise<R>
+  get: (endpoint: string, options?: RequestOptions) => Promise<T>
+  post: <R = T>(endpoint: string, payload: unknown, options?: RequestOptions) => Promise<R>
 }
 
 export function useApi<T = unknown>(): UseApiReturn<T> {
@@ -21,23 +24,46 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
   const loading = ref(false)
   const error = ref<ApiError | null>(null)
 
-  async function get(endpoint: string, config?: AxiosRequestConfig): Promise<T> {
+  async function handleResponse<R>(response: Response, responseType: string = 'json'): Promise<R> {
+    if (!response.ok) {
+      let errorData: unknown
+      try {
+        errorData = await response.json()
+      } catch {
+        errorData = await response.text()
+      }
+      const apiError: ApiError = {
+        status: response.status,
+        message: response.statusText,
+        data: errorData
+      }
+      error.value = apiError
+      throw apiError
+    }
+
+    if (responseType === 'text') return await response.text() as R
+    if (responseType === 'blob') return await response.blob() as R
+    return await response.json() as R
+  }
+
+  async function get(endpoint: string, options?: RequestOptions): Promise<T> {
     loading.value = true
     error.value = null
 
     try {
-      const response = await axios.get<T>(`${baseUrl}${endpoint}`, {
-        withCredentials: true,
-        ...config
+      const response = await fetch(`${baseUrl}${endpoint}`, {
+        credentials: 'include'
       })
-      data.value = response.data
-      return response.data
+      const result = await handleResponse<T>(response, options?.responseType)
+      data.value = result
+      return result
     } catch (err) {
-      const axiosError = err as AxiosError
+      if ((err as ApiError).status) {
+        throw err
+      }
       error.value = {
-        status: axiosError.response?.status ?? 0,
-        message: axiosError.message,
-        data: axiosError.response?.data
+        status: 0,
+        message: (err as Error).message
       }
       throw error.value
     } finally {
@@ -45,22 +71,31 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
     }
   }
 
-  async function post<R = T>(endpoint: string, payload: unknown, config?: AxiosRequestConfig): Promise<R> {
+  async function post<R = T>(endpoint: string, payload: unknown, options?: RequestOptions): Promise<R> {
     loading.value = true
     error.value = null
 
+    const isFormData = payload instanceof FormData
+    const headers: Record<string, string> = {}
+    if (!isFormData) {
+      headers['Content-Type'] = 'application/json'
+    }
+
     try {
-      const response = await axios.post<R>(`${baseUrl}${endpoint}`, payload, {
-        withCredentials: true,
-        ...config
+      const response = await fetch(`${baseUrl}${endpoint}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers,
+        body: isFormData ? payload : JSON.stringify(payload)
       })
-      return response.data
+      return await handleResponse<R>(response, options?.responseType)
     } catch (err) {
-      const axiosError = err as AxiosError
+      if ((err as ApiError).status) {
+        throw err
+      }
       error.value = {
-        status: axiosError.response?.status ?? 0,
-        message: axiosError.message,
-        data: axiosError.response?.data
+        status: 0,
+        message: (err as Error).message
       }
       throw error.value
     } finally {

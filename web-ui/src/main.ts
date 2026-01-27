@@ -2,17 +2,16 @@ import { createApp, type App as VueApp, type Plugin } from 'vue'
 import App from '@/App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faCircleCheck, faCircleExclamation, faChevronRight, faChevronDown, faFileCirclePlus, faFileCircleMinus } from '@fortawesome/free-solid-svg-icons'
 import StartPage from '@/components/StartPage.vue'
 import TestSession from '@/components/TestSession.vue'
 import NewTestSession from '@/components/NewTestSession.vue'
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import '@/assets/main.css'
 
-// Import UI components
 import UIComponents from '@/components/ui'
 
-library.add(faCheck)
+library.add(faCheck, faCircleCheck, faCircleExclamation, faChevronRight, faChevronDown, faFileCirclePlus, faFileCircleMinus)
 
 const routes: RouteRecordRaw[] = [
   {

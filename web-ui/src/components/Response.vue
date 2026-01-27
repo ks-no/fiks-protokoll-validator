@@ -6,14 +6,14 @@
         @click="isCollapsed = !isCollapsed"
       >
         <strong class="flex items-center gap-2">
-          <BIconFilePlus v-if="isCollapsed" />
-          <BIconFileMinus v-if="!isCollapsed" />
+          <font-awesome-icon v-if="isCollapsed" icon="fa-solid fa-file-circle-plus" />
+          <font-awesome-icon v-if="!isCollapsed" icon="fa-solid fa-file-circle-minus" />
           {{ messageType }}
         </strong>
       </div>
     </span>
-    <BCollapse :visible="!isCollapsed" :id="'collapse-' + collapseId" class="mt-2">
-      <BCard>
+    <div v-show="!isCollapsed" :id="'collapse-' + collapseId" class="mt-2">
+      <div class="bg-white rounded-lg shadow p-6 mb-8">
         <p><strong>Mottatt: </strong>{{ formatDateTime(receivedAt) }}</p>
         <div
           v-for="payload in payloads"
@@ -24,8 +24,8 @@
             <PayloadFile :fileName="payload.filename" :content="payload.payload" />
           </p>
         </div>
-      </BCard>
-    </BCollapse>
+      </div>
+    </div>
   </li>
 </template>
 
@@ -33,15 +33,7 @@
 import { ref } from 'vue'
 import { useDateFormat } from '@/composables/useDateFormat'
 import PayloadFile from './PayloadFile.vue'
-import BCollapse from '@/components/ui/BCollapse.vue'
-import BCard from '@/components/ui/BCard.vue'
-import BIconFilePlus from '@/components/ui/icons/BIconFilePlus.vue'
-import BIconFileMinus from '@/components/ui/icons/BIconFileMinus.vue'
-
-interface FiksPayload {
-  filename: string
-  payload?: string
-}
+import type { FiksPayload } from '@/types'
 
 interface Props {
   collapseId: string

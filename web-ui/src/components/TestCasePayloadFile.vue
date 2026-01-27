@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import axios from 'axios'
+import { useApi } from '@/composables/useApi'
 import PayloadFile from './PayloadFile.vue'
 import PayloadFileUpload from '@/components/PayloadFileUpload.vue'
 
@@ -58,15 +58,14 @@ const attachmentUrl = computed(() => {
 
 async function getContent(isTextContent: boolean) {
   const resourceUrl = props.isAttachment ? attachmentUrl.value : payloadUrl.value
-
-  const settings = {
-    responseType: isTextContent ? 'text' : 'blob',
-    responseEncoding: isTextContent ? 'utf-16' : 'base64'
-  } as const
+  const api = useApi<string>()
 
   try {
-    const response = await axios.get(resourceUrl, settings)
-    payloadFileContent.value = response.data
+    const result = await api.get(
+      resourceUrl.replace(import.meta.env.VITE_API_URL || '', ''),
+      { responseType: isTextContent ? 'text' : 'text' }
+    )
+    payloadFileContent.value = result
   } catch {
     // Could add error handling here
   }

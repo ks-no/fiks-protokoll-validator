@@ -37,7 +37,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from 'axios'
+import { useApi } from '@/composables/useApi'
 
 interface Props {
   testId?: string
@@ -51,7 +51,6 @@ const fileInput = ref<HTMLInputElement | null>(null)
 const file = ref<File | null>(null)
 const fileUploadText = ref('Velg egendefinert melding')
 const fileUploadSuccess = ref(false)
-const apiBaseUrl = import.meta.env.VITE_API_URL + '/api/TestCasePayloadFiles'
 
 function handleFileUpload() {
   if (fileInput.value?.files?.[0]) {
@@ -66,17 +65,9 @@ async function submitFile() {
   const formData = new FormData()
   formData.append('file', file.value)
 
+  const api = useApi()
   try {
-    await axios.post(
-      `${apiBaseUrl}/${props.testId}/payload`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        withCredentials: true
-      }
-    )
+    await api.post(`/api/TestCasePayloadFiles/${props.testId}/payload`, formData)
     fileUploadSuccess.value = true
   } catch {
     // Upload failed - could add error handling here

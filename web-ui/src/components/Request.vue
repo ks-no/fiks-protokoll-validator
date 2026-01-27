@@ -17,18 +17,16 @@
       :isCollapsed="isCollapsed"
       :testSessionId="testSessionId"
     />
-    <BCollapse :visible="!isCollapsed" :id="'collapse-' + testCase.operation + testCase.situation">
-      <BContainer fluid>
-        <BRow class="mb-6">
-          <BCol cols="2"><strong class="float-right">Sendt: </strong></BCol>
-          <BCol>{{ formatDateTime(sentAt) }}</BCol>
-        </BRow>
+    <div v-show="!isCollapsed" :id="'collapse-' + testCase.operation + testCase.situation">
+      <div class="w-full px-4">
+        <div class="grid grid-cols-[1fr_2fr] gap-y-1.5 mb-6">
+          <strong class="text-right pr-2">Sendt: </strong>
+          <span>{{ formatDateTime(sentAt) }}</span>
+        </div>
         <div v-if="testCase.fiksResponseTests && testCase.fiksResponseTests.length > 0">
-          <BRow class="mb-1.5">
-            <BCol cols="2">
-              <strong class="float-right">Testspørringer:</strong>
-            </BCol>
-            <BCol>
+          <div class="grid grid-cols-[1fr_2fr] gap-y-1.5 mb-1.5">
+            <strong class="text-right pr-2">Testspørringer:</strong>
+            <span>
               <a
                 v-for="fiksResponseTest in testCase.fiksResponseTests"
                 :key="fiksResponseTest.id"
@@ -46,11 +44,11 @@
                         : "[key='" + fiksResponseTest.expectedValue + "']")
                 }}
               </a>
-            </BCol>
-          </BRow>
+            </span>
+          </div>
         </div>
-      </BContainer>
-      <BCard>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6 mb-8">
         <ul class="space-y-2">
           <h6 class="font-semibold">Svarmeldinger</h6>
           <span v-if="validState === 'notValidated'">Ingen svarmeldinger funnet..</span>
@@ -64,12 +62,13 @@
             :payloadContent="response.payloadContent"
           />
         </ul>
-      </BCard>
-      <BCard>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6 mb-8">
         <h6 class="font-semibold">Testresultat</h6>
         <div v-if="validState === 'notValidated'" class="flex items-center gap-2">
-          <BIconExclamationCircleFill
-            :class="'validState ' + validState"
+          <font-awesome-icon
+            icon="fa-solid fa-circle-exclamation"
+            class="validState notValidated"
             title="Ikke validert"
           />
           <label>Validering er ikke utført</label>
@@ -83,15 +82,16 @@
             :key="error"
             class="flex items-center gap-2"
           >
-            <BIconExclamationCircleFill
-              :class="'validState ' + validState"
+            <font-awesome-icon
+              icon="fa-solid fa-circle-exclamation"
+              class="validState invalid"
               title="Ugyldig"
             />
             {{ error }}
           </label>
         </div>
-      </BCard>
-    </BCollapse>
+      </div>
+    </div>
   </li>
 </template>
 
@@ -100,35 +100,7 @@ import { ref, onBeforeMount } from 'vue'
 import { useDateFormat } from '@/composables/useDateFormat'
 import TestCase from './TestCase.vue'
 import Response from './Response.vue'
-import BContainer from '@/components/ui/BContainer.vue'
-import BRow from '@/components/ui/BRow.vue'
-import BCol from '@/components/ui/BCol.vue'
-import BCollapse from '@/components/ui/BCollapse.vue'
-import BCard from '@/components/ui/BCard.vue'
-import BIconExclamationCircleFill from '@/components/ui/icons/BIconExclamationCircleFill.vue'
-
-type ValidationState = 'valid' | 'invalid' | 'notValidated'
-
-interface FiksResponseTest {
-  id: string
-  payloadQuery: string
-  valueType: number
-  expectedValue: string
-}
-
-interface FiksPayload {
-  id: string
-  filename: string
-  payload?: string
-}
-
-interface FiksResponse {
-  id: string
-  receivedAt: string
-  type: string
-  fiksPayloads: FiksPayload[]
-  payloadContent?: string
-}
+import type { FiksResponseTest, FiksResponse, ValidationState } from '@/types'
 
 interface TestCaseData {
   testId: string
@@ -176,18 +148,3 @@ onBeforeMount(() => {
   }
 })
 </script>
-
-<style scoped>
-svg.validState {
-  font-size: 24px;
-  margin-right: 6px;
-}
-
-svg.notValidated {
-  color: rgb(231, 181, 42);
-}
-
-svg.invalid {
-  color: #cc3333;
-}
-</style>

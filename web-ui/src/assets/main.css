@@ -22,29 +22,12 @@
 }
 
 @layer components {
-  /* Validation badges */
-  .validation-badge {
-    @apply px-2 py-1 rounded-full text-sm font-medium;
-  }
-
-  .validation-badge-valid {
-    @apply bg-green-100 text-green-800;
-  }
-
-  .validation-badge-invalid {
-    @apply bg-red-100 text-red-800;
-  }
-
-  .validation-badge-pending {
-    @apply bg-yellow-100 text-yellow-800;
-  }
-
-  /* Result container */
-  .result {
-    @apply mb-8;
-  }
-
   /* Validation state icons */
+  .validState {
+    font-size: 24px;
+    margin-right: 6px;
+  }
+
   .validState.invalid {
     @apply text-red-600;
   }
@@ -55,31 +38,5 @@
 
   .validState.valid {
     @apply text-green-600;
-  }
-
-  /* Screen reader only */
-  .sr-only {
-    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
-    clip: rect(0, 0, 0, 0);
-  }
-}
-
-@layer utilities {
-  /* Custom scrollbar styles */
-  .scrollbar-thin {
-    scrollbar-width: thin;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 rounded;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-track {
-    @apply bg-gray-100;
   }
 }
