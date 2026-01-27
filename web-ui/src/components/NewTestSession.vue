@@ -1,10 +1,10 @@
 <template>
   <div class="newTestSession max-w-7xl mx-auto px-4 py-6">
-    <h1 class="text-3xl font-bold text-gray-900 mb-6">Ny Test Sesjon</h1>
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">Ny testsesjon</h1>
 
     <div class="mb-6">
       <label for="account-id" class="block text-sm font-semibold text-gray-700 mb-2">
-        FIKS-konto (UUID)
+        Konto ID 
       </label>
       <input
         id="account-id"
@@ -12,16 +12,16 @@
         type="text"
         class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
         placeholder="f.eks. 76b035a9-2d73-48bf-b758-981195333191"
-        aria-label="FIKS-konto UUID"
+        aria-label="FIKS-IO konto (UUID)"
       />
       <p class="mt-2 text-sm text-gray-600">
-        Angi UUID for FIKS-kontoen du vil kjøre tester mot
+        FIKS-IO konto (UUID)
       </p>
     </div>
 
     <div class="mb-6">
       <label for="protocol-select" class="block text-sm font-semibold text-gray-700 mb-2">
-        FIKS-protokoll
+        Protokoll
       </label>
       <select
         id="protocol-select"

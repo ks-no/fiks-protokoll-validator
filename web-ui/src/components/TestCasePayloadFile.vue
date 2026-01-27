@@ -63,7 +63,7 @@ async function getContent(isTextContent: boolean) {
   try {
     const result = await api.get(
       resourceUrl.replace(import.meta.env.VITE_API_URL || '', ''),
-      { responseType: isTextContent ? 'text' : 'text' }
+      { responseType: isTextContent ? 'text' : 'blob' }
     )
     payloadFileContent.value = result
   } catch {

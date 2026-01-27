@@ -32,7 +32,8 @@ const mockTestCases: Record<string, TestCaseData[]> = {
       situation: 'N1',
       expectedResult: 'Leverer en saksmappe fra arkiv som har en referanseEksternNoekkel',
       supported: true,
-      protocol: 'no.ks.fiks.arkiv.v1'
+      protocol: 'no.ks.fiks.arkiv.v1',
+      payloadFileName: 'hent-saksmappe.xml'
     },
     {
       testId: 'HentJournalpostN1',
@@ -44,7 +45,8 @@ const mockTestCases: Record<string, TestCaseData[]> = {
       situation: 'N1',
       expectedResult: 'Leverer en journalpost fra arkiv',
       supported: true,
-      protocol: 'no.ks.fiks.arkiv.v1'
+      protocol: 'no.ks.fiks.arkiv.v1',
+      payloadFileName: 'hent-journalpost.xml'
     },
     {
       testId: 'NyJournalpostF7',
@@ -56,7 +58,8 @@ const mockTestCases: Record<string, TestCaseData[]> = {
       situation: 'F7',
       expectedResult: 'FinderFault med info om at journalpost ikke finnes',
       supported: false,
-      protocol: 'no.ks.fiks.arkiv.v1'
+      protocol: 'no.ks.fiks.arkiv.v1',
+      payloadFileName: 'ny-journalpost.xml'
     }
   ],
   'no.ks.fiks.plan.v2': [
@@ -70,7 +73,8 @@ const mockTestCases: Record<string, TestCaseData[]> = {
       situation: 'N1',
       expectedResult: 'Leverer en plan fra planregisteret',
       supported: true,
-      protocol: 'no.ks.fiks.plan.v2'
+      protocol: 'no.ks.fiks.plan.v2',
+      payloadFileName: 'hent-plan.xml'
     }
   ],
   'no.ks.fiks.matrikkelfoering.v2': [
@@ -84,7 +88,8 @@ const mockTestCases: Record<string, TestCaseData[]> = {
       situation: 'N1',
       expectedResult: 'Matrikkel oppdatert',
       supported: true,
-      protocol: 'no.ks.fiks.matrikkelfoering.v2'
+      protocol: 'no.ks.fiks.matrikkelfoering.v2',
+      payloadFileName: 'oppdater-matrikkel.xml'
     }
   ]
 }
@@ -141,6 +146,12 @@ export function createMockApiPlugin(): Plugin {
               res.end(JSON.stringify({ error: 'Invalid request' }))
             }
           })
+          return
+        }
+
+        if (url.startsWith('/api/TestCasePayloadFiles/')) {
+          res.setHeader('Content-Type', 'text/plain')
+          res.end('<?xml version="1.0" encoding="UTF-8"?>\n<mock>\n  <payload>Mock payload innhold for testing</payload>\n</mock>')
           return
         }
 
