@@ -59,7 +59,7 @@
               <h3 class="text-2xl font-bold text-gray-900 mb-3">
                 Tester
               </h3>
-              <BFormCheckbox
+              <UiCheckbox
                 v-show="!hasRun"
                 id="switch_supported"
                 v-model="showNotSupportedTests"
@@ -68,11 +68,11 @@
                 @change="toggleAllSupportedTests"
               >
                 Vis tester som ikke er implementert
-              </BFormCheckbox>
+              </UiCheckbox>
             </div>
 
             <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-              <BFormCheckbox
+              <UiCheckbox
                 v-show="!hasRun"
                 id="switch_selectAllTests"
                 switch
@@ -83,33 +83,33 @@
                 class="text-base"
               >
                 {{ allTestsSelected ? 'Velg ingen' : 'Velg alle' }}
-              </BFormCheckbox>
+              </UiCheckbox>
 
-              <BButton
+              <UiButton
                 variant="primary"
                 @click="runSelectedTests"
                 v-if="!hasRun || running"
                 :disabled="running || !fiksAccountPresent || selectedTests.length === 0"
                 class="px-6 py-2.5 text-base font-medium"
               >
-                <BSpinner v-if="running" small class="mr-2"></BSpinner>
+                <UiSpinner v-if="running" small class="mr-2"></UiSpinner>
                 {{ running ? 'Kjører...' : `Kjør valgte tester (${selectedTests.length})` }}
-              </BButton>
+              </UiButton>
             </div>
           </div>
         </div>
 
-        <BAlert v-model="showRequestError" variant="danger" dismissible class="mb-4">
+        <UiAlert v-model="showRequestError" variant="danger" dismissible class="mb-4">
           <p class="font-semibold">Testing feilet med statuskode {{ requestErrorStatusCode }}</p>
           <p class="text-sm mt-1">{{ requestErrorMessage }}</p>
-        </BAlert>
+        </UiAlert>
 
         <div v-if="loading && !running" class="flex items-center justify-center py-8">
-          <BSpinner label="Laster tester..."></BSpinner>
+          <UiSpinner label="Laster tester..."></UiSpinner>
           <span class="ml-3 text-gray-600">Laster tester...</span>
         </div>
 
-        <BFormCheckboxGroup
+        <UiCheckboxGroup
           id="test-list-all"
           v-model="selectedTests"
           name="test-list-all"
@@ -133,7 +133,7 @@
             :hasRun="hasRun"
             :isCollapsed="true"
           />
-        </BFormCheckboxGroup>
+        </UiCheckboxGroup>
       </div>
     </div>
   </div>

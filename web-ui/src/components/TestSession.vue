@@ -20,19 +20,19 @@
           readonly
           ref="sessionUrlInput"
         />
-        <BButton
+        <UiButton
           variant="primary"
           @click="copyURL"
           class="px-6 py-2 whitespace-nowrap"
         >
           {{ copied ? 'Kopiert!' : 'Kopier' }}
-        </BButton>
+        </UiButton>
       </div>
     </div>
 
     <!-- Error Alert -->
     <div v-if="fetchError" class="mb-8">
-      <BAlert v-model="fetchError" variant="danger" dismissible class="text-base">
+      <UiAlert v-model="fetchError" variant="danger" dismissible class="text-base">
         <p v-if="requestErrorStatusCode === 404" class="font-semibold mb-2">
           Vi kunne ikke finne din test med SessionID: {{ route.params.testSessionId }}
         </p>
@@ -42,12 +42,12 @@
         <p class="text-sm">Statuskode: {{ requestErrorStatusCode }}</p>
         <p v-if="requestErrorStatusCode === 500" class="text-sm">{{ requestErrorMessage }}</p>
         <p v-else class="text-sm">{{ (requestErrorMessage as ErrorMessage)?.title }}</p>
-      </BAlert>
+      </UiAlert>
     </div>
 
     <!-- Loading Spinner -->
     <div v-if="loading" class="flex items-center justify-center py-12">
-      <BSpinner label="Laster..."></BSpinner>
+      <UiSpinner label="Laster..."></UiSpinner>
       <span class="ml-3 text-gray-600">Laster testresultater...</span>
     </div>
 
@@ -80,13 +80,13 @@
         </div>
 
         <div class="flex-shrink-0">
-          <BButton
+          <UiButton
             variant="primary"
             @click="fetchTestSession"
             class="px-6 py-2.5 text-base font-medium"
           >
             Oppdater tester
-          </BButton>
+          </UiButton>
         </div>
       </div>
     </div>

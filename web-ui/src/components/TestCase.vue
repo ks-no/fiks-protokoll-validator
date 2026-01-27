@@ -58,7 +58,7 @@
             </span>
           </div>
           <div class="sm:w-2/12 ml-auto">
-            <BFormCheckbox
+            <UiCheckbox
               v-if="!hasRun && supported"
               class="float-left"
               switch

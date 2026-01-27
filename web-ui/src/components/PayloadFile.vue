@@ -17,7 +17,7 @@
       </button>
     </span>
     <br />
-    <BModal
+    <UiModal
       v-model="modalIsOpen"
       :title="fileName ?? ''"
       size="xl"
@@ -43,9 +43,9 @@
         </div>
       </div>
       <div v-else>
-        <BSpinner label="Loading ..."></BSpinner>
+        <UiSpinner label="Loading ..."></UiSpinner>
       </div>
-    </BModal>
+    </UiModal>
   </div>
 </template>
 
@@ -53,8 +53,8 @@
 import { ref, onMounted } from 'vue'
 import SshPre from 'simple-syntax-highlighter'
 import 'simple-syntax-highlighter/dist/sshpre.css'
-import BModal from '@/components/ui/BModal.vue'
-import BSpinner from '@/components/ui/BSpinner.vue'
+import UiModal from '@/components/ui/UiModal.vue'
+import UiSpinner from '@/components/ui/UiSpinner.vue'
 
 const mimeTypes: Record<string, string> = {
   pdf: 'application/pdf',
