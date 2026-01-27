@@ -97,7 +97,7 @@
 
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue'
-import { useDateFormat } from '@/composables/useDateFormat'
+import { formatDateTime } from '@/composables/useDateFormat'
 import TestCase from './TestCase.vue'
 import Response from './Response.vue'
 import type { FiksResponseTest, FiksResponse, ValidationState } from '@/types'
@@ -135,7 +135,6 @@ const props = withDefaults(defineProps<Props>(), {
 
 const isCollapsed = ref(true)
 const validState = ref<ValidationState>('notValidated')
-const { formatDateTime } = useDateFormat()
 
 onBeforeMount(() => {
   if (!props.isValidated) {

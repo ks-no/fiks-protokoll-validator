@@ -25,9 +25,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useDateFormat } from '@/composables/useDateFormat'
-
-const { formatDate } = useDateFormat()
+import { formatDate } from '@/composables/useDateFormat'
 
 const lastTestUrl = localStorage.getItem('validatorLastTest') || localStorage.validatorLastTest
 const createdAt = localStorage.getItem('createdAt') || localStorage.createdAt

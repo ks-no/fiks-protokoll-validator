@@ -31,7 +31,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDateFormat } from '@/composables/useDateFormat'
+import { formatDateTime } from '@/composables/useDateFormat'
 import PayloadFile from './PayloadFile.vue'
 import type { FiksPayload } from '@/types'
 
@@ -46,5 +46,4 @@ interface Props {
 defineProps<Props>()
 
 const isCollapsed = ref(true)
-const { formatDateTime } = useDateFormat()
 </script>
