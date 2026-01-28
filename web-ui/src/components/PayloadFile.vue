@@ -109,7 +109,7 @@ function handleButtonOnClick() {
 }
 
 function getMimeType(extension?: string | null): string {
-  return mimeTypes[extension?.toLowerCase() ?? ''] || 'application/octet-stream'
+  return mimeTypes[extension?.toLowerCase() ?? ''] ?? 'application/octet-stream'
 }
 
 function getTemporaryUrl(content: string | Blob): string {
