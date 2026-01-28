@@ -36,6 +36,7 @@ namespace KS.FiksProtokollValidator.WebAPI
                         builder.WithOrigins("http://localhost:8081",
                             "http://localhost:8080",
                             "http://localhost:64558",
+                            "http://localhost:5173",
                             "https://forvaltning.fiks.dev.ks.no",
                             "https://forvaltning.fiks.test.ks.no",
                             "https://forvaltning.fiks.ks.no")
@@ -56,13 +57,25 @@ namespace KS.FiksProtokollValidator.WebAPI
             var appSettings = CreateAppSettings();
             services.AddSingleton(appSettings);
 
-            var fiksProtokollServicesManager = new FiksIOConnectionManager(appSettings, loggerFactory);
-            services.AddSingleton(fiksProtokollServicesManager);
             services.AddControllers();
-            services.AddHostedService<TjenerMessagesSubscriber>();
-            services.AddHostedService<KlientMessagesSubscriber>();
-            services.AddDbContext<FiksIOMessageDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddSingleton<ISendMessageService, SendMessageService>();
+
+            if (appSettings.StandaloneMode)
+            {
+                services.AddDbContext<FiksIOMessageDBContext>(options =>
+                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+                services.AddSingleton<ISendMessageService, MockSendMessageService>();
+            }
+            else
+            {
+                var fiksProtokollServicesManager = new FiksIOConnectionManager(appSettings, loggerFactory);
+                services.AddSingleton(fiksProtokollServicesManager);
+                services.AddHostedService<TjenerMessagesSubscriber>();
+                services.AddHostedService<KlientMessagesSubscriber>();
+                services.AddDbContext<FiksIOMessageDBContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                services.AddSingleton<ISendMessageService, SendMessageService>();
+            }
+
             services.AddScoped<IFiksResponseValidator, FiksResponseValidator>();
             services.AddScoped<ITestSeeder, TestSeeder>();
         }
@@ -84,7 +97,7 @@ namespace KS.FiksProtokollValidator.WebAPI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment() || IsDockerCompose(env))
+            if (env.IsDevelopment() || IsDockerCompose(env) || IsStandalone(env))
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -122,6 +135,13 @@ namespace KS.FiksProtokollValidator.WebAPI
             }
 
             return hostEnvironment.IsEnvironment("DockerCompose");
+        }
+
+        private static bool IsStandalone(IHostEnvironment hostEnvironment)
+        {
+            ArgumentNullException.ThrowIfNull(hostEnvironment);
+
+            return hostEnvironment.IsEnvironment("Standalone");
         }
     }
 }

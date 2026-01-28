@@ -27,7 +27,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Data
             var tests = new DirectoryInfo(@"TestCases/");
 
             // Slett alt innhold i FiksResponseTest og bygg den opp fra scratch fra TestCase filene. Dette er mer effektivt og brekker ikke noen avhengigheter
-            _context.Database.ExecuteSqlRaw("TRUNCATE TABLE FiksResponseTest");
+            _context.Database.ExecuteSqlRaw("DELETE FROM FiksResponseTest");
 
             foreach (var protocolDirectory in tests.GetDirectories())
             {

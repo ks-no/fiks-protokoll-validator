@@ -60,19 +60,23 @@ namespace KS.FiksProtokollValidator.WebAPI
             Log.Information("Path.PathSeparator: {PathSeparator}", Path.PathSeparator);
 
             var appBuilder = CreateHostBuilder(args);
-            
+            var standaloneMode = IsStandaloneMode(appBuilder.Configuration);
+
             var startup = new Startup(appBuilder.Configuration);
             startup.ConfigureServices(appBuilder.Services, loggerFactory);
-            
+
             var app = appBuilder.Build();
 
             app.MapHealthChecks("/api/healthz");
 
-            MigrateAndSeedDatabase(app);
-            
+            MigrateAndSeedDatabase(app, standaloneMode);
+
             startup.Configure(app, appBuilder.Environment);
 
-            var rabbitMqLogger = new RabbitMQEventLogger(loggerFactory, EventLevel.Informational);
+            if (!standaloneMode)
+            {
+                var rabbitMqLogger = new RabbitMQEventLogger(loggerFactory, EventLevel.Informational);
+            }
 
             Log.Information("WebApplication api started running with urls: ");
             foreach (var appUrl in app.Urls)
@@ -83,7 +87,7 @@ namespace KS.FiksProtokollValidator.WebAPI
             app.Run();
         }
         
-        private static void MigrateAndSeedDatabase(IHost host)
+        private static void MigrateAndSeedDatabase(IHost host, bool standaloneMode)
         {
             Log.Information("Running migrations and seeding data");
             using (var scope = host.Services.CreateScope())
@@ -92,7 +96,14 @@ namespace KS.FiksProtokollValidator.WebAPI
                 try
                 {
                     var context = services.GetRequiredService<FiksIOMessageDBContext>();
-                    context.Database.Migrate();
+                    if (standaloneMode)
+                    {
+                        context.Database.EnsureCreated();
+                    }
+                    else
+                    {
+                        context.Database.Migrate();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -102,11 +113,25 @@ namespace KS.FiksProtokollValidator.WebAPI
             }
         }
 
+        private static bool IsStandaloneMode(IConfiguration configuration)
+        {
+            return configuration.GetValue<bool>("AppSettings:StandaloneMode");
+        }
+
         private static WebApplicationBuilder CreateHostBuilder(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddHealthChecks().AddCheck<FiksIOHealthCheck>("FiksIO");
             builder.Configuration.AddEnvironmentVariables("fiksProtokollValidator_");
+
+            if (!IsStandaloneMode(builder.Configuration))
+            {
+                builder.Services.AddHealthChecks().AddCheck<FiksIOHealthCheck>("FiksIO");
+            }
+            else
+            {
+                builder.Services.AddHealthChecks();
+            }
+
             builder.Host.UseSerilog();
             return builder;
         }

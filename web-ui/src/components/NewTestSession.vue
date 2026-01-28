@@ -1,288 +1,288 @@
 <template>
-  <div class="newTestSession">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon3">FIKS-konto</span>
-      </div>
+  <div class="newTestSession max-w-7xl mx-auto px-4 py-6">
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">
+      Ny testsesjon
+    </h1>
+
+    <div class="mb-6">
+      <label
+        for="account-id"
+        class="block text-sm font-semibold text-gray-700 mb-2"
+      >
+        Konto ID 
+      </label>
       <input
         id="account-id"
         v-model="recipientId"
         type="text"
-        class="form-control"
-        placeholder="UUID"
-        aria-label="UUID"
-        aria-describedby="basic-addon1"
-      />
+        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
+        placeholder="f.eks. 76b035a9-2d73-48bf-b758-981195333191"
+        aria-label="FIKS-IO konto (UUID)"
+      >
+      <p class="mt-2 text-sm text-gray-600">
+        FIKS-IO konto (UUID)
+      </p>
     </div>
-    <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon3">FIKS-protokoll</span>
-    </div>
-      <b-form-select v-model="selectedProtocol" v-on:change="getTestsByProtocol" :options="options" style="width:30%"></b-form-select>
-    </div>
-    <b-link
-      :to="{
-        name: newTestSession,
-        query: { fikskonto: recipientId, fiksprotocol: selectedProtocol },
-      }"
-      >Direkte lenke</b-link
-    >
-  
-    <div style="margin: 40px 0">
-      <b-form-group v-if="!hasRun">
-        <span
-          style="width: 100%; display: inline-block; vertical-align: middle;"
-        >
-          <div style="float: left; width: 70%">
-            <h3>
-              Tester
-            </h3>
-            <b-form-checkbox
-              v-show="!hasRun"
-              id="switch_supported"
-              v-model="showNotSupportedTests"
-              size="sm"
-              aria-describedby="testCases"
-              aria-controls="testCases"
-              @change="toggleAllSupportedTests"
-            >
-              {{ "Vis tester som ikke er implementert" }}
-            </b-form-checkbox>
-          </div>
-          <div class="radioAndButton" style="float: left; width: 30%">
-            <b-button
-              variant="primary"
-              v-on:click="runSelectedTests"
-              v-if="!hasRun || running"
-              :disabled="running || !fiksAccountPresent || selectedTests.length==0"
-              class="runAllButton"
-            >
-              Kjør valgte tester
-            </b-button>
-            <b-form-checkbox
-              v-show="!hasRun"
-              id="switch_selectAllTests"
-              switch
-              v-model="allTestsSelected"
-              size="lg"
-              aria-describedby="testCases"
-              aria-controls="testCases"
-              @change="toggleAll"
-            >
-              {{ allTestsSelected ? "Velg ingen" : "Velg alle" }}
-            </b-form-checkbox>
-          </div>
-        </span>
-        <b-alert v-model="showRequestError" variant="danger" dismissible>
-          <p>Testing feilet med statuskode {{requestErrorStatusCode}}. Melding: {{requestErrorMessage}}</p>
-        </b-alert>
-        <b-spinner label="Loading..." v-if="running || loading"></b-spinner>
-        &nbsp;
 
-        <b-form-checkbox-group
-          switches
+    <div class="mb-6">
+      <label
+        for="protocol-select"
+        class="block text-sm font-semibold text-gray-700 mb-2"
+      >
+        Protokoll
+      </label>
+      <select
+        id="protocol-select"
+        v-model="selectedProtocol"
+        class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        @change="getTestsByProtocol"
+      >
+        <option
+          v-for="option in protocolOptions"
+          :key="option.value"
+          :value="option.value"
+        >
+          {{ option.text }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-6">
+      <router-link
+        :to="{
+          name: 'newTestSession',
+          query: { fikskonto: recipientId, fiksprotocol: selectedProtocol },
+        }"
+        class="text-blue-600 hover:text-blue-800 underline"
+      >
+        Direkte lenke
+      </router-link>
+    </div>
+
+    <div class="mb-8">
+      <div v-if="!hasRun">
+        <div class="bg-white border border-gray-200 rounded-lg p-6 mb-4">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold text-gray-900 mb-3">
+                Tester
+              </h3>
+              <UiCheckbox
+                v-show="!hasRun"
+                id="switch_supported"
+                v-model="showNotSupportedTests"
+                aria-describedby="testCases"
+                aria-controls="testCases"
+              >
+                Vis tester som ikke er implementert
+              </UiCheckbox>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+              <UiCheckbox
+                v-show="!hasRun"
+                id="switch_selectAllTests"
+                v-model="allTestsSelected"
+                switch
+                aria-describedby="testCases"
+                aria-controls="testCases"
+                class="text-base"
+                @change="toggleAll"
+              >
+                {{ allTestsSelected ? 'Velg ingen' : 'Velg alle' }}
+              </UiCheckbox>
+
+              <UiButton
+                v-if="!hasRun || running"
+                variant="primary"
+                :disabled="running || !fiksAccountPresent || selectedTests.length === 0"
+                class="px-6 py-2.5 text-base font-medium"
+                @click="runSelectedTests"
+              >
+                <UiSpinner
+                  v-if="running"
+                  small
+                  class="mr-2"
+                />
+                {{ running ? 'Kjører...' : `Kjør valgte tester (${selectedTests.length})` }}
+              </UiButton>
+            </div>
+          </div>
+        </div>
+
+        <UiAlert
+          v-model="showRequestError"
+          variant="danger"
+          dismissible
+          class="mb-4"
+        >
+          <p class="font-semibold">
+            Testing feilet med statuskode {{ requestErrorStatusCode }}
+          </p>
+          <p class="text-sm mt-1">
+            {{ requestErrorMessage }}
+          </p>
+        </UiAlert>
+
+        <div
+          v-if="loading && !running"
+          class="flex items-center justify-center py-8"
+        >
+          <UiSpinner label="Laster tester..." />
+          <span class="ml-3 text-gray-600">Laster tester...</span>
+        </div>
+
+        <UiCheckboxGroup
           id="test-list-all"
           v-model="selectedTests"
           name="test-list-all"
-          size="lg"
           stacked
         >
           <TestCase
             v-for="testCase in computedTestCases"
-            v-bind:key="testCase.testId"
-            :testId="testCase.testId"
-            :testName="testCase.testName"
-            :messageType="testCase.messageType"
-            :payloadFileName="testCase.payloadFileName"
-            :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
+            :key="testCase.testId"
+            :test-id="testCase.testId"
+            :test-name="testCase.testName"
+            :message-type="testCase.messageType"
+            :payload-file-name="testCase.payloadFileName"
+            :payload-attachment-file-names="testCase.payloadAttachmentFileNames"
             :description="testCase.description"
-            :testStep="testCase.testStep"
+            :test-step="testCase.testStep"
             :operation="testCase.operation"
             :situation="testCase.situation"
-            :expectedResult="testCase.expectedResult"
+            :expected-result="testCase.expectedResult"
             :supported="testCase.supported"
             :protocol="testCase.protocol"
-            :hasRun="hasRun"
-            :isCollapsed="true"
+            :has-run="hasRun"
+            :is-collapsed="true"
           />
-        </b-form-checkbox-group>
-      </b-form-group>
+        </UiCheckboxGroup>
+      </div>
     </div>
   </div>
 </template>
 
-<script>
-import axios from "axios";
-import TestCase from "./TestCase";
+<script setup lang="ts">
+import { ref, computed, watch, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useApi } from '@/composables/useApi'
+import TestCase from './TestCase.vue'
+import type { TestCase as TestCaseData, ProtocolOption } from '@/types'
+import type { CreateTestSessionResponse } from '@/types/api'
 
-export default {
-  name: "newTestSession",
-  
-  components: {
-    TestCase
-  },
-  
-  data() {
-    const protocolOptions = [
-      { value: "ingen", text: 'Velg en FIKS-protokoll'},
-      { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
-      { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2'},
-      { value: 'no.ks.fiks.matrikkelfoering.v2', text: 'no.ks.fiks.matrikkelfoering.v2'},
-      { value: 'no.ks.fiks.saksfaser.v1', text: 'no.ks.fiks.saksfaser.v1'}
-    ]
-    const qproto = this.$route.query.fiksprotocol || protocolOptions[0].value;
-    const selectedProtocol = (
-      (qproto && protocolOptions.find((p) => p.value === qproto)) ||
-      protocolOptions[0]
-    ).value;
-    return {
-      title: "Ny Testsesjon",
-      testCases: [],
-      resultData: [],
-      running: false,
-      hasRun: false,
-      loading: false,
-      hasLoaded: false,
-      recipientId: this.$route.query.fikskonto,
-      selectedTests: [],
-      fiksAccountPresent: false,
-      allTestsSelected: false,
-      showNotSupportedTests: false,
-      showRequestError: false,
-      requestErrorStatusCode: 0,
-      requestErrorMessage: "",
-      tmpTests: [],
-      selectedProtocol,
-        options: protocolOptions 
-    };
-  },
-  
-  mounted() {
-    this.recipientId = this.$route.query.fikskonto;
-    if(this.$route.query.fikskonto) {
-      this.fiksAccountPresent = true;
-      if (this.selectedProtocol && this.selectedProtocol !== 'ingen') {
-        this.getTestsByProtocol();
-      }
-    }
-  },
-  
-  computed: {
-    computedTestCases: function() {
-      if(this.selectedProtocol === 'ingen') return;
-      if (!this.showNotSupportedTests) {
-        return this.testCases.filter(testCase => {
-          return testCase.supported === !this.showNotSupportedTests;
-        });
-      } else {
-        return this.testCases;
-      }
-    }
-  },
-  
-  methods: {
-    getTests: async function() {
-      this.loading = true;
-      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases", {withCredentials: true});
-      this.testCases = response.data;
-      this.loading = false;
-      this.hasLoaded = true;
-    },
-    getTestsByProtocol: async function() {
-      this.loading = true;
-      const response = await axios.get(process.env.VUE_APP_API_URL + "/api/TestCases/Protocol/" + this.selectedProtocol, {withCredentials: true});
-      this.testCases = response.data;
-      this.loading = false;
-      this.hasLoaded = true;
-    },
-    runSelectedTests: async function() {
-      this.running = true;
-      
-      if (this.selectedTests.length === 0) {
-        this.running = false;
-        return;
-      }
-      const params = {
-        recipientId: this.recipientId,
-        selectedTestCaseIds: this.selectedTests,
-        protocol: this.selectedProtocol
-      };
-      
-      await axios.post(process.env.VUE_APP_API_URL + "/api/TestSessions", params, {withCredentials: true})
-      .then(response => {
-         if (response.status === 201) {
-                this.resultData = response.data;
-                this.hasRun = true;
-                this.running = false;
-            this.$router.push({ path: "/TestSession/" + response.data.id });        
-        }
-      })
-      .catch(error => {
-        this.running = false;
-        this.requestErrorStatusCode = error.response.status;
-        this.requestErrorMessage = error.response.data;
-        this.showRequestError = true;
-      })
-    },
-    
-    toggleAll(checked) {
-      if (checked) {
-        this.selectedTests = [];
-        const tests = this.testCases.filter(testCase => {
-          return testCase.supported === true && testCase.protocol === this.selectedProtocol;
-        });
-        tests.forEach(test => {
-          this.tmpTests.push(test.testId);
-        });
-        this.selectedTests = this.tmpTests;
-        this.tmpTests = [];
-      } else {
-        this.selectedTests = [];
-      }
-    },
-    
-    toggleAllSupportedTests(checked) {
-      this.showNotSupportedTests = checked;
-    }
-  },
-  created() {
-    //this.getTests();
-  },
-  watch: {
-    selectedTests(newVal) {
-      const length = this.testCases.filter(testCase => {
-        return testCase.supported === true && testCase.protocol === this.selectedProtocol;
-      }).length;
-      if (newVal.length === 0) {
-        this.allTestsSelected = false;
-      } else if (newVal.length === length) {
-        this.allTestsSelected = true;
-      } else {
-        this.allTestsSelected = false;
-      }
-    },
-    recipientId(newVal){
-        this.fiksAccountPresent = newVal.length > 0;
-    },
-    selectedProtocol(){
-      this.selectedTests = [];
-    }
+const route = useRoute()
+const router = useRouter()
+const testCaseApi = useApi<TestCaseData[]>()
+const sessionApi = useApi<CreateTestSessionResponse>()
+
+const protocolOptions: ProtocolOption[] = [
+  { value: 'ingen', text: 'Velg en FIKS-protokoll' },
+  { value: 'no.ks.fiks.arkiv.v1', text: 'no.ks.fiks.arkiv.v1' },
+  { value: 'no.ks.fiks.plan.v2', text: 'no.ks.fiks.plan.v2' },
+  { value: 'no.ks.fiks.matrikkelfoering.v2', text: 'no.ks.fiks.matrikkelfoering.v2' },
+  { value: 'no.ks.fiks.saksfaser.v1', text: 'no.ks.fiks.saksfaser.v1' }
+]
+
+const qproto = (route.query.fiksprotocol as string) || protocolOptions[0]!.value
+const initialProtocol = protocolOptions.find(p => p.value === qproto)?.value || protocolOptions[0]!.value
+
+const testCases = ref<TestCaseData[]>([])
+const running = ref(false)
+const hasRun = ref(false)
+const loading = ref(false)
+const recipientId = ref((route.query.fikskonto as string) || '')
+const selectedTests = ref<string[]>([])
+const fiksAccountPresent = computed(() => recipientId.value.length > 0)
+const allTestsSelected = ref(false)
+const showNotSupportedTests = ref(false)
+const showRequestError = ref(false)
+const requestErrorStatusCode = ref(0)
+const requestErrorMessage = ref('')
+const selectedProtocol = ref(initialProtocol)
+
+const computedTestCases = computed(() => {
+  if (selectedProtocol.value === 'ingen') return []
+  if (!showNotSupportedTests.value) {
+    return testCases.value.filter(tc => tc.supported)
   }
-};
-</script>
+  return testCases.value
+})
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.input-group {
-  max-width: 430px;
+async function getTestsByProtocol() {
+  if (selectedProtocol.value === 'ingen') return
+
+  loading.value = true
+  try {
+    testCases.value = await testCaseApi.get(`/api/TestCases/Protocol/${selectedProtocol.value}`)
+  } catch (err) {
+    const error = err as { status: number; data?: unknown }
+    requestErrorStatusCode.value = error.status
+    requestErrorMessage.value = (error.data as string) ?? 'Kunne ikke laste tester'
+    showRequestError.value = true
+  } finally {
+    loading.value = false
+  }
 }
-.radioAndButton {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin-bottom: 8px;
+
+async function runSelectedTests() {
+  if (selectedTests.value.length === 0) return
+
+  running.value = true
+  showRequestError.value = false
+
+  try {
+    const data = await sessionApi.post('/api/TestSessions', {
+      recipientId: recipientId.value,
+      selectedTestCaseIds: selectedTests.value,
+      protocol: selectedProtocol.value
+    })
+
+    hasRun.value = true
+    router.push({ path: `/TestSession/${data.id}` })
+  } catch (err) {
+    const error = err as { status: number; data?: unknown }
+    requestErrorStatusCode.value = error.status
+    requestErrorMessage.value = error.data as string
+    showRequestError.value = true
+  } finally {
+    running.value = false
+  }
 }
-.runAllButton {
-  margin-bottom: 8px;
+
+function toggleAll(checked: boolean) {
+  if (checked) {
+    const tests = testCases.value.filter(
+      tc => tc.supported && tc.protocol === selectedProtocol.value
+    )
+    selectedTests.value = tests.map(t => t.testId)
+  } else {
+    selectedTests.value = []
+  }
 }
-</style>
+
+// Watchers
+watch(selectedTests, (newVal) => {
+  const supportedCount = testCases.value.filter(
+    tc => tc.supported && tc.protocol === selectedProtocol.value
+  ).length
+
+  if (newVal.length === 0) {
+    allTestsSelected.value = false
+  } else if (newVal.length === supportedCount) {
+    allTestsSelected.value = true
+  } else {
+    allTestsSelected.value = false
+  }
+})
+
+watch(selectedProtocol, () => {
+  selectedTests.value = []
+})
+
+onMounted(() => {
+  recipientId.value = (route.query.fikskonto as string) || ''
+  if (route.query.fikskonto && selectedProtocol.value && selectedProtocol.value !== 'ingen') {
+    getTestsByProtocol()
+  }
+})
+</script>

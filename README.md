@@ -133,11 +133,45 @@ Konto id for simulatorer i develop:
 
 Validatoren består av to applikasjoner, en front-end (web-app) og en back-end (.NET web-API)
 Man kan kjøre det på flere måter:
+* **Standalone modus** (anbefalt for UI-utvikling): Ingen ekstern infrastruktur. Bruker SQLite og mock Fiks-IO.
 * Bygge og kjøre applikasjonen 100% i Docker vha docker-compose med 2 Docker images for front-end og back-end + 1 Docker image for sqlexpress.
 * Kjøre sqlexpress i Docker og front-end og back-end lokalt
 * Sqlexpress på din egen maskin samt front-end og back-end lokalt.
 * Bytte ut sqlexpress med en annen sql server
 
+### Standalone modus (uten ekstern infrastruktur)
+
+Standalone modus kjører backend med SQLite i stedet for SQL Server og simulerer Fiks-IO-meldinger lokalt. Dette krever ingen Docker, ingen SQL Server, ingen RabbitMQ, ingen sertifikater og ingen Fiks-IO-tilgang.
+
+Meldinger som sendes i standalone modus får umiddelbart et simulert svar tilbake (mock), slik at man kan teste hele flyten i UI-et uten reell Fiks-IO-kommunikasjon.
+
+**Krav:**
+* .NET 8.0 SDK
+* Node + NPM
+
+**Start backend:**
+```bash
+cd api/KS.FiksProtokollValidator.WebAPI
+dotnet run --launch-profile Standalone
+```
+
+Backend starter på `http://localhost:5000`. Ved første kjøring opprettes en SQLite-database (`fiks-protokoll-validator.db`) og testdata seedes fra `TestCases/`-mappen.
+
+**Start frontend:**
+```bash
+cd web-ui
+npm install   # kun første gang
+npm run dev
+```
+
+Frontend starter på `http://localhost:5173` og proxyer alle `/api`-kall til backend på port 5000.
+
+**Åpne applikasjonen:** [http://localhost:5173/fiks-validator/](http://localhost:5173/fiks-validator/)
+
+**Merk:**
+* Standalone modus er kun for lokal utvikling. I produksjon er `StandaloneMode` alltid `false` og all infrastruktur brukes som normalt.
+* SQLite-databasefilen (`.db`) er gitignored og opprettes på nytt ved hver oppstart.
+* Mock-svar bruker meldingstypen fra testcasen med `.resultat`-suffix som responstype.
 
 ### Alternativ 1: kjøring lokalt vha docker-compose
 
@@ -168,22 +202,22 @@ Hvis du ønsker å bygge docker lokalt gjør følgende.
 #### API
 Naviger til /api mappen: ``cd api``
 
-Bygg koden: `docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:5.0-alpine dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api`
+Bygg koden: `docker run -v $(pwd):/source -w /source mcr.microsoft.com/dotnet/sdk:8.0 dotnet publish --configuration Release KS.FiksProtokollValidator.WebAPI/KS.FiksProtokollValidator.WebAPI.csproj --output published-api`
 
 Bygg Docker image: `docker build -t fiks-protokoll-validator-api .`
 
 #### WEB
 Naviger til /web-ui mappen: ``cd web-ui``
 
-Bygg koden: `docker run -v $(pwd):/source -w /source node:16 npm install && npm run build -- --mode production `
+Bygg koden: `docker run -v $(pwd):/source -w /source node:22 npm install && npm run build -- --mode production `
 
 Bygg Docker image: `docker build -t fiks-protokoll-validator-web .`
 
 ### Alternativ 2:  kjøring i lokalt utviklingsmiljø med lokal sqlexpress
 
 Følgende må være installert på utviklingsmaskinen:
- - .NET 5.0 SDK https://dotnet.microsoft.com/download
- - IDE. F.eks. Jetbrains Rider eller Visualstudio (min. v.16.8) https://visualstudio.microsoft.com/downloads/
+ - .NET 8.0 SDK https://dotnet.microsoft.com/download
+ - IDE, f.eks. JetBrains Rider eller Visual Studio https://visualstudio.microsoft.com/downloads/
  - SQL EXPRESS https://www.microsoft.com/en-us/sql-server/sql-server-downloads
  - Node + NPM https://nodejs.org/en/download/
  
@@ -203,12 +237,11 @@ Følgende må være installert på utviklingsmaskinen:
 * Hvis ikke du har installert dotnet-ef tool tidligere så kan det installeres slik `dotnet tool install --global dotnet-ef`
 * Kjør oppdatering: `dotnet ef database update"`
 
-#### Pem-fil
-TODO
-#### Konfigurasjon:
-Konfigurer validatoren for FIKS ved å kopiere malfilen *fiks-protokoll-validator/api/KS.FiksProtokollValidator.WebAPI/FiksIO/**fiks-io-config.template.json***, til **fiks-io-config.json**, under samme katalog som malfilen, og endre innholdet i denne til aktuelt FIKS-oppsett. 
+#### PEM-nøkler og sertifikater
+PEM-nøkler og P12-sertifikater konfigureres i `appsettings.Development.json`.
 
-Oppsettet krever en privatnøkkel (.pem-fil) som navngis/plasseres iht. filreferansen i **fiks-io-config.json**.
+#### Konfigurasjon:
+Konfigurer validatoren for FIKS ved å kopiere `appsettings.json` til `appsettings.Development.json` og fyll inn reelle verdier for Fiks-IO, sertifikater osv. Filen ignoreres av `.gitignore`.
 
 
 #### Start back-end applikasjon
@@ -217,4 +250,4 @@ Start back-end ved å åpne **fiks-protokoll-validator/api/KS.FiksProtokollValid
 ### Front-end
 
  * Hent inn web-applikasjonens avhengigheter ved å navigere til **fiks-protokoll-validator/web-ui/** og å kjøre `npm install`.
- * Start front-end på localhost fra **fiks-protokoll-validator/web-ui/** med `npm run serve`.
+ * Start front-end på localhost fra **fiks-protokoll-validator/web-ui/** med `npm run dev`.

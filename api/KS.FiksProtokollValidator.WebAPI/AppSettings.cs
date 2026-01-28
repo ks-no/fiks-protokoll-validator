@@ -4,6 +4,7 @@ namespace KS.FiksProtokollValidator.WebAPI
 {
     public class AppSettings
     {
+        public bool StandaloneMode { get; set; }
         public ValidatorFiksIOConfig TjenerValidatorFiksIOConfig { get; set; }
         public ValidatorFiksIOConfig KlientValidatorFiksIOConfig { get; set; }
     }
