@@ -1,23 +1,26 @@
 <template>
   <li class="border-b border-gray-200 py-4">
     <TestCase
-      :testId="testCase.testId"
-      :testName="testCase.testName"
-      :messageType="testCase.messageType"
-      :payloadFileName="customPayloadFilename ?? testCase.payloadFileName"
-      :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
+      :test-id="testCase.testId"
+      :test-name="testCase.testName"
+      :message-type="testCase.messageType"
+      :payload-file-name="customPayloadFilename ?? testCase.payloadFileName"
+      :payload-attachment-file-names="testCase.payloadAttachmentFileNames"
       :description="testCase.description"
-      :expectedResult="testCase.expectedResult"
+      :expected-result="testCase.expectedResult"
       :situation="testCase.situation"
       :operation="testCase.operation"
-      :testStep="testCase.testStep"
+      :test-step="testCase.testStep"
       :protocol="testCase.protocol"
-      :hasRun="hasRun"
-      :validState="validState"
-      :isCollapsed="isCollapsed"
-      :testSessionId="testSessionId"
+      :has-run="hasRun"
+      :valid-state="validState"
+      :is-collapsed="isCollapsed"
+      :test-session-id="testSessionId"
     />
-    <div v-show="!isCollapsed" :id="'collapse-' + testCase.operation + testCase.situation">
+    <div
+      v-show="!isCollapsed"
+      :id="'collapse-' + testCase.operation + testCase.situation"
+    >
       <div class="w-full px-4">
         <div class="grid grid-cols-[1fr_2fr] gap-y-1.5 mb-6">
           <strong class="text-right pr-2">Sendt: </strong>
@@ -50,22 +53,28 @@
       </div>
       <div class="bg-white rounded-lg shadow p-6 mb-8">
         <ul class="space-y-2">
-          <h6 class="font-semibold">Svarmeldinger</h6>
+          <h6 class="font-semibold">
+            Svarmeldinger
+          </h6>
           <span v-if="validState === 'notValidated'">Ingen svarmeldinger funnet..</span>
           <Response
             v-for="response in responses"
             :key="response.id"
-            :collapseId="'collapse-' + response.id"
-            :receivedAt="response.receivedAt"
-            :messageType="response.type"
+            :collapse-id="'collapse-' + response.id"
+            :received-at="response.receivedAt"
+            :message-type="response.type"
             :payloads="response.fiksPayloads"
-            :payloadContent="response.payloadContent"
           />
         </ul>
       </div>
       <div class="bg-white rounded-lg shadow p-6 mb-8">
-        <h6 class="font-semibold">Testresultat</h6>
-        <div v-if="validState === 'notValidated'" class="flex items-center gap-2">
+        <h6 class="font-semibold">
+          Testresultat
+        </h6>
+        <div
+          v-if="validState === 'notValidated'"
+          class="flex items-center gap-2"
+        >
           <font-awesome-icon
             icon="fa-solid fa-circle-exclamation"
             class="validState notValidated"
@@ -96,8 +105,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onBeforeMount } from 'vue'
-import { formatDateTime } from '@/composables/useDateFormat'
+import { ref, computed } from 'vue'
+import { formatDateTime } from '@/composables/dateFormat'
 import TestCase from './TestCase.vue'
 import Response from './Response.vue'
 import type { FiksResponseTest, FiksResponse, ValidationState } from '@/types'
@@ -130,20 +139,18 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  isValidated: false
+  isValidated: false,
+  validationErrors: () => [],
+  testSessionId: undefined,
+  customPayloadFilename: undefined
 })
 
 const isCollapsed = ref(true)
-const validState = ref<ValidationState>('notValidated')
 
-onBeforeMount(() => {
-  if (!props.isValidated) {
-    validState.value = 'notValidated'
-  } else {
-    validState.value =
-      props.validationErrors && props.validationErrors.length > 0
-        ? 'invalid'
-        : 'valid'
-  }
+const validState = computed<ValidationState>(() => {
+  if (!props.isValidated) return 'notValidated'
+  return props.validationErrors && props.validationErrors.length > 0
+    ? 'invalid'
+    : 'valid'
 })
 </script>

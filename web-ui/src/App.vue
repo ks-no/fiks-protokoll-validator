@@ -1,12 +1,25 @@
 <template>
-  <div id="app" class="min-h-screen bg-gray-50">
+  <div
+    id="app"
+    class="min-h-screen bg-gray-50"
+  >
     <nav class="fixed top-0 left-0 right-0 bg-white shadow-sm z-50">
       <div class="flex items-center h-16 px-4">
-        <img src="./assets/logo.png" alt="logo" class="h-12 ml-32" />
-        <router-link to="/" class="px-6 py-2 font-semibold text-gray-900 hover:text-gray-700">
+        <img
+          src="./assets/logo.png"
+          alt="logo"
+          class="h-12 ml-32"
+        >
+        <router-link
+          to="/"
+          class="px-6 py-2 font-semibold text-gray-900 hover:text-gray-700"
+        >
           Fiks-protokollvalidator
         </router-link>
-        <router-link to="/NewTestSession" class="px-4 py-2 text-gray-700 hover:text-gray-900">
+        <router-link
+          to="/NewTestSession"
+          class="px-4 py-2 text-gray-700 hover:text-gray-900"
+        >
           Ny testsesjon
         </router-link>
       </div>
@@ -17,6 +30,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-</script>

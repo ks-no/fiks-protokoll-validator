@@ -16,7 +16,7 @@
         Se innhold
       </button>
     </span>
-    <br />
+    <br>
     <UiModal
       v-model="modalIsOpen"
       :title="fileName ?? ''"
@@ -43,7 +43,7 @@
         </div>
       </div>
       <div v-else>
-        <UiSpinner label="Loading ..."></UiSpinner>
+        <UiSpinner label="Loading ..." />
       </div>
     </UiModal>
   </div>

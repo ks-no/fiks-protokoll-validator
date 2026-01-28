@@ -1,17 +1,17 @@
 <template>
   <label class="inline-flex items-center cursor-pointer">
     <input
+      :id="id"
       type="checkbox"
       :checked="isChecked"
       :value="value"
-      :id="id"
-      @change="handleChange"
       :class="[
         switchStyle ? 'toggle-switch' : 'w-4 h-4',
         'text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500'
       ]"
-    />
-    <span class="ml-2"><slot></slot></span>
+      @change="handleChange"
+    >
+    <span class="ml-2"><slot /></span>
   </label>
 </template>
 
@@ -32,6 +32,8 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
+  value: undefined,
+  id: undefined,
   switch: false
 })
 

@@ -1,6 +1,13 @@
 <template>
-  <div class="animate-spin rounded-full border-b-2" :class="spinnerClasses" :style="spinnerStyle">
-    <span v-if="label" class="sr-only">{{ label }}</span>
+  <div
+    class="animate-spin rounded-full border-b-2"
+    :class="spinnerClasses"
+    :style="spinnerStyle"
+  >
+    <span
+      v-if="label"
+      class="sr-only"
+    >{{ label }}</span>
   </div>
 </template>
 
@@ -17,6 +24,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'primary',
+  label: undefined,
   small: false
 })
 

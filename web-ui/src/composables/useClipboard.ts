@@ -29,8 +29,12 @@ export function useClipboard(): UseClipboardReturn {
       textArea.focus()
       textArea.select()
 
-      const success = document.execCommand('copy')
-      document.body.removeChild(textArea)
+      let success = false
+      try {
+        success = document.execCommand('copy')
+      } finally {
+        document.body.removeChild(textArea)
+      }
 
       if (success) {
         copied.value = true

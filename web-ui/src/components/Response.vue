@@ -3,16 +3,30 @@
     <span class="w-full block">
       <div
         class="cursor-pointer"
+        role="button"
+        tabindex="0"
         @click="isCollapsed = !isCollapsed"
+        @keyup.enter="isCollapsed = !isCollapsed"
+        @keyup.space="isCollapsed = !isCollapsed"
       >
         <strong class="flex items-center gap-2">
-          <font-awesome-icon v-if="isCollapsed" icon="fa-solid fa-file-circle-plus" />
-          <font-awesome-icon v-if="!isCollapsed" icon="fa-solid fa-file-circle-minus" />
+          <font-awesome-icon
+            v-if="isCollapsed"
+            icon="fa-solid fa-file-circle-plus"
+          />
+          <font-awesome-icon
+            v-if="!isCollapsed"
+            icon="fa-solid fa-file-circle-minus"
+          />
           {{ messageType }}
         </strong>
       </div>
     </span>
-    <div v-show="!isCollapsed" :id="'collapse-' + collapseId" class="mt-2">
+    <div
+      v-show="!isCollapsed"
+      :id="'collapse-' + collapseId"
+      class="mt-2"
+    >
       <div class="bg-white rounded-lg shadow p-6 mb-8">
         <p><strong>Mottatt: </strong>{{ formatDateTime(receivedAt) }}</p>
         <div
@@ -21,7 +35,10 @@
         >
           <p v-if="payload">
             <strong>Innhold: </strong>
-            <PayloadFile :fileName="payload.filename" :content="payload.payload" />
+            <PayloadFile
+              :file-name="payload.filename"
+              :content="payload.payload"
+            />
           </p>
         </div>
       </div>
@@ -31,7 +48,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { formatDateTime } from '@/composables/useDateFormat'
+import { formatDateTime } from '@/composables/dateFormat'
 import PayloadFile from './PayloadFile.vue'
 import type { FiksPayload } from '@/types'
 
@@ -40,7 +57,6 @@ interface Props {
   receivedAt?: string
   messageType?: string
   payloads?: FiksPayload[]
-  payloadContent?: string
 }
 
 defineProps<Props>()

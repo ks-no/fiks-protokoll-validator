@@ -1,9 +1,14 @@
 <template>
   <div class="newTestSession max-w-7xl mx-auto px-4 py-6">
-    <h1 class="text-3xl font-bold text-gray-900 mb-6">Ny testsesjon</h1>
+    <h1 class="text-3xl font-bold text-gray-900 mb-6">
+      Ny testsesjon
+    </h1>
 
     <div class="mb-6">
-      <label for="account-id" class="block text-sm font-semibold text-gray-700 mb-2">
+      <label
+        for="account-id"
+        class="block text-sm font-semibold text-gray-700 mb-2"
+      >
         Konto ID 
       </label>
       <input
@@ -13,21 +18,24 @@
         class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
         placeholder="f.eks. 76b035a9-2d73-48bf-b758-981195333191"
         aria-label="FIKS-IO konto (UUID)"
-      />
+      >
       <p class="mt-2 text-sm text-gray-600">
         FIKS-IO konto (UUID)
       </p>
     </div>
 
     <div class="mb-6">
-      <label for="protocol-select" class="block text-sm font-semibold text-gray-700 mb-2">
+      <label
+        for="protocol-select"
+        class="block text-sm font-semibold text-gray-700 mb-2"
+      >
         Protokoll
       </label>
       <select
         id="protocol-select"
         v-model="selectedProtocol"
-        @change="getTestsByProtocol"
         class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+        @change="getTestsByProtocol"
       >
         <option
           v-for="option in protocolOptions"
@@ -65,7 +73,6 @@
                 v-model="showNotSupportedTests"
                 aria-describedby="testCases"
                 aria-controls="testCases"
-                @change="toggleAllSupportedTests"
               >
                 Vis tester som ikke er implementert
               </UiCheckbox>
@@ -75,37 +82,53 @@
               <UiCheckbox
                 v-show="!hasRun"
                 id="switch_selectAllTests"
-                switch
                 v-model="allTestsSelected"
+                switch
                 aria-describedby="testCases"
                 aria-controls="testCases"
-                @change="toggleAll"
                 class="text-base"
+                @change="toggleAll"
               >
                 {{ allTestsSelected ? 'Velg ingen' : 'Velg alle' }}
               </UiCheckbox>
 
               <UiButton
-                variant="primary"
-                @click="runSelectedTests"
                 v-if="!hasRun || running"
+                variant="primary"
                 :disabled="running || !fiksAccountPresent || selectedTests.length === 0"
                 class="px-6 py-2.5 text-base font-medium"
+                @click="runSelectedTests"
               >
-                <UiSpinner v-if="running" small class="mr-2"></UiSpinner>
+                <UiSpinner
+                  v-if="running"
+                  small
+                  class="mr-2"
+                />
                 {{ running ? 'Kjører...' : `Kjør valgte tester (${selectedTests.length})` }}
               </UiButton>
             </div>
           </div>
         </div>
 
-        <UiAlert v-model="showRequestError" variant="danger" dismissible class="mb-4">
-          <p class="font-semibold">Testing feilet med statuskode {{ requestErrorStatusCode }}</p>
-          <p class="text-sm mt-1">{{ requestErrorMessage }}</p>
+        <UiAlert
+          v-model="showRequestError"
+          variant="danger"
+          dismissible
+          class="mb-4"
+        >
+          <p class="font-semibold">
+            Testing feilet med statuskode {{ requestErrorStatusCode }}
+          </p>
+          <p class="text-sm mt-1">
+            {{ requestErrorMessage }}
+          </p>
         </UiAlert>
 
-        <div v-if="loading && !running" class="flex items-center justify-center py-8">
-          <UiSpinner label="Laster tester..."></UiSpinner>
+        <div
+          v-if="loading && !running"
+          class="flex items-center justify-center py-8"
+        >
+          <UiSpinner label="Laster tester..." />
           <span class="ml-3 text-gray-600">Laster tester...</span>
         </div>
 
@@ -118,20 +141,20 @@
           <TestCase
             v-for="testCase in computedTestCases"
             :key="testCase.testId"
-            :testId="testCase.testId"
-            :testName="testCase.testName"
-            :messageType="testCase.messageType"
-            :payloadFileName="testCase.payloadFileName"
-            :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
+            :test-id="testCase.testId"
+            :test-name="testCase.testName"
+            :message-type="testCase.messageType"
+            :payload-file-name="testCase.payloadFileName"
+            :payload-attachment-file-names="testCase.payloadAttachmentFileNames"
             :description="testCase.description"
-            :testStep="testCase.testStep"
+            :test-step="testCase.testStep"
             :operation="testCase.operation"
             :situation="testCase.situation"
-            :expectedResult="testCase.expectedResult"
+            :expected-result="testCase.expectedResult"
             :supported="testCase.supported"
             :protocol="testCase.protocol"
-            :hasRun="hasRun"
-            :isCollapsed="true"
+            :has-run="hasRun"
+            :is-collapsed="true"
           />
         </UiCheckboxGroup>
       </div>
@@ -169,7 +192,7 @@ const hasRun = ref(false)
 const loading = ref(false)
 const recipientId = ref((route.query.fikskonto as string) || '')
 const selectedTests = ref<string[]>([])
-const fiksAccountPresent = ref(false)
+const fiksAccountPresent = computed(() => recipientId.value.length > 0)
 const allTestsSelected = ref(false)
 const showNotSupportedTests = ref(false)
 const showRequestError = ref(false)
@@ -191,8 +214,11 @@ async function getTestsByProtocol() {
   loading.value = true
   try {
     testCases.value = await testCaseApi.get(`/api/TestCases/Protocol/${selectedProtocol.value}`)
-  } catch {
-    // Could add error handling
+  } catch (err) {
+    const error = err as { status: number; data?: unknown }
+    requestErrorStatusCode.value = error.status
+    requestErrorMessage.value = (error.data as string) ?? 'Kunne ikke laste tester'
+    showRequestError.value = true
   } finally {
     loading.value = false
   }
@@ -234,10 +260,6 @@ function toggleAll(checked: boolean) {
   }
 }
 
-function toggleAllSupportedTests(checked: boolean) {
-  showNotSupportedTests.value = checked
-}
-
 // Watchers
 watch(selectedTests, (newVal) => {
   const supportedCount = testCases.value.filter(
@@ -253,21 +275,14 @@ watch(selectedTests, (newVal) => {
   }
 })
 
-watch(recipientId, (newVal) => {
-  fiksAccountPresent.value = newVal.length > 0
-})
-
 watch(selectedProtocol, () => {
   selectedTests.value = []
 })
 
 onMounted(() => {
   recipientId.value = (route.query.fikskonto as string) || ''
-  if (route.query.fikskonto) {
-    fiksAccountPresent.value = true
-    if (selectedProtocol.value && selectedProtocol.value !== 'ingen') {
-      getTestsByProtocol()
-    }
+  if (route.query.fikskonto && selectedProtocol.value && selectedProtocol.value !== 'ingen') {
+    getTestsByProtocol()
   }
 })
 </script>

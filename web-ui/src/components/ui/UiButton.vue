@@ -5,7 +5,7 @@
     :class="buttonClasses"
     @click="emit('click', $event)"
   >
-    <slot></slot>
+    <slot />
   </button>
 </template>
 

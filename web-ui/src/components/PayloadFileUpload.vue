@@ -1,5 +1,8 @@
 <template>
-  <div v-if="fileName !== null" class="mt-2">
+  <div
+    v-if="fileName !== null"
+    class="mt-2"
+  >
     <form enctype="multipart/form-data">
       <div class="flex items-center gap-2">
         <div class="flex-1">
@@ -8,29 +11,38 @@
           >
             <span class="text-gray-600 text-sm truncate">{{ fileUploadText }}</span>
             <input
-              type="file"
-              ref="fileInput"
-              @change="handleFileUpload"
-              class="hidden"
               id="payloadUpload"
-            />
+              ref="fileInput"
+              type="file"
+              class="hidden"
+              @change="handleFileUpload"
+            >
           </label>
         </div>
         <button
           type="button"
           :disabled="!file"
-          @click="submitFile"
           class="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white rounded-lg text-sm font-medium flex items-center gap-2"
           title="Last opp egen melding"
+          @click="submitFile"
         >
           <span>Last opp</span>
         </button>
         <div class="w-8">
-          <span v-if="fileUploadSuccess" class="text-green-600 text-2xl">
+          <span
+            v-if="fileUploadSuccess"
+            class="text-green-600 text-2xl"
+          >
             <font-awesome-icon icon="check" />
           </span>
         </div>
       </div>
+      <p
+        v-if="fileUploadError"
+        class="text-red-600 text-sm mt-1"
+      >
+        {{ fileUploadError }}
+      </p>
     </form>
   </div>
 </template>
@@ -51,6 +63,7 @@ const fileInput = ref<HTMLInputElement | null>(null)
 const file = ref<File | null>(null)
 const fileUploadText = ref('Velg egendefinert melding')
 const fileUploadSuccess = ref(false)
+const fileUploadError = ref<string | null>(null)
 
 function handleFileUpload() {
   if (fileInput.value?.files?.[0]) {
@@ -67,10 +80,13 @@ async function submitFile() {
 
   const api = useApi()
   try {
+    fileUploadError.value = null
     await api.post(`/api/TestCasePayloadFiles/${props.testId}/payload`, formData)
     fileUploadSuccess.value = true
-  } catch {
-    // Upload failed - could add error handling here
+  } catch (err) {
+    const error = err as { message?: string }
+    fileUploadError.value = error.message ?? 'Opplasting feilet'
+    fileUploadSuccess.value = false
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="space-y-2">
-    <slot></slot>
+    <slot />
   </div>
 </template>
 
@@ -17,8 +17,10 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: () => [],
+  id: undefined,
   stacked: false,
-  switches: false
+  switches: false,
+  size: undefined
 })
 
 const emit = defineEmits<{

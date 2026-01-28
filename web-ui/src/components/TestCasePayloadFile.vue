@@ -2,18 +2,22 @@
   <div>
     <span>
       <PayloadFile
-        :fileName="fileName"
-        :testId="testId"
+        :file-name="fileName"
+        :test-id="testId"
         :protocol="protocol"
         :content="payloadFileContent"
-        :fileUrl="isAttachment ? attachmentUrl : payloadUrl"
+        :file-url="isAttachment ? attachmentUrl : payloadUrl"
         @get-content="(isText: boolean) => getContent(isText)"
       />
     </span>
+    <span
+      v-if="contentError"
+      class="text-red-600 text-sm"
+    >{{ contentError }}</span>
     <span v-if="!hasRun && !isAttachment">
       <PayloadFileUpload
-        :fileName="fileName"
-        :testId="testId"
+        :file-name="fileName"
+        :test-id="testId"
         :protocol="protocol"
       />
     </span>
@@ -39,11 +43,17 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  fileName: undefined,
   isAttachment: false,
-  hasRun: false
+  operation: undefined,
+  situation: undefined,
+  protocol: undefined,
+  hasRun: false,
+  testSessionId: undefined
 })
 
 const payloadFileContent = ref<string | undefined>(undefined)
+const contentError = ref<string | null>(null)
 const apiBaseUrl = import.meta.env.VITE_API_URL + '/api/TestCasePayloadFiles'
 
 const payloadUrl = computed(() => {
@@ -61,13 +71,15 @@ async function getContent(isTextContent: boolean) {
   const api = useApi<string>()
 
   try {
+    contentError.value = null
     const result = await api.get(
       resourceUrl.replace(import.meta.env.VITE_API_URL || '', ''),
       { responseType: isTextContent ? 'text' : 'blob' }
     )
     payloadFileContent.value = result
-  } catch {
-    // Could add error handling here
+  } catch (err) {
+    const error = err as { message?: string }
+    contentError.value = error.message ?? 'Kunne ikke laste innhold'
   }
 }
 </script>

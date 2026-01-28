@@ -4,12 +4,12 @@
     :class="alertClasses"
     role="alert"
   >
-    <slot></slot>
+    <slot />
     <button
       v-if="dismissible"
-      @click="emit('update:modelValue', false)"
       class="ml-auto text-xl leading-none opacity-70 hover:opacity-100"
       aria-label="Close"
+      @click="emit('update:modelValue', false)"
     >
       &times;
     </button>

@@ -51,7 +51,6 @@ interface UseTestCasesReturn {
   testCases: Ref<TestCase[]>
   loading: Ref<boolean>
   error: Ref<{ status: number; message: string; data?: unknown } | null>
-  fetchTestCases: () => Promise<TestCase[]>
   fetchTestCasesByProtocol: (protocol: string) => Promise<TestCase[]>
   filterSupported: (cases: TestCase[]) => TestCase[]
 }
@@ -59,11 +58,6 @@ interface UseTestCasesReturn {
 export function useTestCases(): UseTestCasesReturn {
   const api = useApi<TestCase[]>()
   const testCases = ref<TestCase[]>([])
-
-  async function fetchTestCases(): Promise<TestCase[]> {
-    testCases.value = await api.get('/api/TestCases')
-    return testCases.value
-  }
 
   async function fetchTestCasesByProtocol(protocol: string): Promise<TestCase[]> {
     testCases.value = await api.get(`/api/TestCases/Protocol/${protocol}`)
@@ -78,7 +72,6 @@ export function useTestCases(): UseTestCasesReturn {
     testCases,
     loading: api.loading,
     error: api.error,
-    fetchTestCases,
     fetchTestCasesByProtocol,
     filterSupported
   }

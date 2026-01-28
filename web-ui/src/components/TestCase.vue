@@ -2,10 +2,15 @@
   <div>
     <div class="w-full px-4">
       <div class="flex flex-wrap">
-        <span class="w-full" :class="!hasRun ? 'flex items-center' : ''">
+        <span
+          class="w-full"
+          :class="!hasRun ? 'flex items-center' : ''"
+        >
           <div class="flex-1 sm:w-10/12">
             <span
               class="cursor-pointer"
+              role="button"
+              tabindex="0"
               @click="isNotCollapsed = !isNotCollapsed"
               @keyup.enter="isNotCollapsed = !isNotCollapsed"
               @keyup.space="isNotCollapsed = !isNotCollapsed"
@@ -68,8 +73,8 @@
         </span>
         <div
           v-show="isNotCollapsed"
-          class="ml-4"
           :id="'collapse-' + operation + situation"
+          class="ml-4"
           style="width: 90%"
         >
           <div class="w-full bg-gray-100 p-4 rounded grid grid-cols-[1fr_2fr] gap-y-1.5">
@@ -82,14 +87,14 @@
             <strong class="float-left">Meldingsinnhold:</strong>
             <span>
               <TestCasePayloadFile
-                :testId="testId"
-                :testName="testName"
-                :fileName="payloadFileName"
+                :test-id="testId"
+                :test-name="testName"
+                :file-name="payloadFileName"
                 :operation="operation"
                 :situation="situation"
                 :protocol="protocol"
-                :testSessionId="testSessionId"
-                :hasRun="hasRun"
+                :test-session-id="testSessionId"
+                :has-run="hasRun"
               />
             </span>
             <template v-if="payloadAttachmentFileNames">
@@ -100,25 +105,25 @@
                   :key="attachmentFileName"
                 >
                   <TestCasePayloadFile
-                    :testId="testId"
-                    :testName="testName"
+                    :test-id="testId"
+                    :test-name="testName"
                     :operation="operation"
                     :situation="situation"
                     :protocol="protocol"
-                    :fileName="attachmentFileName"
-                    :isAttachment="true"
-                    :testSessionId="testSessionId"
-                    :hasRun="hasRun"
+                    :file-name="attachmentFileName"
+                    :is-attachment="true"
+                    :test-session-id="testSessionId"
+                    :has-run="hasRun"
                   />
                 </div>
               </span>
             </template>
           </div>
         </div>
-        <hr class="my-0 mx-[5%] border-0 border-t border-gray-200" />
+        <hr class="my-0 mx-[5%] border-0 border-t border-gray-200">
       </div>
     </div>
-    <hr class="my-0 mx-[5%] border-0 border-t border-gray-200" />
+    <hr class="my-0 mx-[5%] border-0 border-t border-gray-200">
   </div>
 </template>
 
@@ -141,14 +146,18 @@ interface Props {
   supported?: boolean
   hasRun?: boolean
   validState?: ValidationState
-  isCollapsed: boolean
+  isCollapsed?: boolean
   protocol: string
   testSessionId?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  payloadFileName: undefined,
+  payloadAttachmentFileNames: undefined,
   supported: false,
   hasRun: false,
+  validState: undefined,
+  testSessionId: undefined,
   isCollapsed: true
 })
 

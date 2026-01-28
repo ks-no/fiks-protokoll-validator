@@ -7,12 +7,17 @@
     >
       <div :class="modalClasses">
         <!-- Header -->
-        <div v-if="title" class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h3 class="text-lg font-semibold text-gray-900">{{ title }}</h3>
+        <div
+          v-if="title"
+          class="flex items-center justify-between px-6 py-4 border-b border-gray-200"
+        >
+          <h3 class="text-lg font-semibold text-gray-900">
+            {{ title }}
+          </h3>
           <button
-            @click="close"
             class="text-gray-400 hover:text-gray-600 text-xl leading-none"
             aria-label="Close"
+            @click="close"
           >
             &times;
           </button>
@@ -20,22 +25,25 @@
 
         <!-- Body -->
         <div class="p-6">
-          <slot></slot>
+          <slot />
         </div>
 
         <!-- Footer -->
-        <div v-if="!okOnly || $slots.footer" class="flex justify-end gap-3 px-6 py-4 border-t border-gray-200">
+        <div
+          v-if="!okOnly || $slots.footer"
+          class="flex justify-end gap-3 px-6 py-4 border-t border-gray-200"
+        >
           <slot name="footer">
             <button
               v-if="!okOnly"
-              @click="close"
               class="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded font-medium transition-colors"
+              @click="close"
             >
               {{ cancelTitle }}
             </button>
             <button
-              @click="handleOk"
               :class="okButtonClasses"
+              @click="handleOk"
             >
               {{ okTitle }}
             </button>
@@ -47,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted, onUnmounted, watch } from 'vue'
 
 type ModalSize = 'sm' | 'md' | 'lg' | 'xl'
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'warning'
@@ -65,6 +73,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: false,
+  title: undefined,
   size: 'md',
   okOnly: false,
   okTitle: 'OK',
@@ -115,4 +124,28 @@ function handleBackdropClick() {
     close()
   }
 }
+
+function handleKeydown(event: KeyboardEvent) {
+  if (event.key === 'Escape' && props.modelValue) {
+    close()
+  }
+}
+
+watch(() => props.modelValue, (isOpen) => {
+  if (isOpen) {
+    document.addEventListener('keydown', handleKeydown)
+  } else {
+    document.removeEventListener('keydown', handleKeydown)
+  }
+})
+
+onMounted(() => {
+  if (props.modelValue) {
+    document.addEventListener('keydown', handleKeydown)
+  }
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
 </script>

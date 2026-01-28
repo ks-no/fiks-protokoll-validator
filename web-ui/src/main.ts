@@ -39,5 +39,5 @@ const router = createRouter({
 const vueApp: VueApp = createApp(App)
 vueApp.use(router)
 vueApp.use(UIComponents as Plugin)
-vueApp.component('font-awesome-icon', FontAwesomeIcon)
+vueApp.component('FontAwesomeIcon', FontAwesomeIcon)
 vueApp.mount('#app')
