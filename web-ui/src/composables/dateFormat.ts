@@ -4,13 +4,15 @@ const dateTimeFormatter = new Intl.DateTimeFormat('nb-NO', {
   year: 'numeric',
   hour: '2-digit',
   minute: '2-digit',
-  second: '2-digit'
+  second: '2-digit',
+  timeZone: 'Europe/Oslo'
 })
 
 const dateFormatter = new Intl.DateTimeFormat('nb-NO', {
   day: '2-digit',
   month: '2-digit',
-  year: 'numeric'
+  year: 'numeric',
+  timeZone: 'Europe/Oslo'
 })
 
 function toDate(date: string | Date): Date | null {
