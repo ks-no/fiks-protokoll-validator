@@ -58,7 +58,17 @@ const lastTestDateTime = computed(() => {
 
 const sessionId = computed(() => {
   if (!lastTestUrl.value) return ''
-  const parts = lastTestUrl.value.split('TestSession/')
-  return parts[1] || ''
+  try {
+    const url = new URL(lastTestUrl.value, window.location.origin)
+    const pathParts = url.pathname.split('/')
+    const testSessionIndex = pathParts.findIndex(part => part === 'TestSession')
+    if (testSessionIndex !== -1 && pathParts[testSessionIndex + 1]) {
+      return pathParts[testSessionIndex + 1]
+    }
+    return ''
+  } catch {
+    const parts = lastTestUrl.value.split('TestSession/')
+    return parts[1] || ''
+  }
 })
 </script>

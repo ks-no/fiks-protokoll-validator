@@ -29,8 +29,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: true,
-  variant: 'info',
-  dismissible: false
+  variant: 'info'
 })
 
 const emit = defineEmits<{

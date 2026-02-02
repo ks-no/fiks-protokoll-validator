@@ -9,7 +9,7 @@
         <!-- Header -->
         <div
           v-if="title"
-          class="flex items-center justify-between px-6 py-4 border-b border-gray-200"
+          class="flex-shrink-0 flex items-center justify-between px-6 py-4 border-b border-gray-200"
         >
           <h3 class="text-lg font-semibold text-gray-900">
             {{ title }}
@@ -24,14 +24,14 @@
         </div>
 
         <!-- Body -->
-        <div class="p-6">
+        <div class="p-6 overflow-y-auto flex-1 min-h-0">
           <slot />
         </div>
 
         <!-- Footer -->
         <div
           v-if="!okOnly || $slots.footer"
-          class="flex justify-end gap-3 px-6 py-4 border-t border-gray-200"
+          class="flex-shrink-0 flex justify-end gap-3 px-6 py-4 border-t border-gray-200"
         >
           <slot name="footer">
             <button
@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 type ModalSize = 'sm' | 'md' | 'lg' | 'xl'
 type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'success' | 'warning'
@@ -72,14 +72,10 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  modelValue: false,
-  title: undefined,
   size: 'md',
-  okOnly: false,
   okTitle: 'OK',
   okVariant: 'primary',
-  cancelTitle: 'Cancel',
-  noCloseOnBackdrop: false
+  cancelTitle: 'Cancel'
 })
 
 const emit = defineEmits<{
@@ -95,7 +91,7 @@ const modalClasses = computed(() => {
     lg: 'max-w-2xl',
     xl: 'max-w-4xl'
   }
-  return `bg-white rounded-lg shadow-xl w-full mx-4 ${sizeClasses[props.size]}`
+  return `bg-white rounded-lg shadow-xl w-full mx-4 max-h-[90vh] flex flex-col ${sizeClasses[props.size]}`
 })
 
 const okButtonClasses = computed(() => {
@@ -131,21 +127,38 @@ function handleKeydown(event: KeyboardEvent) {
   }
 }
 
+// Instance-scoped flag to prevent duplicate listeners per component instance
+const listenerAdded = ref(false)
+
+function addKeydownListener() {
+  if (!listenerAdded.value) {
+    document.addEventListener('keydown', handleKeydown)
+    listenerAdded.value = true
+  }
+}
+
+function removeKeydownListener() {
+  if (listenerAdded.value) {
+    document.removeEventListener('keydown', handleKeydown)
+    listenerAdded.value = false
+  }
+}
+
 watch(() => props.modelValue, (isOpen) => {
   if (isOpen) {
-    document.addEventListener('keydown', handleKeydown)
+    addKeydownListener()
   } else {
-    document.removeEventListener('keydown', handleKeydown)
+    removeKeydownListener()
   }
 })
 
 onMounted(() => {
   if (props.modelValue) {
-    document.addEventListener('keydown', handleKeydown)
+    addKeydownListener()
   }
 })
 
 onUnmounted(() => {
-  document.removeEventListener('keydown', handleKeydown)
+  removeKeydownListener()
 })
 </script>

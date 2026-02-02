@@ -138,19 +138,12 @@ interface Props {
   customPayloadFilename?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  isValidated: false,
-  validationErrors: () => [],
-  testSessionId: undefined,
-  customPayloadFilename: undefined
-})
+const props = defineProps<Props>()
 
 const isCollapsed = ref(true)
 
 const validState = computed<ValidationState>(() => {
   if (!props.isValidated) return 'notValidated'
-  return props.validationErrors && props.validationErrors.length > 0
-    ? 'invalid'
-    : 'valid'
+  return (props.validationErrors?.length ?? 0) > 0 ? 'invalid' : 'valid'
 })
 </script>

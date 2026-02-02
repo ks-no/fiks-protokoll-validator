@@ -18,19 +18,19 @@
             v-if="!isCollapsed"
             icon="fa-solid fa-file-circle-minus"
           />
-          {{ messageType }}
+          {{ props.messageType }}
         </strong>
       </div>
     </span>
     <div
       v-show="!isCollapsed"
-      :id="'collapse-' + collapseId"
+      :id="'collapse-' + props.collapseId"
       class="mt-2"
     >
       <div class="bg-white rounded-lg shadow p-6 mb-8">
-        <p><strong>Mottatt: </strong>{{ formatDateTime(receivedAt) }}</p>
+        <p><strong>Mottatt: </strong>{{ formatDateTime(props.receivedAt) }}</p>
         <div
-          v-for="payload in payloads"
+          v-for="payload in (props.payloads ?? [])"
           :key="payload.filename"
         >
           <p v-if="payload">
@@ -59,7 +59,7 @@ interface Props {
   payloads?: FiksPayload[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const isCollapsed = ref(true)
 </script>

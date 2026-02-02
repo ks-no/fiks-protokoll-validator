@@ -15,13 +15,7 @@ interface Props {
   size?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  modelValue: () => [],
-  id: undefined,
-  stacked: false,
-  switches: false,
-  size: undefined
-})
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: (string | number | boolean)[]]

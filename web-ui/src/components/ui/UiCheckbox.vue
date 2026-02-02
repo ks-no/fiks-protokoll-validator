@@ -30,12 +30,7 @@ interface Props {
   switch?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  modelValue: false,
-  value: undefined,
-  id: undefined,
-  switch: false
-})
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]
@@ -44,7 +39,7 @@ const emit = defineEmits<{
 
 const checkboxGroup = inject<ComputedRef<CheckboxGroupContext> | null>('checkboxGroup', null)
 
-const switchStyle = computed(() => props.switch)
+const switchStyle = computed(() => props.switch ?? false)
 
 const isChecked = computed(() => {
   if (checkboxGroup?.value) {

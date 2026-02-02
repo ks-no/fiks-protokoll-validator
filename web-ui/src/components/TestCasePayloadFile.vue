@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useApi } from '@/composables/useApi'
+import {computed, ref} from 'vue'
+import {useApi} from '@/composables/useApi'
 import PayloadFile from './PayloadFile.vue'
 import PayloadFileUpload from '@/components/PayloadFileUpload.vue'
 
@@ -42,15 +42,7 @@ interface Props {
   testSessionId?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  fileName: undefined,
-  isAttachment: false,
-  operation: undefined,
-  situation: undefined,
-  protocol: undefined,
-  hasRun: false,
-  testSessionId: undefined
-})
+const props = defineProps<Props>()
 
 const payloadFileContent = ref<string | undefined>(undefined)
 const contentError = ref<string | null>(null)
@@ -62,21 +54,22 @@ const payloadUrl = computed(() => {
     : `${apiBaseUrl}/${props.testId}/payload`
 })
 
+const isAttachment = computed(() => props.isAttachment ?? false)
+
 const attachmentUrl = computed(() => {
   return `${apiBaseUrl}/${props.testId}/Attachment/${props.fileName}`
 })
 
 async function getContent(isTextContent: boolean) {
-  const resourceUrl = props.isAttachment ? attachmentUrl.value : payloadUrl.value
+  const resourceUrl = isAttachment.value ? attachmentUrl.value : payloadUrl.value
   const api = useApi<string>()
 
   try {
     contentError.value = null
-    const result = await api.get(
-      resourceUrl.replace(import.meta.env.VITE_API_URL || '', ''),
-      { responseType: isTextContent ? 'text' : 'blob' }
+    payloadFileContent.value = await api.get(
+        resourceUrl.replace(import.meta.env.VITE_API_URL || '', ''),
+        {responseType: isTextContent ? 'text' : 'blob'}
     )
-    payloadFileContent.value = result
   } catch (err) {
     const error = err as { message?: string }
     contentError.value = error.message ?? 'Kunne ikke laste innhold'

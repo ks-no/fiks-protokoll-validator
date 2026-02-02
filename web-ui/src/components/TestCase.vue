@@ -151,15 +151,7 @@ interface Props {
   testSessionId?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  payloadFileName: undefined,
-  payloadAttachmentFileNames: undefined,
-  supported: false,
-  hasRun: false,
-  validState: undefined,
-  testSessionId: undefined,
-  isCollapsed: true
-})
+const props = defineProps<Props>()
 
-const isNotCollapsed = ref(!props.isCollapsed)
+const isNotCollapsed = ref(!(props.isCollapsed ?? true))
 </script>

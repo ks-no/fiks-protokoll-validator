@@ -23,9 +23,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'primary',
-  label: undefined,
-  small: false
+  variant: 'primary'
 })
 
 const spinnerClasses = computed(() => {
@@ -40,7 +38,7 @@ const spinnerClasses = computed(() => {
 })
 
 const spinnerStyle = computed(() => {
-  const size = props.small ? '1rem' : '1.5rem'
+  const size = (props.small ?? false) ? '1rem' : '1.5rem'
   return {
     width: size,
     height: size,

@@ -49,6 +49,7 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
   async function get(endpoint: string, options?: RequestOptions): Promise<T> {
     loading.value = true
     error.value = null
+    data.value = null
 
     try {
       const response = await fetch(`${baseUrl}${endpoint}`, {
@@ -58,6 +59,7 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
       data.value = result
       return result
     } catch (err) {
+      data.value = null
       if ((err as ApiError).status) {
         throw err
       }
