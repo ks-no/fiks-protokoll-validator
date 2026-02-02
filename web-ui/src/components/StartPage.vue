@@ -56,19 +56,29 @@ const lastTestDateTime = computed(() => {
   return formatDate(createdAt.value)
 })
 
-const sessionId = computed(() => {
-  if (!lastTestUrl.value) return ''
+function extractSessionId(urlString: string | null): string {
+  if (!urlString) return ''
+  
+  let pathname: string
   try {
-    const url = new URL(lastTestUrl.value, window.location.origin)
-    const pathParts = url.pathname.split('/')
-    const testSessionIndex = pathParts.findIndex(part => part === 'TestSession')
-    if (testSessionIndex !== -1 && pathParts[testSessionIndex + 1]) {
-      return pathParts[testSessionIndex + 1]
-    }
-    return ''
+    const url = new URL(urlString, window.location.origin)
+    pathname = url.pathname
   } catch {
-    const parts = lastTestUrl.value.split('TestSession/')
-    return parts[1] || ''
+    const withoutQuery = urlString.split('?')[0]
+    const withoutFragment = withoutQuery ? withoutQuery.split('#')[0] : ''
+    pathname = withoutFragment || urlString
   }
-})
+  
+  const match = pathname.match(/\/TestSession\/([^/?#]+)/)
+  if (!match || !match[1]) return ''
+  
+  try {
+    const sessionId = decodeURIComponent(match[1])
+    return sessionId.trim() || ''
+  } catch {
+    return match[1].trim() || ''
+  }
+}
+
+const sessionId = computed(() => extractSessionId(lastTestUrl.value))
 </script>
