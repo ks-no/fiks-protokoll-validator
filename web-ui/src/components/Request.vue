@@ -1,225 +1,149 @@
 <template>
-  <li class="list-group-item">
+  <li class="border-b border-gray-200 py-4">
     <TestCase
-      :testId="testCase.testId"
-      :testName="testCase.testName"
-      :messageType="testCase.messageType"
-      :payloadFileName="customPayloadFilename != null ? customPayloadFilename : testCase.payloadFileName"
-      :payloadAttachmentFileNames="testCase.payloadAttachmentFileNames"
+      :test-id="testCase.testId"
+      :test-name="testCase.testName"
+      :message-type="testCase.messageType"
+      :payload-file-name="customPayloadFilename ?? testCase.payloadFileName"
+      :payload-attachment-file-names="testCase.payloadAttachmentFileNames"
       :description="testCase.description"
-      :expectedResult="testCase.expectedResult"
+      :expected-result="testCase.expectedResult"
       :situation="testCase.situation"
       :operation="testCase.operation"
-      :testStep="testCase.testStep"
+      :test-step="testCase.testStep"
       :protocol="testCase.protocol"
-      :hasRun="hasRun"
-      :validState="validState"
-      :isCollapsed="isCollapsed"
-      :testSessionId="testSessionId"
+      :has-run="hasRun"
+      :valid-state="validState"
+      :is-collapsed="isCollapsed"
+      :test-session-id="testSessionId"
     />
-    <b-collapse :visible="!isCollapsed" :id="'collapse-' + testCase.operation+ '' + testCase.situation">
-      <b-container fluid>
-        <b-row style="margin-bottom: 25px">
-          <b-col cols="2"> <strong class="header">Sendt: </strong> </b-col>
-          <b-col> {{ formatDate(sentAt) }} </b-col>
-        </b-row>
-        <div v-if="testCase.fiksResponseTests != null && testCase.fiksResponseTests.length > 0">
-          <b-row style="margin-bottom: 5px">
-            <b-col cols="2">
-              <strong class="header">Testspørringer:</strong>
-            </b-col>
-            <b-col>
+    <div
+      v-show="!isCollapsed"
+      :id="'collapse-' + testCase.operation + testCase.situation"
+    >
+      <div class="w-full px-4">
+        <div class="grid grid-cols-[1fr_2fr] gap-y-1.5 mb-6">
+          <strong class="text-right pr-2">Sendt: </strong>
+          <span>{{ formatDateTime(sentAt) }}</span>
+        </div>
+        <div v-if="testCase.fiksResponseTests && testCase.fiksResponseTests.length > 0">
+          <div class="grid grid-cols-[1fr_2fr] gap-y-1.5 mb-1.5">
+            <strong class="text-right pr-2">Testspørringer:</strong>
+            <span>
               <a
                 v-for="fiksResponseTest in testCase.fiksResponseTests"
                 :key="fiksResponseTest.id"
+                class="block"
               >
                 {{
-                  testCase.protocol != "no.ks.fiks.politisk.behandling.klient.v1" ? 
-                   fiksResponseTest.payloadQuery +
-                    (fiksResponseTest.valueType === 0
-                      ? "/text(" + fiksResponseTest.expectedValue + ")"
-                      : "[@xsi:type='" + fiksResponseTest.expectedValue + "']")
-                  :
-                  fiksResponseTest.payloadQuery +
-                    (fiksResponseTest.valueType === 0
-                      ? "/forventet verdi(" + fiksResponseTest.expectedValue + ")"
-                      : "[key='" + fiksResponseTest.expectedValue + "']")
+                  testCase.protocol !== 'no.ks.fiks.politisk.behandling.klient.v1'
+                    ? fiksResponseTest.payloadQuery +
+                      (fiksResponseTest.valueType === 0
+                        ? '/text(' + fiksResponseTest.expectedValue + ')'
+                        : "[@xsi:type='" + fiksResponseTest.expectedValue + "']")
+                    : fiksResponseTest.payloadQuery +
+                      (fiksResponseTest.valueType === 0
+                        ? '/forventet verdi(' + fiksResponseTest.expectedValue + ')'
+                        : "[key='" + fiksResponseTest.expectedValue + "']")
                 }}
-                <br />
               </a>
-            </b-col>
-          </b-row>
+            </span>
+          </div>
         </div>
-      </b-container>
-      <b-card>
-        <ul class="list-group">
-          <h6>
-            <strong>Svarmeldinger</strong>
+      </div>
+      <div class="bg-white rounded-lg shadow p-6 mb-8">
+        <ul class="space-y-2">
+          <h6 class="font-semibold">
+            Svarmeldinger
           </h6>
-          {{
-            validState !== "notValidated" ? "" : "Ingen svarmeldinger funnet.."
-          }}
+          <span v-if="validState === 'notValidated'">Ingen svarmeldinger funnet..</span>
           <Response
             v-for="response in responses"
             :key="response.id"
-            :collapseId="'collapse-' + response.id"
-            :receivedAt="response.receivedAt"
-            :messageType="response.type"
+            :collapse-id="'collapse-' + response.id"
+            :received-at="response.receivedAt"
+            :message-type="response.type"
             :payloads="response.fiksPayloads"
-            :payloadContent="response.payloadContent"
           />
         </ul>
-      </b-card>
-      <b-card>
-        <h6><strong>Testresultat</strong></h6>
-        <div v-if="validState === 'notValidated'" class="flex-result-item">
-          <b-icon-exclamation-circle-fill
-            :class="'validState ' + validState"
+      </div>
+      <div class="bg-white rounded-lg shadow p-6 mb-8">
+        <h6 class="font-semibold">
+          Testresultat
+        </h6>
+        <div
+          v-if="validState === 'notValidated'"
+          class="flex items-center gap-2"
+        >
+          <font-awesome-icon
+            icon="fa-solid fa-circle-exclamation"
+            class="validState notValidated"
             title="Ikke validert"
           />
-          <label> Validering er ikke utført </label>
+          <label>Validering er ikke utført</label>
         </div>
         <div v-else-if="validState === 'valid'">
-          <label> Validering utført uten feil! </label>
+          <label>Validering utført uten feil!</label>
         </div>
         <div v-else-if="validState === 'invalid'">
           <label
-            class="flex-result-item"
             v-for="error in validationErrors"
             :key="error"
+            class="flex items-center gap-2"
           >
-            <b-icon-exclamation-circle-fill
-              :class="'validState ' + validState"
+            <font-awesome-icon
+              icon="fa-solid fa-circle-exclamation"
+              class="validState invalid"
               title="Ugyldig"
             />
-            {{error}}
+            {{ error }}
           </label>
         </div>
-      </b-card>
-    </b-collapse>
+      </div>
+    </div>
   </li>
 </template>
 
-<script>
-import moment from "moment";
-import TestCase from "./TestCase.vue";
-import Response from "./Response.vue";
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { formatDateTime } from '@/composables/dateFormat'
+import TestCase from './TestCase.vue'
+import Response from './Response.vue'
+import type { FiksResponseTest, FiksResponse, ValidationState } from '@/types'
 
-export default {
-  name: "Request",
+interface TestCaseData {
+  testId: string
+  testName: string
+  messageType: string
+  description: string
+  testStep: string
+  operation: string
+  situation: string
+  expectedResult: string
+  payloadFileName?: string
+  payloadAttachmentFileNames?: string
+  protocol: string
+  fiksResponseTests?: FiksResponseTest[]
+}
 
-  components: {
-    TestCase,
-    Response
-  },
+interface Props {
+  collapseId: string
+  hasRun: boolean
+  sentAt: string
+  testCase: TestCaseData
+  responses: FiksResponse[]
+  isValidated?: boolean
+  validationErrors?: string[]
+  testSessionId?: string
+  customPayloadFilename?: string
+}
 
-  data() {
-    return {
-      isCollapsed: true,
-      validState: null
-    };
-  },
+const props = defineProps<Props>()
 
-  props: {
-    collapseId: {
-      required: true
-    },
-    hasRun: {
-      required: true,
-      type: Boolean
-    },
-    sentAt: {
-      required: true,
-      type: String
-    },
-    testCase: {
-      required: true,
-      type: Object
-    },
-    responses: {
-      type: Array,
-      required: true
-    },
-    isValidated: {
-      type: Boolean
-    },
-    validationErrors: {
-      type: Array
-    },
-    testSessionId: {
-      type: String
-    },
-    customPayloadFilename: {
-      type: String
-    }
-  },
+const isCollapsed = ref(true)
 
-  methods: {
-    formatDate: date => {
-      return moment(date).format("DD.MM.YYYY [kl.]HH:mm:ss.SSS");
-    }
-  },
-
-  beforeMount() {
-    if (!this.isValidated) {
-      this.validState = "notValidated";
-    } else {
-      this.validState =
-        typeof this.validationErrors !== "undefined" &&
-        this.validationErrors.length > 0
-          ? "invalid"
-          : "valid";
-    }
-  }
-};
+const validState = computed<ValidationState>(() => {
+  if (!props.isValidated) return 'notValidated'
+  return (props.validationErrors?.length ?? 0) > 0 ? 'invalid' : 'valid'
+})
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-.flex-result-item {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
-  vertical-align: -webkit-baseline-middle;
-}
-
-svg.validState {
-  font-size: 24px;
-  margin-right: 6px;
-}
-
-svg.notValidated {
-  color: rgb(231, 181, 42);
-}
-
-svg.invalid {
-  color: #cc3333;
-}
-
-.ext-left {
-  float: left;
-  width: 85%;
-}
-
-.ext-right {
-  float: right;
-}
-
-.grow-right {
-  width: 100%;
-}
-
-li span {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-b-form-checkbox {
-  float: right;
-  widows: 15%;
-}
-
-strong.header {
-  float: right;
-}
-</style>

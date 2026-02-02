@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    overflow-y: scroll;
+  }
+
+  body {
+    @apply font-sans antialiased text-gray-900 text-sm;
+  }
+
+  h1 {
+    @apply mb-4;
+  }
+
+  th,
+  td {
+    @apply border border-gray-400 px-2.5 py-1.5;
+  }
+}
+
+@layer components {
+  /* Validation state icons */
+  .validState {
+    font-size: 24px;
+    margin-right: 6px;
+  }
+
+  .validState.invalid {
+    @apply text-red-600;
+  }
+
+  .validState.notValidated {
+    @apply text-yellow-500;
+  }
+
+  .validState.valid {
+    @apply text-green-600;
+  }
+}

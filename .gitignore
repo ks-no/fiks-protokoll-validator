@@ -380,6 +380,15 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# Generated schema files from NuGet packages
+api/KS.FiksProtokollValidator.WebAPI/Schemas/*.schema.json
+
+# SQLite database files
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
 # App specific files
 *.pem
 *.cer
@@ -392,3 +401,7 @@ appsettings.Local.json
 published-app
 api/published-api
 web-ui/dist
+
+# Development logs
+backend.log
+frontend.log

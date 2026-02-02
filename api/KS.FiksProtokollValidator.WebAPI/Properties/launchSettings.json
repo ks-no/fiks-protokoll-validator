@@ -24,6 +24,14 @@
         "AMQP_IGNORE_SSL_ERROR": "true"
       },
       "applicationUrl": "https://localhost:44303;http://localhost:64558"
+    },
+    "Standalone": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Standalone"
+      },
+      "applicationUrl": "http://localhost:5000"
     }
   }
 }
