@@ -116,11 +116,17 @@
           dismissible
           class="mb-4"
         >
-          <p class="font-semibold">
-            Testing feilet med statuskode {{ requestErrorStatusCode }}
+          <p class="font-semibold mr-2">
+            {{ requestErrorTitle }}
           </p>
-          <p class="text-sm mt-1">
+          <p class="text-sm">
             {{ requestErrorMessage }}
+          </p>
+          <p 
+            v-if="requestErrorStatusCode > 0" 
+            class="text-xs mt-2 text-gray-600"
+          >
+            Statuskode: {{ requestErrorStatusCode }}
           </p>
         </UiAlert>
 
@@ -169,6 +175,7 @@ import { useApi } from '@/composables/useApi'
 import TestCase from './TestCase.vue'
 import type { TestCase as TestCaseData, ProtocolOption } from '@/types'
 import type { CreateTestSessionResponse } from '@/types/api'
+import {UiAlert, UiCheckboxGroup, UiSpinner} from "@/components/ui";
 
 const route = useRoute()
 const router = useRouter()
@@ -200,6 +207,22 @@ const requestErrorStatusCode = ref(0)
 const requestErrorMessage = ref('')
 const selectedProtocol = ref(initialProtocol)
 
+const requestErrorTitle = computed(() => {
+  if (requestErrorStatusCode.value === 0) {
+    return 'Kunne ikke fullføre forespørselen'
+  }
+  if (requestErrorStatusCode.value === 404) {
+    return 'Ressursen ble ikke funnet'
+  }
+  if (requestErrorStatusCode.value === 400) {
+    return 'Ugyldig forespørsel'
+  }
+  if (requestErrorStatusCode.value >= 500) {
+    return 'Serverfeil'
+  }
+  return `Feil ved testing`
+})
+
 const computedTestCases = computed(() => {
   if (selectedProtocol.value === 'ingen') return []
   if (!showNotSupportedTests.value) {
@@ -215,9 +238,27 @@ async function getTestsByProtocol() {
   try {
     testCases.value = await testCaseApi.get(`/api/TestCases/Protocol/${selectedProtocol.value}`)
   } catch (err) {
-    const error = err as { status: number; data?: unknown }
+    const error = err as { status: number; data?: unknown; message?: string }
     requestErrorStatusCode.value = error.status
-    requestErrorMessage.value = (error.data as string) ?? 'Kunne ikke laste tester'
+    
+    // Handle different error scenarios with user-friendly messages
+    if (error.status === 0) {
+      // Network error - use the friendly message from useApi
+      requestErrorMessage.value = error.message || 'Noe gikk galt. Kontroller nettverkstilkoblingen og prøv igjen.'
+    } else if (error.status === 404) {
+      requestErrorMessage.value = 'Ressursen ble ikke funnet. Kontroller at protokollen er korrekt.'
+    } else if (error.status === 400) {
+      const errorData = error.data as string
+      // Check if it's the "Ugyldig konto" error from backend
+      if (errorData && errorData.includes('Ugyldig konto')) {
+        requestErrorMessage.value = 'FIKS-IO kontoen ble ikke funnet. Kontroller at konto-IDen er korrekt.'
+      } else {
+        requestErrorMessage.value = errorData || 'Ugyldig forespørsel. Kontroller at alle verdier er korrekte.'
+      }
+    } else {
+      requestErrorMessage.value = (error.data as string) || 'Kunne ikke laste tester. Prøv igjen senere.'
+    }
+    
     showRequestError.value = true
   } finally {
     loading.value = false
@@ -240,9 +281,30 @@ async function runSelectedTests() {
     hasRun.value = true
     router.push({ path: `/TestSession/${data.id}` })
   } catch (err) {
-    const error = err as { status: number; data?: unknown }
+    const error = err as { status: number; data?: unknown; message?: string }
     requestErrorStatusCode.value = error.status
-    requestErrorMessage.value = error.data as string
+    
+    // Handle different error scenarios with user-friendly messages
+    if (error.status === 0) {
+      // Network error - use the friendly message from useApi
+      requestErrorMessage.value = error.message || 'Noe gikk galt. Kontroller FIKS-IO kontoen og nettverkstilkoblingen.'
+    } else if (error.status === 404) {
+      requestErrorMessage.value = 'FIKS-IO kontoen ble ikke funnet. Kontroller at konto-IDen er korrekt.'
+    } else if (error.status === 400) {
+      const errorData = error.data as string
+      // Check if it's the "Ugyldig konto" error from backend
+      if (errorData && errorData.includes('Ugyldig konto')) {
+        requestErrorMessage.value = 'FIKS-IO kontoen ble ikke funnet. Kontroller at konto-IDen er korrekt.'
+      } else {
+        requestErrorMessage.value = errorData || 'Ugyldig forespørsel. Kontroller at alle verdier er korrekte.'
+      }
+    } else if (error.status >= 500) {
+      const errorData = error.data as string
+      requestErrorMessage.value = errorData || 'En serverfeil oppstod. Prøv igjen senere.'
+    } else {
+      requestErrorMessage.value = (error.data as string) || 'En uventet feil oppstod. Prøv igjen senere.'
+    }
+    
     showRequestError.value = true
   } finally {
     running.value = false

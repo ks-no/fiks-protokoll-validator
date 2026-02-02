@@ -148,13 +148,21 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 catch (Exception e)
                 {
                     Logger.Error(e, "Noe gikk galt ved sending av request til {FiksKonto}", testSession.RecipientId);
-                    if (e.InnerException != null && e.InnerException.Message.Contains("Ingen konto med id"))
+                    
+                    var errorMessage = e.Message;
+                    if (e.InnerException != null)
                     {
-                        Logger.Error("TestSession FIKS-account {FiksKonto} is illegal", testSession.RecipientId);
-                        return BadRequest("Ugyldig konto: " + testSession.RecipientId);
+                        errorMessage = e.InnerException.Message;
                     }
+                    
+                    if (errorMessage.Contains("Ingen konto med id") || errorMessage.Contains("NotFound"))
+                    {
+                        Logger.Error("TestSession FIKS-account {FiksKonto} was not found", testSession.RecipientId);
+                        return BadRequest($"Ugyldig konto: {testSession.RecipientId}. Kontoen ble ikke funnet i FIKS-IO katalogen.");
+                    }
+                    
                     Logger.Error("An Error occured when sending FIKS request with recipient ID {RecipientId}", testSession.RecipientId);
-                    return StatusCode(500, e.Message);
+                    return StatusCode(500, $"Feil ved sending til FIKS-IO: {errorMessage}");
                 }
 
                 if (isNewFiksRequest)
@@ -166,9 +174,6 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
                 {
                     _context.FiksRequest.Update(fiksRequest);
                 }
-                
-                // Make changes to DB for each sent message. Or else the response may arrive before this whole session is done
-               // await _context.SaveChangesAsync(); 
             }
 
             testSession.SelectedTestCaseIds.Clear();
