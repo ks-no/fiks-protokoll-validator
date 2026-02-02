@@ -53,29 +53,9 @@
 import { ref, onMounted } from 'vue'
 import SshPre from 'simple-syntax-highlighter'
 import 'simple-syntax-highlighter/dist/sshpre.css'
+import * as mime from 'mime-types'
 import UiModal from '@/components/ui/UiModal.vue'
 import UiSpinner from '@/components/ui/UiSpinner.vue'
-
-const mimeTypes: Record<string, string> = {
-  pdf: 'application/pdf',
-  xml: 'application/xml',
-  json: 'application/json',
-  txt: 'text/plain',
-  html: 'text/html',
-  htm: 'text/html',
-  csv: 'text/csv',
-  md: 'text/markdown',
-  jpg: 'image/jpeg',
-  jpeg: 'image/jpeg',
-  png: 'image/png',
-  gif: 'image/gif',
-  svg: 'image/svg+xml',
-  zip: 'application/zip',
-  doc: 'application/msword',
-  docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-  xls: 'application/vnd.ms-excel',
-  xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-}
 
 interface Props {
   fileName?: string
@@ -109,7 +89,8 @@ function handleButtonOnClick() {
 }
 
 function getMimeType(extension?: string | null): string {
-  return mimeTypes[extension?.toLowerCase() ?? ''] ?? 'application/octet-stream'
+  if (!extension) return 'application/octet-stream'
+  return mime.lookup(extension) || 'application/octet-stream'
 }
 
 function getTemporaryUrl(content: string | Blob): string {
