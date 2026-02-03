@@ -23,7 +23,7 @@
     "@types/mime-types": "^3.0.1",
     "@types/node": "^22.10.0",
     "@vitejs/plugin-vue": "^6.0.4",
-    "autoprefixer": "^10.4.23",
+    "autoprefixer": "^10.4.24",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.2",
     "eslint-plugin-vue": "^10.7.0",
