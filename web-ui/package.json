@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/mime-types": "^3.0.1",
-    "@types/node": "^22.10.0",
+    "@types/node": "^25.2.0",
     "@vitejs/plugin-vue": "^6.0.4",
     "autoprefixer": "^10.4.24",
     "dotenv": "^17.2.3",
