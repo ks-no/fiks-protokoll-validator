@@ -1,6 +1,5 @@
 <template>
   <div class="max-w-7xl mx-auto px-4 py-6">
-    <!-- Header -->
     <div class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">
         Test Resultater
@@ -10,7 +9,6 @@
       </p>
     </div>
 
-    <!-- Session URL Copy Box -->
     <div
       v-if="!fetchError"
       class="mb-8 bg-blue-50 border border-blue-200 rounded-lg p-6"
@@ -167,6 +165,7 @@ import { useApi } from '@/composables/useApi'
 import { useClipboard } from '@/composables/useClipboard'
 import Request from './Request.vue'
 import type { TestSession as TestSessionData } from '@/types'
+import {UiAlert, UiButton, UiSpinner} from "@/components/ui";
 
 interface ErrorMessage {
   title?: string
@@ -182,7 +181,6 @@ const fetchError = ref(false)
 const sessionUrl = ref(window.location.href)
 const requestErrorStatusCode = ref<number | null>(null)
 const requestErrorMessage = ref<string | ErrorMessage>('')
-const sessionUrlInput = ref<HTMLInputElement | null>(null)
 
 const showUpdateButton = computed(() => {
   if (!testSession.value?.fiksRequests) return false
