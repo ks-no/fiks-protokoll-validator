@@ -11,9 +11,9 @@
               class="cursor-pointer"
               role="button"
               tabindex="0"
-              @click="isNotCollapsed = !isNotCollapsed"
-              @keyup.enter="isNotCollapsed = !isNotCollapsed"
-              @keyup.space="isNotCollapsed = !isNotCollapsed"
+              @click="handleToggle"
+              @keyup.enter="handleToggle"
+              @keyup.space="handleToggle"
             >
               <div>
                 <h5 class="flex items-center justify-between w-full text-base">
@@ -153,5 +153,14 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const emit = defineEmits<{
+  'toggle-collapse': []
+}>()
+
 const isNotCollapsed = ref(!(props.isCollapsed ?? true))
+
+function handleToggle() {
+  isNotCollapsed.value = !isNotCollapsed.value
+  emit('toggle-collapse')
+}
 </script>

@@ -16,6 +16,7 @@
       :valid-state="validState"
       :is-collapsed="isCollapsed"
       :test-session-id="testSessionId"
+      @toggle-collapse="isCollapsed = !isCollapsed"
     />
     <div
       v-show="!isCollapsed"
