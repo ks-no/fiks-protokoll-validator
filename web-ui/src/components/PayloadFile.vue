@@ -31,6 +31,7 @@
           <ssh-pre
             :language="fileExtension"
             :label="fileExtension?.toUpperCase() ?? ''"
+            class="!bg-slate-50 !text-slate-800 rounded-lg"
           >
             {{ attemptDecodeBase64(content) }}
           </ssh-pre>

@@ -1,6 +1,6 @@
 <template>
-  <div
-    class="animate-spin rounded-full border-b-2"
+  <span
+    class="inline-block animate-spin rounded-full border-2 border-transparent"
     :class="spinnerClasses"
     :style="spinnerStyle"
   >
@@ -8,7 +8,7 @@
       v-if="label"
       class="sr-only"
     >{{ label }}</span>
-  </div>
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -28,22 +28,20 @@ const props = withDefaults(defineProps<Props>(), {
 
 const spinnerClasses = computed(() => {
   const variants: Record<SpinnerVariant, string> = {
-    primary: 'border-blue-600',
-    secondary: 'border-gray-600',
-    success: 'border-green-600',
-    danger: 'border-red-600',
-    warning: 'border-yellow-600'
+    primary: 'border-t-blue-600',
+    secondary: 'border-t-gray-600',
+    success: 'border-t-green-600',
+    danger: 'border-t-red-600',
+    warning: 'border-t-yellow-600'
   }
   return variants[props.variant]
 })
 
 const spinnerStyle = computed(() => {
-  const size = (props.small ?? false) ? '1rem' : '1.5rem'
+  const size = props.small ? '1rem' : '1.5rem'
   return {
     width: size,
-    height: size,
-    verticalAlign: '8px',
-    marginLeft: '10px'
+    height: size
   }
 })
 </script>

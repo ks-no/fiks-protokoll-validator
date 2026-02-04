@@ -134,26 +134,25 @@
     </div>
 
     <!-- Test Results -->
-    <div
-      v-if="testSession && testSession.fiksRequests"
-      class="space-y-4"
-    >
-      <h2 class="text-2xl font-bold text-gray-900 mb-4">
+    <div v-if="testSession && testSession.fiksRequests">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">
         Test Resultater
       </h2>
-      <Request
-        v-for="request in testSession.fiksRequests"
-        :key="request.messageGuid"
-        :collapse-id="request.messageGuid"
-        :has-run="true"
-        :sent-at="request.sentAt"
-        :responses="request.fiksResponses"
-        :test-case="request.testCase"
-        :custom-payload-filename="request.customPayloadFile?.filename"
-        :is-validated="request.isFiksResponseValidated"
-        :validation-errors="request.fiksResponseValidationErrors"
-        :test-session-id="testSession.id"
-      />
+      <ul class="divide-y divide-gray-200">
+        <Request
+          v-for="request in testSession.fiksRequests"
+          :key="request.messageGuid"
+          :collapse-id="request.messageGuid"
+          :has-run="true"
+          :sent-at="request.sentAt"
+          :responses="request.fiksResponses"
+          :test-case="request.testCase"
+          :custom-payload-filename="request.customPayloadFile?.filename"
+          :is-validated="request.isFiksResponseValidated"
+          :validation-errors="request.fiksResponseValidationErrors"
+          :test-session-id="testSession.id"
+        />
+      </ul>
     </div>
   </div>
 </template>

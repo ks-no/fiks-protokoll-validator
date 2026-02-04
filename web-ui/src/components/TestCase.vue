@@ -1,129 +1,97 @@
 <template>
   <div>
-    <div class="w-full px-4">
-      <div class="flex flex-wrap">
-        <span
-          class="w-full"
-          :class="!hasRun ? 'flex items-center' : ''"
-        >
-          <div class="flex-1 sm:w-10/12">
-            <span
-              class="cursor-pointer"
-              role="button"
-              tabindex="0"
-              @click="handleToggle"
-              @keyup.enter="handleToggle"
-              @keyup.space="handleToggle"
-            >
-              <div>
-                <h5 class="flex items-center justify-between w-full text-base">
-                  <font-awesome-icon
-                    v-show="!isNotCollapsed"
-                    icon="fa-solid fa-chevron-right"
-                    class="mr-1.5"
-                  />
-                  <font-awesome-icon
-                    v-show="isNotCollapsed"
-                    icon="fa-solid fa-chevron-down"
-                    class="mr-1.5"
-                  />
-                  <span class="flex-1">{{ testName }}</span>
-                  <div
-                    v-if="validState === 'invalid'"
-                    class="text-center"
-                  >
-                    <font-awesome-icon
-                      icon="fa-solid fa-circle-exclamation"
-                      :class="'validState ' + validState"
-                      title="Ugyldig"
-                    />
-                  </div>
-                  <div
-                    v-else-if="validState === 'valid'"
-                    class="text-center"
-                  >
-                    <font-awesome-icon
-                      icon="fa-solid fa-circle-check"
-                      :class="'validState ' + validState"
-                      title="Gyldig"
-                    />
-                  </div>
-                  <div
-                    v-else-if="validState === 'notValidated'"
-                    class="text-center"
-                  >
-                    <font-awesome-icon
-                      icon="fa-solid fa-circle-exclamation"
-                      :class="'validState ' + validState"
-                      title="Ikke validert"
-                    />
-                  </div>
-                </h5>
-              </div>
-            </span>
-          </div>
-          <div class="sm:w-2/12 ml-auto">
-            <UiCheckbox
-              v-if="!hasRun && supported"
-              class="float-left"
-              switch
-              :value="testId"
-            />
-          </div>
-        </span>
+    <div class="flex items-center gap-3">
+      <div class="flex-1">
         <div
-          v-show="isNotCollapsed"
-          :id="'collapse-' + operation + situation"
-          class="ml-4"
-          style="width: 90%"
+          class="cursor-pointer inline-flex items-center gap-2 hover:text-blue-600 transition-colors"
+          role="button"
+          tabindex="0"
+          @click="handleToggle"
+          @keyup.enter="handleToggle"
+          @keyup.space="handleToggle"
         >
-          <div class="w-full bg-gray-100 p-4 rounded grid grid-cols-[1fr_2fr] gap-y-1.5">
-            <strong class="float-left">Beskrivelse:</strong>
-            <span>{{ description }}</span>
-            <strong class="float-left">ID:</strong>
-            <span>{{ operation + situation }}</span>
-            <strong class="float-left">Meldingstype:</strong>
-            <span>{{ messageType }}</span>
-            <strong class="float-left">Meldingsinnhold:</strong>
-            <span>
-              <TestCasePayloadFile
-                :test-id="testId"
-                :test-name="testName"
-                :file-name="payloadFileName"
-                :operation="operation"
-                :situation="situation"
-                :protocol="protocol"
-                :test-session-id="testSessionId"
-                :has-run="hasRun"
-              />
-            </span>
-            <template v-if="payloadAttachmentFileNames">
-              <strong class="float-left">Vedlegg:</strong>
-              <span>
-                <div
-                  v-for="attachmentFileName in payloadAttachmentFileNames.split(';')"
-                  :key="attachmentFileName"
-                >
-                  <TestCasePayloadFile
-                    :test-id="testId"
-                    :test-name="testName"
-                    :operation="operation"
-                    :situation="situation"
-                    :protocol="protocol"
-                    :file-name="attachmentFileName"
-                    :is-attachment="true"
-                    :test-session-id="testSessionId"
-                    :has-run="hasRun"
-                  />
-                </div>
-              </span>
-            </template>
-          </div>
+          <font-awesome-icon
+            :icon="isNotCollapsed ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-right'"
+            class="text-sm text-gray-400"
+          />
+          <span class="font-medium">{{ testName }}</span>
         </div>
-        <hr class="my-0 mx-[5%] border-0 border-t border-gray-200">
+      </div>
+      <div class="flex items-center gap-3">
+        <UiCheckbox
+          v-if="!hasRun && supported"
+          switch
+          :value="testId"
+        />
+        <font-awesome-icon
+          v-if="validState === 'invalid'"
+          icon="fa-solid fa-circle-exclamation"
+          :class="'validState ' + validState"
+          title="Ugyldig"
+        />
+        <font-awesome-icon
+          v-else-if="validState === 'valid'"
+          icon="fa-solid fa-circle-check"
+          :class="'validState ' + validState"
+          title="Gyldig"
+        />
+        <font-awesome-icon
+          v-else-if="validState === 'notValidated'"
+          icon="fa-solid fa-circle-exclamation"
+          :class="'validState ' + validState"
+          title="Ikke validert"
+        />
       </div>
     </div>
-    <hr class="my-0 mx-[5%] border-0 border-t border-gray-200">
+    <div
+      v-show="isNotCollapsed"
+      :id="'collapse-' + operation + situation"
+      class="mt-3 ml-6"
+    >
+      <div class="bg-gray-50 rounded-md p-4 text-sm grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
+        <strong class="text-gray-600">Beskrivelse:</strong>
+        <span class="text-gray-800">{{ description }}</span>
+
+        <strong class="text-gray-600">ID:</strong>
+        <span class="text-gray-800 font-mono">{{ operation + situation }}</span>
+
+        <strong class="text-gray-600">Meldingstype:</strong>
+        <span class="text-gray-800 font-mono text-xs">{{ messageType }}</span>
+
+        <strong class="text-gray-600">Meldingsinnhold:</strong>
+        <span>
+          <TestCasePayloadFile
+            :test-id="testId"
+            :test-name="testName"
+            :file-name="payloadFileName"
+            :operation="operation"
+            :situation="situation"
+            :protocol="protocol"
+            :test-session-id="testSessionId"
+            :has-run="hasRun"
+          />
+        </span>
+
+        <template v-if="payloadAttachmentFileNames">
+          <strong class="text-gray-600">Vedlegg:</strong>
+          <div class="space-y-1">
+            <TestCasePayloadFile
+              v-for="attachmentFileName in payloadAttachmentFileNames.split(';')"
+              :key="attachmentFileName"
+              :test-id="testId"
+              :test-name="testName"
+              :operation="operation"
+              :situation="situation"
+              :protocol="protocol"
+              :file-name="attachmentFileName"
+              :is-attachment="true"
+              :test-session-id="testSessionId"
+              :has-run="hasRun"
+            />
+          </div>
+        </template>
+      </div>
+    </div>
   </div>
 </template>
 
