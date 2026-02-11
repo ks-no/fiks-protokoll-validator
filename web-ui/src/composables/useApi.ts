@@ -78,6 +78,10 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
       throw apiError
     }
 
+    if (response.status === 204 || response.headers.get('content-length') === '0') {
+      return undefined as R
+    }
+
     if (responseType === 'text') return await response.text() as R
     if (responseType === 'blob') return await response.blob() as R
     return await response.json() as R
