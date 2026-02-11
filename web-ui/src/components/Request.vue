@@ -81,9 +81,9 @@
           v-if="validState === 'notValidated'"
           class="flex items-center gap-2 text-sm"
         >
-          <font-awesome-icon
-            icon="fa-solid fa-circle-exclamation"
+          <PhWarningCircle
             class="validState notValidated"
+            weight="fill"
             title="Ikke validert"
           />
           <span class="text-gray-600">Validering er ikke utført</span>
@@ -103,9 +103,9 @@
             :key="error"
             class="flex items-center gap-2 text-sm"
           >
-            <font-awesome-icon
-              icon="fa-solid fa-circle-exclamation"
+            <PhWarningCircle
               class="validState invalid"
+              weight="fill"
               title="Ugyldig"
             />
             <span class="text-red-700">{{ error }}</span>
@@ -118,6 +118,7 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { PhWarningCircle } from '@phosphor-icons/vue'
 import { formatDateTime } from '@/composables/dateFormat'
 import TestCase from './TestCase.vue'
 import Response from './Response.vue'

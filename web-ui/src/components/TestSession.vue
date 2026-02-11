@@ -100,17 +100,17 @@
           </h3>
           <div class="space-y-2 text-sm text-gray-700">
             <p class="flex items-center gap-2">
-              <font-awesome-icon
-                icon="fa-solid fa-circle-exclamation"
+              <PhWarningCircle
                 class="validState invalid"
+                weight="fill"
                 title="Ugyldig"
               />
               <span><strong>Ugyldig:</strong> Testen har feil eller mangler</span>
             </p>
             <p class="flex items-center gap-2">
-              <font-awesome-icon
-                icon="fa-solid fa-circle-exclamation"
+              <PhWarningCircle
                 class="validState notValidated"
+                weight="fill"
                 title="Ikke validert"
               />
               <span><strong>Ikke validert:</strong> Har ikke mottatt svar</span>
@@ -159,6 +159,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { PhWarningCircle } from '@phosphor-icons/vue'
 import { useRoute } from 'vue-router'
 import { useApi } from '@/composables/useApi'
 import { useClipboard } from '@/composables/useClipboard'
