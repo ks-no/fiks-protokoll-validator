@@ -202,7 +202,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             
             Log.Information("UploadCustomPayload finished");
             
-            return new OkResult();
+            return NoContent();
         }
         
         // GET api/<TestsCasePayloadFilesController>/testCaseId/Attachement/attachmentFileName

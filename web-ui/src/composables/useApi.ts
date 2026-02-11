@@ -6,43 +6,6 @@ interface ApiError {
   data?: unknown
 }
 
-/**
- * Categorizes and provides user-friendly error messages for different error types
- */
-function createUserFriendlyError(err: unknown): ApiError {
-  const error = err as Error
-  
-  if (error.message.includes('Failed to fetch')) {
-    return {
-      status: 0,
-      message: 'Kunne ikke koble til serveren. Sjekk nettverkstilkoblingen eller prøv igjen senere.',
-      data: { type: 'network_error', original: error.message }
-    }
-  }
-  
-  if (error.message.includes('NetworkError') || error.message.includes('Network request failed')) {
-    return {
-      status: 0,
-      message: 'Nettverksfeil. Kontroller internettforbindelsen din.',
-      data: { type: 'network_error', original: error.message }
-    }
-  }
-  
-  if (error.message.includes('timeout') || error.message.includes('timed out')) {
-    return {
-      status: 0,
-      message: 'Forespørselen tok for lang tid. Prøv igjen.',
-      data: { type: 'timeout_error', original: error.message }
-    }
-  }
-  
-  return {
-    status: 0,
-    message: 'Noe gikk galt med forespørselen. Kontroller at alle verdier er korrekte og prøv igjen.',
-    data: { type: 'unknown_error', original: error.message }
-  }
-}
-
 interface RequestOptions {
   responseType?: 'json' | 'text' | 'blob'
 }
@@ -78,9 +41,16 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
       throw apiError
     }
 
+    if (response.status === 204 || response.status === 205) {
+      return null as R
+    }
+
     if (responseType === 'text') return await response.text() as R
     if (responseType === 'blob') return await response.blob() as R
-    return await response.json() as R
+
+    const text = await response.text()
+    if (!text) return null as R
+    return JSON.parse(text) as R
   }
 
   async function get(endpoint: string, options?: RequestOptions): Promise<T> {
@@ -100,7 +70,7 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
       if ((err as ApiError).status) {
         throw err
       }
-      error.value = createUserFriendlyError(err)
+      error.value = { status: 0, message: (err as Error).message || 'Unknown error' }
       throw error.value
     } finally {
       loading.value = false
@@ -129,7 +99,7 @@ export function useApi<T = unknown>(): UseApiReturn<T> {
       if ((err as ApiError).status) {
         throw err
       }
-      error.value = createUserFriendlyError(err)
+      error.value = { status: 0, message: (err as Error).message || 'Unknown error' }
       throw error.value
     } finally {
       loading.value = false

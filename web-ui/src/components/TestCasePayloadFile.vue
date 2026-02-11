@@ -70,9 +70,8 @@ async function getContent(isTextContent: boolean) {
         resourceUrl.replace(import.meta.env.VITE_API_URL || '', ''),
         {responseType: isTextContent ? 'text' : 'blob'}
     )
-  } catch (err) {
-    const error = err as { message?: string }
-    contentError.value = error.message ?? 'Kunne ikke laste innhold'
+  } catch {
+    contentError.value = 'Kunne ikke laste innhold'
   }
 }
 </script>

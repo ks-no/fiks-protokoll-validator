@@ -243,8 +243,7 @@ async function getTestsByProtocol() {
     
     // Handle different error scenarios with user-friendly messages
     if (error.status === 0) {
-      // Network error - use the friendly message from useApi
-      requestErrorMessage.value = error.message || 'Noe gikk galt. Kontroller nettverkstilkoblingen og prøv igjen.'
+      requestErrorMessage.value = 'Kunne ikke koble til serveren. Sjekk nettverkstilkoblingen og prøv igjen.'
     } else if (error.status === 404) {
       requestErrorMessage.value = 'Ressursen ble ikke funnet. Kontroller at protokollen er korrekt.'
     } else if (error.status === 400) {
@@ -286,8 +285,7 @@ async function runSelectedTests() {
     
     // Handle different error scenarios with user-friendly messages
     if (error.status === 0) {
-      // Network error - use the friendly message from useApi
-      requestErrorMessage.value = error.message || 'Noe gikk galt. Kontroller FIKS-IO kontoen og nettverkstilkoblingen.'
+      requestErrorMessage.value = 'Kunne ikke koble til serveren. Sjekk FIKS-IO kontoen og nettverkstilkoblingen.'
     } else if (error.status === 404) {
       requestErrorMessage.value = 'FIKS-IO kontoen ble ikke funnet. Kontroller at konto-IDen er korrekt.'
     } else if (error.status === 400) {
