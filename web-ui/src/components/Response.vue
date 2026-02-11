@@ -8,9 +8,15 @@
       @keyup.enter="isCollapsed = !isCollapsed"
       @keyup.space="isCollapsed = !isCollapsed"
     >
-      <font-awesome-icon
-        :icon="isCollapsed ? 'fa-solid fa-chevron-right' : 'fa-solid fa-chevron-down'"
+      <PhCaretDown
+        v-if="!isCollapsed"
         class="text-xs text-gray-400"
+        weight="bold"
+      />
+      <PhCaretRight
+        v-else
+        class="text-xs text-gray-400"
+        weight="bold"
       />
       <span class="font-medium text-sm text-gray-700">{{ props.messageType }}</span>
     </div>
@@ -43,6 +49,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { PhCaretRight, PhCaretDown } from '@phosphor-icons/vue'
 import { formatDateTime } from '@/composables/dateFormat'
 import PayloadFile from './PayloadFile.vue'
 import type { FiksPayload } from '@/types'

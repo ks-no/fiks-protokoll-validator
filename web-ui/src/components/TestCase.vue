@@ -10,9 +10,15 @@
           @keyup.enter="handleToggle"
           @keyup.space="handleToggle"
         >
-          <font-awesome-icon
-            :icon="isNotCollapsed ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-right'"
+          <PhCaretDown
+            v-if="isNotCollapsed"
             class="text-sm text-gray-400"
+            weight="bold"
+          />
+          <PhCaretRight
+            v-else
+            class="text-sm text-gray-400"
+            weight="bold"
           />
           <span class="font-medium">{{ testName }}</span>
         </div>
@@ -23,22 +29,22 @@
           switch
           :value="testId"
         />
-        <font-awesome-icon
+        <PhWarningCircle
           v-if="validState === 'invalid'"
-          icon="fa-solid fa-circle-exclamation"
           :class="'validState ' + validState"
+          weight="fill"
           title="Ugyldig"
         />
-        <font-awesome-icon
+        <PhCheckCircle
           v-else-if="validState === 'valid'"
-          icon="fa-solid fa-circle-check"
           :class="'validState ' + validState"
+          weight="fill"
           title="Gyldig"
         />
-        <font-awesome-icon
+        <PhWarningCircle
           v-else-if="validState === 'notValidated'"
-          icon="fa-solid fa-circle-exclamation"
           :class="'validState ' + validState"
+          weight="fill"
           title="Ikke validert"
         />
       </div>
@@ -97,6 +103,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { PhCaretRight, PhCaretDown, PhWarningCircle, PhCheckCircle } from '@phosphor-icons/vue'
 import TestCasePayloadFile from './TestCasePayloadFile.vue'
 import type { ValidationState } from '@/types'
 

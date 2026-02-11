@@ -33,7 +33,7 @@
             v-if="fileUploadSuccess"
             class="text-green-600 text-2xl"
           >
-            <font-awesome-icon icon="check" />
+            <PhCheck />
           </span>
         </div>
       </div>
@@ -49,6 +49,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { PhCheck } from '@phosphor-icons/vue'
 import { useApi } from '@/composables/useApi'
 
 interface Props {
