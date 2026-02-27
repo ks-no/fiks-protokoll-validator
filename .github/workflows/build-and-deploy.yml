@@ -1,0 +1,285 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      isRelease:
+        description: 'Skal prosjektet releases?'
+        type: boolean
+        default: false
+      specifiedVersion:
+        description: 'Hva er det nye versjonsnummeret (X.X.X)? Som default releases snapshot-versjonen'
+        type: string
+        default: ''
+      releaseNotes:
+        description: 'Hva er endret i denne releasen?'
+        type: string
+        default: 'Ingen endringer utført'
+      securityReview:
+        description: 'Har endringene sikkerhetsmessige konsekvenser, og hvilke tiltak er i så fall iverksatt?'
+        type: string
+        default: 'Endringene har ingen sikkerhetskonsekvenser'
+      reviewer:
+        description: 'Hvem har gjort review?'
+        type: string
+        default: 'Endringene krever ikke review'
+
+env:
+  PROJECT_WEB_FOLDER: web-ui
+  PROJECT_API_FOLDER: api
+  PROJECT_TEST: KS.FiksProtokollValidator.Tests/KS.FiksProtokollValidator.Tests.csproj
+  PROJECT_CHARTNAME: fiks-protokoll-validator
+  API_APP_NAME: fiks-protokoll-validator-api
+  WEB_APP_NAME: fiks-protokoll-validator-web
+  DOCKER_REGISTRY: docker-local-snapshots.artifactory.fiks.ks.no
+  DOCKER_REGISTRY_RELEASE: docker-local.artifactory.fiks.ks.no
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+  DOTNET_NOLOGO: true
+
+jobs:
+  initialize:
+    name: Initialize
+    runs-on: ubuntu-latest
+    outputs:
+      git_sha: ${{ steps.vars.outputs.git_sha }}
+      current_version: ${{ steps.vars.outputs.current_version }}
+      next_version: ${{ steps.vars.outputs.next_version }}
+      full_version: ${{ steps.vars.outputs.full_version }}
+      version_suffix: ${{ steps.vars.outputs.version_suffix }}
+      build_suffix: ${{ steps.vars.outputs.build_suffix }}
+      is_release: ${{ steps.vars.outputs.is_release }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Set version variables
+        id: vars
+        shell: bash
+        run: |
+          GIT_SHA=$(git rev-parse HEAD | cut -c1-7)
+          echo "git_sha=$GIT_SHA" >> "$GITHUB_OUTPUT"
+
+          # Extract VersionPrefix from csproj files (excluding test/example projects)
+          CURRENT_VERSION=$(grep -r '<VersionPrefix>' api/ --include='*.csproj' \
+            | grep -iv 'test\|example' \
+            | head -1 \
+            | sed 's/.*<VersionPrefix>\(.*\)<\/VersionPrefix>.*/\1/')
+
+          echo "current_version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+
+          IS_RELEASE="${{ github.event.inputs.isRelease || 'false' }}"
+          SPECIFIED_VERSION="${{ github.event.inputs.specifiedVersion }}"
+          echo "is_release=$IS_RELEASE" >> "$GITHUB_OUTPUT"
+
+          if [ "$IS_RELEASE" = "true" ]; then
+            echo "version_suffix=" >> "$GITHUB_OUTPUT"
+            echo "build_suffix=" >> "$GITHUB_OUTPUT"
+            echo "full_version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            TIMESTAMP=$(date +%Y%m%d%H%M%S%3N)
+            VERSION_SUFFIX="build.${TIMESTAMP}"
+            echo "version_suffix=$VERSION_SUFFIX" >> "$GITHUB_OUTPUT"
+            echo "build_suffix=--version-suffix $VERSION_SUFFIX" >> "$GITHUB_OUTPUT"
+            echo "full_version=${CURRENT_VERSION}-${VERSION_SUFFIX}" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Calculate next version (increment patch)
+          if [ -n "$SPECIFIED_VERSION" ]; then
+            echo "next_version=$SPECIFIED_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
+            NEXT_PATCH=$((PATCH + 1))
+            echo "next_version=${MAJOR}.${MINOR}.${NEXT_PATCH}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Print version info
+        run: |
+          echo "Current version: ${{ steps.vars.outputs.current_version }}"
+          echo "Full version: ${{ steps.vars.outputs.full_version }}"
+          echo "Next version: ${{ steps.vars.outputs.next_version }}"
+          echo "Is release: ${{ steps.vars.outputs.is_release }}"
+
+  build-api:
+    name: 'API: Build and publish docker image'
+    runs-on: ubuntu-latest
+    needs: initialize
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        working-directory: api/KS.FiksProtokollValidator.WebAPI
+        run: |
+          dotnet restore --force --verbosity normal
+
+      - name: Publish API
+        working-directory: api/KS.FiksProtokollValidator.WebAPI
+        run: |
+          BUILD_OPTS=""
+          if [ -n "${{ needs.initialize.outputs.version_suffix }}" ]; then
+            BUILD_OPTS="--version-suffix ${{ needs.initialize.outputs.version_suffix }}"
+          fi
+          dotnet publish \
+            --configuration Release \
+            --no-restore \
+            --output published-api \
+            $BUILD_OPTS
+
+      - name: Log in to Docker registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}
+          username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+      - name: Build and push API Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: api/KS.FiksProtokollValidator.WebAPI
+          push: true
+          tags: |
+            ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}/${{ env.API_APP_NAME }}:${{ needs.initialize.outputs.full_version }}
+            ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}/${{ env.API_APP_NAME }}:latest
+
+  build-web:
+    name: 'WEB: Build and publish docker image'
+    runs-on: ubuntu-latest
+    needs: initialize
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: web-ui/package-lock.json
+
+      - name: Install dependencies
+        working-directory: web-ui
+        run: npm install
+
+      - name: Build web UI
+        working-directory: web-ui
+        run: npm run build -- --mode production
+
+      - name: Log in to Docker registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}
+          username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+
+      - name: Build and push WEB Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: web-ui
+          push: true
+          tags: |
+            ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}/${{ env.WEB_APP_NAME }}:${{ needs.initialize.outputs.full_version }}
+            ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}/${{ env.WEB_APP_NAME }}:latest
+
+  push-helm-chart:
+    name: 'API and WEB: Push helm chart'
+    runs-on: ubuntu-latest
+    needs: [initialize, build-api, build-web]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Package Helm chart
+        run: |
+          FULL_VERSION="${{ needs.initialize.outputs.full_version }}"
+          # Replace version placeholder in Chart.yaml
+          sed -i "s/\${CHART_VERSION}/$FULL_VERSION/g" fiks-protokoll-validator/Chart.yaml
+          sed -i "s/\${CHART_VERSION}/$FULL_VERSION/g" fiks-protokoll-validator/values.yaml
+          helm package fiks-protokoll-validator
+
+      - name: Push Helm chart
+        run: |
+          FULL_VERSION="${{ needs.initialize.outputs.full_version }}"
+          IS_RELEASE="${{ needs.initialize.outputs.is_release }}"
+          if [ "$IS_RELEASE" = "true" ]; then
+            HELM_REPO="https://artifactory.fiks.ks.no/artifactory/helm-local"
+          else
+            HELM_REPO="https://artifactory.fiks.ks.no/artifactory/helm-local-snapshots"
+          fi
+          curl -u "${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }}" \
+            -T "${{ env.PROJECT_CHARTNAME }}-${FULL_VERSION}.tgz" \
+            "${HELM_REPO}/${{ env.PROJECT_CHARTNAME }}-${FULL_VERSION}.tgz"
+
+  deploy-to-dev:
+    name: 'API og WEB: Deploy to dev'
+    runs-on: ubuntu-latest
+    needs: [initialize, push-helm-chart]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      needs.initialize.outputs.is_release != 'true'
+    steps:
+
+      - name: Trigger deploy to dev
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d '{"event_type":"deploy-to-dev","client_payload":{"chartName":"${{ env.PROJECT_CHARTNAME }}","version":"${{ needs.initialize.outputs.full_version }}"}}'
+
+  release:
+    name: 'Release: Set next version and push to git'
+    runs-on: ubuntu-latest
+    needs: [initialize, push-helm-chart]
+    if: |
+      github.event.inputs.isRelease == 'true' &&
+      needs.initialize.outputs.next_version != '' &&
+      needs.initialize.outputs.full_version != ''
+    steps:
+
+      - name: Set up github app
+        id: setup_github_app
+        uses: ks-no/github-actions-public/setup-github-app@main
+        with:
+          ks_github_app_id: ${{ vars.KS_RUNNER_APP_ID }}
+          ks_github_app_private_key: ${{ secrets.KS_RUNNER_PRIVATE_KEY }}
+          is_release: ${{ needs.initialize.outputs.is_release }}
+
+
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+          fetch-tags: true
+          token: ${{ steps.setup_github_app.outputs.token }}
+
+      - name: Create GitHub Release
+        uses: ks-no/github-actions-public/create-github-release@main
+        with:
+          current-version: ${{ needs.initialize.outputs.full_version }}
+          next-version: ${{ needs.initialize.outputs.next_version }}
+          release-notes: |
+            ${{ github.event.inputs.releaseNotes }}
+          reviewer: ${{ github.event.inputs.reviewer }}
+          github-token: ${{ steps.setup_github_app.outputs.token }}
+          actor: ${{ github.actor }}
+          ref-name: ${{ github.ref_name }}
