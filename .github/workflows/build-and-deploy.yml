@@ -232,6 +232,8 @@ jobs:
   deploy-to-dev:
     name: 'API og WEB: Deploy to dev'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     needs: [initialize, push-helm-chart]
     if: |
       github.ref == 'refs/heads/main' &&
@@ -249,6 +251,8 @@ jobs:
   release:
     name: 'Release: Set next version and push to git'
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     needs: [initialize, push-helm-chart]
     if: |
       github.event.inputs.isRelease == 'true' &&
