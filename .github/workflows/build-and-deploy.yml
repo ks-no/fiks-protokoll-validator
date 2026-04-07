@@ -205,6 +205,10 @@ jobs:
           fetch-depth: 0
           fetch-tags: true
 
+      - uses: ks-no/github-actions-public/prepare-the-frog@main
+        with:
+          artifactory_username: ${{ secrets.ARTIFACTORY_USERNAME }}
+          artifactory_password: ${{ secrets.ARTIFACTORY_PASSWORD }}
       - name: Install Helm
         uses: azure/setup-helm@v4
 
@@ -217,17 +221,17 @@ jobs:
           helm package fiks-protokoll-validator
 
       - name: Push Helm chart
+        shell: bash
         run: |
           FULL_VERSION="${{ needs.initialize.outputs.full_version }}"
           IS_RELEASE="${{ needs.initialize.outputs.is_release }}"
+          CHART_FILE="${{ env.PROJECT_CHARTNAME }}-${FULL_VERSION}.tgz"
           if [ "$IS_RELEASE" = "true" ]; then
-            HELM_REPO="https://artifactory.fiks.ks.no/artifactory/helm-local"
+            HELM_REPO="helm-local"
           else
-            HELM_REPO="https://artifactory.fiks.ks.no/artifactory/helm-local-snapshots"
+            HELM_REPO="helm-local-snapshots"
           fi
-          curl -u "${{ secrets.ARTIFACTORY_USERNAME }}:${{ secrets.ARTIFACTORY_PASSWORD }}" \
-            -T "${{ env.PROJECT_CHARTNAME }}-${FULL_VERSION}.tgz" \
-            "${HELM_REPO}/${{ env.PROJECT_CHARTNAME }}-${FULL_VERSION}.tgz"
+          jfrog rt upload "$CHART_FILE" "$HELM_REPO/"
 
   deploy-to-dev:
     name: 'API og WEB: Deploy to dev'
