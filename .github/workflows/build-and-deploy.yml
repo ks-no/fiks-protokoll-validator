@@ -251,6 +251,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
+      contents: write
     needs: [initialize, push-helm-chart]
     if: |
       github.event.inputs.isRelease == 'true' &&
@@ -271,7 +272,7 @@ jobs:
           ref: main
           fetch-depth: 0
           fetch-tags: true
-          token: ${{ steps.setup_github_app.outputs.token }}
+          token: ${{ steps.setup_github_app.outputs.app_token }}
 
       - name: Create GitHub Release
         uses: ks-no/github-actions-public/create-github-release@main
