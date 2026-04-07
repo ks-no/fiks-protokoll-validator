@@ -239,13 +239,13 @@ jobs:
     steps:
 
       - name: Trigger deploy to dev
-        run: |
-          curl -X POST \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/dispatches \
-            -d '{"event_type":"deploy-to-dev","client_payload":{"chartName":"${{ env.PROJECT_CHARTNAME }}","version":"${{ needs.initialize.outputs.full_version }}"}}'
-
+        uses: ks-no/github-actions/deploy@main
+        with:
+          environment: dev
+          helm_chart: ${{ env.PROJECT_CHARTNAME }}
+          version: ${{ needs.initialize.outputs.full_version }}
+          ks_github_app_id: ${{ vars.KS_RUNNER_APP_ID }}
+          ks_github_app_private_key: ${{ secrets.KS_RUNNER_PRIVATE_KEY }}
   release:
     name: 'Release: Set next version and push to git'
     runs-on: ubuntu-latest
@@ -262,7 +262,6 @@ jobs:
         with:
           ks_github_app_id: ${{ vars.KS_RUNNER_APP_ID }}
           ks_github_app_private_key: ${{ secrets.KS_RUNNER_PRIVATE_KEY }}
-          is_release: ${{ needs.initialize.outputs.is_release }}
 
 
       - uses: actions/checkout@v6
@@ -283,3 +282,12 @@ jobs:
           github-token: ${{ steps.setup_github_app.outputs.token }}
           actor: ${{ github.actor }}
           ref-name: ${{ github.ref_name }}
+
+      - name: Deploy to test
+        uses: ks-no/github-actions/deploy@main
+        with:
+          environment: test
+          helm_chart: ${{ env.PROJECT_CHARTNAME }}
+          version: ${{ needs.initialize.outputs.full_version }}
+          ks_github_app_id: ${{ vars.KS_RUNNER_APP_ID }}
+          ks_github_app_private_key: ${{ secrets.KS_RUNNER_PRIVATE_KEY }}
