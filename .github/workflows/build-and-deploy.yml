@@ -224,14 +224,8 @@ jobs:
         shell: bash
         run: |
           FULL_VERSION="${{ needs.initialize.outputs.full_version }}"
-          IS_RELEASE="${{ needs.initialize.outputs.is_release }}"
           CHART_FILE="${{ env.PROJECT_CHARTNAME }}-${FULL_VERSION}.tgz"
-          if [ "$IS_RELEASE" = "true" ]; then
-            HELM_REPO="helm-local"
-          else
-            HELM_REPO="helm-local-snapshots"
-          fi
-          jfrog rt upload "$CHART_FILE" "$HELM_REPO/"
+          jfrog rt upload "$CHART_FILE" "ks-helm/"
 
   deploy-to-dev:
     name: 'API og WEB: Deploy to dev'
