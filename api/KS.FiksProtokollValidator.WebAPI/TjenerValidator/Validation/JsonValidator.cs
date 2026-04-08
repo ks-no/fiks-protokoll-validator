@@ -13,8 +13,9 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 {
     public class JsonValidator : IDisposable
     {
-        private const string SaksfaserAssemblyBaseFilename = "KS.Fiks.Saksfaser.Models.V1.Schema.V1"; 
-        private const string FiksPlanAssemblyBaseFilename = "KS.Fiks.Plan.Models.V2.Schema.V2"; 
+        private const string SaksfaserAssemblyBaseFilename = "KS.Fiks.Saksfaser.Models.V1.Schema.V1";
+        private const string FiksPlanAssemblyBaseFilename = "KS.Fiks.Plan.Models.V2.Schema.V2";
+        private static readonly string SchemasDirectory = Path.Combine(Path.GetTempPath(), "fiks-protokoll-validator-schemas");
         private string assemblyName;
         private string assemblyBaseFilename;
 
@@ -22,7 +23,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
         {
             try
             {
-                Directory.CreateDirectory("Schemas");
+                Directory.CreateDirectory(SchemasDirectory);
             }
             catch(Exception e)
             {
@@ -75,7 +76,7 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
         private void writeSchemaToDisk(string messageType)
         {
             var content = GetSchemaFromAssembly(messageType);
-            File.WriteAllText($"./Schemas/{messageType}.schema.json", content);
+            File.WriteAllText(Path.Combine(SchemasDirectory, $"{messageType}.schema.json"), content);
         }
 
         private string GetSchemaFromAssembly(string messagename)
@@ -118,13 +119,11 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
 
             using var reader = new JsonTextReader(schemaStreamReader);
             var resolver = new JSchemaUrlResolver();
-            //var baseUri = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            var baseUri = Directory.GetCurrentDirectory();
 
             var schema = JSchema.Load(reader, new JSchemaReaderSettings()
                 {
                     Resolver = resolver,
-                    BaseUri = new Uri($"{baseUri}/Schemas/{messageType}.schema.json") // Hoved schema
+                    BaseUri = new Uri(Path.Combine(SchemasDirectory, $"{messageType}.schema.json")) // Hoved schema
                 }
             );
             schema.ExtensionData.Remove("definitions");
