@@ -25,7 +25,7 @@
     "dotenv": "^17.4.1",
     "eslint": "^9.39.4",
     "eslint-plugin-vue": "^10.8.0",
-    "globals": "^17.4.0",
+    "globals": "^17.5.0",
     "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
