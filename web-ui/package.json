@@ -30,7 +30,7 @@
     "prettier": "^3.8.1",
     "tailwindcss": "^4.2.2",
     "typescript": "^5.7.0",
-    "typescript-eslint": "^8.58.0",
+    "typescript-eslint": "^8.58.2",
     "vite": "^8.0.5",
     "vue-tsc": "^3.2.6"
   }
