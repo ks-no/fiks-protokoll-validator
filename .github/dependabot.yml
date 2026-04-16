@@ -1,36 +1,66 @@
 version: 2
+registries:
+  nuget-feed-artifactory-v3:
+    type: nuget-feed
+    url: https://artifactory.fiks.ks.no/artifactory/api/nuget/v3/nuget-all/index.json
+    username: tok-dependabot
+    password: ${{secrets.DEPENDABOT}}
 updates:
-- package-ecosystem: docker
-  directory: "/api"
-  schedule:
-    interval: daily
-    time: "03:00"
-    timezone: Europe/Oslo
-  open-pull-requests-limit: 15
-  ignore:
-    - dependency-name: "*"
-      update-types: [ "version-update:semver-major" ]
-- package-ecosystem: docker
-  directory: "/web-ui"
-  schedule:
-    interval: daily
-    time: "03:00"
-    timezone: Europe/Oslo
-  open-pull-requests-limit: 15
-  ignore:
-    - dependency-name: "*"
-      update-types: [ "version-update:semver-major" ]
-- package-ecosystem: nuget
-  directory: "/api"
-  schedule:
-    interval: daily
-    time: "03:00"
-    timezone: Europe/Oslo
-  open-pull-requests-limit: 15
-- package-ecosystem: npm
-  directory: "/web-ui"
-  schedule:
-    interval: daily
-    time: "03:00"
-    timezone: Europe/Oslo
-  open-pull-requests-limit: 15  
+  - package-ecosystem: docker
+    directory: "/api"
+    schedule:
+      interval: daily
+      time: "03:00"
+      timezone: Europe/Oslo
+    open-pull-requests-limit: 15
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: docker
+    directory: "/web-ui"
+    schedule:
+      interval: daily
+      time: "03:00"
+      timezone: Europe/Oslo
+    open-pull-requests-limit: 15
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+  - package-ecosystem: nuget
+    directory: "/api"
+    schedule:
+      interval: daily
+      time: "03:00"
+      timezone: Europe/Oslo
+    open-pull-requests-limit: 15
+    registries:
+      - nuget-feed-artifactory-v3
+    groups:
+      fiks-deps:
+        patterns:
+          - "KS.Fiks*"
+        update-types:
+          - "minor"
+          - "patch"
+      other-deps:
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "KS.Fiks*"
+        update-types:
+          - "minor"
+          - "patch"
+  - package-ecosystem: npm
+    directory: "/web-ui"
+    schedule:
+      interval: daily
+      time: "03:00"
+      timezone: Europe/Oslo
+    open-pull-requests-limit: 15
+    groups:
+      all-deps:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
