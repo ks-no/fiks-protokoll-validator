@@ -14,8 +14,8 @@
     "@phosphor-icons/vue": "^2.2.1",
     "mime-types": "^3.0.2",
     "simple-syntax-highlighter": "^3.1.1",
-    "vue": "^3.5.32",
-    "vue-router": "^5.0.4"
+    "vue": "^3.5.33",
+    "vue-router": "^5.0.6"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.2.4",
