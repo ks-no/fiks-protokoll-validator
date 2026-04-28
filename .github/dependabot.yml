@@ -4,7 +4,7 @@ updates:
     directory: "/api"
     schedule:
       interval: daily
-      time: "03:00"
+      time: "04:32"
       timezone: Europe/Oslo
     open-pull-requests-limit: 15
     ignore:
@@ -14,7 +14,7 @@ updates:
     directory: "/web-ui"
     schedule:
       interval: daily
-      time: "03:00"
+      time: "04:32"
       timezone: Europe/Oslo
     open-pull-requests-limit: 15
     ignore:
@@ -24,7 +24,7 @@ updates:
     directory: "/api"
     schedule:
       interval: daily
-      time: "03:00"
+      time: "04:32"
       timezone: Europe/Oslo
     open-pull-requests-limit: 15
     groups:
@@ -46,7 +46,7 @@ updates:
     directory: "/web-ui"
     schedule:
       interval: daily
-      time: "03:00"
+      time: "04:32"
       timezone: Europe/Oslo
     open-pull-requests-limit: 15
     groups:
