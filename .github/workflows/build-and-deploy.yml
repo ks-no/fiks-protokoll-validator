@@ -139,14 +139,14 @@ jobs:
             $BUILD_OPTS
 
       - name: Log in to Docker registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}
           username: ${{ secrets.ARTIFACTORY_USERNAME }}
           password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
       - name: Build and push API Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7
         with:
           context: api/KS.FiksProtokollValidator.WebAPI
           push: true
@@ -180,14 +180,14 @@ jobs:
         run: npm run build -- --mode production
 
       - name: Log in to Docker registry
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ${{ needs.initialize.outputs.is_release == 'true' && env.DOCKER_REGISTRY_RELEASE || env.DOCKER_REGISTRY }}
           username: ${{ secrets.ARTIFACTORY_USERNAME }}
           password: ${{ secrets.ARTIFACTORY_PASSWORD }}
 
       - name: Build and push WEB Docker image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@f9f3042f7e2789586610d6e8b85c8f03e5195baf # v7
         with:
           context: web-ui
           push: true
