@@ -251,3 +251,4 @@ Start back-end ved å åpne **fiks-protokoll-validator/api/KS.FiksProtokollValid
 
  * Hent inn web-applikasjonens avhengigheter ved å navigere til **fiks-protokoll-validator/web-ui/** og å kjøre `npm install`.
  * Start front-end på localhost fra **fiks-protokoll-validator/web-ui/** med `npm run dev`.
+
