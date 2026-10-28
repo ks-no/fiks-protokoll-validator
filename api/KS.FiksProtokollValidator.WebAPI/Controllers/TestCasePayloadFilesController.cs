@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.Resources;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -209,6 +210,12 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
         [HttpGet("{testCaseId}/Attachment/{attachmentFileName}")]
         public async Task<ActionResult> GetAttachmentPayloadFileAsync(string testCaseId, string attachmentFileName)
         {
+            if (!PayloadFilePath.IsFileName(attachmentFileName))
+            {
+                Log.Error("GetAttachmentPayloadFile avviste attachmentFileName {AttachmentFileName}", attachmentFileName);
+                return NotFound();
+            }
+
             var testCase = await _context.TestCases.FindAsync(testCaseId); 
             
             var filePath = Path.Combine(testCase.SamplePath, "Attachments", attachmentFileName);
@@ -223,7 +230,13 @@ namespace KS.FiksProtokollValidator.WebAPI.Controllers
             try
             {
                 var basepath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                return new FileContentResult(ReadAllBytes( basepath + "/" + filePath), "application/octet-stream");
+                var fullPath = PayloadFilePath.Resolve(basepath, filePath);
+                if (fullPath == null)
+                {
+                    Log.Error("GetPayload avviste filepath {FilePath}", filePath);
+                    return NotFound();
+                }
+                return new FileContentResult(ReadAllBytes(fullPath), "application/octet-stream");
             }
             catch (Exception exception)
             {
