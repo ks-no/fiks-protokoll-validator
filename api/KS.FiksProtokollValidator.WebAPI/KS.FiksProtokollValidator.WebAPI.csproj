@@ -3,7 +3,7 @@
   <PropertyGroup>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
     <StartupObject>KS.FiksProtokollValidator.WebAPI.Program</StartupObject>
-    <VersionPrefix>2.0.10</VersionPrefix>
+    <VersionPrefix>2.0.11</VersionPrefix>
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
