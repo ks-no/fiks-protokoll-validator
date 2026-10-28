@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 
 namespace KS.FiksProtokollValidator.Tests.UnitTest.WebAPI.TjenerValidator.Validation
 {
-    public class PayloadValidatorTests : IDisposable
+    public class PayloadValidatorTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
         private readonly PayloadValidator _payloadValidator;
@@ -39,11 +39,6 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.WebAPI.TjenerValidator.Valida
             var responseMessageType = "no.ks.fiks.saksfaser.v1.saksfaser.hent.resultat";
             _payloadValidator.ValidateJsonWithSchema(payload, validationErrors, responseMessageType);
             Assert.NotEmpty(validationErrors);
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }
