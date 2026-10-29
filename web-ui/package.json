@@ -21,7 +21,7 @@
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/mime-types": "^3.0.1",
-    "@types/node": "^25.9.2",
+    "@types/node": "^26.6.5",
     "@vitejs/plugin-vue": "^6.0.10",
     "dotenv": "^17.4.2",
     "eslint": "^10.7.0",
