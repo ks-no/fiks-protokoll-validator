@@ -171,6 +171,9 @@ interface ErrorMessage {
   title?: string
 }
 
+// Test session ids are GUIDs (TestSessionsController). Anything else is not looked up.
+const TEST_SESSION_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
 const route = useRoute()
 const { copy, copied } = useClipboard()
 const api = useApi<TestSessionData>()
@@ -199,8 +202,15 @@ async function fetchTestSession() {
   loading.value = true
   fetchError.value = false
 
+  if (!TEST_SESSION_ID_PATTERN.test(testSessionId)) {
+    requestErrorStatusCode.value = 404
+    fetchError.value = true
+    loading.value = false
+    return
+  }
+
   try {
-    const data = await api.get(`/api/TestSessions/${testSessionId}`)
+    const data = await api.get(`/api/TestSessions/${encodeURIComponent(testSessionId)}`)
     testSession.value = {
       ...data,
       fiksRequests: sortRequests(data.fiksRequests)

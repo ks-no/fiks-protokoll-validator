@@ -82,7 +82,7 @@ async function submitFile() {
   const api = useApi()
   try {
     fileUploadError.value = null
-    await api.post(`/api/TestCasePayloadFiles/${props.testId}/payload`, formData)
+    await api.post(`/api/TestCasePayloadFiles/${encodeURIComponent(props.testId ?? '')}/payload`, formData)
     fileUploadSuccess.value = true
   } catch {
     fileUploadError.value = 'Opplasting feilet. Prøv igjen.'
