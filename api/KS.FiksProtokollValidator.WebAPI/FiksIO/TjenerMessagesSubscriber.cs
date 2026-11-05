@@ -107,6 +107,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 catch (Exception e)
                 {
+                    if (e is AsiceReadLimitException)
+                    {
+                        // Keep no part of a message that is over the limits.
+                        payloads.Clear();
+                    }
+
                     Logger.Error("Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                     payloadErrors += $"Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {mottattMeldingArgs.Melding?.MeldingId}, Error: {e.Message}";
                 }

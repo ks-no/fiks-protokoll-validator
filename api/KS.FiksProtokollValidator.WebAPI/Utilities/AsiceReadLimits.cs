@@ -4,6 +4,14 @@ using System.Threading.Tasks;
 
 namespace KS.FiksProtokollValidator.WebAPI.Utilities
 {
+    // Thrown when an ASiC-E passes one of the limits in AsiceReadLimits.
+    public class AsiceReadLimitException : Exception
+    {
+        public AsiceReadLimitException(string message) : base(message)
+        {
+        }
+    }
+
     // Reads the entries of one ASiC-E into memory, with limits. The entries are compressed, so the size of a message
     // does not show how much memory its entries take when they are read. Use one instance per message.
     public class AsiceReadLimits
@@ -60,7 +68,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Utilities
             _entries++;
             if (_entries > _maxEntries)
             {
-                throw new InvalidDataException($"ASiC-E har flere enn {_maxEntries} filer");
+                throw new AsiceReadLimitException($"ASiC-E har flere enn {_maxEntries} filer");
             }
 
             return Math.Min(_maxEntryBytes, _remainingBytes);
@@ -70,7 +78,7 @@ namespace KS.FiksProtokollValidator.WebAPI.Utilities
         {
             if (target.Length + count > limit)
             {
-                throw new InvalidDataException(
+                throw new AsiceReadLimitException(
                     $"En fil i ASiC-E er større enn {_maxEntryBytes} byte, eller filene i ASiC-E er til sammen for store");
             }
 

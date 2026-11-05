@@ -135,6 +135,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
             var xmlFound = false;
             
             IAsicReader reader = new AsiceReader();
+            var readLimits = new AsiceReadLimits();
             using (var inputStream = mottatt.Melding.DecryptedStream.Result)
             using (var asice = reader.Read(inputStream))
             {
@@ -145,7 +146,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                         if (asiceReadEntry.FileName.Equals(FiksArkivPayloadHelper.GetPayloadFilnavn(mottatt.Melding.MeldingType)))
                         {
                             xmlFound = true;
-                            var payloadBytes = new AsiceReadLimits().ReadEntry(entryStream);
+                            var payloadBytes = readLimits.ReadEntry(entryStream);
                             xmlReaderResult.validationMessages = new XmlValidator().ValidateXml(
                                 new MemoryStream(payloadBytes),
                                 xmlSchemaSet

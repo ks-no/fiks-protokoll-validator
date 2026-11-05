@@ -40,7 +40,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.WebAPI.Utilities
         {
             var limits = new AsiceReadLimits(maxEntryBytes: 999);
 
-            Assert.Throws<InvalidDataException>(() => limits.ReadEntry(new MemoryStream(new byte[1000])));
+            Assert.Throws<AsiceReadLimitException>(() => limits.ReadEntry(new MemoryStream(new byte[1000])));
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.WebAPI.Utilities
         {
             var limits = new AsiceReadLimits(maxEntryBytes: 999);
 
-            await Assert.ThrowsAsync<InvalidDataException>(() => limits.ReadEntryAsync(new MemoryStream(new byte[1000])));
+            await Assert.ThrowsAsync<AsiceReadLimitException>(() => limits.ReadEntryAsync(new MemoryStream(new byte[1000])));
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.WebAPI.Utilities
             var limits = new AsiceReadLimits(maxEntryBytes: 1000, maxTotalBytes: 1500);
             await limits.ReadEntryAsync(new MemoryStream(new byte[1000]));
 
-            await Assert.ThrowsAsync<InvalidDataException>(() => limits.ReadEntryAsync(new MemoryStream(new byte[1000])));
+            await Assert.ThrowsAsync<AsiceReadLimitException>(() => limits.ReadEntryAsync(new MemoryStream(new byte[1000])));
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace KS.FiksProtokollValidator.Tests.UnitTest.WebAPI.Utilities
             limits.ReadEntry(new MemoryStream(new byte[1]));
             limits.ReadEntry(new MemoryStream(new byte[1]));
 
-            Assert.Throws<InvalidDataException>(() => limits.ReadEntry(new MemoryStream(new byte[1])));
+            Assert.Throws<AsiceReadLimitException>(() => limits.ReadEntry(new MemoryStream(new byte[1])));
         }
 
         [Fact]
