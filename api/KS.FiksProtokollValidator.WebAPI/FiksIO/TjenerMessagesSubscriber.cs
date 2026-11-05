@@ -11,6 +11,7 @@ using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.Data;
 using KS.FiksProtokollValidator.WebAPI.FiksIO.Connection;
 using KS.FiksProtokollValidator.WebAPI.TjenerValidator.Models;
+using KS.FiksProtokollValidator.WebAPI.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -73,16 +74,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     using var asiceReadModel = asiceReader.Read(await verifyStream2);
                   
                     // Verify asice and read payload
+                    var readLimits = new AsiceReadLimits();
                     foreach (var asiceVerifyReadEntry in asiceReadModel.Entries)
                     {
                         await using (var entryStream = asiceVerifyReadEntry.OpenStream())
                         {
-                            byte[] fileAsBytes;
-                            await using (MemoryStream ms = new MemoryStream())
-                            {
-                                await entryStream.CopyToAsync(ms);
-                                fileAsBytes = ms.ToArray();
-                            }
+                            var fileAsBytes = await readLimits.ReadEntryAsync(entryStream);
                             payloads.Add(new FiksPayload() { Filename = asiceVerifyReadEntry.FileName, Payload = fileAsBytes });
                         }
                     }

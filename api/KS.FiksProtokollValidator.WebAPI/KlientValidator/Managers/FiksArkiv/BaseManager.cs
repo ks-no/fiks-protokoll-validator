@@ -8,6 +8,7 @@ using KS.Fiks.ASiC_E;
 using KS.Fiks.IO.Client.Models;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Validation;
+using KS.FiksProtokollValidator.WebAPI.Utilities;
 using Serilog;
 
 namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
@@ -144,8 +145,9 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                         if (asiceReadEntry.FileName.Equals(FiksArkivPayloadHelper.GetPayloadFilnavn(mottatt.Melding.MeldingType)))
                         {
                             xmlFound = true;
+                            var payloadBytes = new AsiceReadLimits().ReadEntry(entryStream);
                             xmlReaderResult.validationMessages = new XmlValidator().ValidateXml(
-                                entryStream,
+                                new MemoryStream(payloadBytes),
                                 xmlSchemaSet
                             );
                             if (xmlReaderResult.validationMessages != null && xmlReaderResult.validationMessages[0].Count > 0)
@@ -153,9 +155,8 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                                 xmlReaderResult.XmlValidationErrorOccured = true;
                             }
 
-                            var newEntryStream = asiceReadEntry.OpenStream();
-                            var reader1 = new StreamReader(newEntryStream);
-                            xmlReaderResult.Xml = reader1.ReadToEnd();
+                            using var payloadReader = new StreamReader(new MemoryStream(payloadBytes));
+                            xmlReaderResult.Xml = payloadReader.ReadToEnd();
                         }
                     }
 
@@ -195,6 +196,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
         {
             var xmlReaderResult = new XmlReaderResult();
             IAsicReader reader = new AsiceReader();
+            var readLimits = new AsiceReadLimits();
           
             using (var inputStream = mottatt.Melding.DecryptedStream.Result)
             using (var asice = reader.Read(inputStream))
@@ -206,7 +208,7 @@ namespace KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv
                         if (asiceReadEntry.FileName.Contains(".xml"))
                         {
                             xmlReaderResult.validationMessages = new XmlValidator().ValidateXml(
-                                entryStream,
+                                new MemoryStream(readLimits.ReadEntry(entryStream)),
                                 xmlSchemaSet
                             );
                             if (xmlReaderResult.validationMessages != null && xmlReaderResult.validationMessages[0].Count > 0)
