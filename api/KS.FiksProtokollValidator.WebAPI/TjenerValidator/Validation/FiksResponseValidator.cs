@@ -228,7 +228,8 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             }
             catch (Exception e)
             {
-                Logger.Error($"Klarte ikke å parse xml for validering: {xmlPayloadContent}");
+                Logger.Error(e, "Klarte ikke å parse xml for validering. Lengde på payload: {PayloadLength}",
+                    xmlPayloadContent?.Length);
                 validationErrors.Add("Klarte ikke å parse xml for validering.");
             }
         }
