@@ -171,6 +171,11 @@ interface ErrorMessage {
   title?: string
 }
 
+// Test session ids are GUIDs (TestSessionsController). The pattern accepts the D, N, B and P forms of a GUID: with
+// or without hyphens, in braces or in parentheses. A value with other characters is not looked up. The API rejects
+// a mix of the forms that the pattern lets through.
+const TEST_SESSION_ID_PATTERN = /^[{(]?[0-9a-f]{8}(-?[0-9a-f]{4}){3}-?[0-9a-f]{12}[)}]?$/i
+
 const route = useRoute()
 const { copy, copied } = useClipboard()
 const api = useApi<TestSessionData>()
@@ -199,8 +204,15 @@ async function fetchTestSession() {
   loading.value = true
   fetchError.value = false
 
+  if (!TEST_SESSION_ID_PATTERN.test(testSessionId)) {
+    requestErrorStatusCode.value = 404
+    fetchError.value = true
+    loading.value = false
+    return
+  }
+
   try {
-    const data = await api.get(`/api/TestSessions/${testSessionId}`)
+    const data = await api.get(`/api/TestSessions/${encodeURIComponent(testSessionId)}`)
     testSession.value = {
       ...data,
       fiksRequests: sortRequests(data.fiksRequests)

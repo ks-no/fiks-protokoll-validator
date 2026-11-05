@@ -50,14 +50,14 @@ const apiBaseUrl = import.meta.env.VITE_API_URL + '/api/TestCasePayloadFiles'
 
 const payloadUrl = computed(() => {
   return props.hasRun
-    ? `${apiBaseUrl}/${props.testSessionId}/${props.testId}/payload`
-    : `${apiBaseUrl}/${props.testId}/payload`
+    ? `${apiBaseUrl}/${encodeURIComponent(String(props.testSessionId))}/${encodeURIComponent(props.testId)}/payload`
+    : `${apiBaseUrl}/${encodeURIComponent(props.testId)}/payload`
 })
 
 const isAttachment = computed(() => props.isAttachment ?? false)
 
 const attachmentUrl = computed(() => {
-  return `${apiBaseUrl}/${props.testId}/Attachment/${props.fileName}`
+  return `${apiBaseUrl}/${encodeURIComponent(props.testId)}/Attachment/${encodeURIComponent(String(props.fileName))}`
 })
 
 async function getContent(isTextContent: boolean) {
