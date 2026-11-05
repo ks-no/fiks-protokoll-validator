@@ -171,8 +171,10 @@ interface ErrorMessage {
   title?: string
 }
 
-// Test session ids are GUIDs (TestSessionsController). Anything else is not looked up.
-const TEST_SESSION_ID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+// Test session ids are GUIDs (TestSessionsController). The pattern accepts the D, N, B and P forms of a GUID: with
+// or without hyphens, in braces or in parentheses. A value with other characters is not looked up. The API rejects
+// a mix of the forms that the pattern lets through.
+const TEST_SESSION_ID_PATTERN = /^[{(]?[0-9a-f]{8}(-?[0-9a-f]{4}){3}-?[0-9a-f]{12}[)}]?$/i
 
 const route = useRoute()
 const { copy, copied } = useClipboard()
