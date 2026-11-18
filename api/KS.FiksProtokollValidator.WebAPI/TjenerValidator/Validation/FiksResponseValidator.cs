@@ -20,7 +20,9 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
         private static readonly ILogger Logger = Log.ForContext(MethodBase.GetCurrentMethod()?.DeclaringType);
         private static PayloadValidator _payloadValidator;
         // The payload comes from the account under test. The log gets only its start, so that a large payload does not
-        // fill the log, and line breaks are escaped, so that the payload cannot add its own lines to the console log.
+        // fill the log. The start goes in the property PayloadStart, not in the message: the console log shows only the
+        // message, so the payload cannot add its own lines there, and logstash gets the property as JSON with the line
+        // breaks, so Kibana shows the payload as it is.
         private const int MaxLoggedPayloadLength = 1000;
 
         public FiksResponseValidator()
@@ -231,22 +233,15 @@ namespace KS.FiksProtokollValidator.WebAPI.TjenerValidator.Validation
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Klarte ikke å parse xml for validering. Lengde på payload: {PayloadLength}. Starten av payload: {PayloadStart}",
-                    xmlPayloadContent?.Length, LoggablePayload(xmlPayloadContent));
+                Logger.ForContext("PayloadStart", PayloadStart(xmlPayloadContent))
+                    .Error(e, "Klarte ikke å parse xml for validering. Lengde på payload: {PayloadLength}",
+                        xmlPayloadContent?.Length);
                 validationErrors.Add("Klarte ikke å parse xml for validering.");
             }
         }
 
-        private static string LoggablePayload(string payload)
-        {
-            if (payload == null)
-            {
-                return null;
-            }
-
-            var start = payload.Length > MaxLoggedPayloadLength ? payload.Substring(0, MaxLoggedPayloadLength) : payload;
-            return start.Replace("\r", "\\r").Replace("\n", "\\n");
-        }
+        private static string PayloadStart(string payload) =>
+            payload == null || payload.Length <= MaxLoggedPayloadLength ? payload : payload.Substring(0, MaxLoggedPayloadLength);
 
         private static void ValidateXmlPayloadWithFiksResponseTests(FiksRequest fiksRequest, List<string> validationErrors,
            XDocument xmlDoc)
