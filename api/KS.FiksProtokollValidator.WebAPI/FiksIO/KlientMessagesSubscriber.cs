@@ -15,6 +15,7 @@ using KS.FiksProtokollValidator.WebAPI.KlientValidator.Engines.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Managers.FiksArkiv;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Models;
 using KS.FiksProtokollValidator.WebAPI.KlientValidator.Utilities.Serialization;
+using KS.FiksProtokollValidator.WebAPI.Utilities;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Serilog;
@@ -186,16 +187,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                     using var asiceReadModel = asiceReader.Read(await verifyStream2);
                   
                     // Verify asice and read payload
+                    var readLimits = new AsiceReadLimits();
                     foreach (var asiceVerifyReadEntry in asiceReadModel.Entries)
                     {
                         await using (var entryStream = asiceVerifyReadEntry.OpenStream())
                         {
-                            byte[] fileAsBytes;
-                            await using (MemoryStream ms = new MemoryStream())
-                            {
-                                await entryStream.CopyToAsync(ms);
-                                fileAsBytes = ms.ToArray();
-                            }
+                            var fileAsBytes = await readLimits.ReadEntryAsync(entryStream);
                             payloads.Add(new FiksPayload() { Filename = asiceVerifyReadEntry.FileName, Payload = fileAsBytes });
                         }
                     }
@@ -221,6 +218,12 @@ namespace KS.FiksProtokollValidator.WebAPI.FiksIO
                 }
                 catch (Exception e)
                 {
+                    if (e is AsiceReadLimitException)
+                    {
+                        // Keep no part of a message that is over the limits.
+                        payloads.Clear();
+                    }
+
                     Logger.Error("Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {MeldingId}, Error: {Message}", mottattMeldingArgs.Melding?.MeldingId, e.Message);
                     payloadErrors += $"Klarte ikke hente payload og melding blir dermed ikke parset. MeldingId: {mottattMeldingArgs.Melding?.MeldingId}, Error: {e.Message}";
                 }
